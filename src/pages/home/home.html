@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="primary">
+
+    <ion-title>
+      الصفحة الرئيسية
+      </ion-title>
+    <!--<ion-buttons end>
+      <button ion-button (click)="toLoginPage()">
+          <ion-icon name="person"></ion-icon>
+      </button>
+    </ion-buttons>-->
+  </ion-navbar>
+</ion-header>
+
+<ion-content color="primaryDark">
+  <ion-slides>
+
+    <ion-slide >
+      <h2>Slide 1</h2>
+    </ion-slide>
+
+    <ion-slide >
+      <h2>Slide 2</h2>
+    </ion-slide>
+
+    <ion-slide >
+      <h2>Slide 3</h2>
+    </ion-slide>
+
+  </ion-slides>
+
+
+
+  <ion-grid id="surf">
+    <ion-row>
+      <ion-col (click)="toMerchantPage()">
+        <h1>متاجر</h1>
+      </ion-col>
+      <ion-col (click)="toExporterPage()">
+        <h1>موردين</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>1</ion-col>
+      <ion-col>2</ion-col>
+      <ion-col>3</ion-col>
+      <ion-col>4</ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

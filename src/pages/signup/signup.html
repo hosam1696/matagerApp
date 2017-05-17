@@ -1,0 +1,136 @@
+<!--
+  Generated template for the Signup page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>تسجيل حساب جديد</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form
+    novalidate
+    [formGroup]="SignUpFrom"
+    (ngSubmit)="SubmitCreateForm()"
+  >
+    <section id="pager">
+      <div class="dot"
+           [ngClass]="{active: csPage==1}"
+            (click)="csPage=1"
+      ></div>
+      <div class="dot"
+           [ngClass]="{active: csPage==2}"
+           (click)="csPage=1"
+      ></div>
+      <div class="dot"
+           [ngClass]="{active: csPage==3}"
+           (click)="csPage=1"
+      ></div>
+    </section>
+    <ion-list class="step" [ngClass]="{shownPage: csPage== 1}">
+      <ion-item>
+        <ion-label>اسم المستخدم</ion-label>
+        <ion-input type="text" formControlName="Username"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>كلمة المرور</ion-label>
+        <ion-input type="password" formControlName="Password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>تأكيد كلمة المرور</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>الاسم بالكامل</ion-label>
+        <ion-input type="text" formControlName="Name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>البريد الالكترونى</ion-label>
+        <ion-input type="email" formControlName="Email"
+                   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>رقم الجوال</ion-label>
+        <ion-input type="text" formControlName="Mobile"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>الجنس</ion-label>
+
+        <ion-select  formControlName="Gender" >
+          <ion-option value="male">ذكر</ion-option>
+          <ion-option value="female">انثى</ion-option>
+        </ion-select>
+        <!--<label for="female">انثى</label>-->
+        <!--<input type="checkbox" name="gender" id="female">-->
+        <!--<label for="male">ذكر</label>-->
+        <!--<input type="checkbox" id="male" name="gender">-->
+      </ion-item>
+    </ion-list>
+    <ion-list class="step" [ngClass]="{shownPage: csPage== 2}">
+      <ion-item>
+        <ion-label>نوع العميل</ion-label>
+        <ion-select formControlName="level_id">
+          <ion-option [value]="levelId('store')">متجر</ion-option>
+          <ion-option [value]="levelId('client')">عميل</ion-option>
+          <ion-option [value]="levelId('exporter')">مورد</ion-option>
+
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <ion-list class="step" [ngClass]="{shownPage: csPage== 3}">
+      <ion-item>
+        <ion-select placeholder="المنطقة اجبارى" formControlName="Area" >
+            <ion-option *ngFor="let area of msAreas" [value]="area.id">{{area.name || 'اجبارى'}}</ion-option>
+        </ion-select>
+        <ion-select placeholder="  المدينة اجبارى" formControlName="City">
+<ion-option *ngFor="let city of msCity" [value]="city.id ">{{city.name || 'اجبارى'}}</ion-option>
+        </ion-select>
+        <ion-select placeholder="الحى" formControlName="Dist">
+
+<ion-option *ngFor="let dist of msDist" [value]="dist.id">{{dist.name || "اختيارى"}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-input placeholder="العنوان"
+          formControlName="Address"
+          *ngIf="levelId('store') || levelId('exporter')"
+        >
+         </ion-input>
+      </ion-item>
+      <ion-item *ngIf="SignUpFrom.value.level_id == 2">
+        <ion-input placeholder="رقم السجل التجارى"></ion-input>
+      </ion-item>
+      <ion-item *ngIf="SignUpFrom.value.level_id == 2">
+        <ion-input placeholder="اسم مدير المتج"></ion-input>
+      </ion-item>
+    </ion-list>
+    <!--/[disabled]=" !SignUpFrom.valid"-->
+
+
+
+    <button *ngIf="lastPage" ion-button type="submit">{{lastPage}}</button>
+  </form>
+  <button
+    *ngIf="!lastPage"
+    ion-button block
+    round
+    color="secondary"
+    (click)="toNextPage()"
+
+  >{{lastPage || "التالى" }}</button>
+
+
+  <pre>
+    {{SignUpFrom.value | json}}
+  </pre>
+
+
+</ion-content>

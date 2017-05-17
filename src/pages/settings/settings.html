@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      اعدادات
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <section id="hero">
+
+  </section>
+
+  <ion-list *ngIf="!userHasLog">
+
+  </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-left></ion-avatar>
+        <h1>حسام النبوى</h1>
+        <p>عميل</p>
+      </ion-item>
+      <ion-item (click)="toLoginPage()">
+
+        <ion-label>تسجيل الدخول</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>تعديل البيانات الشخصية</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>تعديل البيانات الشخصية</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>تعديل البيانات الشخصية</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>سياسة الاستخدام</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>تعديل البيانات الشخصية</ion-label>
+        <ion-icon name="arrow-round-back" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>اتصل بنا</ion-label>
+        <ion-icon name="call" item-right></ion-icon>
+      </ion-item>
+      <ion-item>
+        <ion-label>تسجيل الخروج</ion-label>
+        <ion-icon name="exit" item-right></ion-icon>
+      </ion-item>
+    </ion-list>
+</ion-content>

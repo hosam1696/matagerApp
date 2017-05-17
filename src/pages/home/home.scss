@@ -1,0 +1,60 @@
+.no-side-margins {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+page-home {
+    ion-content {
+      #surf {
+        ion-row {
+          /*padding-right: 15px ;
+          padding-left: 15px ;*/
+          ion-col {
+            margin: 10px;
+            //border: 1px solid red;
+            height: 100px;
+            //color: #333;
+            &:first-child {
+              background-color: dodgerblue;
+            }
+            &:last-child {
+              background-color: darkcyan;
+            }
+          }
+        }
+      }
+      ion-slides {
+        max-height: 200px;
+        ion-slide {
+          height: 100%;
+          background-color: #ccc
+        }
+      }
+        background-color: #666;
+        h2 {
+            margin-left: 10px;
+        }
+        ion-grid {
+            &.grid {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+            }
+
+            ion-col {
+                display: flex;
+                height: 150px;
+                justify-content: center;
+                background-color: #ccc;
+                color: #eee;
+                align-items: center
+            }
+        }
+        ion-card {
+            margin-left:0 !important;
+            width: 100% !important;
+            background-color: #333;
+            color: #eee
+        }
+    }
+
+}

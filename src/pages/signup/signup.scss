@@ -1,0 +1,50 @@
+page-signup {
+   &* {
+     transition: all .35s ease-in;
+   }
+  ion-content {
+    direction: rtl;
+    text-align: right;
+    .scroll-content {
+      background-color: #eee;
+    }
+    ion-select {
+      min-width: 80px;
+    }
+
+    form {
+      #pager {
+        display: flex;
+        justify-content: center;
+
+        .dot {
+          border-radius: 50%;
+          width: 15px;
+          height: 15px;
+          background-color: #ccc;
+          margin: 5px;
+          &.active {
+            background-color: #ff5b67
+          }
+        }
+        &.step {
+          display: none
+        }
+      }
+      ion-list {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+
+        display: none;
+        &.list-md {
+          background-color: #eee;
+        }
+
+        &.shownPage {
+          display: block;
+          align-items: center;
+        }
+      }
+    }
+  }}

@@ -1,0 +1,30 @@
+page-login {
+  ion-content {
+
+    .scroll-content {
+
+background: #eee;
+      ion-card {
+        ion-input {
+          border-bottom: 1px solid #ccc;
+
+        }
+        direction: rtl;
+        border-radius: 10px;
+        padding: 15px;
+        button {
+          margin-top: 20px
+        }
+        p {
+          button {
+            background-color: transparent;
+            color: #555
+          }
+          color: #999;
+          text-align: center;
+        }
+
+      }
+    }
+  }
+}
