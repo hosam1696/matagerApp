@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class UserProvider {
 
-  API_URL:string = "http://192.168.1.11/matager/api/users.php";
-  Areas_URL:string = 'http://192.168.1.11/matager/api/places.php';
+  API_URL:string = "http://192.168.1.8/matager/api/users.php";
+  Areas_URL:string = 'http://192.168.1.8/matager/api/places.php';
 
   constructor(public http: Http) {
   }

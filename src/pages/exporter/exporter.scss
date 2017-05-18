@@ -5,7 +5,7 @@ page-exporter {
   ion-content {
     #search {
       position: absolute;
-      top: 110px;
+      top: 10px;
       right: 10px;
       z-index:2;
       font-size: 25px
@@ -36,9 +36,9 @@ page-exporter {
 
     ion-list {
       ion-item {
-
+          
         &.item-md {
-          margin: 5px;
+          margin-top: 10px;
           padding-left: 0;
           padding-right: 16px;
         }

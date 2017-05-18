@@ -5,6 +5,8 @@ import {IlevelId} from "../../app/service/InewUserData";
 import {UserProvider} from "../../providers/user";
 import {ToastController } from 'ionic-angular';
 import 'rxjs/RX';
+
+import {Login} from '../login/login';
 /**
  * Generated class for the Signup page.
  *
@@ -26,6 +28,7 @@ export class Signup {
   msAreas: [any];
   msCity: any;
   msDist: any;
+  mainTabs: any;
 
   constructor(
     public navCtrl: NavController,
@@ -87,7 +90,23 @@ export class Signup {
     });
 
     */
+
+    this.mainTabs = document.querySelector('#main-tabs .tabbar');
+
+    this.mainTabs.style.display = 'none';
+
+    console.log('hide tabbar')
   }
+
+
+    
+
+
+  ionViewWillLeave() {
+    console.log('show tabbar');
+    this.mainTabs.style.display = 'flex';
+  }
+
   toNextPage() {
     this.increasePageNum();
   }
@@ -102,10 +121,14 @@ export class Signup {
   }
 
   SubmitCreateForm() {
+
+    //TODO: add more client side validation
+
     this.userProvider.addUser(this.SignUpFrom.value).subscribe((data)=>{
         console.log(data);
         if(data.status.message == 'success') {
           this.showToast('تم اضافة حسابك بنجاح');
+          this.navCtrl.pop(Login);
         } else {
           let keys = Object.keys(data.status);
           let errMsg: string;

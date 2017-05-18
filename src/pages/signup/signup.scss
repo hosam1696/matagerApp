@@ -5,8 +5,24 @@ page-signup {
   ion-content {
     direction: rtl;
     text-align: right;
-    .scroll-content {
+    &.content {
       background-color: #eee;
+    }
+
+    ion-tabs {
+    #main-tabs {
+        div.tabbar.show-tabbar {
+        opacity: 0;
+      }
+    }
+      
+      .tabbar {
+        display: none;
+      }
+      .tabs-md .tabbar 
+      {
+       display: none
+      }
     }
     ion-select {
       min-width: 80px;

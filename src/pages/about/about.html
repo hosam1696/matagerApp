@@ -1,11 +1,42 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>
       الصفحة الشخصية
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
 
+  <section id="hero"></section>
+
+
+  <ion-card *ngIf="userLocal" id="user-info">
+
+    <ion-avatar>
+      <ion-icon *ngIf="userLocal.gender == 'male'" name="person" color="primaryDark"></ion-icon>
+      <ion-icon *ngIf="userLocal.gender == 'male'" name="woman" color="primaryDark"></ion-icon>
+    </ion-avatar>
+    <h1>{{userLocal.name}}
+      <ion-icon name="person" color="primaryDark"></ion-icon>
+      <p>{{userLocal.username}}</p>
+    </h1>
+    <hr>
+    <p>
+      <ion-icon name="card"></ion-icon>  {{userLevel(userLocal.level_id)}}</p>
+    <p>
+      <ion-icon name="mail"></ion-icon>  {{userLocal.email}}</p>
+
+    <!-- test data <pre>
+        {{userLocal | json}}
+      </pre> -->
+  </ion-card>
+
+  <ion-card *ngIf="!userLocal">
+
+    <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
+    <button ion-button (click)="toLoginPage()">تسجيل الدخول</button>
+    <p>او قم بتسجيل حساب جديد</p>
+    <button ion-button (click)="toSignupPage()">تسجيل حساب جديد</button>
+  </ion-card>
 </ion-content>

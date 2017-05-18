@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar color="secondary">
+  <ion-navbar color="primary">
     <ion-title>تسجيل الدخول</ion-title>
   </ion-navbar>
 
@@ -20,7 +20,7 @@
           [formGroup]="LoginForm"
           (ngSubmit)="submitLogin()"
     >
-    <ion-list>
+    <ion-list no-lines>
 
       <ion-item>
         <ion-label >اسم المستخدم</ion-label>
@@ -40,16 +40,20 @@
         ></ion-input>
       </ion-item>
       <button
-        ion-button
+        
         type="submit"
-        color="secondary"
-        round block
-        [disabled]="!LoginForm.valid"
-      >تسجيل الدخول</button>
-      <p>ليس لديك حساب ؟ <button (click)="toRegisterPage()">تسجيل حساب جديد</button></p>
+        color="primary"
+         block
+        id="login-button"
+      >تسجيل الدخول
+      <div id="loader" *ngIf="showLoader">
+            <div class="loader-circle"></div>
+        </div>
+      </button>
+      
     </ion-list>
     </form>
-
+    <p>ليس لديك حساب ؟ <button (click)="toRegisterPage()">تسجيل حساب جديد</button></p>
     <!--<pre>{{ LoginForm.value | json}}</pre>-->
   </ion-card>
 </ion-content>

@@ -7,7 +7,7 @@ import {Exporter} from "../exporter/exporter";
 import {UserProvider} from "../../providers/user";
 
 import { Geolocation } from '@ionic-native/geolocation';
-
+import {Network} from '@ionic-native/network';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -17,7 +17,8 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     public userProv: UserProvider,
-    public geolocation: Geolocation
+    public geolocation: Geolocation,
+     public network: Network
   ) {
     
   if(localStorage.getItem('Username')) {
@@ -26,6 +27,17 @@ export class HomePage {
       console.warn('no user has found..')
     }
     
+
+    let netConnect = this.network.onConnect().subscribe(data=>{
+      console.log(data, 'You are connected to the internet');
+      //TODO: add a toast to show connection message
+    });
+
+    let netDisconnect = this.network.onDisconnect().subscribe(data=> {
+      console.log(data, 'You are disconnected');
+      //TODO: add a toast to show connection message
+    })
+
   }
 /* test login provider
   runUserLogin(){

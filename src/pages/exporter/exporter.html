@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>صفحة الموردين</ion-title>
   </ion-navbar>
 
@@ -14,13 +14,9 @@
 
 
 <ion-content>
-  <section id="hero">
-    <h1>الموردين</h1>
-  </section>
-  <ion-icon id="search" name="search"></ion-icon>
-  <ion-input type="text" >
 
-  </ion-input>
+  <ion-icon id="search" name="search"></ion-icon>
+  <ion-input type="text" (focus)="openSearchModal()" ></ion-input>
   <!-- List of the neerer exporters -->
   <ion-list>
     <ion-item>
