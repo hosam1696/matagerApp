@@ -39,7 +39,7 @@
 
 
     <ion-list *ngIf="userHasLog">
-      <ion-item>
+      <ion-item (click)="toProfilePage()">
         <ion-avatar item-left></ion-avatar>
         <h1>{{usersavedName}}</h1>
         <p>{{userSavedLevel}}</p>

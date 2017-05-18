@@ -5,7 +5,10 @@ import { Signup } from '../signup/signup';
 import {Editprofile} from './editprofile/editprofile';
 import { Useterms} from './useterms/useterms';
 import { Contactus } from './contactus/contactus';
+import {AboutPage} from '../about/about';
 import {IlevelId } from '../../app/service/InewUserData';
+
+import {levelToAr} from '../../app/service/InewUserData';
 
 @Component({
   selector: 'page-contact',
@@ -28,8 +31,13 @@ static viewCtrl: ViewController;
 
   ionViewDidLoad() {
     this.checkUserLogin();
-    this.usersavedName = localStorage.getItem('Username');
-    this.userSavedLevel = IlevelId[JSON.parse(localStorage.getItem('userLocalData'))['level_id']];
+    console.log(this.checkUserLogin);
+
+    if (this.userHasLog) {
+       this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+    this.userSavedLevel = levelToAr[JSON.parse(localStorage.getItem('userLocalData'))['level_id']];
+    }
+   
   }
   ionViewDidEnter() {
     console.log('user has cached or not',this.userHasLog);
@@ -42,7 +50,7 @@ static viewCtrl: ViewController;
   
   checkUserLogin() {
 
-    return localStorage.getItem('Username') ? this.userHasLog = true : this.userHasLog = false;
+    return localStorage.getItem('userLocalData') ? this.userHasLog = true : this.userHasLog = false;
   }
 
   logOut() {
@@ -93,5 +101,8 @@ toLoginPage() {
   }
   toContactPage() {
     this.navCtrl.push(Contactus);
+  }
+  toProfilePage() {
+    this.navCtrl.push(AboutPage)
   }
 }

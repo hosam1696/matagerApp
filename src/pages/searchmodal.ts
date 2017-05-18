@@ -20,7 +20,7 @@ import {UserProvider} from '../providers/user';
 
 </ion-header>
     <ion-content>
-        <p>{{modalData.User}}</p>
+        
         <ion-list>
             <ion-item *ngFor="let place of places">
                 <p item-left>{{place.id}}</p>
@@ -42,7 +42,7 @@ export  class PlacesModal {
       this.para = params.get('User');
       this.usersPlaces.getAreas().subscribe(data=> {
           this.places = data.data;
-          console.log(data);
+          //console.log(data);
       })
   }
   closeModal() {

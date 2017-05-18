@@ -3,6 +3,11 @@ export enum IlevelId {
   exporter,
   client
 }
+export enum levelToAr {
+  'متجر'= 2,
+  'مورد',
+  'عميل'
+}
 export interface IuserData{
   apiKey: string,
   Name: string,

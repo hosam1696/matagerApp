@@ -15,10 +15,9 @@
 
     <ion-avatar>
       <ion-icon *ngIf="userLocal.gender == 'male'" name="person" color="primaryDark"></ion-icon>
-      <ion-icon *ngIf="userLocal.gender == 'male'" name="woman" color="primaryDark"></ion-icon>
+      <ion-icon *ngIf="userLocal.gender == 'female'" name="woman" color="primaryDark"></ion-icon>
     </ion-avatar>
-    <h1>{{userLocal.name}}
-      <ion-icon name="person" color="primaryDark"></ion-icon>
+    <h1><b>{{userLocal.name}}</b>
       <p>{{userLocal.username}}</p>
     </h1>
     <hr>
@@ -27,12 +26,13 @@
     <p>
       <ion-icon name="mail"></ion-icon>  {{userLocal.email}}</p>
 
+     <p><ion-icon name="phone-portrait"></ion-icon>  {{userLocal.mobile}}</p> 
     <!-- test data <pre>
         {{userLocal | json}}
       </pre> -->
   </ion-card>
 
-  <ion-card *ngIf="!userLocal">
+  <ion-card *ngIf="userLocal == null || userLocal == undefined">
 
     <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
     <button ion-button (click)="toLoginPage()">تسجيل الدخول</button>

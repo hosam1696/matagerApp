@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {IlevelId} from '../../app/service/InewUserData';
+ import {levelToAr} from '../../app/service/InewUserData';
 import {Login} from '../login/login';
 import {Signup} from '../signup/signup';
 
@@ -17,8 +18,11 @@ export class AboutPage {
 
   ionViewDidLoad() {
     this.userName = localStorage.getItem('Username');
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+    
     console.log(this.userLocal);
+  }
+  ionViewWillEnter() {
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
   toLoginPage() {
@@ -29,6 +33,6 @@ export class AboutPage {
   }
 
   userLevel(level) {
-    return IlevelId[level]
+    return levelToAr[level]
   }
 }
