@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+import { ToastController } from 'ionic-angular';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
+import {Network} from '@ionic-native/network';
 
 import { HomePage } from '../home/home';
 import { Signup } from "../signup/signup";
 
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+
 import { UserProvider } from "../../providers/user";
-import { ToastController } from 'ionic-angular';
+
 
 
 @IonicPage()
@@ -25,7 +27,8 @@ export class Login {
     public navParams: NavParams,
     public userLogin: UserProvider,
     public toastCtrl: ToastController,
-    public storage: Storage
+    public storage: Storage,
+    public network: Network
   ) {
     this.LoginForm = new FormGroup({
       Username: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -35,6 +38,17 @@ export class Login {
 
   ionViewDidLoad() {
     console.log('Login Page form Loads');
+
+
+    //TODO: chech the internet connection
+    let netConnect = this.network.onConnect().subscribe(data=> {
+      this.showToast(data);
+    });
+
+    let netDisconnet = this.network.onDisconnect().subscribe(data=>{
+      this.showToast(data);
+    })
+
     /* this.LoginForm.valueChanges.subscribe((data)=>{
        console.log(data);
      })
