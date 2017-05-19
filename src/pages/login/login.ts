@@ -6,8 +6,6 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import {Network} from '@ionic-native/network';
 
 import { HomePage } from '../home/home';
-import { Signup } from "../signup/signup";
-
 
 import { UserProvider } from "../../providers/user";
 
@@ -39,16 +37,19 @@ export class Login {
   ionViewDidLoad() {
     console.log('Login Page form Loads');
 
+let netConnect = this.network.onConnect().subscribe(data=> {
+        this.showToast(data);
+      });
 
-    //TODO: chech the internet connection
-    let netConnect = this.network.onConnect().subscribe(data=> {
-      this.showToast(data);
-    });
+      netConnect.unsubscribe();  
 
-    let netDisconnet = this.network.onDisconnect().subscribe(data=>{
-      this.showToast(data);
-    })
-
+      let netDisconnet = this.network.onDisconnect().subscribe(data => {
+        this.showToast(data);
+        console.log(data, 'you are disconnected');
+      });
+    
+      netDisconnet.unsubscribe();
+    
     /* this.LoginForm.valueChanges.subscribe((data)=>{
        console.log(data);
      })
@@ -64,6 +65,9 @@ export class Login {
 
   submitLogin() {
     if (this.LoginForm.value.Username && this.LoginForm.value.Password) {
+
+    //TODO: chech the internet connection
+      
       this.showLoader= true;
       this.userLogin.LoginUser(this.LoginForm.value).subscribe(data => {
         
@@ -101,7 +105,7 @@ export class Login {
   }
 
   toRegisterPage() {
-    this.navCtrl.push(Signup)
+    this.navCtrl.push('Signup')
   }
 
   showToast(msg) {

@@ -6,50 +6,32 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <section id="hero">
+<ion-content padding>
+  <section id="hero"></section>
 
-  </section>
-
-  <ion-list *ngIf="!userHasLog">
-      <ion-item (click)="toLoginPage()">
-        <ion-label>تسجيل الدخول</ion-label>
-        <ion-icon name="arrow-round-back" item-right></ion-icon>
-      </ion-item>
-
-
-      <ion-item (click) = "toSignup()">
-        <ion-label>تسجيل حساب جديد</ion-label>
-        <ion-icon name="arrow-round-back" item-right></ion-icon>
-      </ion-item>
-
-     
-
-      <ion-item>
-        <ion-label>سياسة الاستخدام</ion-label>
-        <ion-icon name="arrow-round-back" item-right></ion-icon>
-      </ion-item>
-
-      <ion-item>
-        <ion-label>اتصل بنا</ion-label>
-        <ion-icon name="call" item-right></ion-icon>
-      </ion-item>
+  <ion-list *ngIf="!userHasLog" no-lines>
+        <button ion-item (click)="navigateToPage('Login')">تسجيل الدخول</button>  
+        <button ion-item (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>  
+        <button ion-item (click)="navigateToPage('Useterms')">سياسة الأستخدام</button>  
+        <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
   </ion-list>
 
 
 
     <ion-list *ngIf="userHasLog">
-      <ion-item (click)="toProfilePage()">
+      <ion-item (click)="navigateToPage('About')">
         <ion-avatar item-left></ion-avatar>
         <h1>{{usersavedName}}</h1>
         <p>{{userSavedLevel}}</p>
       </ion-item>
-        <button ion-item (click)="toEditProfilePage()">تعديل البيانات الشخصية</button>  
+        <button ion-item (click)="navigateToPage('Editprofile')">تعديل البيانات الشخصية
+          
+          </button>  
 
-        <button ion-item (click)="touseTermsPage()">سياسة الأستخدام</button>  
+        <button ion-item (click)="navigateToPage('Userterms')">سياسة الأستخدام</button>  
 
 
-        <button ion-item (click)="toContactPage()">اتصل بنا</button>
+        <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
 
         <button ion-item (click)="logOut()">تسجيل الخروج</button>
 

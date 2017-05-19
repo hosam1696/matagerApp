@@ -26,7 +26,7 @@ export class AboutPage {
   }
 
   toLoginPage() {
-    this.navCtrl.push(Login);
+    this.navCtrl.push('Login');
   }
   toSignupPage() {
     this.navCtrl.push(Signup)

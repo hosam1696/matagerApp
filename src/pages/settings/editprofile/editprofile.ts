@@ -12,12 +12,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'editprofile.html',
 })
 export class Editprofile {
-
+  mainTabs: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Editprofile');
+    this.mainTabs = document.querySelector('#main-tabs .tabbar');
+    this.mainTabs.style.display = 'none';
   }
 
 }

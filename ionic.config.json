@@ -1,6 +1,5 @@
 {
-  "name": "salasApp",
+  "name": "matagerApp",
   "app_id": "b8068b88",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }

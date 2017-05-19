@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Notifications } from './notifications';
+import { NotificationsPage } from './notificationsPage';
 
 @NgModule({
   declarations: [
-    Notifications,
+    NotificationsPage,
   ],
   imports: [
-    IonicPageModule.forChild(Notifications),
+    IonicPageModule.forChild(NotificationsPage),
   ],
   exports: [
-    Notifications
+    NotificationsPage
   ]
 })
 export class NotificationsModule {}

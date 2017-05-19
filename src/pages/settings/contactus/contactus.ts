@@ -13,12 +13,19 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'contactus.html',
 })
 export class Contactus {
-
+  mainTabs: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Contactus');
+    this.mainTabs = document.querySelector('#main-tabs .tabbar');
+    this.mainTabs.style.display = 'none';
   }
+
+  ionViewWillLeave() {
+    this.mainTabs.style.display = 'flex';
+  }
+
 
 }

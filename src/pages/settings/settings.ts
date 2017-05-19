@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController } from 'ionic-angular';
-import {Login} from "../login/login";
-import { Signup } from '../signup/signup';
-import {Editprofile} from './editprofile/editprofile';
-import { Useterms} from './useterms/useterms';
-import { Contactus } from './contactus/contactus';
+
 import {AboutPage} from '../about/about';
 import {IlevelId } from '../../app/service/InewUserData';
 
@@ -71,7 +67,7 @@ static viewCtrl: ViewController;
           handler: data=> {
             localStorage.removeItem('Username');
             localStorage.removeItem('userLocalData');
-            this.navCtrl.push(Login);
+            this.navCtrl.push('Login');
           }
         }
       ]
@@ -79,30 +75,9 @@ static viewCtrl: ViewController;
 
     alert.present();
     
-
     //TODO: move to the home page after logout
   }
-
-  toSignup() {
-    this.navCtrl.push(Signup)
-  }
-
-toLoginPage() {
-    this.navCtrl.push(Login)
-  }
-
-
-  toEditProfilePage() {
-    this.navCtrl.push(Editprofile)
-  }
-
-  touseTermsPage() {
-    this.navCtrl.push(Useterms)
-  }
-  toContactPage() {
-    this.navCtrl.push(Contactus);
-  }
-  toProfilePage() {
-    this.navCtrl.push(AboutPage)
+  navigateToPage(page) {
+    this.navCtrl.push(page)
   }
 }

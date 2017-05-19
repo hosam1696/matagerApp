@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {IlevelId} from "../../app/service/InewUserData";
 import {UserProvider} from "../../providers/user";
-import {ToastController } from 'ionic-angular';
 import 'rxjs/RX';
 
-import {Login} from '../login/login';
 /**
  * Generated class for the Signup page.
  *
@@ -128,7 +126,7 @@ export class Signup {
         console.log(data);
         if(data.status.message == 'success') {
           this.showToast('تم اضافة حسابك بنجاح');
-          this.navCtrl.pop(Login);
+          this.navCtrl.pop('Login');
         } else {
           let keys = Object.keys(data.status);
           let errMsg: string;
