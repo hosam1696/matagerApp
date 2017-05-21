@@ -35,7 +35,6 @@ export class Login {
   }
 
   ionViewDidLoad() {
-    console.log('Login Page form Loads');
 
 let netConnect = this.network.onConnect().subscribe(data=> {
         this.showToast(data);
@@ -64,15 +63,22 @@ let netConnect = this.network.onConnect().subscribe(data=> {
   }
 
   submitLogin() {
-    if (this.LoginForm.value.Username && this.LoginForm.value.Password) {
+
 
     //TODO: chech the internet connection
-      
-      this.showLoader= true;
-      this.userLogin.LoginUser(this.LoginForm.value).subscribe(data => {
+    console.log('Connection Type', this.network.type);
+    if (this.network.type == null) {
+      this.showToast('You are not connected to the internet ');
+      this.showLoader = false;
+    } else {
+      // test the type of connection
+      console.log('you are connected to ' + this.network.type);
+      if (this.LoginForm.value.Username && this.LoginForm.value.Password) {
+        
+        this.showLoader= true;
+        this.userLogin.LoginUser(this.LoginForm.value).subscribe(data => {
         
         //TODO: if data is correct navigate to the home page
-        // test Data: console.log('Data from server', data);
         if (data.status == 'success') {
           
           this.showLoader= false;
@@ -99,13 +105,33 @@ let netConnect = this.network.onConnect().subscribe(data=> {
       });
     } else {
       this.showLoader= false;
-      console.log('show loader', this.showLoader);
-      this.showToast('تأكد من ادخال البيانات الصحيحة')
+      
+      if (this.network.type == null) {
+        this.showToast('You are not connected to the internet ');
+
+      } else {
+        this.showToast('تأكد من ملء جميع الحقول')
+      } 
+      
     }
+
+
+    }
+    
   }
 
   toRegisterPage() {
     this.navCtrl.push('Signup')
+  }
+  checkConnection() {
+    if (this.network.type == null) {
+      this.showToast('You are not connected to the internet ');
+      setTimeout(() => {
+        this.showLoader = false;
+      }, 50);
+    } else {
+      console.log('you are connected to ' + this.network.type);
+    }
   }
 
   showToast(msg) {

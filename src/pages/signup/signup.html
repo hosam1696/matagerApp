@@ -92,9 +92,8 @@
         > 
       </div>
         <div class = "form-group">
-        <input type="text" class="form-control" formControlName="Email"
-          placeholder="البريد الالكترونى"
-        > 
+        <input type="text" class="form-control" formControlName="Mobile"
+          placeholder="رقم التليفون المحمول"        > 
       </div>
 
       <div id="radio-group" class="form-group group-bg">
@@ -212,8 +211,9 @@
 
 
 
-    <button *ngIf="lastPage" ion-button type="submit">{{lastPage}}</button>
+    <button *ngIf="lastPage" block ion-button type="submit">{{lastPage}}</button>
   </form>
+  <br>
   <button
     *ngIf="!lastPage"
     ion-button block
@@ -222,11 +222,14 @@
 
   >{{lastPage || "التالى" }}</button>
 
-
-  <pre style= "direction:'ltr'">
+<ion-card padding>   
+    <pre style= "direction:'ltr'">
     <h6>show All Form Data [Test Only]</h6>
     {{SignUpFrom.value | json}}
   </pre>
+  
+ </ion-card>
+
 
 
 </ion-content>

@@ -32,11 +32,11 @@
       </pre> -->
   </ion-card>
 
-  <ion-card *ngIf="userLocal == null || userLocal == undefined">
+  <ion-card *ngIf="userLocal == null || userLocal == undefined" style="text-align:center">
 
     <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
-    <button ion-button (click)="toLoginPage()">تسجيل الدخول</button>
+    <button ion-button (click)="navigateToPage('Login')">تسجيل الدخول</button>
     <p>او قم بتسجيل حساب جديد</p>
-    <button ion-button (click)="toSignupPage()">تسجيل حساب جديد</button>
+    <button ion-button (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
   </ion-card>
 </ion-content>

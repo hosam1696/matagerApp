@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import {IlevelId} from '../../app/service/InewUserData';
+//import {IlevelId} from '../../app/service/InewUserData';
  import {levelToAr} from '../../app/service/InewUserData';
-import {Login} from '../login/login';
-import {Signup} from '../signup/signup';
+
 
 @Component({
   selector: 'page-about',
@@ -25,11 +24,8 @@ export class AboutPage {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
-  toLoginPage() {
-    this.navCtrl.push('Login');
-  }
-  toSignupPage() {
-    this.navCtrl.push(Signup)
+  navigateToPage(page) {
+    this.navCtrl.push(page)
   }
 
   userLevel(level) {

@@ -33,10 +33,14 @@ export class HomePage {
       //TODO: add a toast to show connection message
     });
 
-    let netDisconnect = this.network.onDisconnect().subscribe(data=> {
+    netConnect.unsubscribe();
+
+    let netDisconnect = this.network.onDisconnect().subscribe(data => {
       console.log(data, 'You are disconnected');
       //TODO: add a toast to show connection message
-    })
+    });
+
+    netDisconnect.unsubscribe();
 
   }
 /* test login provider

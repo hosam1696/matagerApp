@@ -14,5 +14,56 @@
 
 
 <ion-content padding>
+    <ion-card  id="user-info">
+        <ion-avatar>
+          <ion-icon  name="person" color="primaryDark"></ion-icon>
+          <!-- if the user upload profile image
+            <ion-img></ion-img>-->
+            <ion-icon name='add'></ion-icon>
+        </ion-avatar>
+        <h1><b>Full name</b>
+          <p>username</p>
+        </h1>
+    </ion-card>
+    <ion-card>
+      <ion-list>
+          <button ion-item (click)="editdetail($event)">change user name</button>
+          <div class="form-edit">
+            <ion-label>Type the new user you want.. username</ion-label>
+            <ion-input inline type="text" placeholder="new user"></ion-input>
+          </div>
+          <button ion-item (click)="editdetail($event)">change  name</button>
+          <div class="form-edit">
+            <ion-label>Type the new user you want.. full</ion-label>
+            <ion-input inline type="text" placeholder="new name "></ion-input>
+          </div>
+          <button ion-item (click)="editdetail($event)">change user password</button>
+          <div class="form-edit">
+            <ion-label>Type the new password you want.. username</ion-label>
+            <ion-input inline type="password" placeholder="new user"></ion-input>
+          </div>
+          <button ion-item (click)="editdetail($event)">change user email</button>
+          <div class="form-edit">
+            <ion-label>Type the new user you want.. email</ion-label>
+            <ion-input inline type="email" placeholder="new email"></ion-input>
+          </div>
+          <button ion-item (click)="editdetail($event)">change user name</button>
+          
+          <button ion-item (click)="editdetail($event)">change mobile number</button>
+          <div class="form-edit">
+            <ion-label>Type the mobile</ion-label>
+            <ion-input inline type="text" placeholder="new user"></ion-input>
+          </div>
+          <button ion-item>تحديد موقعك</button>
+      </ion-list>
+      <br>
+      
 
+    </ion-card>
+    
+    <ion-buttons >
+<button ion-button  color="secondary">تأكيد وتعديل</button>
+<button ion-button  color="danger" (click)="goBack()"> الغاء</button>
+    </ion-buttons>
+    
 </ion-content>

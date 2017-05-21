@@ -65,6 +65,7 @@ export class Signup {
         
     });
 
+
     this.SignUpFrom.valueChanges.distinctUntilChanged().subscribe((data)=>{
       console.log('Area Id',data);
 
@@ -99,7 +100,11 @@ export class Signup {
 
     
 
+  ionViewDidEnter() {
+    this.mainTabs = document.querySelector('#main-tabs .tabbar');
 
+    this.mainTabs.style.display = 'none';
+  }
   ionViewWillLeave() {
     console.log('show tabbar');
     this.mainTabs.style.display = 'flex';

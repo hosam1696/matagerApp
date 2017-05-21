@@ -7,18 +7,23 @@
 </ion-header>
 
 <ion-content padding>
-  <section id="hero"></section>
+ 
 
   <ion-list *ngIf="!userHasLog" no-lines>
         <button ion-item (click)="navigateToPage('Login')">تسجيل الدخول</button>  
         <button ion-item (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>  
         <button ion-item (click)="navigateToPage('Useterms')">سياسة الأستخدام</button>  
         <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
+
+        <button ion-item (click)="navigateToPage('Editprofile')">تعديل البيانات الشخصية
+          
+          </button>  
   </ion-list>
 
 
 
     <ion-list *ngIf="userHasLog">
+       <section id="hero"></section>
       <ion-item (click)="navigateToPage('About')">
         <ion-avatar item-left></ion-avatar>
         <h1>{{usersavedName}}</h1>

@@ -2,13 +2,22 @@ page-signup {
    * {
      //transition: all .35s ease-in;
    }
+   ion-list.showPage {
+          animation: slide 0.5s ;
+          animation-fill-mode: forwards;
+          align-items: center;
+          display: block
+        }
   ion-content {
     direction: rtl;
     text-align: right;
     &.content {
+      background: linear-gradient(#00BCD4,#27a397);
       background-color: #eee;
     }
-
+    &.scroll-content {
+          background: linear-gradient(to right,#425863,#506b79);
+    }
     ion-tabs {
     #main-tabs {
         div.tabbar.show-tabbar {
@@ -37,7 +46,7 @@ page-signup {
           border-radius: 50%;
           width: 15px;
           height: 15px;
-          background-color: #ccc;
+          background-color: #eee;
           margin: 5px;
           &.active {
             background-color: #ff5b67
@@ -47,12 +56,27 @@ page-signup {
           display: none
         }
       }
-      div.step {
+      
+      div.step, ion-list.step {
+        transition: all .3s ease-in;
         display: none;
+        transform: translateX(-120%);
       }
-      div.shownPage {
-          display: block;
+      div.shownPage, ion-list.showPage {
+          animation: slide 0.5s ;
+          animation-fill-mode: forwards;
           align-items: center;
+          display: block
+        }
+        @keyframes slide {
+          from {
+            transform: translateX(-120%)
+          }
+          to{
+            transform: translateX(0);
+            
+          }
+          
         }
       .form-group {
         padding: 5px 0;
@@ -121,8 +145,8 @@ page-signup {
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
+       
 
-        display: none;
         ion-item {
           ion-list {
             height: 200px;
