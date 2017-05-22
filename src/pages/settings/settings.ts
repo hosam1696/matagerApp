@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController } from 'ionic-angular';
 
-import {AboutPage} from '../about/about';
-import {IlevelId } from '../../app/service/InewUserData';
-
 import {levelToAr} from '../../app/service/InewUserData';
 
 @Component({
@@ -14,7 +11,7 @@ export class ContactPage {
 
   userHasLog:boolean;
   usersavedName: string;
-  userSavedLevel: string;
+  userFullName: string;
 static viewCtrl: ViewController;
   constructor(
     public navCtrl: NavController,
@@ -22,16 +19,16 @@ static viewCtrl: ViewController;
      
      ) {
     this.checkUserLogin();
-    console.log(this.userHasLog);
+    
   }
 
   ionViewDidLoad() {
     this.checkUserLogin();
-    console.log(this.checkUserLogin);
+    
 
     if (this.userHasLog) {
        this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-    this.userSavedLevel = levelToAr[JSON.parse(localStorage.getItem('userLocalData'))['level_id']];
+    this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
     }
    
   }

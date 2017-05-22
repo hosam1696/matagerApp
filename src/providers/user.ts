@@ -1,18 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/RX';
 
-/*
-  Generated class for the User provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
 @Injectable()
 export class UserProvider {
 
-  API_URL:string = "http://192.168.1.8/matager/api/users.php";
-  Areas_URL:string = 'http://192.168.1.8/matager/api/places.php';
+  API_URL:string = "http://192.168.1.16/matager/api/users.php";
+  Areas_URL:string = 'http://192.168.1.16/matager/api/places.php';
 
   constructor(public http: Http) {
   }
@@ -48,6 +43,9 @@ getAreas() {
 
   return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"})).map(res=>res.json());
 }
+getMapAreas() {
 
+  return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"})).flatMap(res=>res.json());
+}
 
 }

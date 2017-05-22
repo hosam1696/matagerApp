@@ -3,9 +3,10 @@ page-signup {
      //transition: all .35s ease-in;
    }
    ion-list.showPage {
+     /*
           animation: slide 0.5s ;
           animation-fill-mode: forwards;
-          align-items: center;
+          align-items: center;*/
           display: block
         }
   ion-content {
@@ -60,12 +61,12 @@ page-signup {
       div.step, ion-list.step {
         transition: all .3s ease-in;
         display: none;
-        transform: translateX(-120%);
+       // transform: translateX(-120%);
       }
       div.shownPage, ion-list.showPage {
-          animation: slide 0.5s ;
+         /* animation: slide 0.5s ;
           animation-fill-mode: forwards;
-          align-items: center;
+          align-items: center;*/
           display: block
         }
         @keyframes slide {

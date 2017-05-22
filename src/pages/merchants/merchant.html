@@ -13,7 +13,18 @@
 </ion-header>
 
 
-<ion-content >
+<ion-content *ngIf="isOnline == true" id="offline">
+
+  <div>
+    <h1><ion-icon name="wifi"></ion-icon></h1>
+
+  <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
+  </div>
+
+</ion-content>
+<ion-content *ngIf="isOnline == false">
+
+
 
 <ion-icon id="search" name="search"></ion-icon>
   <ion-input type="text" >

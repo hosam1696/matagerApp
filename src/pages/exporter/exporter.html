@@ -6,21 +6,28 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="light">
     <ion-title>صفحة الموردين</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<ion-content >
 
-  <ion-icon id="search" name="search"></ion-icon>
-  <ion-input type="text" (focus)="openSearchModal()" ></ion-input>
+  
+  <button type="button" id="modal-button" color="light" (click)="openSearchModal()" >
+  <div id="search-result" *ngIf="dataFromModal">  
+      <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
+    </div>
+  <ion-icon item-right id="search-icon"  name="search"></ion-icon>
+
+    
+  </button>
   <!-- List of the neerer exporters -->
-  <ion-list>
+  <ion-list padding>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -28,7 +35,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -36,7 +43,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -44,7 +51,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -52,7 +59,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -60,7 +67,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -68,7 +75,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>
@@ -76,7 +83,7 @@
       </div>
     </ion-item>
     <ion-item>
-      <div class="item-avatar" item-left></div>
+      <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
         <p><span class="kilos">2</span> Km</p>

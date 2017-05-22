@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the Merchant page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Network } from '@ionic-native/network';
+
 @IonicPage()
 @Component({
   selector: 'page-merchant',
@@ -14,9 +10,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Merchant {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  isOnline:boolean = true ;
+
+  constructor(public navCtrl: NavController,
+  public network: Network,
+   public navParams: NavParams) {
   }
 
+
+  ionViewWillEnter() {
+
+    if ( this.network.type == 'none' || this.network.type == null) {
+      this.isOnline = false;
+    } else {
+      this.isOnline = true
+    }
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad Merchant');
   }

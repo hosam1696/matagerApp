@@ -1,44 +1,78 @@
 <ion-header>
-  <ion-navbar color="primary">
+  <ion-navbar color="light">
     <ion-title>
-      اعدادات
+      الاعدادات
     </ion-title>
+    <ion-buttons start>
+        <button type="button" ion-button>
+            <ion-icon name="search" color="primary"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
- 
+<ion-content>
+
 
   <ion-list *ngIf="!userHasLog" no-lines>
-        <button ion-item (click)="navigateToPage('Login')">تسجيل الدخول</button>  
-        <button ion-item (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>  
-        <button ion-item (click)="navigateToPage('Useterms')">سياسة الأستخدام</button>  
-        <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
+    <ion-item-group>
+      <ion-item-divider color="bgColor">الاعدادات</ion-item-divider>
+    </ion-item-group>
+    <button ion-item (click)="navigateToPage('Login')">
+      تسجيل الدخول
+      
+      </button>
+    <button ion-item (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
+    <button ion-item (click)="navigateToPage('Useterms')">سياسة الأستخدام</button>
+    <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
 
-        <button ion-item (click)="navigateToPage('Editprofile')">تعديل البيانات الشخصية
-          
-          </button>  
   </ion-list>
 
 
 
-    <ion-list *ngIf="userHasLog">
-       <section id="hero"></section>
-      <ion-item (click)="navigateToPage('About')">
-        <ion-avatar item-left></ion-avatar>
-        <h1>{{usersavedName}}</h1>
-        <p>{{userSavedLevel}}</p>
-      </ion-item>
-        <button ion-item (click)="navigateToPage('Editprofile')">تعديل البيانات الشخصية
-          
-          </button>  
+  <ion-list *ngIf="userHasLog">
 
-        <button ion-item (click)="navigateToPage('Userterms')">سياسة الأستخدام</button>  
+    <ion-item no-lines id="hero">
+      <ion-avatar item-left>
+
+        <ion-icon name="person" color="primaryDark"></ion-icon>
+
+      </ion-avatar>
+      <h3>{{userFullName}}</h3>
+      <p>{{usersavedName}}</p>
+    </ion-item>
+
+    <ion-item-group no-lines>
+      <ion-item-divider color="bgColor">الاعدادات</ion-item-divider>
+      <ion-item ion-item 
+      (click)="navigateToPage('Editprofile')">
+        <ion-icon name="settings" color="primary"></ion-icon>
+        تعديل البيانات الشخصية <ion-icon name="arrow-back" item-right></ion-icon></ion-item>
+      <ion-item ion-item (click)="navigateToPage('Editprofile')">
+        <ion-icon name="folder-open" color="primary"></ion-icon>التقارير </ion-item>
+      <ion-item ion-item (click)="navigateToPage('Editprofile')">
+        <ion-icon name="stats" color="primary"></ion-icon>المبيعات </ion-item>
+      <ion-item ion-item (click)="navigateToPage('Messages')">
+        <ion-icon name="chatbubbles" color="primary"></ion-icon>الرسائل </ion-item>
+    </ion-item-group>
 
 
-        <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
+    <ion-item-group no-lines>
+      <ion-item-divider color="bgColor">التطبيق</ion-item-divider>
+      <ion-item ion-item color="light" (click)="navigateToPage('Useterms')">
+        <ion-icon name="folder" color="primary"></ion-icon>سياسة الأستخدام</ion-item>
+      <ion-item ion-item color="light" (click)="navigateToPage('Contactus')">
+        <ion-icon name="call" color="primary"></ion-icon>اتصل بنا</ion-item>
+    </ion-item-group>
+    <ion-item-group no-lines>
+      <ion-item-divider color="bgColor">تسجيل الخروج</ion-item-divider>
+      <ion-item ion-item (click)="logOut()">
+        <ion-icon name="exit" color="primary"></ion-icon>تسجيل الخروج</ion-item>
+    </ion-item-group>
 
-        <button ion-item (click)="logOut()">تسجيل الخروج</button>
 
-    </ion-list>
+  </ion-list>
+
+  <h4 text-center>Powered By <a href="http://it-plus.co/ar" target="_blank">ITPLUS</a></h4>
+
 </ion-content>

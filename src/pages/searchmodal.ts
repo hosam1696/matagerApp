@@ -2,6 +2,13 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 import {UserProvider} from '../providers/user';
+import 'rxjs/operator/filter';
+
+interface IResult {
+    AreaId?: number,
+    CityId?: number,
+    DistId?: number
+}
 
 @Component({
     template:`\
@@ -22,10 +29,10 @@ import {UserProvider} from '../providers/user';
     <ion-content>
         
         <ion-list>
-            <ion-item *ngFor="let place of places">
-                <p item-left>{{place.id}}</p>
+            <button *ngFor="let place of places, let i = index" ion-item (click)="openNewModal(place)">
+               <p item-left>[{{i+1}}] : id:{{place.id}}</p>
                 <p>{{place.name}}</p>
-            </ion-item>
+            </button>
         </ion-list>
 
     </ion-content>
@@ -33,21 +40,59 @@ import {UserProvider} from '../providers/user';
     `
 })
 export  class PlacesModal {
-    para:string;
     places: [any];
     modalData: object;
-  constructor(params:NavParams, public viewCtrl: ViewController, public usersPlaces:UserProvider) {
+    modalNum:number = 1;
+    finalResult: IResult ={};
+  constructor(params:NavParams,
+                public viewCtrl: ViewController,
+                 public usersPlaces:UserProvider) {
       console.log('UserId', params.data);
       this.modalData = params.data;
-      this.para = params.get('User');
-      this.usersPlaces.getAreas().subscribe(data=> {
-          this.places = data.data;
+      this.usersPlaces.getAreas().subscribe(fetchedData=> {
+          
+          //this.places = fetchedData;
+          this.places = fetchedData.data.filter(area=>area.parent == 0);
           //console.log(data);
       })
   }
-  closeModal() {
+  closeModal(newData) {
       console.log('close the modal');
-      this.viewCtrl.dismiss()
+      this.viewCtrl.dismiss(this.finalResult)
+  }
+
+
+  openNewModal(newData) {
+    switch (this.modalNum) {
+        case 1:
+            this.finalResult.AreaId = newData.id;
+            break;
+        case 2:
+            this.finalResult.CityId = newData.id;
+            break;
+        case 3: 
+            this.finalResult.DistId = newData.id;
+            break;
+
+    }
+    
+
+    console.log(this.finalResult, this.modalNum);
+
+    this.usersPlaces.getAreas().subscribe(fetchedData=> {
+          //console.log('Fetched Data', fetchedData);
+          let AllData = fetchedData.data;
+
+          let wantedData = AllData.filter(place=> place.parent == newData.id);
+          console.log(wantedData);
+          this.places = wantedData;
+          //console.log(data);
+          if (this.modalNum >= 3) {
+              this.viewCtrl.dismiss(this.finalResult)
+          } else {
+              this.modalNum+=1;
+          }
+      })
   }
 
   onDismiss(){

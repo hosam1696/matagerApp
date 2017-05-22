@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,IonicPage } from 'ionic-angular';
 //import {IlevelId} from '../../app/service/InewUserData';
  import {levelToAr} from '../../app/service/InewUserData';
 
-
+@IonicPage()
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'

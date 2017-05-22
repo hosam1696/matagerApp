@@ -6,14 +6,26 @@
 -->
 <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="light">
     <ion-title>اشعارات</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content>
+<!-- catch the device connection state [online | offline] -->
+<ion-content *ngIf="isOnline == false" id="offline">
+
+  <div>
+    <h1><ion-icon name="wifi"></ion-icon></h1>
+
+  <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
+  </div>
+
+</ion-content >
+
+
+<ion-content *ngIf="isOnline == true">
 
   <ion-list>
     <ion-item>
