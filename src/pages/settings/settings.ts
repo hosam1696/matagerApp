@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController } from 'ionic-angular';
 
-import {levelToAr} from '../../app/service/InewUserData';
+//import {levelToAr} from '../../app/service/InewUserData';
 
 @Component({
   selector: 'page-contact',
@@ -12,6 +12,7 @@ export class ContactPage {
   userHasLog:boolean;
   usersavedName: string;
   userFullName: string;
+  userGender: string;
 static viewCtrl: ViewController;
   constructor(
     public navCtrl: NavController,
@@ -28,6 +29,7 @@ static viewCtrl: ViewController;
 
     if (this.userHasLog) {
        this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+    this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
     this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
     }
    
@@ -35,6 +37,11 @@ static viewCtrl: ViewController;
   ionViewDidEnter() {
     console.log('user has cached or not',this.userHasLog);
     this.checkUserLogin();
+    if (this.userHasLog) {
+       this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+    this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
+    this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
+    }
   }
   ionViewWilleave() {
     this.checkUserLogin();

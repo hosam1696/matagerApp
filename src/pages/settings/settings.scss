@@ -26,7 +26,10 @@ page-contact {
     }
   
   ion-content {
-
+    &.content {
+      background-color: color($colors, bgColor);
+      //padding-top: 0 !important;
+    } 
     ion-item#hero {
       background: color($colors, light);
       height: auto;
@@ -36,10 +39,10 @@ page-contact {
         h3 {
           font-weight: bold;
           margin-bottom: 0;
-          color: color($colors, primary)
+          color: color($colors, bgPrimary)
         }
         p {
-          margin-top: -6px;
+          margin-top: -4px;
         }
         ion-avatar {
           display: flex;
@@ -48,20 +51,20 @@ page-contact {
           border-radius: 50%;
           width: 60px;
           height: 60px;
+         /* width: 60px;
+          height: 60px;*/
           overflow: hidden;
           border: 2px solid color($colors, primaryDark) ;
-          ion-icon {
-            margin: 10px 0 0 0;
-            font-size: 75px;
-            
+          img {
+            width: 45px !important;
+            height: auto
           }
+          
         }
       
     }
-    .scroll-content {
-      background-color: #eee;
-      //padding-top: 0 !important;
-    }
+    
+    
     ion-list {
         margin-top: 20px;
         .item-inner {

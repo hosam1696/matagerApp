@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 import {UserProvider} from '../providers/user';
+
 import 'rxjs/operator/filter';
 
 interface IResult {
@@ -30,7 +31,7 @@ interface IResult {
         
         <ion-list>
             <button *ngFor="let place of places, let i = index" ion-item (click)="openNewModal(place)">
-               <p item-left>[{{i+1}}] : id:{{place.id}}</p>
+               <p item-left><ion-badge color="primary">{{i+1}}</ion-badge> </p>
                 <p>{{place.name}}</p>
             </button>
         </ion-list>
@@ -47,6 +48,7 @@ export  class PlacesModal {
   constructor(params:NavParams,
                 public viewCtrl: ViewController,
                  public usersPlaces:UserProvider) {
+
       console.log('UserId', params.data);
       this.modalData = params.data;
       this.usersPlaces.getAreas().subscribe(fetchedData=> {
@@ -87,7 +89,7 @@ export  class PlacesModal {
           console.log(wantedData);
           this.places = wantedData;
           //console.log(data);
-          if (this.modalNum >= 3) {
+          if (this.modalNum >= 3 || wantedData.length == 0) {
               this.viewCtrl.dismiss(this.finalResult)
           } else {
               this.modalNum+=1;

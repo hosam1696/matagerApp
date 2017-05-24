@@ -18,13 +18,15 @@ export class Contactus {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Contactus');
+    /*console.log('ionViewDidLoad Contactus');
     this.mainTabs = document.querySelector('#main-tabs .tabbar');
-    this.mainTabs.style.display = 'none';
+    this.mainTabs.style.display = 'none';*/
   }
 
   ionViewWillLeave() {
+    /*
     this.mainTabs.style.display = 'flex';
+    */
   }
 
 

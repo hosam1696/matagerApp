@@ -1,19 +1,18 @@
-<!--
-  Generated template for the Signup page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>تسجيل حساب جديد</ion-title>
-  </ion-navbar>
-
-</ion-header>
 
 
-<ion-content padding>
+<ion-content padding-horizontal>
+  <section id="form-navigate">
+  <ion-buttons start>
+    <button ion-button (click)="backStep()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+  </ion-buttons>
+</section>
+  <section id="hero-logo">
+    <!--<h2>LOGO</h2>-->
+    <img src="../../assets/img/slogo.png" width="100" alt="">
+  </section>
+
   <form
     novalidate
     [formGroup]="SignUpFrom"
@@ -22,19 +21,19 @@
     <section id="pager">
       <div class="dot"
            [ngClass]="{active: csPage==1}"
-            (click)="csPage=1"
+            (click)="csPage=1;lastPage=null"
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==2}"
-           (click)="csPage=1"
+           (click)="csPage=2;lastPage=null"
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==3}"
-           (click)="csPage=1"
+           (click)="csPage=3;lastPage = 'أضف حساب جديد'"
       ></div>
     </section>
- 
-    <div class="step" [ngClass]="{shownPage: csPage== 1}">
+
+    <div class="step" [ngClass]="{shownPage: csPage== 1}"><br>
      <!-- <ion-item>
         <ion-label>اسم المستخدم</ion-label>
         <ion-input type="text" formControlName="Username"></ion-input>
@@ -62,59 +61,64 @@
       </ion-item>
       -->
       <div class = "form-group">
-        <input type="text" class="form-control" 
+        <input type="text" class="form-control"
           placeholder="اسم المستخدم"
-        formControlName="Username"> 
+        formControlName="Username"
+        #Username>
       </div>
 
       <div class = "form-group">
-        <input type="password" 
+        <input type="password"
         placeholder="كلمة المرور"
-        class="form-control" 
-        formControlName="Password"> 
+        class="form-control"
+        formControlName="Password">
       </div>
 
       <div class = "form-group">
-        <input type="password" 
+        <input type="password"
         placeholder="تأكيد كلمة المرور"
-        class="form-control" > 
+        class="form-control" >
       </div>
 
       <div class = "form-group">
         <input type="text" class="form-control" formControlName="Name"
         placeholder="الاسم بالكامل"
-        > 
+        >
       </div>
 
       <div class = "form-group">
         <input type="email" class="form-control" formControlName="Email"
           placeholder="البريد الالكترونى"
-        > 
+        >
       </div>
         <div class = "form-group">
         <input type="text" class="form-control" formControlName="Mobile"
-          placeholder="رقم التليفون المحمول"        > 
+          placeholder="رقم التليفون المحمول"        >
       </div>
 
       <div id="radio-group" class="form-group group-bg">
-        <div class="radio-group ">
-          
+        <div class="radio-group gender">
+
         <input type="radio"  formControlName='Gender' value="male" id="gender-male">
         <label for="gender-male">
-          <ion-icon name="person" color="primaryDark"></ion-icon>
-          <p>ذكر</p>
-        </label> 
+          <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/male-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/male-inactive.png" >
+          <!--<p>ذكر</p>-->
+        </label>
         </div>
-        <div  class="radio-group">
-        
+        <div  class="radio-group gender">
+
         <input type="radio" formControlName='Gender' value="female" id="gender-female">
   <label for="gender-female">
-          <ion-icon name="woman" color="primaryDark"></ion-icon>
-          <p>انثى</p>
+          <!--<ion-icon name="woman" ></ion-icon>-->
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/female-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/female-active.png" >
+          <!--<p>انثى</p>-->
         </label>
-          </div> 
+          </div>
               </div>
-    
+
 <!--
         <ion-list radio-group id="radio-list">
           <ion-item>
@@ -126,10 +130,10 @@
             <ion-radio value="female"></ion-radio>
           </ion-item>
         </ion-list>
-        
+
         -->
-       <!-- Gender select box 
-       </ion-item> 
+       <!-- Gender select box
+       </ion-item>
         <ion-select  formControlName="Gender" >
           <ion-option value="male">ذكر</ion-option>
           <ion-option value="female">انثى</ion-option>
@@ -143,19 +147,21 @@
     </div>
 
     <div class="step" [ngClass]="{shownPage: csPage== 2}">
+      <br>
+      <h5 text-center style="color: #fff">من فضلك قم باختيار نوع العميل</h5>
       <div id="radio-group" class="form-group">
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="store" formControlName="level_id" value="2">
             <label for="store">متجر<ion-icon name="person"></ion-icon></label>
-          
+
           </div>
         </div>
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="client" formControlName="level_id" value="3">
             <label for="client">عميل<ion-icon name="person"></ion-icon></label>
-            
+
           </div>
         </div>
         <div class="radio-group ">
@@ -179,7 +185,48 @@
       </ion-item>
     </ion-list>
 -->
-    <ion-list class="step" [ngClass]="{shownPage: csPage== 3}">
+
+
+    <div class="step" [ngClass]="{shownPage: csPage== 3}">
+      <br>
+      <div class="select-group">
+          <div (click)="openModal('Area', 0)">
+
+            {{AreaName || 'المنطة'}}
+            <ion-icon name="arrow-down" ></ion-icon>
+            <input type="text" formControlName="Area">
+            </div>
+          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
+
+            <ion-icon name="arrow-down" ></ion-icon>
+            <input type="text" formControlName="City">
+          </div>
+          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
+            <ion-icon name="arrow-down"></ion-icon>
+            <input type="text" formControlName="Dist">
+          </div>
+
+      </div>
+
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName="Address"
+          [hidden]="SignUpFrom.value.level_id == 3"
+          placeholder="العنوان"        >
+      </div>
+      <div class="form-group">
+        <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
+          placeholder="رقم السجل التجارى"        >
+      </div>
+      <div class="form-group">
+        <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
+          placeholder="اسم مدير المنتج"        >
+      </div>
+
+
+    </div>
+
+    <!--
+    <ion-list class="step" [ngClass]="{shownPage: csPage== 3}"><br>
       <ion-item>
         <ion-select placeholder="المنطقة اجبارى" formControlName="Area" >
             <ion-option *ngFor="let area of msAreas" [value]="area.id">{{area.name || 'اجبارى'}}</ion-option>
@@ -206,28 +253,42 @@
       <ion-item *ngIf="SignUpFrom.value.level_id == 2">
         <ion-input placeholder="اسم مدير المتج"></ion-input>
       </ion-item>
-    </ion-list>
+    </ion-list>-->
     <!--/[disabled]=" !SignUpFrom.valid"-->
 
 
 
-    <button *ngIf="lastPage" block ion-button type="submit">{{lastPage}}</button>
+    <button *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
   </form>
-  <br>
-  <button
-    *ngIf="!lastPage"
+ <!-- <button
+
     ion-button block
     color="primary"
     (click)="toNextPage()"
 
-  >{{lastPage || "التالى" }}</button>
+  >{{lastPage || "التالى" }}</button>-->
 
-<ion-card padding>   
-    <pre style= "direction:'ltr'">
+  <button
+        margin-top
+        *ngIf="!lastPage"
+        type="submit"
+         block
+         (click)="toNextPage()"
+        id="login-button"
+      >{{lastPage || "التالى" }}
+      <div id="loader" *ngIf="showLoader">
+            <div class="loader-circle"></div>
+        </div>
+      </button>
+
+<ion-card padding>
+  {{SignUpFrom.getRawValue()['Gender'] | json}}
+  {{SignUpFrom.getRawValue()['Area']}}
+    <pre>
     <h6>show All Form Data [Test Only]</h6>
     {{SignUpFrom.value | json}}
   </pre>
-  
+
  </ion-card>
 
 

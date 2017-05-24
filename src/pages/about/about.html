@@ -1,21 +1,22 @@
 <ion-header>
   <ion-navbar color="light">
     <ion-title>
-      الصفحة الشخصية
-    </ion-title>
+صفحتى    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-  <section id="hero"></section>
+  
 
-
+<section *ngIf="userLocal" id="hero"></section>
   <ion-card *ngIf="userLocal" id="user-info">
 
     <ion-avatar>
-      <ion-icon *ngIf="userLocal.gender == 'male'" name="person" color="primaryDark"></ion-icon>
-      <ion-icon *ngIf="userLocal.gender == 'female'" name="woman" color="primaryDark"></ion-icon>
+      <!--<ion-icon *ngIf="userLocal.gender == 'male'" name="person" color="primaryDark"></ion-icon>-->
+      <img *ngIf="userLocal.gender == 'male'" width="70" src="../../assets/img/male-alt.png">
+      <!--<ion-icon *ngIf="userLocal.gender == 'female'" name="woman" color="primaryDark"></ion-icon>-->
+      <img *ngIf="userLocal.gender == 'female'" width="70" src="../../assets/img/female-alt.png">
     </ion-avatar>
     <h1><b>{{userLocal.name}}</b>
       <p>{{userLocal.username}}</p>
@@ -32,8 +33,7 @@
       </pre> -->
   </ion-card>
 
-  <ion-card *ngIf="userLocal == null || userLocal == undefined" style="text-align:center">
-
+  <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
     <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
     <button ion-button (click)="navigateToPage('Login')">تسجيل الدخول</button>
     <p>او قم بتسجيل حساب جديد</p>

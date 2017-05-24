@@ -13,14 +13,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'useterms.html',
 })
 export class Useterms {
-  mainTabs: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Useterms');
-    this.mainTabs = document.querySelector('#main-tabs .tabbar');
-    this.mainTabs.style.display = 'none';
+
   }
 
 }

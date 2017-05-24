@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 
-import {PlacesModal} from '../searchmodal';
+import {PlacesModal} from '../filtermodal';
 import {UserProvider} from '../../providers/user';
 
 @IonicPage()
@@ -27,7 +27,7 @@ export class Exporter {
 
   searchData(modalData) {
     this.userProvider.getAreas().subscribe(data=>{
-        console.log('Data entered',modalData,'Matched Area from Database', data.data);
+        //console.log('Data entered',modalData,'Matched Area from Database', data.data);
         this.dataFromModal = data.data.filter(place=> place.id == modalData.AreaId || place.id == modalData.CityId || place.id == modalData.DistId);
         console.log(this.dataFromModal);
       })

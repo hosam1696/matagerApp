@@ -1,0 +1,81 @@
+page-forget {
+ion-content {
+    
+    &.content {
+      background-color: #028cff;
+      background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../../assets/img/logo.png);
+      background-position: 100%;
+
+    }
+
+    #logo-hero {
+      height: 150px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      h1 {
+        color: #fff;
+        font-size: 60px
+      }
+    }
+    ion-card {
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: auto 5px !important;
+        ion-input {
+          border-bottom: 1px solid #ccc;
+
+        }
+        .navigatelinks {
+            display: flex;
+            justify-content: space-between;
+            margin-top:15px;
+            button {
+                border: none;
+                background: transparent;
+                color: #fff;
+            }
+        }
+        .form-group {
+        padding: 5px 0;
+        .form-control {
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.3);
+          color: #fff;
+          padding: 7px 10px;
+          border-radius: 5px;
+          border: none;
+          font-size: 14px;
+
+          &::-webkit-input-placeholder {
+            color: #d6ecff !important;
+          }
+        } 
+
+        
+        }
+
+        direction: rtl;
+        border-radius: 10px;
+        padding: 15px;
+        #login-button {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          padding: 5px;
+          height: 35px;
+          border-radius: 4px;
+          background-color: color($colors, light);
+          color: #008bff;
+          min-height: 32px;
+          margin-top: 10px;
+        }
+    }
+}
+
+
+    
+
+}

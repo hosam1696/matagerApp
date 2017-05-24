@@ -1,7 +1,5 @@
 page-signup {
-   * {
-     //transition: all .35s ease-in;
-   }
+
    ion-list.showPage {
      /*
           animation: slide 0.5s ;
@@ -12,12 +10,91 @@ page-signup {
   ion-content {
     direction: rtl;
     text-align: right;
+
     &.content {
-      background: linear-gradient(#00BCD4,#27a397);
-      background-color: #eee;
+
+      /*background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../../assets/img/logo.png);*/
+      background: url(../../assets/img/logo2.png)
     }
-    &.scroll-content {
-          background: linear-gradient(to right,#425863,#506b79);
+    #hero-logo {
+      display: flex;
+      height: 100px;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      h2 {
+        font-size: 40px
+      }
+    }
+    .select-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 3px;
+      div {
+        width: 90px;
+        padding: 8px 0 ;
+        background-color: #fff;
+        border-radius: 3px;
+        color: #666;
+        text-align: center;
+        ion-icon {
+          color: #999;
+
+        }
+        input {
+          width: 0;
+          height: 0;
+          border: none;
+          visibility: hidden
+        }
+
+      }
+    }
+    #login-button {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          padding: 5px;
+          height: 35px;
+          border-radius: 4px;
+          background-color: color($colors, light);
+          color: #008bff;
+          min-height: 32px;
+          #loader {
+            position: relative;
+            z-index: 5999;
+            width: 20px;
+            height: 20px;
+            //background-color: red;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            .loader-circle {
+              width: 80%;
+              height: 80%;
+              border-radius: 50%;
+              border:2px solid transparent;
+              border-top-color: color($colors, primary);
+              animation: loader 0.6s linear infinite;
+
+            }
+            @keyframes loader {
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          }
+        }
+    #form-navigate {
+      height: 30px;
+      margin-right: -5px;
+      button {
+        background: transparent;
+        margin-top: -5px;
+        margin-right: -10px
+      }
     }
     ion-tabs {
     #main-tabs {
@@ -25,11 +102,11 @@ page-signup {
         opacity: 0;
       }
     }
-      
+
       .tabbar {
         display: none;
       }
-      .tabs-md .tabbar 
+      .tabs-md .tabbar
       {
        display: none
       }
@@ -39,25 +116,32 @@ page-signup {
     }
 
     form {
+
+
+
       #pager {
         display: flex;
         justify-content: center;
 
         .dot {
           border-radius: 50%;
-          width: 15px;
-          height: 15px;
-          background-color: #eee;
-          margin: 5px;
+          width: 10px;
+          height: 10px;
+          transition: box-shadow .15s linear;
+          box-shadow: inset 0 0 #005da7;
+          background-color: #c0e2fe;
+          margin: 2px 6px;
           &.active {
-            background-color: #ff5b67
+            box-shadow: inset 0 0 0 5px #005da7;
+            //background-color: #005da7
+            //background-color: #ff5b67
           }
         }
         &.step {
           display: none
         }
       }
-      
+
       div.step, ion-list.step {
         transition: all .3s ease-in;
         display: none;
@@ -75,27 +159,36 @@ page-signup {
           }
           to{
             transform: translateX(0);
-            
+
           }
-          
+
         }
       .form-group {
-        padding: 5px 0;
+        padding: 2px 0;
         .form-control {
+          font-size: 14px;
           width: 100%;
           padding: 7px 10px;
-          border-radius: 5px;
-          border: 1px solid #eee
-        } 
+          border-radius: 4px;
+         // border: 1px solid rgba(255,255,255,0.31);
+         border: none;
+          color: #fff;
+          background-color: rgba(255,255,255,0.3);
+          &::-webkit-input-placeholder {
+            color: #eee
+          }
+        }
 
       }
       #radio-group {
+        margin: 2px 0;
         display: flex;
         align-content: center;
-        
+
         border-radius: 5px;
         &.group-bg {
-          background-color: #fff;
+          padding: 10px 30px;
+         // background-color: rgba(255,255,255,0.5);
         }
         .radio-group {
           width: 50%;
@@ -104,6 +197,18 @@ page-signup {
           display: flex;
           flex-direction: column;
           align-items: center;
+          min-height: 61px;
+          &.gender{
+            &:first-of-type {
+            border-left: 2px solid #80c5ff;
+          }
+          }
+          img {
+            width: 40px;
+          }
+          ion-icon {
+            color: #c5ebfd;
+          }
           &.group-bg {
           background-color: #fff;
         }
@@ -121,12 +226,15 @@ page-signup {
         }
           label {
             width: 100%;
+            color: #999;
             ion-icon {
               font-size: 60px;
+              padding: 0 5px
             }
             p {
               font-size: 10px;
               margin-top: -5px;
+              color: #eee
             }
           }
           input[type='radio'] {
@@ -134,19 +242,21 @@ page-signup {
             display: none
           }
           input[type='radio']:checked  ~ label ion-icon{
-            color: #396dca;
+            color:color($colors, primary);
+            text-shadow: 1px -1px #a1cdf4, 2px -2px #018bff
           }
           input[type='radio']:checked ~ label {
             color: #396dca;
           }
         }
-        
+
       }
+
       ion-list {
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
-       
+
 
         ion-item {
           ion-list {

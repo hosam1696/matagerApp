@@ -1,0 +1,47 @@
+<ion-header>
+
+  <ion-navbar color="light">
+    <ion-title>تسجيل الدخول</ion-title>
+  </ion-navbar>
+  
+</ion-header>
+
+
+<ion-content no-padding>
+
+  <section id="logo-hero">
+    <h1>LOGO</h1>
+  </section>
+
+  <ion-card>
+        <form novalidate
+          [formGroup]="ForgetPassForm"
+          (ngSubmit)="onSubmit()"
+    >
+
+    <div class="form-group">
+      <input
+      placeholder="البريد الالكترونى"
+          type="email"
+          class="form-control"
+          formControlName="email"
+          required>
+    </div>
+<button
+        
+        type="submit"
+        color="primary"
+         block
+        id="login-button"
+      >ارسال كلمة المرور
+      
+      </button>
+
+        </form>
+        <div class="navigatelinks">
+    <button (click)="navigateTo('Login')">تسجيل الدخول</button>
+    <button (click)="navigateTo('Signup')">تسجيل حساب جديد</button>
+  </div>
+  </ion-card>
+  
+</ion-content>

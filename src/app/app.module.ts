@@ -2,7 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {IonicApp, IonicModule, IonicErrorHandler, IonicPageModule} from 'ionic-angular';
+import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import { IonicStorageModule} from '@ionic/storage';
 
 import { MyApp } from './app.component';
@@ -16,14 +16,15 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {Merchant} from "../pages/merchants/merchant";
 import {Exporter} from "../pages/exporter/exporter";
-import { PlacesModal } from '../pages/searchmodal';
+import { PlacesModal } from '../pages/filtermodal';
 
+import { ChooseArea } from '../pages/chooselocmodal';
 
 import {UserLogin} from "./service/userlogin";
 import {Network} from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import {UserProvider} from "../providers/user";
-
+import { AreaProvider } from '../providers/area';
 @NgModule({
   declarations: [
     MyApp,
@@ -33,7 +34,8 @@ import {UserProvider} from "../providers/user";
     NotificationsPage,
     Merchant,
     Exporter,
-    PlacesModal
+    PlacesModal,
+    ChooseArea
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,11 @@ import {UserProvider} from "../providers/user";
     FormsModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {
-      backButtonText: ''
+      backButtonText: '',
+      backButtonIcon: 'arrow-forward',
+      iconMode: 'ios',
+      tabsHideOnSubPages: true,
+      mode: 'ios'
     }),
 
     IonicStorageModule.forRoot()
@@ -55,7 +61,8 @@ import {UserProvider} from "../providers/user";
     NotificationsPage,
     Merchant,
     Exporter,
-    PlacesModal
+    PlacesModal,
+    ChooseArea
   ],
   providers: [
     StatusBar,
@@ -64,7 +71,8 @@ import {UserProvider} from "../providers/user";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     UserLogin,
     Geolocation,
-    Network
+    Network,
+    AreaProvider
   ]
 })
 export class AppModule {}

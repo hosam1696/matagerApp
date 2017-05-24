@@ -9,38 +9,55 @@ page-exporter {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 5px 15px;
+      padding: 2px 15px 2px 5px;
+      height: 34px;
       line-height: 15px;
-      ion-icon {
-        font-size: 20px;
+      .btn-icon {
+        width: 30px;
+        height:30px;
+        border-left: 1px solid color($colors, bgColor);
+        text-align: right;
+        ion-icon {
+          font-size: 20px;
+          line-height: 30px;
+          color: #999
+        }
       }
+      
       #search-result{
         min-width: 100px;
-        //background: red;
-        display: inline-flex;
+        display: flex;
         //margin: 10px;
-
+        flex-direction: row-reverse ;
         height: 30px;
         align-items: center;
+        div {
+        display: flex;
+        //margin: 10px;
+        flex-direction: row-reverse ;
+        
         span {
-          text-align: right;
+          text-align: left;
             min-width: 50px;
+            font-size: 10px;
           //background-color: blue;
           margin: 5px;
           position: relative;
+          
           &:after {
             content: '';
             position: absolute;
-            left: -2px;
+            right: -2px;
             top: -2px;
             width: 15px;
             border-radius: 2px;
             height: 15px;
-            border: 2px solid transparent;
+            border: 1px solid transparent;
+            box-shadow: 1px -1px #ececec;
             transform: rotate(45deg);
            // background-color: #888;
-            border-bottom-color: #ddd;
-            border-left-color: #ddd
+            border-top-color: #ddd;
+            border-right-color: #ddd
 
           }
           &:last-child {
@@ -49,6 +66,7 @@ page-exporter {
               display: none;
             } 
           }
+        }
 
         }
       }
@@ -60,8 +78,8 @@ page-exporter {
         z-index:-1
       }
     }
-    .scroll-content {
-      background-color: #ddd;
+    &.content {
+      background-color: color($colors, bgColor);
     }
     #hero {
       background: #517fa4;
@@ -95,10 +113,10 @@ page-exporter {
 
       }
         .item-avatar {
-
+          margin-left: 0 !important;
           width: 80px;
           height: 75px;
-          background: radial-gradient(#ccc,#999)
+          background: radial-gradient(color($colors, primary),#1c8be8)
         }
         .exporter-info {
         

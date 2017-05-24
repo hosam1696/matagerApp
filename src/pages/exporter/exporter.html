@@ -16,17 +16,26 @@
 <ion-content >
 
   
-  <button type="button" id="modal-button" color="light" (click)="openSearchModal()" >
-  <div id="search-result" *ngIf="dataFromModal">  
-      <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
+  <button type="button" id="modal-button" 
+        color="light" 
+        (click)="openSearchModal()" >
+  
+  <div class="btn-icon">
+    <ion-icon item-right id="search-icon"  name="search"></ion-icon>
+  </div>
+  <div id="search-result" >  
+      <div *ngIf="dataFromModal">
+        <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
+        </div>  
+      
     </div>
-  <ion-icon item-right id="search-icon"  name="search"></ion-icon>
+  
 
     
   </button>
   <!-- List of the neerer exporters -->
-  <ion-list padding>
-    <ion-item>
+  <ion-list padding no-lines>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -34,7 +43,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -42,7 +51,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -50,7 +59,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -58,7 +67,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -66,7 +75,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -74,7 +83,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">
@@ -82,7 +91,7 @@
         <p><span class="stars">5</span> start</p>
       </div>
     </ion-item>
-    <ion-item>
+    <ion-item no-padding margin-bottom>
       <div class="item-avatar" item-right></div>
       <h2>Exporter 1</h2>
       <div class="exporter-info">

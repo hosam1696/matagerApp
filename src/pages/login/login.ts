@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { ToastController } from 'ionic-angular';
+
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
@@ -17,7 +17,6 @@ import { UserProvider } from "../../providers/user";
 })
 export class Login {
   LoginForm: FormGroup;
-  mainTabs: any;
   showLoader: boolean = false;
   connectingStatus: boolean;
   constructor(public navCtrl: NavController,
@@ -41,13 +40,15 @@ export class Login {
      })
  */
    
-    //TODO: hide the tabs on login page
-    this.mainTabs = document.querySelector('#main-tabs .tabbar');
-    this.mainTabs.style.display = 'none';
   }
 
+  ionViewWillEnter() {
+  
+    //TODO: hide the tabs on login page
+
+}  
   ionViewWillLeave() {
-    this.mainTabs.style.display = 'flex';
+
   }
 
   submitLogin() {
@@ -114,7 +115,7 @@ export class Login {
     this.navCtrl.push('Signup')
   }
   checkConnection() {
-    if (this.network.type == null) {
+    if (this.network.type == 'none') {
       this.showToast('You are not connected to the internet ');
       setTimeout(() => {
         this.showLoader = false;
@@ -130,5 +131,12 @@ export class Login {
       duration: 2000
     });
     toast.present();
+  }
+
+  toForgetPass() {
+    this.navCtrl.push('ForgetPage')
+  }
+  backStep() {
+    this.navCtrl.pop();
   }
 }

@@ -55,6 +55,8 @@ export class HomePage {
     this.geolocation.getCurrentPosition().then((res)=>{
       console.log("User Location:", res.coords.latitude,res.coords.longitude);
       this.showToast("User Location:"+ res.coords.latitude+' | '+res.coords.longitude)
+    }).catch(err=> {
+      console.warn(err);
     });
     
    // TODO: check connection

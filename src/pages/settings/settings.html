@@ -16,16 +16,33 @@
 
   <ion-list *ngIf="!userHasLog" no-lines>
     <ion-item-group>
-      <ion-item-divider color="bgColor">الاعدادات</ion-item-divider>
+      <ion-item-divider color="bgColor"><br></ion-item-divider>
     </ion-item-group>
-    <button ion-item (click)="navigateToPage('Login')">
-      تسجيل الدخول
-      
-      </button>
-    <button ion-item (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
-    <button ion-item (click)="navigateToPage('Useterms')">سياسة الأستخدام</button>
-    <button ion-item (click)="navigateToPage('Contactus')">اتصل بنا</button>
 
+      <ion-item padding-left ion-item 
+      (click)="navigateToPage('Login')">
+        <ion-icon name="open-outline" color="primary"></ion-icon>
+        تسجيل الدخول
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+      <ion-item padding-left ion-item
+       (click)="navigateToPage('Signup')">
+       <ion-icon name="add-circle-outline" color="primary"></ion-icon> 
+       تسجيل حساب جديد
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+      <ion-item padding-left ion-item color="light" (click)="navigateToPage('Useterms')">
+        <ion-icon name="folder-outline" color="primary"></ion-icon>سياسة الأستخدام
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+      <ion-item padding-left ion-item color="light" (click)="navigateToPage('Contactus')">
+        <ion-icon name="call-outline" color="primary"></ion-icon>اتصل 
+        بنا
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
   </ion-list>
 
 
@@ -34,8 +51,9 @@
 
     <ion-item no-lines id="hero">
       <ion-avatar item-left>
-
-        <ion-icon name="person" color="primaryDark"></ion-icon>
+        <img *ngIf="userGender == 'female'" src="../../assets/img/female-alt.png" >
+        <img *ngIf="userGender == 'male'" src="../../assets/img/male-alt.png" >
+        <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
 
       </ion-avatar>
       <h3>{{userFullName}}</h3>
@@ -44,30 +62,47 @@
 
     <ion-item-group no-lines>
       <ion-item-divider color="bgColor">الاعدادات</ion-item-divider>
-      <ion-item ion-item 
+      <ion-item padding-left ion-item 
       (click)="navigateToPage('Editprofile')">
-        <ion-icon name="settings" color="primary"></ion-icon>
+        <ion-icon name="settings-outline" color="primary"></ion-icon>
         تعديل البيانات الشخصية <ion-icon name="arrow-back" item-right></ion-icon></ion-item>
-      <ion-item ion-item (click)="navigateToPage('Editprofile')">
-        <ion-icon name="folder-open" color="primary"></ion-icon>التقارير </ion-item>
-      <ion-item ion-item (click)="navigateToPage('Editprofile')">
-        <ion-icon name="stats" color="primary"></ion-icon>المبيعات </ion-item>
-      <ion-item ion-item (click)="navigateToPage('Messages')">
-        <ion-icon name="chatbubbles" color="primary"></ion-icon>الرسائل </ion-item>
+      <ion-item padding-left ion-item (click)="navigateToPage('Editprofile')">
+        <ion-icon name="folder-open-outline" color="primary"></ion-icon>التقارير 
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+      <ion-item padding-left ion-item (click)="navigateToPage('Editprofile')">
+        <ion-icon name="stats-outline" color="primary"></ion-icon>المبيعات
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+         </ion-item>
+      <ion-item padding-left ion-item (click)="navigateToPage('Messages')">
+        <ion-icon name="chatbubbles-outline" color="primary"></ion-icon>الرسائل 
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
     </ion-item-group>
 
 
     <ion-item-group no-lines>
       <ion-item-divider color="bgColor">التطبيق</ion-item-divider>
-      <ion-item ion-item color="light" (click)="navigateToPage('Useterms')">
-        <ion-icon name="folder" color="primary"></ion-icon>سياسة الأستخدام</ion-item>
-      <ion-item ion-item color="light" (click)="navigateToPage('Contactus')">
-        <ion-icon name="call" color="primary"></ion-icon>اتصل بنا</ion-item>
+      <ion-item padding-left ion-item color="light" (click)="navigateToPage('Useterms')">
+        <ion-icon name="folder-outline" color="primary"></ion-icon>سياسة الأستخدام
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+      <ion-item padding-left ion-item color="light" (click)="navigateToPage('Contactus')">
+        <ion-icon name="call-outline" color="primary"></ion-icon>اتصل 
+        بنا
+        
+        <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
     </ion-item-group>
     <ion-item-group no-lines>
-      <ion-item-divider color="bgColor">تسجيل الخروج</ion-item-divider>
+      <ion-item-divider color="bgColor">تسجيل الخروج
+
+      </ion-item-divider>
       <ion-item ion-item (click)="logOut()">
-        <ion-icon name="exit" color="primary"></ion-icon>تسجيل الخروج</ion-item>
+        <ion-icon name="exit-outline" color="primary"></ion-icon>تسجيل الخروج</ion-item>
     </ion-item-group>
 
 
