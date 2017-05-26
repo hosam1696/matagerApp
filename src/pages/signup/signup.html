@@ -16,7 +16,7 @@
   <form
     novalidate
     [formGroup]="SignUpFrom"
-    (ngSubmit)="SubmitCreateForm()"
+    (ngSubmit)="SubmitSignup()"
   >
     <section id="pager">
       <div class="dot"
@@ -77,7 +77,8 @@
       <div class = "form-group">
         <input type="password"
         placeholder="تأكيد كلمة المرور"
-        class="form-control" >
+        class="form-control"
+ >
       </div>
 
       <div class = "form-group">
@@ -258,7 +259,9 @@
 
 
 
-    <button *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
+    <button 
+    [disabled]="SignUpFrom.valid == false"
+    *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
   </form>
  <!-- <button
 
@@ -275,6 +278,7 @@
          block
          (click)="toNextPage()"
         id="login-button"
+        
       >{{lastPage || "التالى" }}
       <div id="loader" *ngIf="showLoader">
             <div class="loader-circle"></div>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {IlevelId} from "../../app/service/InewUserData";
 import {UserProvider} from "../../providers/user";
 
@@ -26,22 +26,28 @@ export class Signup {
   CityName: string;
   DistName: string;
   showLoader:boolean = false;
-
+  Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
   PageFormcontrols: object;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public userProvider: UserProvider,
     public toastCont:ToastController,
-    public modalCrtl: ModalController
+    public modalCrtl: ModalController, 
+    fb: FormBuilder
   ) {
 
+    console.log(this.Name);
     //console.log(this.signGender);
-    this.SignUpFrom = new FormGroup({
-      Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    this.SignUpFrom = fb.group({
       Username: new FormControl('', [Validators.required, Validators.minLength(5)]),
       Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      Email: new FormControl('', Validators.required),
+      //InsurePassword: new FormControl('', [Validators.required,Validators[this.insurePass]]),
+      Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      
+      
+      
+      Email: new FormControl('', [Validators.required,Validators.pattern("[^ @]*@[^ @]*")]),
       Mobile: new FormControl('', [Validators.required]),
       Gender: new FormControl('male', Validators.required),
       Address: new FormControl('', [Validators.required]),
@@ -80,18 +86,12 @@ export class Signup {
       ]
 
     }
-    //console.log(this.SignUpFrom);
-
-    let Name = this.SignUpFrom.get('Username');
-
-    Name.valueChanges
-      .subscribe(data => {
-        console.log(data)
-      })
+ 
   }
-
-  ionViewDidLoad() {
-
+  insurePass(input:FormControl ) {
+    return (input == input.parent.controls['Password'].value) ? true : false;
+  }
+   ionViewDidLoad() {
     // GET All places from database
      /* this.userProvider.getAreas().subscribe((data)=>{
 
@@ -140,11 +140,7 @@ export class Signup {
 
 
   toNextPage() {
-    //console.log('can navigate to another page:',this.checkValidator());
-    if (this.checkValidator() == true)
-      this.increasePageNum();
-    else 
-      this.showToast('مشكلة فى'+this.checkValidator()[0][0]);
+    (this.checkValidator() == true) ? this.increasePageNum():this.detectErrors(this.checkValidator());
   }
 
   checkValidator() {
@@ -152,6 +148,21 @@ export class Signup {
     //console.log(validcontrols);
     return validcontrols.length == 0 ? true : validcontrols;
   }
+
+  detectErrors(control) {
+    console.log(this.checkValidator());  
+      if (control[0][1].value == '') {
+        
+        this.showToast(`يجب ادخال ${control[0][0]}`)
+      }
+      else if (control[0][1].errors['minlength']) {
+        
+        this.showToast(`${control[0][0]} يجب ان يكون ${control[0][1].errors.minlength.requiredLength} حروف على الاقل`);
+      } else {
+        this.showToast(`${control[0][0]} غير صحيح`)
+      }
+  }
+
   increasePageNum() {
 
     let num = Math.max(Math.min(3,this.csPage+1), 1);
@@ -174,14 +185,9 @@ export class Signup {
   }
 
 
-  SubmitCreateForm() {
+  SubmitSignup() {
 
-    console.log(this.SignUpFrom.get('Username').valid);
-
-    if( this.SignUpFrom.valid) {
-
-
-   
+    if( this.SignUpFrom.valid) {   
     //TODO: add more client side validation
 
     this.userProvider.addUser(this.SignUpFrom.value).subscribe((data)=>{
@@ -231,7 +237,6 @@ export class Signup {
   backStep() {
     if (this.csPage == 1)
       this.navCtrl.pop();
-
     else
       this.decreasePageNum();
   }
@@ -240,17 +245,12 @@ export class Signup {
 
     if (name == 'Area') {
       this.initModal(name, searchId);
-    } else if (name =="City") {
-      console.log('You are opening city ');
-      if (this.SignUpFrom.get('Area').value)
-        this.initModal(name, searchId);
-      else
-        this.showToast('you have to choose area first');
-    } else if( name == 'Dist') {
-      if (this.SignUpFrom.get('City').value)
-        this.initModal(name, searchId);
-      else
-        this.showToast('you have to choose City first');
+    } else if (name == "City") {
+      
+      (this.SignUpFrom.get('Area').value) ? this.initModal(name, searchId) : this.showToast('يجب تحديد المنطقة أولاً'); 
+    } else if (name == 'Dist') {
+      
+     (this.SignUpFrom.get('City').value)?this.initModal(name, searchId):this.showToast('يجب تحديد المدينة أولاً');
     } else {
       return false;
     }
@@ -259,32 +259,28 @@ export class Signup {
   initModal (name, searchId) {
     let modal = this.modalCrtl.create(ChooseArea, {name, defineSearch:searchId});
 
-
       modal.onDidDismiss(data=> {
 
         // Hint DATA is Array [PLaceType, placeName, placeId]
 
         if (data && this.SignUpFrom.get(data[0]).value != data[2]) {
-
-        
-        console.log(data);
-        
-        switch (data[0]) {
-          case 'Area':
-            this.AreaName = data[1];
-            this.SignUpFrom.get('City').setValue(null);
-            this.SignUpFrom.get('Dist').setValue(null);
-            this.CityName = null;
-            this.DistName = null;
-            break;
-          case 'City':
-            this.CityName = data[1];
-            this.DistName = null;
-            this.SignUpFrom.get('Dist').setValue(null);
-            break;
-          case 'Dist':
-            this.DistName = data[1];
-            break;
+          console.log(data);
+          switch (data[0]) {
+            case 'Area':
+              this.AreaName = data[1];
+              this.SignUpFrom.get('City').setValue(null);
+              this.SignUpFrom.get('Dist').setValue(null);
+              this.CityName = null;
+              this.DistName = null;
+              break;
+            case 'City':
+              this.CityName = data[1];
+              this.DistName = null;
+              this.SignUpFrom.get('Dist').setValue(null);
+              break;
+            case 'Dist':
+              this.DistName = data[1];
+              break;
         }
       
         this.SignUpFrom.get(data[0]).setValue(data[2]);

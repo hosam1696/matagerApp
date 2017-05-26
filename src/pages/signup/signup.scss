@@ -171,11 +171,17 @@ page-signup {
           padding: 7px 10px;
           border-radius: 4px;
          // border: 1px solid rgba(255,255,255,0.31);
-         border: none;
+         border: 1px solid transparent;
           color: #fff;
           background-color: rgba(255,255,255,0.3);
           &::-webkit-input-placeholder {
             color: #eee
+          }
+          &.ng-valid.ng-dirty {
+            border-color: greenyellow
+          }
+          &.ng-invalid.ng-dirty {
+            //border-color: rosybrown
           }
         }
 

@@ -105,7 +105,11 @@ export class Login {
         );
       } else {
         this.showLoader = false;
-        this.showToast('تأكد من ملء جميع الحقول')
+        if (this.LoginForm.value.Username == "")
+          this.showToast('تأكد من ادخال اسم  المستخدم');
+        else {
+          this.showToast('تأكد من ادخال كلمة المرور')
+        }
       }
     }
 

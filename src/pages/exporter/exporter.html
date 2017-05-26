@@ -15,23 +15,23 @@
 
 <ion-content >
 
-  
-  <button type="button" id="modal-button" 
-        color="light" 
+
+  <button type="button" id="modal-button"
+        color="light"
         (click)="openSearchModal()" >
-  
+
   <div class="btn-icon">
-    <ion-icon item-right id="search-icon"  name="search"></ion-icon>
+    <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
   </div>
-  <div id="search-result" >  
+  <div id="search-result" >
       <div *ngIf="dataFromModal">
         <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
-        </div>  
-      
-    </div>
-  
+        </div>
 
-    
+    </div>
+
+
+
   </button>
   <!-- List of the neerer exporters -->
   <ion-list padding no-lines>
