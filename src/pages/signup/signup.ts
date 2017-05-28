@@ -7,6 +7,8 @@ import {UserProvider} from "../../providers/user";
 import {ChooseArea } from '../chooselocmodal';
 import 'rxjs/RX';
 
+
+
 @IonicPage()
 @Component({
   selector: 'page-signup',
@@ -42,27 +44,26 @@ export class Signup {
     this.SignUpFrom = fb.group({
       Username: new FormControl('', [Validators.required, Validators.minLength(5)]),
       Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      //InsurePassword: new FormControl('', [Validators.required,Validators[this.insurePass]]),
-      Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      
-      
-      
+      InsurePassword: new FormControl('', [Validators.required,this.insurePass]),
+      Name: new FormControl('', [Validators.required, Validators.minLength(5)]), 
       Email: new FormControl('', [Validators.required,Validators.pattern("[^ @]*@[^ @]*")]),
       Mobile: new FormControl('', [Validators.required]),
       Gender: new FormControl('male', Validators.required),
-      Address: new FormControl('', [Validators.required]),
-      Map: new FormControl('', [Validators.required]),
-      Area: new FormControl('', [Validators.required]),
+      Address: new FormControl(''),
+      Map: new FormControl(''),
+      Area: new FormControl('',[Validators.required]),
       City: new FormControl('', [Validators.required]),
       Dist: new FormControl(''),
-      level_id: new FormControl('2', [Validators.required])
+      level_id: new FormControl('2', [Validators.required]),
+      cr_num: new FormControl(''),
+      owner_name: new FormControl('')
     });
     this.PageFormcontrols = {
       1: [
         ["اسم المستخدم", this.SignUpFrom.get('Username')],
 
         ['كلمة المرور',this.SignUpFrom.get('Password')],
-
+        ['تأكيد كلمة المرور',this.SignUpFrom.get('InsurePassword')],
         ['الاسم',this.SignUpFrom.get('Name')],
 
         ['البريد الالكترونى',this.SignUpFrom.get('Email')],
@@ -86,10 +87,18 @@ export class Signup {
       ]
 
     }
+
+    console.log(this.SignUpFrom);
  
   }
-  insurePass(input:FormControl ) {
-    return (input == input.parent.controls['Password'].value) ? true : false;
+  
+  insurePass(input:FormControl ):{ [s: string]: boolean } {
+    if (!input.root || !input.root.value) {
+      return null;
+    }
+    const exactMatch = input.root.value.Password === input.value;
+
+    return exactMatch ? null: {uninsured:true};
   }
    ionViewDidLoad() {
     // GET All places from database
@@ -118,16 +127,8 @@ export class Signup {
         console.log(this.msCity);
       }
 
-    })
-*/
-    /* assign the Areas
-    this.userProvider.getAreas().filter(res=>res.data.parent == 0).subscribe(data=>{
-      console.log(data);
-      this.msAreas = data;
-      console.log(this.msAreas);
-    });
+    })*/
 
-    */
 
   }
 
@@ -153,12 +154,14 @@ export class Signup {
     console.log(this.checkValidator());  
       if (control[0][1].value == '') {
         
-        this.showToast(` تأكد  من ادخال  ${control[0][0]}`)
+        this.showToast(`يرجى ادخال  ${control[0][0]}`)
       }
       else if (control[0][1].errors['minlength']) {
         
         this.showToast(`${control[0][0]} يجب ان يكون ${control[0][1].errors.minlength.requiredLength} حروف على الاقل`);
-      } else {
+      } else if (control[0][0] == 'تأكيد كلمة المرور'){
+        this.showToast('كلمات المرور غير متطابقة')
+      }else {
         this.showToast(`${control[0][0]} غير صحيح`)
       }
   }
@@ -185,22 +188,23 @@ export class Signup {
   }
 
 
-  SubmitSignup() {
+  SubmitForm() {
 
     if( this.SignUpFrom.valid) {   
     //TODO: add more client side validation
-
+    delete this.SignUpFrom.value.InsurePassword;
     this.userProvider.addUser(this.SignUpFrom.value).subscribe((data)=>{
         console.log(data);
         if(data.status.message == 'success') {
           this.showToast('تم اضافة حسابك بنجاح');
-          this.navCtrl.pop('Login');
+          this.SignUpFrom.reset();
+          this.navCtrl.push('Login');
         } else {
           let keys = Object.keys(data.status);
           let errMsg: string;
           for (let i of keys) {
             if (typeof data.status[i] == 'object')
-              errMsg += data.status[i][0]+'+++';
+              errMsg = data.status[i][0];
           }
 
           this.showToast(errMsg, 6000);

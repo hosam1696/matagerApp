@@ -50,7 +50,7 @@ page-signup {
 
       }
     }
-    #login-button {
+    #next-button {
           display: flex;
           align-items: center;
           width: 100%;
@@ -61,6 +61,7 @@ page-signup {
           background-color: color($colors, light);
           color: #008bff;
           min-height: 32px;
+          padding-top: 10px;
           #loader {
             position: relative;
             z-index: 5999;
@@ -122,11 +123,11 @@ page-signup {
       #pager {
         display: flex;
         justify-content: center;
-
+        margin: 10px auto;
         .dot {
           border-radius: 50%;
-          width: 10px;
-          height: 10px;
+          width: 6px;
+          height: 6px;
           transition: box-shadow .15s linear;
           box-shadow: inset 0 0 #005da7;
           background-color: #c0e2fe;

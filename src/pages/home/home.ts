@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController, ToastController, ModalController } from 'ionic-angular';
 import {Login} from "../login/login";
 import {Merchant} from "../merchants/merchant";
 import {Exporter} from "../exporter/exporter";
 
 import {UserProvider} from "../../providers/user";
-
+import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
 
@@ -15,13 +15,14 @@ import {Network} from '@ionic-native/network';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  
+  dataFromModal;
   constructor(
     public navCtrl: NavController,
-    public userProv: UserProvider,
+    public userProvider: UserProvider,
     public geolocation: Geolocation,
      public network: Network,
-     public toastCont: ToastController
+     public toastCont: ToastController,
+     public modalCrtl: ModalController
   ) {
     
   if(localStorage.getItem('Username')) {
@@ -37,16 +38,6 @@ export class HomePage {
 
   }
 
-
-  
-/* test login provider
-  runUserLogin(){
-    let response = this.userProv.LoginUser({"Username": "TestUser",   "Password": "testPassword123"  });
-    response.subscribe(data => {
-      console.log(data.status);
-    });
-  }
-*/
   ionViewDidLoad() {
 
     //TODO: pre configuration and  setup for user 
@@ -106,6 +97,27 @@ showToast(msg, dur=3000) {
   }
   toExporterPage() {
     this.navCtrl.push(Exporter)
+  }
+navigateTo(page) {
+  this.navCtrl.push(page);
+}
+   openSearchModal() {
+
+    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'FilterModal',User: 'Hosam'});
+    modal.onDidDismiss(data=> {
+      //console.log('Data from Modal',data);
+      this.searchData(data);
+      
+    });
+    modal.present();
+
+  }
+  searchData(modalData) {
+    this.userProvider.getAreas().subscribe(data=>{
+        //console.log('Data entered',modalData,'Matched Area from Database', data.data);
+        this.dataFromModal = data.data.filter(place=> place.id == modalData.AreaId || place.id == modalData.CityId || place.id == modalData.DistId);
+        console.log(this.dataFromModal);
+      })
   }
 
 }

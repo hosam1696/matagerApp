@@ -68,7 +68,6 @@ export class Login {
         this.showLoader = true;
         this.userLogin.LoginUser(this.LoginForm.value).subscribe(
           data => {
-
             //TODO: if data is correct navigate to the home page
             if (data.status == 'success') {
 
@@ -79,12 +78,7 @@ export class Login {
               localStorage.setItem('Username', this.LoginForm.value.Username);
               localStorage.setItem('userLocalData', JSON.stringify(data.data));
               console.log(localStorage.getItem('userLocalData'));
-              /* persist data in one value in it's key
-              let dataKeys = Object.keys(data.data);
-              for (let key of dataKeys) {
-                console.log(key, data.data[key]);
-                localStorage.setItem(key, data.data[key]);
-              }*/
+
               // TODO: navigate to the home page
               this.navCtrl.setRoot(HomePage);
               this.navCtrl.popToRoot();

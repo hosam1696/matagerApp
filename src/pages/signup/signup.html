@@ -10,13 +10,13 @@
 </section>
   <section id="hero-logo">
     <!--<h2>LOGO</h2>-->
-    <img src="../../assets/img/slogo.png" width="100" alt="">
+    <img src="../../assets/img/mainlogo.png" width="100" alt="">
   </section>
 
   <form
     novalidate
     [formGroup]="SignUpFrom"
-    (ngSubmit)="SubmitSignup()"
+    (ngSubmit)="SubmitForm()"
   >
     <section id="pager">
       <div class="dot"
@@ -33,38 +33,13 @@
       ></div>
     </section>
 
-    <div class="step" [ngClass]="{shownPage: csPage== 1}"><br>
-     <!-- <ion-item>
-        <ion-label>اسم المستخدم</ion-label>
-        <ion-input type="text" formControlName="Username"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>كلمة المرور</ion-label>
-        <ion-input type="password" formControlName="Password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>تأكيد كلمة المرور</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>الاسم بالكامل</ion-label>
-        <ion-input type="text" formControlName="Name"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>البريد الالكترونى</ion-label>
-        <ion-input type="email" formControlName="Email"
-                   pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label>رقم الجوال</ion-label>
-        <ion-input type="text" formControlName="Mobile"></ion-input>
-      </ion-item>
-      -->
+    <div class="step" [ngClass]="{shownPage: csPage== 1}">
+ 
       <div class = "form-group">
         <input type="text" class="form-control"
           placeholder="اسم المستخدم"
         formControlName="Username"
-        #Username>
+        >
       </div>
 
       <div class = "form-group">
@@ -78,7 +53,8 @@
         <input type="password"
         placeholder="تأكيد كلمة المرور"
         class="form-control"
- >
+        formControlName = "InsurePassword"
+         >
       </div>
 
       <div class = "form-group">
@@ -88,7 +64,8 @@
       </div>
 
       <div class = "form-group">
-        <input type="email" class="form-control" formControlName="Email"
+        <input type="email" class="form-control" 
+        formControlName="Email"
           placeholder="البريد الالكترونى"
         >
       </div>
@@ -120,35 +97,10 @@
           </div>
               </div>
 
-<!--
-        <ion-list radio-group id="radio-list">
-          <ion-item>
-            <ion-label><ion-icon name="person"></ion-icon></ion-label>
-            <ion-radio value="male"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label><ion-icon name="female"></ion-icon></ion-label>
-            <ion-radio value="female"></ion-radio>
-          </ion-item>
-        </ion-list>
-
-        -->
-       <!-- Gender select box
-       </ion-item>
-        <ion-select  formControlName="Gender" >
-          <ion-option value="male">ذكر</ion-option>
-          <ion-option value="female">انثى</ion-option>
-        </ion-select>
-        <label for="female">انثى</label>
-        <input type="checkbox" name="gender" id="female">
-        <label for="male">ذكر</label>
-        <input type="checkbox" id="male" name="gender">
-        </ion-item>
-        -->
     </div>
 
     <div class="step" [ngClass]="{shownPage: csPage== 2}">
-      <br>
+      
       <h5 text-center style="color: #fff">من فضلك قم باختيار نوع العميل</h5>
       <div id="radio-group" class="form-group">
         <div class="radio-group  ">
@@ -174,18 +126,6 @@
         </div>
       </div>
     </div>
-   <!-- <ion-list class="step" [ngClass]="{shownPage: csPage== 2}">
-      <ion-item>
-        <ion-label>نوع العميل</ion-label>
-        <ion-select formControlName="level_id">
-          <ion-option [value]="levelId('store')">متجر</ion-option>
-          <ion-option [value]="levelId('client')">عميل</ion-option>
-          <ion-option [value]="levelId('exporter')">مورد</ion-option>
-
-        </ion-select>
-      </ion-item>
-    </ion-list>
--->
 
 
     <div class="step" [ngClass]="{shownPage: csPage== 3}">
@@ -204,7 +144,9 @@
           </div>
           <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
             <ion-icon name="arrow-down"></ion-icon>
-            <input type="text" formControlName="Dist">
+            <input type="text" 
+            formControlName="Dist" id="dist" 
+            [required]= 'SignUpFrom.value.level_id == 2'>
           </div>
 
       </div>
@@ -212,79 +154,42 @@
       <div class="form-group">
         <input type="text" class="form-control" formControlName="Address"
           [hidden]="SignUpFrom.value.level_id == 3"
-          placeholder="العنوان"        >
+          placeholder="العنوان" 
+          [required]= 'SignUpFrom.value.level_id !=3'       >
       </div>
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
-          placeholder="رقم السجل التجارى"        >
+          placeholder="رقم السجل التجارى"        
+          
+          formControlName="cr_num">
       </div>
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
-          placeholder="اسم مدير المنتج"        >
+          placeholder="اسم مدير المنتج" 
+          formControlName='owner_name'       >
       </div>
 
 
     </div>
 
-    <!--
-    <ion-list class="step" [ngClass]="{shownPage: csPage== 3}"><br>
-      <ion-item>
-        <ion-select placeholder="المنطقة اجبارى" formControlName="Area" >
-            <ion-option *ngFor="let area of msAreas" [value]="area.id">{{area.name || 'اجبارى'}}</ion-option>
-        </ion-select>
-        <ion-select placeholder="  المدينة اجبارى" formControlName="City">
-<ion-option *ngFor="let city of msCity" [value]="city.id ">{{city.name || 'اجبارى'}}</ion-option>
-        </ion-select>
-        <ion-select placeholder="الحى" formControlName="Dist">
-
-<ion-option *ngFor="let dist of msDist" [value]="dist.id">{{dist.name || "اختيارى"}}</ion-option>
-        </ion-select>
-      </ion-item>
-
-      <ion-item>
-        <ion-input placeholder="العنوان"
-          formControlName="Address"
-          *ngIf="levelId('store') || levelId('exporter')"
-        >
-         </ion-input>
-      </ion-item>
-      <ion-item *ngIf="SignUpFrom.value.level_id == 2">
-        <ion-input placeholder="رقم السجل التجارى"></ion-input>
-      </ion-item>
-      <ion-item *ngIf="SignUpFrom.value.level_id == 2">
-        <ion-input placeholder="اسم مدير المتج"></ion-input>
-      </ion-item>
-    </ion-list>-->
-    <!--/[disabled]=" !SignUpFrom.valid"-->
 
 
 
-    <button 
-    [disabled]="SignUpFrom.valid == false"
-    *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
+    <button *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
   </form>
- <!-- <button
-
-    ion-button block
-    color="primary"
-    (click)="toNextPage()"
-
-  >{{lastPage || "التالى" }}</button>-->
 
   <button
         margin-top
         *ngIf="!lastPage"
-        type="submit"
          block
          (click)="toNextPage()"
-        id="login-button"
-        
+        id="next-button"
       >{{lastPage || "التالى" }}
       <div id="loader" *ngIf="showLoader">
             <div class="loader-circle"></div>
         </div>
-      </button>
-
+  </button>
+<!--
 <ion-card padding>
   {{SignUpFrom.getRawValue()['Gender'] | json}}
   {{SignUpFrom.getRawValue()['Area']}}
@@ -295,6 +200,6 @@
 
  </ion-card>
 
-
+-->
 
 </ion-content>

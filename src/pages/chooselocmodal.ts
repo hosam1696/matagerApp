@@ -32,7 +32,7 @@ interface maPlaces {
       
       <ion-item *ngFor="let area of AllAreas;let i =index"
       (click)="choosePlace(area.name, area.id)">
-        <ion-badge>{{i}}</ion-badge>
+        <!--<ion-badge>{{i}}</ion-badge>-->
         {{area.name}}      </ion-item>
     </ion-list>
 
@@ -40,7 +40,14 @@ interface maPlaces {
       لا يوجد أماكن متوفرة لهذا لأختيار حتى الان
     </p> 
   </ion-content>
-    `
+    `,
+    styles: [
+      `
+        ion-header ion-navbar ion-title .toolbar-title{
+          color: #fff
+        }
+      `
+    ]
 })
 
 export class ChooseArea {

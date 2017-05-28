@@ -4,42 +4,38 @@
     <ion-title>
       الصفحة الرئيسية
       </ion-title>
-    <!--<ion-buttons end>
-      <button ion-button (click)="toLoginPage()">
-          <ion-icon name="person"></ion-icon>
-      </button>
-    </ion-buttons>-->
+
   </ion-navbar>
 </ion-header>
 
-<ion-content color="primaryDark">
-  <ion-slides>
+<ion-content>
 
-    <ion-slide >
-      <h2>اعلان</h2>
-    </ion-slide>
-
-    <ion-slide >
-      <h2>اعلان</h2>
-    </ion-slide>
-
-    <ion-slide >
-      <h2>اعلان</h2>
-    </ion-slide>
-
-  </ion-slides>
-
-
+ <ion-slides>
+   <ion-slide>1</ion-slide>
+   <ion-slide>2</ion-slide>
+   <ion-slide>3</ion-slide>
+ </ion-slides>
 
   <ion-grid id="surf">
+
+    <h2 id="hero-header">الأقسام الرئيسية</h2>
+
     <ion-row>
-      <ion-col (click)="toExporterPage()">
-        <h1>موردين</h1>
+
+
+      <ion-col (click)="navigateTo('StoresPage')">
+        <h4 float-right>متاجر</h4>
+        <img src="../../assets/img/store-icon.png" alt="">
+        <ion-icon float-left name="arrow-dropleft-circle"></ion-icon>
+      </ion-col>
+
+      <ion-col (click)="navigateTo('Exporter')">
+        <h4>موردين</h4>
+        <img src="../../assets/img/exporter-icon.png" alt="">
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
       </ion-col>
       
-      <ion-col (click)="toMerchantPage()">
-        <h1>متاجر</h1>
-      </ion-col>
+      
       
     </ion-row>
   </ion-grid>
