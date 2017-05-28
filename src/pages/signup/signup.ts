@@ -153,7 +153,7 @@ export class Signup {
     console.log(this.checkValidator());  
       if (control[0][1].value == '') {
         
-        this.showToast(`يجب ادخال ${control[0][0]}`)
+        this.showToast(` تأكد  من ادخال  ${control[0][0]}`)
       }
       else if (control[0][1].errors['minlength']) {
         

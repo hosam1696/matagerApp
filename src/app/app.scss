@@ -33,6 +33,9 @@
 
 ion-header {
     ion-navbar {
+        .toolbar-background-ios {
+            border-color: rgba(0,0,0,.1) !important;
+        }
         ion-title {
           .toolbar-title {
             font-size: 20px;
