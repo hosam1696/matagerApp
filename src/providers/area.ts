@@ -8,8 +8,7 @@ import {Observable} from "rxjs/Observable";
 export class AreaProvider {
     Areas_URL:string = 'http://192.168.1.16/matager/api/places.php';
 
-    constructor ( public http: Http) {
-}
+    constructor ( public http: Http) {}
 
 
     getAreas() {

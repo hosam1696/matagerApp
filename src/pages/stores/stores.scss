@@ -1,9 +1,12 @@
-* {
-  box-sizing: border-box;
-}
-page-exporter {
-  ion-content {
-    #modal-button{
+
+page-stores {
+$content-padding : 14px;
+$content-margin-bottom: 5px;
+ion-content {
+    &.content {
+        background-color: #eeeeee
+      }
+ #modal-button{
       background-color: #fff;
       width: 100%;
       display: flex;
@@ -15,24 +18,24 @@ page-exporter {
       .btn-icon {
         width: 30px;
         height:30px;
-        border-left: 1px solid color($colors, bgColor);
+        border-left: 1px solid #ddd;
         text-align: right;
         ion-icon {
           font-size: 20px;
           line-height: 30px;
           font-weight: bold;
-          color: color($colors, primary)
+          color: color($colors, primary);
         }
       }
-
+ }
       #search-result{
         min-width: 100px;
-        display: flex;
         width: 100%;
+        //display: flex;
         //margin: 10px;
-        flex-direction: row-reverse ;
+        //flex-direction: row-reverse ;
         height: 30px;
-        align-items: center;
+        //align-items: center;
         div.no-data {
             display: flex;
             justify-content: space-between;
@@ -88,36 +91,11 @@ page-exporter {
 
         }
       }
-    }
 
-    ion-input {
-      .input-cover {
-        background-color: #fff;
-        z-index:-1
-      }
-    }
-    &.content {
-      background-color: color($colors, bgColor);
-    }
-    #hero {
-      background: #517fa4;
-      background: -webkit-linear-gradient(to right, #517fa4, #243949);
-      background: linear-gradient(to right, #517fa4, #243949);
-      height: 100px;
-      width: 100%;
-      //box-shadow: inset  0 -5px 25px #999;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      h1 {
-        color: #fff
-      }
-    }
 
-    ion-list {
+      ion-list {
       ion-item {
-
-       h2 {
+        h2 {
           display: flex;
           padding: 5px 0 5px 5px;
           justify-content: space-between;
@@ -137,9 +115,8 @@ page-exporter {
             color: color($colors, primaryDark);
           }
       }
-
       }
-
     }
-  }
+}
+
 }

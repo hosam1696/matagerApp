@@ -14,8 +14,6 @@ import { NotificationsPage } from '../pages/notifications/notificationsPage';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {Merchant} from "../pages/merchants/merchant";
-import {Exporter} from "../pages/exporter/exporter";
 import { PlacesModal } from '../pages/filtermodal';
 
 import { ChooseArea } from '../pages/chooselocmodal';
@@ -32,8 +30,6 @@ import { AreaProvider } from '../providers/area';
     HomePage,
     TabsPage,
     NotificationsPage,
-    Merchant,
-    Exporter,
     PlacesModal,
     ChooseArea
   ],
@@ -59,8 +55,6 @@ import { AreaProvider } from '../providers/area';
     HomePage,
     TabsPage,
     NotificationsPage,
-    Merchant,
-    Exporter,
     PlacesModal,
     ChooseArea
   ],

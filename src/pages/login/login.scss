@@ -1,34 +1,51 @@
 
 
 page-login {
- 
+
   ion-tabs {
     #main-tabs {
         div.tabbar.show-tabbar {
         opacity: 0;
       }
     }
-      
+
       .tabbar {
         display: none;
       }
-      .tabs-md .tabbar 
+      .tabs-md .tabbar
       {
        display: none
       }
     }
   ion-content {
-    
+
     &.content {
       background-color: #028cff;
       /*background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../../assets/img/logo.png);*/
 
-      background:url(../../assets/img/logo2.png);
+      background:url('/assets/img/logo2.png');
       background-position: 100%;
+
+    }
+    #page-content {
+     //background-color: red;
+      transform: translateY( -30px);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+
+      form {
+        width: 100%;
+      }
 
     }
     #form-navigate {
       height: 30px;
+      position: relative;
+      z-index: 100;
       margin-top: -12px;
       margin-right: -5px;
       button {
@@ -42,10 +59,12 @@ page-login {
       width: 100%;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
-      h1 {
-        color: #fff;
-        font-size: 60px
+      align-items: center;
+      margin-bottom: 15px;
+      margin-top: -15px;
+      img {
+        width: 40%;
+
       }
     }
     .scroll-content {
@@ -69,7 +88,7 @@ page-login {
             //background-color: red;
             display: inline-flex;
             align-items: center;
-            justify-content: center; 
+            justify-content: center;
             margin: 0 10px;
             .loader-circle {
               width: 80%;
@@ -77,7 +96,7 @@ page-login {
               border-radius: 50%;
               border:2px solid transparent;
               border-top-color: #fff;
-              animation: loader 0.6s linear infinite; 
+              animation: loader 0.6s linear infinite;
 
             }
             @keyframes loader {
@@ -108,9 +127,9 @@ page-login {
           &::-webkit-input-placeholder {
             color: #d6ecff !important;
           }
-        } 
+        }
 
-        
+
         }
 
         direction: rtl;
@@ -135,7 +154,7 @@ page-login {
             //background-color: red;
             display: inline-flex;
             align-items: center;
-            justify-content: center; 
+            justify-content: center;
             margin: 0 10px;
             .loader-circle {
               width: 80%;
@@ -143,7 +162,7 @@ page-login {
               border-radius: 50%;
               border:2px solid transparent;
               border-top-color: color($colors, primary);
-              animation: loader 0.6s linear infinite; 
+              animation: loader 0.6s linear infinite;
 
             }
             @keyframes loader {
@@ -154,9 +173,10 @@ page-login {
           }
         }
         button {
-          margin-top: 20px
+          margin-top: 15px
         }
         p {
+          margin: 0 auto;
           button {
             background-color: transparent;
             color: #fff
@@ -167,5 +187,5 @@ page-login {
 
       }
     }
-  
+
 }
