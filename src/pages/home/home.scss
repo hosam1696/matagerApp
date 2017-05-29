@@ -32,7 +32,6 @@ page-home {
           color: color($colors, primary);
         }
       }
-      
       #search-result{
         min-width: 100px;
         display: flex;
@@ -44,7 +43,6 @@ page-home {
         display: flex;
         //margin: 10px;
         flex-direction: row-reverse ;
-        
         span {
           text-align: left;
             min-width: 50px;
@@ -52,7 +50,7 @@ page-home {
           //background-color: blue;
           margin: 5px;
           position: relative;
-          
+
           &:after {
             content: '';
             position: absolute;
@@ -73,7 +71,8 @@ page-home {
             &:after {
               content : '';
               display: none;
-            } 
+
+            }
           }
         }
 
@@ -130,7 +129,7 @@ page-home {
             @extend :after;
             right: -5px;
 
-            
+
           }
         }
         ion-row {
@@ -142,56 +141,48 @@ page-home {
             color: #333;
             background-color: color($colors, light);
             color: color($colors, primary);
+
             h4 {
               margin-top: 0px;
-              position: relative;
-              right: -35px;
-              
+            }
+
+            img {
+              text-align: center;
+              width: 80px;
+              //height: 70px;
+              display: block;
+              margin: 0 auto;
+
             }
             ion-icon {
               font-size: 25px;
-              position: relative;
-              left: -50px;
+              //position: relative;
+              //left: -50px;
+              display: block;
+              text-align: left
             }
             &:first-child {
               //background-color: dodgerblue;
+              img {
+                height: 56px
+              }
             }
             &:last-child {
-              //background-color: darkcyan;
+              //background: red;
             }
+
           }
         }
       }
       ion-slides {
+        direction: ltr;
         max-height: 200px;
         ion-slide {
-         
+
+         direction: ltr;
           background-color: #ccc
         }
       }
-        
-      
-        ion-grid {
-            &.grid {
-                margin-left: 0 !important;
-                margin-right: 0 !important;
-            }
-
-            ion-col {
-                display: flex;
-                height: 150px;
-                justify-content: center;
-                background-color: #ccc;
-                color: #eee;
-                align-items: center
-            }
-        }
-        ion-card {
-            margin-left:0 !important;
-            width: 100% !important;
-            background-color: #333;
-            color: #eee
-        }
     }
 
 }

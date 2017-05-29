@@ -13,7 +13,7 @@ export class ContactPage {
   usersavedName: string;
   userFullName: string;
   userGender: string;
-static viewCtrl: ViewController;
+  static viewCtrl: ViewController;
   constructor(
     public navCtrl: NavController,
      public alertCtrl:AlertController,

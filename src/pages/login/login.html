@@ -2,19 +2,22 @@
 
 <ion-content padding-horizontal>
 <section id="form-navigate">
+
   <ion-buttons start>
     <button ion-button (click)="backStep()">
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
   </ion-buttons>
+
 </section>
 
 
   <section id="page-content">
 
-  
+
+
   <section id="logo-hero">
-    <img src="../../assets/img/mainlogo.png" alt="">
+    <img src="/assets/img/mainlogo.png" alt="">
   </section>
 
 
@@ -40,7 +43,7 @@
           required>
     </div>
 <button
-        
+
         type="submit"
         color="primary"
          block
@@ -50,44 +53,15 @@
             <div class="loader-circle"></div>
         </div>
       </button>
-    <!--
-    <ion-list no-lines>
-
-      <ion-item>
-        <ion-label >اسم المستخدم</ion-label>
-        <ion-input
-          type="text"
-          formControlName="Username"
-          required
-        ></ion-input>
-      </ion-item>
-
-      <ion-item>
-        <ion-label >كلمة المرور</ion-label>
-        <ion-input
-          type="password"
-          formControlName="Password"
-          required
-        ></ion-input>
-      </ion-item>
-      <button
-        
-        type="submit"
-        color="primary"
-         block
-        id="login-button"
-      >تسجيل الدخول
-      <div id="loader" *ngIf="showLoader">
-            <div class="loader-circle"></div>
-        </div>
-      </button>
-      
-    </ion-list> -->
     </form>
     <br>
     <p style="color:#fff" (click)="toForgetPass()">نسيت كلمة المرور؟</p>
     <p>ليس لديك حساب ؟ <button (click)="toRegisterPage()">تسجيل حساب جديد</button></p>
     <!--<pre>{{ LoginForm.value | json}}</pre>-->
 </section>
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 95fe7a3c930d877b4a16ba6f70f498d1df96756a
 </ion-content>

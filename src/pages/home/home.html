@@ -10,8 +10,11 @@
 
 <ion-content>
 
- <ion-slides>
-   <ion-slide>1</ion-slide>
+
+ <ion-slides  pager="true" autoplay="1000" loop="true">
+   <ion-slide>
+
+   </ion-slide>
    <ion-slide>2</ion-slide>
    <ion-slide>3</ion-slide>
  </ion-slides>
@@ -22,21 +25,27 @@
 
     <ion-row>
 
-
       <ion-col (click)="navigateTo('StoresPage')">
         <h4 float-right>متاجر</h4>
         <img src="../../assets/img/store-icon.png" alt="">
         <ion-icon float-left name="arrow-dropleft-circle"></ion-icon>
       </ion-col>
 
+
+      <ion-col (click)="navigateTo('StoresPage')">
+        <h4 float-right>متاجر</h4>
+        <img src="/assets/img/store-icon.png" alt="">
+        <ion-icon float-left name="arrow-dropleft-circle"></ion-icon>
+      </ion-col>
+
       <ion-col (click)="navigateTo('Exporter')">
         <h4>موردين</h4>
-        <img src="../../assets/img/exporter-icon.png" alt="">
+        <img src="/assets/img/exporter-icon.png" alt="">
         <ion-icon name="arrow-dropleft-circle"></ion-icon>
       </ion-col>
-      
-      
-      
+
+
+
     </ion-row>
   </ion-grid>
 

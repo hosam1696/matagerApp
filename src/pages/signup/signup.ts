@@ -150,7 +150,7 @@ export class Signup {
     return validcontrols.length == 0 ? true : validcontrols;
   }
 
-  detectErrors(control) {
+  detectErrors(control):void {
     console.log(this.checkValidator());  
       if (control[0][1].value == '') {
         
@@ -166,7 +166,7 @@ export class Signup {
       }
   }
 
-  increasePageNum() {
+  increasePageNum():number {
 
     let num = Math.max(Math.min(3,this.csPage+1), 1);
     if (num >= 3)
@@ -176,7 +176,7 @@ export class Signup {
     return this.csPage;
   }
 
-  decreasePageNum() {
+  decreasePageNum():number {
     let num = Math.max(Math.min(3, this.csPage-1), 1);
 
     if (num < 3 )
@@ -188,8 +188,13 @@ export class Signup {
   }
 
 
+<<<<<<< HEAD
   SubmitForm() {
+=======
+  SubmitForm():void {
+>>>>>>> 95fe7a3c930d877b4a16ba6f70f498d1df96756a
 
+        
     if( this.SignUpFrom.valid) {   
     //TODO: add more client side validation
     delete this.SignUpFrom.value.InsurePassword;
@@ -212,7 +217,8 @@ export class Signup {
     });
 
      } else {
-       console.log('Form Status',this.SignUpFrom.status);
+      console.log('Form Status', this.SignUpFrom.status);
+      this.showToast('تأكد من ملىء جميع الحقول')
      }
   }
 
@@ -238,23 +244,23 @@ export class Signup {
     toast.present();
   }
 
-  backStep() {
+  backStep():void {
     if (this.csPage == 1)
       this.navCtrl.pop();
     else
       this.decreasePageNum();
   }
 
-  openModal(name, searchId) {
+  openModal(name:string, searchId: number) {
 
     if (name == 'Area') {
       this.initModal(name, searchId);
     } else if (name == "City") {
       
-      (this.SignUpFrom.get('Area').value) ? this.initModal(name, searchId) : this.showToast('يجب تحديد المنطقة أولاً'); 
+      (this.SignUpFrom.get('Area').value) ? this.initModal(name, searchId) : this.showToast('يرجى تحديد المنطقة أولاً'); 
     } else if (name == 'Dist') {
       
-     (this.SignUpFrom.get('City').value)?this.initModal(name, searchId):this.showToast('يجب تحديد المدينة أولاً');
+     (this.SignUpFrom.get('City').value)?this.initModal(name, searchId):this.showToast('يرجى تحديد المدينة أولاً');
     } else {
       return false;
     }

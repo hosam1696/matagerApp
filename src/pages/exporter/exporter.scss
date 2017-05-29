@@ -24,7 +24,7 @@ page-exporter {
           color: color($colors, primary)
         }
       }
-      
+
       #search-result{
         min-width: 100px;
         display: flex;
@@ -48,49 +48,49 @@ page-exporter {
             width: 100%;
             height: 100%;
             align-items: center;
-        display: flex;
-        //margin: 10px;
-        flex-direction: row-reverse ;
-        
+            display: flex;
+            //margin: 10px;
+            flex-direction: row ;
+
         span {
-          text-align: left;
+          text-align: right;
             min-width: 50px;
             font-size: 10px;
           //background-color: blue;
           margin: 5px;
           color: #777;
           position: relative;
-          
+
           &:after {
             content: '';
             position: absolute;
-            right: -2px;
-            top: -2px;
-            width: 15px;
+            left: 0;
+            top: 0;
+            width: 12px;
             border-radius: 2px;
-            height: 15px;
+            height: 12px;
             border: 1px solid transparent;
-            box-shadow: 1px -1px #ececec;
+           // box-shadow: 1px -1px #ececec;
             transform: rotate(45deg);
            // background-color: #888;
             //border-top-color: #ddd;
-            //border-right-color: #ddd;
-            border-top-color: color($colors, primary);
-            border-right-color: color($colors, primary);
+            border-bottom-color: color($colors, primary);
+            border-left-color: color($colors, primary);
+            //border-right-color: #ddd
 
           }
           &:last-child {
             &:after {
               content : '';
               display: none;
-            } 
+            }
           }
         }
 
         }
       }
     }
-    
+
     ion-input {
       .input-cover {
         background-color: #fff;
@@ -117,7 +117,6 @@ page-exporter {
 
     ion-list {
       ion-item {
-          
        h2 {
           display: flex;
           padding: 5px 0 5px 5px;
@@ -138,8 +137,7 @@ page-exporter {
             color: color($colors, primaryDark);
           }
       }
-        
-      }
+            }
 
     }
   }

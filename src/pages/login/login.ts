@@ -39,14 +39,14 @@ export class Login {
        console.log(data);
      })
  */
-   
+
   }
 
   ionViewWillEnter() {
-  
+
     //TODO: hide the tabs on login page
 
-}  
+}
   ionViewWillLeave() {
 
   }
@@ -54,7 +54,7 @@ export class Login {
   submitLogin() {
 
 
-    //TODO: chech the internet connection || works  on device only 
+    //TODO: chech the internet connection || works  on device only
 
     if ( this.network.type == 'none') {
       //if ('1' == '2') {
@@ -77,12 +77,16 @@ export class Login {
               // Test data :: console.log(dataKeys, dataKeys.length);
               localStorage.setItem('Username', this.LoginForm.value.Username);
               localStorage.setItem('userLocalData', JSON.stringify(data.data));
+<<<<<<< HEAD
               console.log(localStorage.getItem('userLocalData'));
+=======
+              console.table(localStorage.getItem('userLocalData'));
+>>>>>>> 95fe7a3c930d877b4a16ba6f70f498d1df96756a
 
               // TODO: navigate to the home page
               this.navCtrl.setRoot(HomePage);
               this.navCtrl.popToRoot();
-              console.log(localStorage.getItem('Username'));
+
             } else {
               this.showLoader = false;
               this.showToast(`${data.message}`)
@@ -92,17 +96,14 @@ export class Login {
             this.showToast('مشكلة فى الوصول الى قاعدة البيانات');
             console.warn(err);
             this.showLoader = false;
-          },
-          () => {
-            console.log('completed successfully');
           }
         );
       } else {
         this.showLoader = false;
         if (this.LoginForm.value.Username == "")
-          this.showToast('تأكد من ادخال اسم  المستخدم');
+          this.showToast(' يرجى ادخال اسم  المستخدم');
         else {
-          this.showToast('تأكد من ادخال كلمة المرور')
+          this.showToast('يرجى ادخال كلمة المرور')
         }
       }
     }
@@ -126,15 +127,17 @@ export class Login {
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000
+      duration: 2000,
+      cssClass: 'danger-toast'
     });
     toast.present();
   }
 
-  toForgetPass() {
+  toForgetPass():void {
     this.navCtrl.push('ForgetPage')
   }
-  backStep() {
+  backStep():void {
     this.navCtrl.pop();
+    console.log('pop this page.. please!');
   }
 }
