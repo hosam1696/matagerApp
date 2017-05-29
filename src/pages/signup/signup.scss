@@ -32,14 +32,17 @@ page-signup {
       margin-bottom: 3px;
       div {
         width: 30%;
-        padding: 8px 0 ;
-        background-color: #fff;
+        padding: 8px  ;
+       background-color: rgba(255, 255, 255, 0.3);
         border-radius: 3px;
-        color: #666;
-        text-align: center;
+        color: #fff;
+        //text-align: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         ion-icon {
-          color: #999;
-
+          color: #eee;
+          font-size: 12px;
         }
         input {
           width: 0;
@@ -148,6 +151,7 @@ page-signup {
         display: none;
        // transform: translateX(-120%);
       }
+
       div.shownPage, ion-list.showPage {
          /* animation: slide 0.5s ;
           animation-fill-mode: forwards;
@@ -164,6 +168,7 @@ page-signup {
           }
 
         }
+
       .form-group {
         padding: 2px 0;
         .form-control {
@@ -216,27 +221,26 @@ page-signup {
           ion-icon {
             color: #c5ebfd;
           }
-          &.group-bg {
-          background-color: #fff;
-        }
+          
         .almostwidth {
           width: 90% !important;
-          background-color: #fff;
+          background-color: rgba(255, 255, 255, 0.3);
           border-radius: 5px;
           padding: 5px;
-          border: 1px solid #ddd;
+          color: #c5ebfd;
+          //border: 1px solid #ddd;
           ion-icon {
             font-size: 12px;
-            color: #ccc;
+            color: #a1cdf4;
             margin: 5px
           }
         }
           label {
             width: 100%;
-            color: #999;
             ion-icon {
               font-size: 60px;
-              padding: 0 5px
+              padding: 0 5px;
+              
             }
             p {
               font-size: 10px;
@@ -249,11 +253,11 @@ page-signup {
             display: none
           }
           input[type='radio']:checked  ~ label ion-icon{
-            color:color($colors, primary);
-            text-shadow: 1px -1px #a1cdf4, 2px -2px #018bff
+            color:#1a6da5;
+            text-shadow: 1px -1px #a1cdf4
           }
           input[type='radio']:checked ~ label {
-            color: #396dca;
+            color: #fff;
           }
         }
 

@@ -188,11 +188,8 @@ export class Signup {
   }
 
 
-<<<<<<< HEAD
-  SubmitForm() {
-=======
+
   SubmitForm():void {
->>>>>>> 95fe7a3c930d877b4a16ba6f70f498d1df96756a
 
         
     if( this.SignUpFrom.valid) {   

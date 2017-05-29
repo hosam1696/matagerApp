@@ -58,8 +58,6 @@ export class ChooseArea {
                 public areasProviders: AreaProvider) {
 
                     this.modalData = this.params.data.name;
-                    // console.log('Data entered', params.get('name'));
-
                     this.areasProviders.filterPlacesByParent(this.params.data.defineSearch)
                       .subscribe(data=>{
                         this.AllAreas.push(data);

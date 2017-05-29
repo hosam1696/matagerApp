@@ -13,7 +13,7 @@ export class AreaProvider {
 
     getAreas() {
 
-        return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"}));
+        return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"})).map(res=>res.json());
     }
 
 

@@ -27,15 +27,15 @@ export class Exporter {
 
   searchData(modalData) {
     this.userProvider.getAreas().subscribe(data=>{
-        //console.log('Data entered',modalData,'Matched Area from Database', data.data);
+
         this.dataFromModal = data.data.filter(place=> place.id == modalData.AreaId || place.id == modalData.CityId || place.id == modalData.DistId);
         console.log(this.dataFromModal);
       })
   }
 
-  openSearchModal() {
+  openFilterModal() {
 
-    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'FilterModal',User: 'Hosam'});
+    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'اختر نوع البحث',User: 'Hosam'});
     modal.onDidDismiss(data=> {
       //console.log('Data from Modal',data);
       this.searchData(data);

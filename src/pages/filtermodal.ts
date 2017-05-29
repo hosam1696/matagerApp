@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 
 import {UserProvider} from '../providers/user';
-
+import { AreaProvider } from '../providers/area';
 import 'rxjs/operator/filter';
 
 interface IResult {
@@ -15,7 +15,7 @@ interface IResult {
     template:`\
        <ion-header>
 
-  <ion-navbar color="primary">
+  <ion-navbar color="light">
     <ion-title>{{modalData.pageName}}</ion-title>
 
     <ion-buttons end>
@@ -41,25 +41,27 @@ interface IResult {
     `
 })
 export  class PlacesModal {
-    places: [any];
+    places: [any] = [{}];
     modalData: object;
     modalNum:number = 1;
     finalResult: IResult ={};
   constructor(params:NavParams,
                 public viewCtrl: ViewController,
-                 public usersPlaces:UserProvider) {
+                public usersPlaces: UserProvider,
+                public areasProviders: AreaProvider) {
 
       console.log('UserId', params.data);
       this.modalData = params.data;
-      this.usersPlaces.getAreas().subscribe(fetchedData=> {
-          
-          //this.places = fetchedData;
-          this.places = fetchedData.data.filter(area=>area.parent == 0);
-          //console.log(data);
+
+      this.areasProviders.filterPlacesByParent(0).subscribe(fetched => {
+          this.places.push(fetched);
+      },
+          err => {
+              console.warn(err);
       })
+
   }
   closeModal(newData) {
-      console.log('close the modal');
       this.viewCtrl.dismiss(this.finalResult)
   }
 
@@ -81,8 +83,8 @@ export  class PlacesModal {
 
     console.log(this.finalResult, this.modalNum);
 
-    this.usersPlaces.getAreas().subscribe(fetchedData=> {
-          //console.log('Fetched Data', fetchedData);
+    this.areasProviders.getAreas().subscribe(fetchedData=> {
+          console.log('Fetched Data', fetchedData);
           let AllData = fetchedData.data;
 
           let wantedData = AllData.filter(place=> place.parent == newData.id);

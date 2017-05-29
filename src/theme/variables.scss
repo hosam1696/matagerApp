@@ -33,13 +33,13 @@ $content-margin: 9px;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #3fa8ff,
+  primary:    #2e8bc9,
   bgPrimary: #008bff,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #ffffff,
   dark:       #222,
-  primaryDark: #777,
+  primaryDark: #666,
   lightDark : #ccc,
   bgColor: #eee 
 );
@@ -49,8 +49,14 @@ $colors: (
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
+$tabs-background: #fff !important;
+$tabs-ios-border-color: transparent !important;
+$tabs-ios-tab-text-color:#666 !important;
+$tabs-ios-tab-icon-color: #666 !important;
 
+$tabs-ios-tab-text-color-active: #2e8bc9 !important;
 
+$tabs-ios-tab-icon-color-active: #2e8bc9 !important;
 
 // App Material Design Variables
 // --------------------------------------------------

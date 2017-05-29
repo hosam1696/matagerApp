@@ -120,4 +120,9 @@ navigateTo(page) {
       })
   }
 
+
+  navToAdv(addsLink) {
+    // navigate to the adverise link or the advertise owner
+    console.log('You have to go to ' + addsLink)
+  }
 }

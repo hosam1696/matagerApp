@@ -176,11 +176,17 @@ page-home {
       }
       ion-slides {
         direction: ltr;
-        max-height: 200px;
+        height: 170px;
         ion-slide {
-
          direction: ltr;
-          background-color: #ccc
+          background-color: #ccc;
+          height: 170px;
+         
+          img {
+            width: 100% !important;
+            height: 170px !important;
+            margin-top: 8px;
+          }
         }
       }
     }

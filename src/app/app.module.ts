@@ -42,8 +42,7 @@ import { AreaProvider } from '../providers/area';
       backButtonText: '',
       backButtonIcon: 'arrow-forward',
       iconMode: 'ios',
-      tabsHideOnSubPages: true,
-      mode: 'ios'
+      tabsHideOnSubPages: true
     }),
 
     IonicStorageModule.forRoot()

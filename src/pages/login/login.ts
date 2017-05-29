@@ -77,11 +77,9 @@ export class Login {
               // Test data :: console.log(dataKeys, dataKeys.length);
               localStorage.setItem('Username', this.LoginForm.value.Username);
               localStorage.setItem('userLocalData', JSON.stringify(data.data));
-<<<<<<< HEAD
-              console.log(localStorage.getItem('userLocalData'));
-=======
+
               console.table(localStorage.getItem('userLocalData'));
->>>>>>> 95fe7a3c930d877b4a16ba6f70f498d1df96756a
+
 
               // TODO: navigate to the home page
               this.navCtrl.setRoot(HomePage);

@@ -8,11 +8,10 @@
     </button>
   </ion-buttons>
 </section>
-<br>
   <section id="hero-logo">
     <!--<h2>LOGO</h2>-->
 
-    <img src="/assets/img/mainlogo.png" width="100" alt="">
+    <img src="/assets/img/mainlogo.png" width="80" alt="">
   </section>
 
   <form
@@ -103,19 +102,19 @@
 
     <div class="step" [ngClass]="{shownPage: csPage== 2}">
       
-      <h5 text-center style="color: #fff">من فضلك قم باختيار نوع العميل</h5>
+      <h6 text-center style="color: #fff">من فضلك قم باختيار نوع العضوية</h6>
       <div id="radio-group" class="form-group">
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="store" formControlName="level_id" value="2">
-            <label for="store">متجر<ion-icon name="person"></ion-icon></label>
+            <label for="store"><ion-icon name="person"></ion-icon>متجر</label>
 
           </div>
         </div>
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="client" formControlName="level_id" value="3">
-            <label for="client">عميل<ion-icon name="person"></ion-icon></label>
+            <label for="client"><ion-icon name="person"></ion-icon>عميل</label>
 
           </div>
         </div>
@@ -123,7 +122,7 @@
           <div class="almostwidth group-bg">
 
           <input type="radio" id="exporter" formControlName="level_id" value="4">
-            <label for="exporter">مورد<ion-icon name="person"></ion-icon></label>
+            <label for="exporter"><ion-icon name="person"></ion-icon>مورد</label>
           </div>
         </div>
       </div>
