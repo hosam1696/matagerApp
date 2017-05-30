@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ViewController } from 'ionic-angular';
-
+import { NavController, AlertController, ViewController, Events } from 'ionic-angular';
+import { Network } from '@ionic-native/network';
 //import {levelToAr} from '../../app/service/InewUserData';
 
 @Component({
@@ -17,10 +17,15 @@ export class ContactPage {
   constructor(
     public navCtrl: NavController,
      public alertCtrl:AlertController,
-     
+    public events: Events,public network: Network
      ) {
     this.checkUserLogin();
-    
+
+    this.events.subscribe('networkStatus', (data) => {
+        
+        console.log('%c%s','font-size: 30px', 'Your connection status is' + this.network.type);
+      }); 
+     
   }
 
   ionViewDidLoad() {
@@ -32,6 +37,12 @@ export class ContactPage {
     this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
     this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
     }
+
+
+    
+     
+
+       
    
   }
   ionViewDidEnter() {

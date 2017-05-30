@@ -19,9 +19,9 @@ export class StoresPage {
   }
 
 
- openSearchModal() {
+ openFilterModal() {
 
-    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'FilterModal',User: 'Hosam'});
+    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'اختر نوع البحث',User: 'Hosam'});
     modal.onDidDismiss(data=> {
       //console.log('Data from Modal',data);
       this.searchData(data);

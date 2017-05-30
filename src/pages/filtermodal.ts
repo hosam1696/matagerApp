@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
-
-import {UserProvider} from '../providers/user';
 import { AreaProvider } from '../providers/area';
+
 import 'rxjs/operator/filter';
 
 interface IResult {
@@ -29,36 +28,51 @@ interface IResult {
 </ion-header>
     <ion-content>
         
-        <ion-list>
+        <ion-list *ngIf="places.length > 0">
             <button *ngFor="let place of places, let i = index" ion-item (click)="openNewModal(place)">
                <p item-left><ion-badge color="primary">{{i+1}}</ion-badge> </p>
                 <p>{{place.name}}</p>
             </button>
         </ion-list>
 
+        <p *ngIf="noPlaces && !errorAccessDB" text-center>
+            <br>
+            <ion-icon name="git-branch" color="primaryDark"></ion-icon>
+            <br>
+            لا يوجد أماكن متوفرة لهذا لأختيار حتى الان<ion-icon name="mark"></ion-icon>
+         </p>
+
+         <p *ngIf="errorAccessDB" text-center wordcolor="blue">
+            <br>
+            <ion-icon name="git-branch" ></ion-icon>
+            <br>
+            مشكلة فى الوصول الى قاعدة البيانات
+         </p>
     </ion-content>
 
     `
 })
 export  class PlacesModal {
-    places: [any] = [{}];
+    places: [any] | any = [];
     modalData: object;
     modalNum:number = 1;
-    finalResult: IResult ={};
-  constructor(params:NavParams,
-                public viewCtrl: ViewController,
-                public usersPlaces: UserProvider,
-                public areasProviders: AreaProvider) {
+    finalResult: IResult = {};
+    errorAccessDB: boolean = false;
+    noPlaces: boolean = false;
 
-      console.log('UserId', params.data);
+  constructor(
+                params:NavParams,
+                public viewCtrl: ViewController,
+                public areasProviders: AreaProvider)
+  {
+
       this.modalData = params.data;
 
-      this.areasProviders.filterPlacesByParent(0).subscribe(fetched => {
-          this.places.push(fetched);
-      },
-          err => {
-              console.warn(err);
-      })
+      this.fetchAreas(0, (data) => {
+          if (data == 'err') {
+              console.info('%c%s','font-size: 30px','Error Accessing the database');
+          }
+      });
 
   }
   closeModal(newData) {
@@ -67,6 +81,7 @@ export  class PlacesModal {
 
 
   openNewModal(newData) {
+
     switch (this.modalNum) {
         case 1:
             this.finalResult.AreaId = newData.id;
@@ -74,32 +89,52 @@ export  class PlacesModal {
         case 2:
             this.finalResult.CityId = newData.id;
             break;
-        case 3: 
+        case 3:
             this.finalResult.DistId = newData.id;
             break;
 
     }
-    
 
     console.log(this.finalResult, this.modalNum);
+    this.places = [];
+    this.areasProviders.filterPlacesByParent(newData.id).subscribe(fetched => {
 
-    this.areasProviders.getAreas().subscribe(fetchedData=> {
-          console.log('Fetched Data', fetchedData);
-          let AllData = fetchedData.data;
+      this.places.push( fetched );
+      this.errorAccessDB = false;
 
-          let wantedData = AllData.filter(place=> place.parent == newData.id);
-          console.log(wantedData);
-          this.places = wantedData;
-          //console.log(data);
-          if (this.modalNum >= 3 || wantedData.length == 0) {
-              this.viewCtrl.dismiss(this.finalResult)
-          } else {
-              this.modalNum+=1;
-          }
-      })
+    },
+        err => {
+            this.errorAccessDB = true;
+            console.warn(err);
+        },
+        () => {
+            //if (this.modalNum > 3 || this.places.length == 0) 
+            if (this.modalNum >= 3 ) {
+                this.viewCtrl.dismiss(this.finalResult)
+            } else {
+                if (this.places.length == 0)
+                    this.noPlaces = true;     
+                this.modalNum += 1;
+                console.log('modal number = ', this.modalNum);
+            }
+        }
+    )
   }
 
-  onDismiss(){
+  fetchAreas(parentId: number, callback = (f) => {}):void {
+    this.places = [];
+      this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
 
+          this.places.push(fetched);
+          this.errorAccessDB = false;
+          callback(fetched);
+      },
+          err => {
+
+              this.errorAccessDB = true;
+              console.warn(err);
+              callback('err');
+          }
+      )
   }
 }

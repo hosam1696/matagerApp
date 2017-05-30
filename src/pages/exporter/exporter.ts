@@ -35,7 +35,7 @@ export class Exporter {
 
   openFilterModal() {
 
-    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'اختر نوع البحث',User: 'Hosam'});
+    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'اختر نوع البحث',User: 'test user'});
     modal.onDidDismiss(data=> {
       //console.log('Data from Modal',data);
       this.searchData(data);

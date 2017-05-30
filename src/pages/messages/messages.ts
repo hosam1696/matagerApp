@@ -17,7 +17,7 @@ export class Messages {
 
   ionViewDidLoad() {
     //console.log('ionViewDidLoad Messages');
-
+    /*
     this.network.onConnect().subscribe(data=>{
       this.isOnline = true;
     });
@@ -25,13 +25,17 @@ export class Messages {
     this.network.onDisconnect().subscribe(data=> {
       this.isOnline = false;
     });
+
+    */
   }
 
   ionViewDidEnter() {
+    /*
     if ( this.network.type == 'none' || this.network.type == null) {
       this.isOnline = false;
     } else {
       this.isOnline = true
-    }
+    }*/
   }
+   
 }

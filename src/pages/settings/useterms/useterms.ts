@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Events } from 'ionic-angular';
 
 /**
  * Generated class for the Useterms page.
@@ -14,11 +14,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Useterms {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public events: Events) {
   }
 
   ionViewDidLoad() {
-
+    this.events.publish('networkStatus', 'Is connected');
   }
 
 }

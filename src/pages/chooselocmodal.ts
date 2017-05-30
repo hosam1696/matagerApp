@@ -27,7 +27,7 @@ interface maPlaces {
   </ion-navbar>
   </ion-header>
   <ion-content>
-
+    
     <ion-list *ngIf="AllAreas.length > 0">
       
       <ion-item *ngFor="let area of AllAreas;let i =index"
@@ -37,7 +37,8 @@ interface maPlaces {
     </ion-list>
 
     <p *ngIf="AllAreas.length <= 0" text-center>
-      لا يوجد أماكن متوفرة لهذا لأختيار حتى الان
+    <br>
+      لا يوجد أماكن متوفرة لهذا لأختيار حتى الان<ion-icon name="mark"></ion-icon>
     </p> 
   </ion-content>
     `,

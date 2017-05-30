@@ -11,7 +11,7 @@ import { NotificationsPage } from '../notifications/notificationsPage';
 export class TabsPage {
 
   tab1Root = HomePage;
-  tab2Root = 'AboutPage';
+  tab2Root = 'ProfilePage';
   tab3Root = 'Messages';
   tab4Root = NotificationsPage;
   tab5Root = ContactPage;

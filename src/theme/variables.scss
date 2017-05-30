@@ -45,11 +45,13 @@ $colors: (
 );
 
 
+$tabs-ios-background: #fff;
+$tabs-tab-color-active: #2e8bc9 !important;
 // App iOS Variables
 // --------------------------------------------------
 // iOS only Sass variables can go here
 
-$tabs-background: #fff !important;
+/*
 $tabs-ios-border-color: transparent !important;
 $tabs-ios-tab-text-color:#666 !important;
 $tabs-ios-tab-icon-color: #666 !important;
@@ -57,7 +59,7 @@ $tabs-ios-tab-icon-color: #666 !important;
 $tabs-ios-tab-text-color-active: #2e8bc9 !important;
 
 $tabs-ios-tab-icon-color-active: #2e8bc9 !important;
-
+*/
 // App Material Design Variables
 // --------------------------------------------------
 // Material Design only Sass variables can go here

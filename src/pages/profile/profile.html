@@ -1,0 +1,174 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      صفحتى </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+
+
+  <ion-card *ngIf="userLocal" id="user-info">
+    <section  id="hero">
+
+    </section>
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+
+        <ion-col col-3>
+
+          <ion-avatar>
+            <ion-icon name="camera-outline"></ion-icon>
+            <img *ngIf="userLocal.gender == 'male'" width="70" src="/assets/img/male-alt.png">
+
+            <img *ngIf="userLocal.gender == 'female'" width="70" src="/assets/img/female-alt.png">
+          </ion-avatar>
+          <div class="clearfix"></div>
+        </ion-col>
+
+        <ion-col>
+          <h4>{{userLocal.name}}</h4>
+          <div id="rank">
+            <ion-icon name="star" color="light"></ion-icon>
+            <ion-icon name="star" color="light"></ion-icon>
+            <ion-icon name="star" color="light"></ion-icon>
+            <ion-icon name="star" color="light"></ion-icon>
+            <ion-icon name="star-outline" color="light"></ion-icon>
+            &nbsp;
+            <span class="user-rank">4</span> / 5
+          </div>
+          <div id="profile-buttons">
+
+            <button ion-button color="primary" small outline>
+              <ion-icon name="person"></ion-icon> 
+             متابعة
+        </button>
+
+            <button ion-button color="primary" small outline>
+              <ion-icon name="chatboxes"></ion-icon> 
+           راسلنا
+          </button>
+
+            
+
+          </div>
+
+        </ion-col>
+       
+        </ion-row>
+      </ion-grid>
+
+        <div id="profile-follow">
+          <p ion-button clear color="primary">
+                      <ion-icon name="people"></ion-icon>
+                      المتابعون
+                      
+                      <span class="following">154</span>
+                      </p>
+
+          <p ion-button clear color="primary">
+                      <ion-icon name="people"></ion-icon>
+                      المتابعين
+                      <span class="followers">113</span>
+                      
+                    </p>
+        </div>
+
+
+        <div id="page-segments" padding>
+          <ion-segment [(ngModel)]="showContent">
+            <ion-segment-button value="shelfs">
+              الرفوف
+            </ion-segment-button>
+            <ion-segment-button value="products">
+              المنتجات
+            </ion-segment-button>
+          </ion-segment>
+      </div>
+
+
+
+    </ion-card>
+  
+    <!--<p>
+      <ion-icon name="card"></ion-icon> {{userLevel(userLocal.level_id)}}</p>
+    <p>
+      <ion-icon name="mail"></ion-icon> {{userLocal.email}}</p>
+
+    <p>
+      <ion-icon name="phone-portrait"></ion-icon> {{userLocal.mobile}}</p> -->
+    <!-- test data <pre>
+        {{userLocal | json}}
+      </pre> -->
+  </ion-card>
+  <div class="clearfix"></div>
+  <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
+
+    <ion-grid padding-horizontal>
+      <ion-row>
+        <ion-col col-6>
+          <div class="col-content">
+            <img src="/assets/img/adds_02.png" alt="product">
+            <p class="prod-desc">
+              ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>1,500</b></span>
+              ج.م
+            </p>
+
+            <a href="">ابلاغ عن مخالفة</a>
+          </div>
+        </ion-col>
+        
+        
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+ 
+  <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card">
+<ion-grid padding-horizontal>
+  <ion-row>
+    <ion-col col-6>
+      <div class="col-content">
+        <img src="/assets/img/adds_01.png" alt="product">
+        <p class="prod-desc">
+          ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+        </p>
+        <p class="price">
+          <span class="prod-price"><b>1,500</b></span> ج.م
+        </p>
+
+        <a href="">ابلاغ عن مخالفة</a>
+      </div>
+    </ion-col>
+    <ion-col col-6>
+      <div class="col-content">
+        <img src="/assets/img/adds_01.png" alt="product">
+        <p class="prod-desc">
+          ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+        </p>
+        <p class="price">
+          <span class="prod-price"><b>1,500</b></span> ج.م
+        </p>
+
+        <a href="">ابلاغ عن مخالفة</a>
+      </div>
+    </ion-col>
+   
+
+  </ion-row>
+</ion-grid>
+  </ion-card>
+
+  <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
+    <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
+    <button ion-button (click)="navigateToPage('Login')">تسجيل الدخول</button>
+    <p>او قم بتسجيل حساب جديد</p>
+    <button ion-button (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
+  </ion-card>
+</ion-content>

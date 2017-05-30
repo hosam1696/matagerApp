@@ -4,9 +4,21 @@ page-messages {
       //background-color: #eee;
     }
     ion-list {
-      ion-avatar {
-        background-color: #999;
-        border-radius: 10px
+      ion-item {
+        ion-avatar {
+        background: url(/assets/img/male-alt.png);
+        background-size: cover;
+        background-size: 100% 96%;
+        border-radius: 5px;
+
+      }
+      h4 {
+            margin-top: -5px !important;
+        color: color($colors, primary);
+      }
+      p {
+            margin-top: -5px !important
+      }
       }
     }
   }

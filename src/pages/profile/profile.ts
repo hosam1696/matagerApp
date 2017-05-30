@@ -5,12 +5,15 @@ import { NavController,IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
+  selector: 'page-profile',
+  templateUrl: 'profile.html'
 })
-export class AboutPage {
+export class ProfilePage {
   userName: string;
   userLocal: object;
+  shelf: string;
+  showContent: string = 'shelfs';
+
   constructor(public navCtrl: NavController) {
 
   }
@@ -19,6 +22,7 @@ export class AboutPage {
     this.userName = localStorage.getItem('Username');
     
     console.log(this.userLocal);
+    console.log(this.showContent);
   }
   ionViewWillEnter() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));

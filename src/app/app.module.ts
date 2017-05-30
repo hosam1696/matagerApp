@@ -10,13 +10,15 @@ import { MyApp } from './app.component';
 import { ContactPage } from '../pages/settings/settings';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
-import { NotificationsPage } from '../pages/notifications/notificationsPage';
 
+import { NotificationsPage } from '../pages/notifications/notificationsPage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { PlacesModal } from '../pages/filtermodal';
 
+import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
+
+import {wordColorDirective } from './service/wordcolor.directive';
 
 import {UserLogin} from "./service/userlogin";
 import {Network} from '@ionic-native/network';
@@ -26,12 +28,14 @@ import { AreaProvider } from '../providers/area';
 @NgModule({
   declarations: [
     MyApp,
+    wordColorDirective,
     ContactPage,
     HomePage,
     TabsPage,
     NotificationsPage,
     PlacesModal,
     ChooseArea
+
   ],
   imports: [
     BrowserModule,
