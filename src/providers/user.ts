@@ -14,24 +14,18 @@ export class UserProvider {
 
   LoginUser(userData){
     let apiKey = 'loginUser';
-    /*body.apiKey = 'loginUser';
-    console.log(body, typeof body);
-    this.http.post(this.API_URL+'/user.php',body)*/
+
     let data = JSON.stringify(Object.assign({}, {apiKey}, userData));
     console.log('Data entered',data, typeof data);
     return this.http.post(this.API_URL, data).map(res=> res.json());
   }
-  //TODO: Add {apiKey: 'loginUser'}
+
 
 
 
 
 addUser(newUserData) {
-  // TODO: Add {apiKey: 'newUser'}
-  /*
-   ES6 Feature
-   Object.assign(body, {apiKey: 'newUser'})
-   */
+
   let apiKey = 'newUser';
   let data = JSON.stringify(Object.assign({}, {apiKey}, newUserData));
   console.log('Data entered', data);

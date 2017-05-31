@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController } from 'ionic-angular';
 import { AreaProvider } from '../providers/area';
-
+import {ImodalData, Iplace} from '../app/service/InewUserData';
 import 'rxjs/operator/filter';
 
-interface IResult {
-    AreaId?: number,
-    CityId?: number,
-    DistId?: number
-}
 
 @Component({
     template:`\
@@ -19,7 +14,7 @@ interface IResult {
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">
-       <ion-icon  name="close">
+       <ion-icon  name="close-circle" color="primary">
        </ion-icon>
        </button>
     </ion-buttons>
@@ -27,7 +22,9 @@ interface IResult {
 
 </ion-header>
     <ion-content>
-        
+        <div id="loader" *ngIf="showLoader">
+            <div class="loader-circle"></div>
+        </div>
         <ion-list *ngIf="places.length > 0">
             <button *ngFor="let place of places, let i = index" ion-item (click)="openNewModal(place)">
                <p item-left><ion-badge color="primary">{{i+1}}</ion-badge> </p>
@@ -50,16 +47,43 @@ interface IResult {
          </p>
     </ion-content>
 
-    `
+    `,
+    styles: [`
+        #loader {
+            position: relative;
+            z-index: 5999;
+            width: 100%;
+            top: 15px;
+            height: 20px;
+            //background-color: red;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+}
+            #loader .loader-circle {
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              border:2px solid transparent;
+              border-top-color: #2e8bc9 ;
+              animation: loader 0.6s linear infinite;
+
+            }
+            @keyframes loader {
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          `]
 })
 export  class PlacesModal {
-    places: [any] | any = [];
+    places: [Iplace] | any = [];
     modalData: object;
     modalNum:number = 1;
-    finalResult: IResult = {};
+    finalResult: ImodalData = {};
     errorAccessDB: boolean = false;
     noPlaces: boolean = false;
-
+    showLoader: boolean = true;
   constructor(
                 params:NavParams,
                 public viewCtrl: ViewController,
@@ -75,66 +99,91 @@ export  class PlacesModal {
       });
 
   }
-  closeModal(newData) {
+  closeModal():void {
       this.viewCtrl.dismiss(this.finalResult)
   }
 
 
-  openNewModal(newData) {
+  openNewModal(choosenPlace:Iplace):void {
 
     switch (this.modalNum) {
         case 1:
-            this.finalResult.AreaId = newData.id;
+            [this.finalResult.AreaId, this.finalResult.AreaName] = [choosenPlace.id, choosenPlace.name];
             break;
         case 2:
-            this.finalResult.CityId = newData.id;
+            [this.finalResult.CityId, this.finalResult.CityName] = [choosenPlace.id, choosenPlace.name];
             break;
         case 3:
-            this.finalResult.DistId = newData.id;
+            [this.finalResult.DistId, this.finalResult.DistName] = [choosenPlace.id, choosenPlace.name];
             break;
 
     }
 
-    console.log(this.finalResult, this.modalNum);
-    this.places = [];
-    this.areasProviders.filterPlacesByParent(newData.id).subscribe(fetched => {
+    console.log(this.modalNum, this.finalResult);
 
-      this.places.push( fetched );
-      this.errorAccessDB = false;
-
-    },
-        err => {
-            this.errorAccessDB = true;
-            console.warn(err);
-        },
-        () => {
-            //if (this.modalNum > 3 || this.places.length == 0) 
-            if (this.modalNum >= 3 ) {
-                this.viewCtrl.dismiss(this.finalResult)
+    this.fetchAreas(choosenPlace.id, (fetched) => {
+        if (fetched != 'err' && fetched == 'completed') {
+            if (this.modalNum >= 3) {
+                this.closeModal();
+                //this.viewCtrl.dismiss(this.finalResult)
             } else {
                 if (this.places.length == 0)
-                    this.noPlaces = true;     
+                    this.noPlaces = true;
                 this.modalNum += 1;
                 console.log('modal number = ', this.modalNum);
             }
         }
-    )
+    });
+
+  /*
+    this.places = [];
+    this.areasProviders.filterPlacesByParent(choosenPlace.id).subscribe(fetched => {
+        this.showLoader = false;
+        this.places.push(fetched);
+        this.errorAccessDB = false;
+
+    },
+        err => {
+            this.showLoader = false;
+            this.errorAccessDB = true;
+            console.warn(err);
+        },
+        () => {
+            //if (this.modalNum > 3 || this.places.length == 0)
+            if (this.modalNum >= 3) {
+                this.closeModal();
+                //this.viewCtrl.dismiss(this.finalResult)
+            } else {
+                if (this.places.length == 0)
+                    this.noPlaces = true;
+                this.modalNum += 1;
+                console.log('modal number = ', this.modalNum);
+            }
+        }
+    );*/
+
+
   }
 
-  fetchAreas(parentId: number, callback = (f) => {}):void {
+
+
+  fetchAreas(parentId: number, callback = (f) => { }): void {
+      
     this.places = [];
       this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
-
+          [this.showLoader, this.errorAccessDB] = Array(2).fill(false);
           this.places.push(fetched);
-          this.errorAccessDB = false;
           callback(fetched);
       },
           err => {
-
+              this.showLoader = false;
               this.errorAccessDB = true;
               console.warn(err);
               callback('err');
-          }
+          },
+          () => {
+              callback('completed');
+        }
       )
   }
 }

@@ -44,48 +44,50 @@
           <div id="profile-buttons">
 
             <button ion-button color="primary" small outline>
-              <ion-icon name="person"></ion-icon> 
+              <ion-icon name="person"></ion-icon>
              متابعة
         </button>
 
             <button ion-button color="primary" small outline>
-              <ion-icon name="chatboxes"></ion-icon> 
+              <ion-icon name="chatboxes"></ion-icon>
            راسلنا
           </button>
 
-            
+
 
           </div>
 
         </ion-col>
-       
+
         </ion-row>
       </ion-grid>
 
         <div id="profile-follow">
-          <p ion-button clear color="primary">
+          <p ion-button clear color="primary" (click)="navigateToPage('FollowingsPage')">
                       <ion-icon name="people"></ion-icon>
                       المتابعون
-                      
+
                       <span class="following">154</span>
                       </p>
 
-          <p ion-button clear color="primary">
+          <p ion-button clear color="primary" (click)="navigateToPage('FollowersPage')">
                       <ion-icon name="people"></ion-icon>
                       المتابعين
                       <span class="followers">113</span>
-                      
+
                     </p>
         </div>
 
 
         <div id="page-segments" padding>
           <ion-segment [(ngModel)]="showContent">
-            <ion-segment-button value="shelfs">
-              الرفوف
-            </ion-segment-button>
+            
             <ion-segment-button value="products">
               المنتجات
+            </ion-segment-button>
+            
+            <ion-segment-button value="shelfs">
+              الرفوف
             </ion-segment-button>
           </ion-segment>
       </div>
@@ -93,7 +95,7 @@
 
 
     </ion-card>
-  
+
     <!--<p>
       <ion-icon name="card"></ion-icon> {{userLevel(userLocal.level_id)}}</p>
     <p>
@@ -108,6 +110,14 @@
   <div class="clearfix"></div>
   <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
 
+    <ion-list>
+        <ion-item margin-top *ngFor="let shelf of AllShelfs">
+          مساحة الرف: {{shelf.area}} || سعر الرف: {{shelf.cost}}
+
+        </ion-item>
+    </ion-list>
+
+<!--
     <ion-grid padding-horizontal>
       <ion-row>
         <ion-col col-6>
@@ -124,12 +134,26 @@
             <a href="">ابلاغ عن مخالفة</a>
           </div>
         </ion-col>
-        
-        
+        <ion-col col-6>
+          <div class="col-content">
+            <img src="/assets/img/adds_02.png" alt="product">
+            <p class="prod-desc">
+              ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>1,500</b></span> ج.م
+            </p>
+
+            <a href="">ابلاغ عن مخالفة</a>
+          </div>
+        </ion-col>
+
       </ion-row>
     </ion-grid>
+-->
+    <button ion-button small (click)="navigateToPage('AddshelfPage')"> أضف رف</button>
   </ion-card>
- 
+
   <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card">
 <ion-grid padding-horizontal>
   <ion-row>
@@ -159,7 +183,7 @@
         <a href="">ابلاغ عن مخالفة</a>
       </div>
     </ion-col>
-   
+
 
   </ion-row>
 </ion-grid>

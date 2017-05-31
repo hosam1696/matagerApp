@@ -20,7 +20,7 @@
   </div>
   <div id="search-result" >
       <div *ngIf="dataFromModal" class="found-data">
-        <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
+        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
         </div>
         <div *ngIf="!dataFromModal" class="no-data">
           <span color="primary">المدينة</span>

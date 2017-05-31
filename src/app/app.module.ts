@@ -25,6 +25,8 @@ import {Network} from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import {UserProvider} from "../providers/user";
 import { AreaProvider } from '../providers/area';
+import { ShelfsProvider } from '../providers/shelfs';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -69,7 +71,8 @@ import { AreaProvider } from '../providers/area';
     UserLogin,
     Geolocation,
     Network,
-    AreaProvider
+    AreaProvider,
+    ShelfsProvider
   ]
 })
 export class AppModule {}

@@ -8,6 +8,20 @@ export enum levelToAr {
   'مورد',
   'عميل'
 }
+export interface ImodalData {
+  AreaId?: number,
+  AreaName?: string,
+  CityId?: number,
+  CityName?:string,
+  DistId?: number,
+  DistName?: string
+}
+export interface Iplace {
+  id: number,
+  name; string,
+  parent: number,
+  parent_name: string| null
+}
 export interface IuserData{
   apiKey: string,
   Name: string,

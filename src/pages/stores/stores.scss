@@ -61,6 +61,7 @@ ion-content {
             font-size: 10px;
           //background-color: blue;
           margin: 5px;
+          color: #777;
           position: relative;
 
           &:after {
@@ -74,8 +75,11 @@ ion-content {
             border: 1px solid transparent;
            // box-shadow: 1px -1px #ececec;
             transform: rotate(45deg);
+           // background-color: #888;
+            //border-top-color: #ddd;
             border-bottom-color: color($colors, primary);
             border-left-color: color($colors, primary);
+            //border-right-color: #ddd
 
           }
           &:last-child {

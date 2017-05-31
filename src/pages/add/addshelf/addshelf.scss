@@ -1,0 +1,39 @@
+page-addshelf {
+    ion-header {
+        ion-navbar {
+            ion-title {
+            .toolbar-title {
+                color: #fff !important
+            }
+            }
+        }
+    }
+    ion-content {
+        &.content {
+            background: #eee;
+            //background-color: color($colors, bgColor)
+        }
+       form {
+
+            .form-group {
+        padding: 5px 0;
+        .form-control {
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.3);
+          color: #fff;
+          padding: 7px 10px;
+          border-radius: 5px;
+          border: none;
+          font-size: 14px;
+
+          &::-webkit-input-placeholder {
+            color: #d6ecff !important;
+          }
+        }
+
+
+        }
+       }
+    }
+
+}

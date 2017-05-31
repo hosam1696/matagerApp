@@ -2,7 +2,7 @@
 page-contact {
   * {
     font-size: 13px;
-  }  
+  }
   ion-item-divider {
       padding-right: 10px !important;
       height: 30px;
@@ -24,12 +24,12 @@ page-contact {
         }
       }
     }
-  
+
   ion-content {
     &.content {
       background-color: color($colors, bgColor);
       //padding-top: 0 !important;
-    } 
+    }
     ion-item#hero {
       background: color($colors, light);
       height: auto;
@@ -59,26 +59,26 @@ page-contact {
             width: 45px !important;
             height: auto
           }
-          
+
         }
-      
+
     }
-    
-    
+
+
     ion-list {
         margin-top: 20px;
         .item-inner {
           border-bottom:0.5px solid color($colors, bgColor) !important
           }
-          
-       
-        
+
+
+
       ion-item {
         color: color($colors, primaryDark) !important;
         font-weight:bold;
         padding-left: 13px;
         &.item-md:first-of-type {
-          
+
         }
         &.item-ios {
           padding-left: 0;
@@ -105,5 +105,11 @@ page-contact {
       text-decoration: none;
       font-weight: bold;
     }
+    &+p {
+      color: #999;
+      margin-top: -8px;
+      font-size: 11px
+    }
   }
+
 }

@@ -1,7 +1,14 @@
 page-messages {
+  ion-navbar {
+    ion-title {
+      .toolbar-title {
+        color: color($colors, light) !important;
+      }
+    }
+  }
   ion-content {
     .scroll-content {
-      //background-color: #eee;
+      background-color: #eee;
     }
     ion-list {
       ion-item {
@@ -30,7 +37,7 @@ page-messages {
         justify-content: center;
         align-items: center;
     }
-    
+
     ion-icon {
       font-size: 60px;
       color: #ccc

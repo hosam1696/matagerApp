@@ -4,6 +4,7 @@ import {Login} from "../login/login";
 import {Merchant} from "../merchants/merchant";
 import {Exporter} from "../exporter/exporter";
 
+import {ShelfsProvider} from "../../providers/shelfs";
 import {UserProvider} from "../../providers/user";
 import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -22,7 +23,8 @@ export class HomePage {
     public geolocation: Geolocation,
      public network: Network,
      public toastCont: ToastController,
-     public modalCrtl: ModalController
+     public modalCrtl: ModalController,
+     public shelfsProvider: ShelfsProvider
   ) {
     
   if(localStorage.getItem('Username')) {
@@ -39,6 +41,12 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
+    this.shelfsProvider.getShelfs()
+      .subscribe(res => {
+          console.log(res);
+      });
+
 
     //TODO: pre configuration and  setup for user 
 
@@ -81,7 +89,7 @@ showToast(msg, dur=3000) {
 
     toast.onDidDismiss(()=>{
       //TODO: pop to the main page of the user
-      console.log('moving to main page ..');
+      //console.log('moving to main page ..');
   
     });
 

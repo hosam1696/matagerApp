@@ -20,7 +20,7 @@ interface maPlaces {
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">
-       <ion-icon  name="close">
+       <ion-icon  name="close-outline" color="primary">
        </ion-icon>
        </button>
     </ion-buttons>
@@ -69,7 +69,7 @@ export class ChooseArea {
                       () => {
                         if (this.AllAreas.length <= 0) {
                             console.info('No Data',this.AllAreas);
-                            
+
                         }
                         console.info('All Data',this.AllAreas)
                       }
