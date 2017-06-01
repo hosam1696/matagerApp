@@ -1,9 +1,4 @@
-<!--
-  Generated template for the Contactus page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="light">
@@ -14,5 +9,34 @@
 
 
 <ion-content padding>
+  <form novalidate 
+    [formGroup]="contactForm" 
+    (ngSubmit)="submitForm()">
 
+
+    <div class="form-group">
+      <input type="text" placeholder="الاسم" formControlName="Name" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <input type="email" 
+      placeholder="البريد الالكترونى" 
+
+      formControlName="Email" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="العنوان" class="form-control" formControlName="Address">
+    </div>
+    <div class="form-group message">
+      <textarea class="form-control"
+        placeholder="رسالتك"
+       formControlName="Message"
+       rows="5"
+       >
+
+      </textarea>
+    </div>
+
+    <button id="form-button" ion-button full> ارسل رسالتك</button>
+  </form>
 </ion-content>

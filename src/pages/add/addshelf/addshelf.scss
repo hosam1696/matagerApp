@@ -23,11 +23,14 @@ page-addshelf {
             color: color($colors, primaryDark);
             padding: 7px 10px;
             border-radius: 5px;
-            border: none;
+            border: 1px solid transparent;
             font-size: 14px;
 
             &::-webkit-input-placeholder {
               color: #999 !important;
+            }
+            &.ng-valid {
+                border: 1px solid green;
             }
         }
         }

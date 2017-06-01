@@ -135,32 +135,6 @@ export  class PlacesModal {
         }
     });
 
-  /*
-    this.places = [];
-    this.areasProviders.filterPlacesByParent(choosenPlace.id).subscribe(fetched => {
-        this.showLoader = false;
-        this.places.push(fetched);
-        this.errorAccessDB = false;
-
-    },
-        err => {
-            this.showLoader = false;
-            this.errorAccessDB = true;
-            console.warn(err);
-        },
-        () => {
-            //if (this.modalNum > 3 || this.places.length == 0)
-            if (this.modalNum >= 3) {
-                this.closeModal();
-                //this.viewCtrl.dismiss(this.finalResult)
-            } else {
-                if (this.places.length == 0)
-                    this.noPlaces = true;
-                this.modalNum += 1;
-                console.log('modal number = ', this.modalNum);
-            }
-        }
-    );*/
 
 
   }
@@ -168,10 +142,10 @@ export  class PlacesModal {
 
 
   fetchAreas(parentId: number, callback = (f) => { }): void {
-      
+
     this.places = [];
       this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
-          [this.showLoader, this.errorAccessDB] = Array(2).fill(false);
+          [this.showLoader, this.errorAccessDB] = [true , false];
           this.places.push(fetched);
           callback(fetched);
       },
@@ -182,6 +156,7 @@ export  class PlacesModal {
               callback('err');
           },
           () => {
+              this.showLoader = false;
               callback('completed');
         }
       )

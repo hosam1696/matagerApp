@@ -24,7 +24,7 @@ interface Ishelf {
 export class ProfilePage {
   userName: string;
   userLocal: IlocalUser;
-  showContent: string = 'shelfs';
+  showContent: string = 'products';
   AllShelfs :[Ishelf];
   noShelfs:string;
 
@@ -40,6 +40,7 @@ export class ProfilePage {
     /*console.log(this.userLocal);
     console.log(this.showContent);
 */
+  if (this.userLocal)
     this.getShelfs(this.userLocal['id']);
 
   }
@@ -51,17 +52,18 @@ export class ProfilePage {
     this.shelfsProvider.getShelfs(userId).subscribe(res => {
       console.log('data', res);
       this.AllShelfs = res.data;
+      this.noShelfs = null;
       if (this.AllShelfs.length <=0)
         this.noShelfs = 'empty';
     },
       err => {
-        console.warn(err);
+
         this.noShelfs = 'netErr';
       }
     );
   }
-  navigateToPage(page):void {
-    this.navCtrl.push(page)
+  navigateToPage(page, pageData=165):void {
+    this.navCtrl.push(page ,{pageData})
   }
 
   userLevel(level:number):string {

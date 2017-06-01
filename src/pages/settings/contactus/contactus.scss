@@ -1,3 +1,43 @@
 page-contactus {
 
+
+    ion-content {
+        &.content {
+            background-color: #eee;
+        }
+
+        form {
+
+        .form-group {
+          padding: 5px 0;
+          .form-control {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 1);
+            color: color($colors, primaryDark);
+            padding: 7px 10px;
+            border-radius: 5px;
+            border:none;
+            border-bottom: 2px solid transparent;
+            font-size: 14px;
+            transition: border-bottom 0.3s ease-in;
+            &::-webkit-input-placeholder {
+              color: #999 !important;
+            }
+            &.ng-valid {
+                border-bottom: 2px solid #bfffd2;
+            }
+            &.ng-dirty.ng-invalid {
+                border-bottom: 2px solid #ffe8bf;
+            }
+        }
+        }
+         #form-button {
+           position: fixed;
+           bottom: 0;
+           left: 0;
+           height: 35px;
+           font-size: 14px;
+         }
+       }
+    }
 }
