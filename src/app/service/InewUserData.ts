@@ -1,13 +1,14 @@
-export enum IlevelId {
-  store =2,
-  exporter,
-  client
+export class IlevelId {
+  'store' = 2;
+  'exporter';
+  'client'
 }
 export enum levelToAr {
   'متجر'= 2,
   'مورد',
   'عميل'
 }
+
 export interface ImodalData {
   AreaId?: number,
   AreaName?: string,
@@ -37,4 +38,24 @@ export interface IuserData{
   level_id: number,
   commercialRegisterId?: number,
   directorProductName?: string
+}
+
+export interface IlocalUser {
+  username: string,
+  name: string,
+  id: number,
+  level_id: number,
+  active: number,
+  address: string,
+  area: number,
+  city: number,
+  dist: number,
+  email: string,
+  gender: string,
+  mobile: string,
+  avatar: string,
+  owner_name?: string,
+  cr_num?: number,
+  map: string
+
 }

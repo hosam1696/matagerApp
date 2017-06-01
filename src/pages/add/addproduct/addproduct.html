@@ -7,12 +7,54 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>addproduct</ion-title>
+    <ion-title>اضافة منتج</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <form novalidate [formGroup]="addProductForm"
+        (ngSubmit)="submitForm()">
+
+    <div class="form-group prod-photo" >
+      <ion-icon name="camera-outline"></ion-icon>
+      <p>أضف صورة</p>
+    </div>
+    <div class="form-group">
+      <input type="text"
+             placeholder="اسم المنتج"
+             formControlName = "Name"
+             class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text"
+             placeholder="سعر المنتج"
+             formControlName = "Cost"
+             class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="تاريخ الانتاج"
+             formControlName="productionDate"
+             class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="تاريخ الانتهاء"
+             formControlName="ExpireDate"
+             class="form-control">
+    </div>
+    <div class="form-group">
+      <textarea placeholder="الوصف" class="form-control"
+
+                column="4"
+             formControlName ="Description"
+      ></textarea>
+    </div>
+
+
+    <button id="form-button" ion-button full> اضف منتج</button>
+  </form>
+
 
 </ion-content>
