@@ -123,6 +123,7 @@
       <span text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
       </p>
         
+
         <ion-item  *ngFor="let shelf of AllShelfs">
             <div class="shelf-id">
               <p>رقم الرف <span>{{shelf.id}} </span></p>
@@ -150,6 +151,7 @@
               </div>
             </div>
 
+
         </ion-item>
     </ion-list>
 
@@ -162,7 +164,9 @@
   <ion-row>
     <ion-col col-6>
       <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
+
         <img src="/assets/img/adds_02.png" alt="product">
+
         <p class="prod-desc">
           ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
         </p>
@@ -175,7 +179,9 @@
     </ion-col>
     <ion-col col-6>
       <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
+
         <img src="/assets/img/adds_02.png" alt="product">
+
         <p class="prod-desc">
           ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
         </p>

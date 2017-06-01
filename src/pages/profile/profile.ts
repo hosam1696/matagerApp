@@ -61,11 +61,12 @@ export class ProfilePage {
         this.noShelfs = 'empty';
     },
       err => {
-        console.warn(err);
+
         this.noShelfs = 'netErr';
       }
     );
   }
+
 
   deleteShelf(shelf: Ishelf):void {
     console.log(shelf);
