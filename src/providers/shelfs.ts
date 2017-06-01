@@ -25,6 +25,14 @@ export class ShelfsProvider {
         return this.http.post(this.shelfs_URl, JSON.stringify(body)).map(res => res.json());
     
     }
-    deleteShelf() { }
+
+    
+    deleteShelf(shelfData) { 
+        let apiKey = "delete";
+
+        let body = Object.assign({}, { apiKey }, shelfData);
+        return this.http.post(this.shelfs_URl, body).map(res => res.json());
+
+    }
     editShelf() {}
 }

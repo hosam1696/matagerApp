@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @IonicPage()
 @Component({
@@ -10,12 +10,23 @@ import { Network } from '@ionic-native/network';
 })
 export class Messages {
   isOnline:boolean = true;
-  constructor(public navCtrl: NavController,
-   public navParams: NavParams,
-   public network: Network) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public network: Network,
+    public barcodeScanner: BarcodeScanner,
+    public toastCtrl: ToastController
+  ) {
+
+    
+
   }
 
   ionViewDidLoad() {
+
+    
+
+
     //console.log('ionViewDidLoad Messages');
     /*
     this.network.onConnect().subscribe(data=>{
@@ -30,12 +41,29 @@ export class Messages {
   }
 
   ionViewDidEnter() {
+    this.scanBarcode();
     /*
     if ( this.network.type == 'none' || this.network.type == null) {
       this.isOnline = false;
     } else {
       this.isOnline = true
     }*/
+  }
+
+  scanBarcode() {
+    this.barcodeScanner.scan().then((barcodeData) => {
+      this.showToast(barcodeData);
+    }).catch(err => {
+      this.showToast(err);
+    });
+  }
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      cssClass: 'danger-toast'
+    });
+    toast.present();
   }
    
 }

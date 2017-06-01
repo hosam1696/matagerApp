@@ -1,20 +1,56 @@
 page-notifications {
 
-    ion-content {
+  ion-navbar {
+    ion-title {
+      .toolbar-title {
+        //color: color($colors, light) !important;
+      }
+    }
+  }
+  ion-content {
+    .scroll-content {
+      background-color: #eee;
+    }
+    ion-list {
+      ion-item {
+        ion-avatar {
+          background: url(/assets/img/male-alt.png);
+          background-size: cover;
+          background-size: 100% 96%;
+          border-radius: 5px;
 
-        &#offline {
-            .scroll-content {
-                text-align: center;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            ion-icon {
+        }
+        .message-sender {
+          display: flex;
+          justify-content: space-between;
+          h4 {
+            margin-top: -5px !important;
+            color: color($colors, primary);
+          }
+          .message-et {
+            font-size: 12px;
+            color: color($colors, lightDark)
+          }
+        }
+
+        p {
+          margin-top: -5px !important
+        }
+      }
+    }
+  }
+
+  ion-content#offline {
+    .scroll-content {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ion-icon {
       font-size: 60px;
       color: #ccc
     }
-
-     }
-
-    }
+  }
 }

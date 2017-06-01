@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
-import { IonicStorageModule} from '@ionic/storage';
 
 import { MyApp } from './app.component';
 
@@ -23,7 +22,10 @@ import {wordColorDirective } from './service/wordcolor.directive';
 import {UserLogin} from "./service/userlogin";
 import {Network} from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
-import {UserProvider} from "../providers/user";
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { IonicStorageModule } from '@ionic/storage';
+
+import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
 import { ShelfsProvider } from '../providers/shelfs';
 
@@ -71,6 +73,7 @@ import { ShelfsProvider } from '../providers/shelfs';
     UserLogin,
     Geolocation,
     Network,
+    BarcodeScanner,
     AreaProvider,
     ShelfsProvider
   ]

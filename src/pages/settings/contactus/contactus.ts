@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
-/**
- * Generated class for the Contactus page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-contactus',
@@ -14,20 +9,31 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class Contactus {
   mainTabs: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  contactForm: FormGroup;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private fb: FormBuilder) {
+
+    this.contactForm = this.fb.group({
+      Name: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      Email: new FormControl('', Validators.required),
+      Address: new FormControl(''),
+      Message: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    });
+
+    console.log(this.contactForm.value)
+
+
+
   }
 
   ionViewDidLoad() {
-    /*console.log('ionViewDidLoad Contactus');
-    this.mainTabs = document.querySelector('#main-tabs .tabbar');
-    this.mainTabs.style.display = 'none';*/
+    console.log(this.contactForm.value);
   }
 
   ionViewWillLeave() {
-    /*
-    this.mainTabs.style.display = 'flex';
-    */
+   
   }
 
+  submitForm() {
 
+  }
 }

@@ -111,48 +111,58 @@
   <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
 
     <ion-list>
+      
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
-
              لم يتم اضافة رفوف حتى الان
         </p>
       <p text-center *ngIf="noShelfs =='netErr'">
         <br>
-        <ion-icon name="wifi"></ion-icon>
-
        خطأ فى الاتصال
-        <br><br>
-        <span (click)="getShelfs(userLocal.id)"><b> <ion-icon name="rewind"></ion-icon>اعادة تحميل</b></span>
+        <br>
+      <span text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
       </p>
-        <ion-item margin-top *ngFor="let shelf of AllShelfs">
-          مساحة الرف: {{shelf.area}} || سعر الرف: {{shelf.cost}}
+        
+        <ion-item  *ngFor="let shelf of AllShelfs">
+            <div class="shelf-id">
+              <p>رقم الرف <span>{{shelf.id}} </span></p>
+
+              <p>{{shelf.cost}} ج.م  |
+                 {{shelf.area}}
+                 متر 
+                </p>
+            </div>
+            
+            <hr>
+            <div class="shelf-status">
+              <div class="reserved">
+                <span *ngIf="shelf.close == 0">غير محجوز</span>
+                <span *ngIf="shelf.close == 1"> محجوز</span>
+                </div>
+              <div class="shelf-controls">
+                <ion-icon name="open-outline"
+                  (click)="updateShelf(shelf)"
+                ></ion-icon>
+                <ion-icon 
+                  name="trash-outline"
+                  (click)="deleteShelf(shelf)"
+                  ></ion-icon>
+              </div>
+            </div>
 
         </ion-item>
     </ion-list>
 
 
-    <button
-      *ngIf="showContent == 'shelfs'"
-      ion-button
-      small
-      (click)="navigateToPage('AddshelfPage')"
-      class="float-button"
-    > أضف رف</button>
-
-    <button
-      *ngIf="showContent == 'products'"
-      ion-button
-      small
-      (click)="navigateToPage('AddproductPage')"
-      class="float-button"> أضف منتج</button>
+    
   </ion-card>
 
   <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card">
 <ion-grid padding-horizontal>
   <ion-row>
     <ion-col col-6>
-      <div class="col-content">
-        <img src="/assets/img/adds_01.png" alt="product">
+      <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
+        <img src="/assets/img/adds_02.png" alt="product">
         <p class="prod-desc">
           ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
         </p>
@@ -164,8 +174,8 @@
       </div>
     </ion-col>
     <ion-col col-6>
-      <div class="col-content">
-        <img src="/assets/img/adds_01.png" alt="product">
+      <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
+        <img src="/assets/img/adds_02.png" alt="product">
         <p class="prod-desc">
           ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
         </p>
@@ -180,7 +190,18 @@
 
   </ion-row>
 </ion-grid>
+<button 
+
+    *ngIf="showContent == 'shelfs'" 
+    ion-button 
+    small 
+    (click)="navigateToPage('AddshelfPage')" 
+    class="float-button"> أضف رف</button>
+
+<button [hidden]="showContent == 'shelfs'" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
+
   </ion-card>
+
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
     <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>

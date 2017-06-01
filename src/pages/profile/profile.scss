@@ -41,7 +41,50 @@ page-profile {
                 box-shadow: none;
 
                 ion-list {
+                    margin-top: 4px;
                     background-color: transparent !important;
+                    ion-item {
+                        &:first-child {
+                            border-top: none !important;
+                        }
+                        border-bottom: 1px solid #ddd !important;
+                        height: 55px;
+                        p {
+                            color: color($colors, primary)
+                        }
+                        hr {
+                            margin: 0;
+                            background:rgba(0, 0, 0, 0.05);
+                        }
+                        .shelf-id {
+                            display: flex;
+                            justify-content: space-between;
+                            p {
+                                &:last-child {
+                                    font-size: 12px;
+                                }
+                            }
+                        }
+                        .shelf-status {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-top: -5px;
+                            .reserved {
+                                span {
+                                font-size: 14px;
+                                color: color($colors,primaryDark)
+                            }
+                            
+                            }
+                            .shelf-controls {
+                            ion-icon {
+                                color: color($colors, primaryDark);
+                                margin-right: 10px;
+                            }
+                        }
+                        }
+                        
+                    }
                 }
                 ion-grid {
                     padding-top: 5px !important;
@@ -190,16 +233,16 @@ page-profile {
                 }
             }
 
-          .float-button {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            box-shadow: 2px 2px 15px #888;
-          }
+          
 
         }
 
-
+.float-button {
+            position: fixed;
+            bottom: 60px;
+            left: 10px;
+            box-shadow: 2px 2px 15px #888;
+          }
 
 
     }

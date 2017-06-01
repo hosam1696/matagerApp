@@ -73,7 +73,7 @@ export class ContactPage {
         {
           text: 'الغاء',
           handler: data=> {
-            console.log('User Log out', data);
+            
             //ContactPage.viewCtrl.dismiss();
           }
         },

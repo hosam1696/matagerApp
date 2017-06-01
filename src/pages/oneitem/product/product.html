@@ -1,32 +1,48 @@
 <!--
-  Generated template for the Notifications page.
+  Generated template for the ProductPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-  <ion-navbar color="light">
-    <ion-title>اشعارات</ion-title>
+  <ion-navbar>
+    <ion-title>{{productData}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<!-- catch the device connection state [online | offline] -->
-<ion-content *ngIf="isOnline == true" id="offline">
+<ion-content>
+  <section id="hero">
+    <img src="../../../assets/img/adds_02.png" alt="">
+  </section>
+  <section id="product">
+    <h4> ماك بوك برو</h4>
+    <p class="price"><span>1500</span> ج.م</p>
+    <p class="description">مجموعة متنوعة من الهواتف الذكية لماركة سامسونج وبأسعار وتخفيضات هائلة وعروض مميزة بادر بالحجز وتواصل معنا للحصول على الهاتف</p>
+    <div class="product-date">
+      <p >انتاج: <span class="production-date"> 1 /3 /2018</span></p>
+      <p >انتهاء: <span class="expire-date">1 / 5 / 2019</span></p>
+    </div>
 
-  <div>
-    <h1><ion-icon name="wifi"></ion-icon></h1>
+  </section>
 
-  <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
-  </div>
-
-</ion-content >
-
-
-<ion-content  *ngIf="isOnline == false">
   <ion-list>
+
+    <ion-item-divider>
+      <div class="product-states">
+        <p >
+          الاراء
+          <span class="reviews"> (5) </span>
+        </p>
+        <p >
+            الاعجابات
+           <span class="likes">(15)</span>
+        </p>
+
+      </div>
+    </ion-item-divider>
     <ion-item>
       <ion-avatar item-left></ion-avatar>
       <div class="message-sender">
@@ -41,36 +57,6 @@
       </div>
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias esse inventore quas veritatis. </p>
     </ion-item>
-    <ion-item>
-      <ion-avatar item-left></ion-avatar>
-      <div class="message-sender">
-
-        <h4>محمد أحمد</h4>
-
-        <div class="message-et">
-          <ion-icon name="timer"></ion-icon>
-          منذ
-          <span>يومان</span>
-        </div>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias esse inventore quas veritatis. </p>
-    </ion-item>
-
-    <ion-item>
-      <ion-avatar item-left></ion-avatar>
-      <div class="message-sender">
-
-        <h4>محمد أحمد</h4>
-
-        <div class="message-et">
-          <ion-icon name="timer"></ion-icon>
-          منذ
-          <span>يومان</span>
-        </div>
-      </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias esse inventore quas veritatis. </p>
-    </ion-item>
-
     <ion-item>
       <ion-avatar item-left></ion-avatar>
       <div class="message-sender">
@@ -101,4 +87,16 @@
       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad alias esse inventore quas veritatis. </p>
     </ion-item>
   </ion-list>
+  <div class="float-buttons">
+    <button ion-button clear>
+      <ion-icon name="heart-outline"></ion-icon>
+    </button>
+    <button ion-button clear>
+      <ion-icon name="chatbubbles-outline"></ion-icon>
+    </button>
+    <button ion-button clear>
+      <ion-icon name="card-outline"></ion-icon>
+    </button>
+  </div>
+  <div class="margin-div"></div>
 </ion-content>
