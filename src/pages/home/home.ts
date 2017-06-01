@@ -42,10 +42,6 @@ export class HomePage {
 
   ionViewDidLoad() {
 
-    this.shelfsProvider.getShelfs()
-      .subscribe(res => {
-          console.log(res);
-      });
 
 
     //TODO: pre configuration and  setup for user 

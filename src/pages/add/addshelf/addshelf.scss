@@ -3,7 +3,7 @@ page-addshelf {
         ion-navbar {
             ion-title {
             .toolbar-title {
-                color: #fff !important
+                //color: #fff !important
             }
             }
         }
@@ -15,24 +15,29 @@ page-addshelf {
         }
        form {
 
-            .form-group {
-        padding: 5px 0;
-        .form-control {
-          width: 100%;
-          background-color: rgba(255, 255, 255, 0.3);
-          color: #fff;
-          padding: 7px 10px;
-          border-radius: 5px;
-          border: none;
-          font-size: 14px;
+        .form-group {
+          padding: 5px 0;
+          .form-control {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 1);
+            color: color($colors, primaryDark);
+            padding: 7px 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 14px;
 
-          &::-webkit-input-placeholder {
-            color: #d6ecff !important;
-          }
+            &::-webkit-input-placeholder {
+              color: #999 !important;
+            }
         }
-
-
         }
+         #form-button {
+           position: fixed;
+           bottom: 0;
+           left: 0;
+           height: 35px;
+           font-size: 14px;
+         }
        }
     }
 

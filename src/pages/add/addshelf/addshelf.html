@@ -13,25 +13,25 @@
   <form novalidate [formGroup]="addShelfForm"
   (ngSubmit)="submitForm()">
     <div class="form-group">
-      <input type="text" 
-      placeholder="اسم الرف" 
+      <input type="text"
+      placeholder="اسم الرف"
       formControlName = "Name"
       class="form-control">
     </div>
 
     <div class="form-group">
-      <input type="text" placeholder="مساحة الرف" 
+      <input type="text" placeholder="مساحة الرف"
         formControlName="Area"
       class="form-control">
     </div>
     <div class="form-group">
-      <input type="text" placeholder="سعر الرف" class="form-control" 
+      <input type="text" placeholder="سعر الرف" class="form-control"
       formControlName ="Cost"
       >
     </div>
-    
 
-    <button ion-button> اضافة رف</button>
+
+    <button id="form-button" ion-button full> اضافة رف</button>
   </form>
 
 </ion-content>

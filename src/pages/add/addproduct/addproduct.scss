@@ -1,3 +1,54 @@
 page-addproduct {
+  ion-content {
+    &.content {
+      background: #eee;
+      //background-color: color($colors, bgColor)
+    }
+    form {
 
+      .form-group {
+        padding: 5px 0;
+          &.prod-photo {
+            background:color($colors, light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 120px;
+            color: #999;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            ion-icon {
+              font-size: 35px;
+            }
+            p {
+              margin: 0
+            }
+          }
+        .form-control {
+          width: 100%;
+          background-color: rgba(255, 255, 255, 1);
+          color: color($colors, primaryDark);
+          padding: 7px 10px;
+          border-radius: 5px;
+          border: none;
+          font-size: 14px;
+
+          &::-webkit-input-placeholder {
+            color: #999 !important;
+          }
+        }
+
+
+      }
+
+      #form-button {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        height: 35px;
+        font-size: 14px;
+      }
+    }
+  }
 }
