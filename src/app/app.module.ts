@@ -1,50 +1,42 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
-import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
 import { MyApp } from './app.component';
-
-import { ContactPage } from '../pages/settings/settings';
-import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
-
-import { NotificationsPage } from '../pages/notifications/notificationsPage';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 
 import {wordColorDirective } from './service/wordcolor.directive';
+import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
 
-import {UserLogin} from "./service/userlogin";
-import {Network} from '@ionic-native/network';
-import { Geolocation } from '@ionic-native/geolocation';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { IonicStorageModule } from '@ionic/storage';
-
+import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
-import { ShelfsProvider } from '../providers/shelfs';
+import { UserLocalData } from '../providers/userLocalData';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { ImagePicker } from '@ionic-native/image-picker';
+
+import { ActionSheet } from '@ionic-native/action-sheet';
+
 
 @NgModule({
   declarations: [
     MyApp,
     wordColorDirective,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    NotificationsPage,
     PlacesModal,
     ChooseArea
-
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
@@ -52,16 +44,12 @@ import { ShelfsProvider } from '../providers/shelfs';
       iconMode: 'ios',
       tabsHideOnSubPages: true
     }),
-
-    IonicStorageModule.forRoot()
+    HsaloaderComponentModule
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    ContactPage,
-    HomePage,
-    TabsPage,
-    NotificationsPage,
     PlacesModal,
     ChooseArea
   ],
@@ -70,12 +58,14 @@ import { ShelfsProvider } from '../providers/shelfs';
     SplashScreen,
     UserProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    UserLogin,
     Geolocation,
     Network,
     BarcodeScanner,
     AreaProvider,
-    ShelfsProvider
+    ShelfsProvider,
+    { provide: UserLocalData, useClass: UserLocalData }, 
+    ImagePicker,
+    ActionSheet
   ]
 })
 export class AppModule {}

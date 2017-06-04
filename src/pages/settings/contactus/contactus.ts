@@ -14,9 +14,9 @@ export class Contactus {
 
     this.contactForm = this.fb.group({
       Name: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      Email: new FormControl('', Validators.required),
+      Email: new FormControl('', [Validators.required,Validators.minLength(10)]),
       Address: new FormControl(''),
-      Message: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      Message: new FormControl('', [Validators.required, Validators.minLength(20)]),
     });
 
     console.log(this.contactForm.value)
@@ -30,7 +30,7 @@ export class Contactus {
   }
 
   ionViewWillLeave() {
-   
+
   }
 
   submitForm() {

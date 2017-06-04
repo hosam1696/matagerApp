@@ -81,31 +81,7 @@ page-login {
           background-color: color($colors, light);
           color: #008bff;
           min-height: 32px;
-          #loader {
-            position: relative;
-            z-index: 5999;
-            width: 20px;
-            height: 20px;
-            //background-color: red;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            .loader-circle {
-              width: 80%;
-              height: 80%;
-              border-radius: 50%;
-              border:2px solid transparent;
-              border-top-color: #fff;
-              animation: loader 0.6s linear infinite;
 
-            }
-            @keyframes loader {
-              to {
-                transform: rotate(360deg);
-              }
-            }
-          }
         }
       }
 

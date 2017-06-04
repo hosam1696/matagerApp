@@ -3,7 +3,7 @@
     justify-content: space-between;
 }
 page-profile {
-
+    
     ion-header {
         ion-navbar {
             ion-title {
@@ -16,6 +16,10 @@ page-profile {
     }
 
     ion-content {
+        button.pick-image {
+            background: transparent;
+            z-index: 165
+        }
         &.content {
             background-color: color($colors, bgColor);
         }
@@ -151,7 +155,7 @@ page-profile {
             justify-content: flex-end;
             align-items: flex-end;
               padding-bottom: 10px;
-              padding-left: 20px;
+              padding-left: 10px;
               ion-icon {
                 color: #fff;
                 text-shadow: 1px 1px #999;
@@ -178,12 +182,16 @@ page-profile {
                 align-items: center;
                 position: relative;
                 box-shadow: 1px 1px 2px #999;
-                ion-icon {
+                button {
+                    background-color: transparent;
                     position: absolute;
                     bottom: 0;
-                    color: color($colors, light);
+                    ion-icon {
+                        color: color($colors, light);
+                        font-size: 18px;
                     //font-weight: bold;
-                    text-shadow: 1px 1px #555
+                     text-shadow: 1px 1px #555
+                    }
                 }
                 img {
                     width:100%;
@@ -220,12 +228,10 @@ page-profile {
             #profile-follow {
                 @extend %flex-between;
                 margin: -6px auto -16px;
-                p {
+                padding: 0 13px;
+                a {
                     color: color($colors, primary);
-                    ion-icon {
-                        margin-left: 5px;
-
-                    }
+                
                     span {
                       margin-right: 5px;
                     }

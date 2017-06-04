@@ -12,7 +12,7 @@
 
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
-      <ion-icon name="camera-outline"></ion-icon>
+      <button type="button" class="pick-image" (click)="pickImage()"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
     <ion-card>
@@ -22,7 +22,9 @@
         <ion-col col-3>
 
           <ion-avatar>
-            <ion-icon name="camera-outline"></ion-icon>
+             <button type="button" class="pick-image" (click)="pickImage()">
+               <ion-icon name="camera-outline"></ion-icon>
+              </button>
             <img *ngIf="userLocal.gender == 'male'" width="70" src="/assets/img/male-alt.png">
 
             <img *ngIf="userLocal.gender == 'female'" width="70" src="/assets/img/female-alt.png">
@@ -63,19 +65,18 @@
       </ion-grid>
 
         <div id="profile-follow">
-          <p ion-button clear color="primary" (click)="navigateToPage('FollowingsPage')">
+          <a  color="primary" (click)="navigateToPage('FollowingsPage')">
                       <ion-icon name="people"></ion-icon>
-                      المتابعون
+                      المتابِعون
 
                       <span class="following">154</span>
-                      </p>
+                      </a>
 
-          <p ion-button clear color="primary" (click)="navigateToPage('FollowersPage')">
+          <a color="primary" (click)="navigateToPage('FollowersPage')">
                       <ion-icon name="people"></ion-icon>
-                      المتابعين
-                      <span class="followers">113</span>
+                      المتابَعون                      <span class="followers">113</span>
 
-                    </p>
+                    </a>
         </div>
 
 
@@ -86,7 +87,7 @@
               المنتجات
             </ion-segment-button>
 
-            <ion-segment-button value="shelfs">
+            <ion-segment-button value="shelfs" (click)="getShelfs(userLocal.id)">
               الرفوف
             </ion-segment-button>
           </ion-segment>
@@ -111,17 +112,21 @@
   <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
 
     <ion-list>
-      
+      <!-- add loADER -->
+        <p text-center *ngIf="showLoader">
+          <hsa-loader></hsa-loader>
+        </p>
+        
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
              لم يتم اضافة رفوف حتى الان
         </p>
-      <p text-center *ngIf="noShelfs =='netErr'">
-        <br>
-       خطأ فى الاتصال
-        <br>
-      <span text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
-      </p>
+        <p text-center *ngIf="noShelfs =='netErr'">
+         <br>
+         تعثر فى الاتصال
+         <br>
+         <span text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
+        </p>
         
 
         <ion-item  *ngFor="let shelf of AllShelfs">

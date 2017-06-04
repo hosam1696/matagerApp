@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController,IonicPage, AlertController, AlertOptions } from 'ionic-angular';
 //import {IlevelId} from '../../app/service/InewUserData';
- import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
-
+import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
+import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { ShelfsProvider } from '../../providers/shelfs';
+import { ImagePicker } from '@ionic-native/image-picker';
+
 
 interface Ishelf {
   area: number,
@@ -28,13 +30,17 @@ export class ProfilePage {
   AllShelfs :[Ishelf];
   noShelfs:string;
   alertOptions: AlertOptions;
-
+  showLoader: boolean = false;
+  
 
   constructor(
     public navCtrl: NavController,
     public alert: AlertController,
-    public shelfsProvider: ShelfsProvider) {
-
+    public shelfsProvider: ShelfsProvider,
+    private imgPicker: ImagePicker,
+    private actionSheet: ActionSheet
+  ) {
+      
   }
 
   ionViewDidLoad() {
@@ -43,26 +49,60 @@ export class ProfilePage {
 
     /*console.log(this.userLocal);
     console.log(this.showContent);
-*/
+
   if (this.userLocal)
     this.getShelfs(this.userLocal['id']);
-
+    */
   }
+
+
   ionViewWillEnter() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
+  pickImage() {
+    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
+    let options: ActionSheetOptions = {
+      title: 'chooseTitle',
+      buttonLabels: [
+        'Camera',
+        'Album'
+      ]
+    };
+    this.actionSheet.show(options)
+      .then(pressed => {
+        console.log('The place to get image is ', pressed);
+      })
+      .catch(err => {
+        console.warn(err);
+      })
+    /*
+    
+    this.imgPicker.getPictures({maximumImagesCount:1,width:400,height:120}).then(imageURI => {
+      console.log(imageURI);
+    }).catch(warn => {
+      console.warn(warn);
+    })
+    */
+
+  }
+
+
   getShelfs(userId: number): void {
+    this.showLoader = true;
     this.shelfsProvider.getShelfs(userId).subscribe(res => {
-      console.log('data', res);
-      this.AllShelfs = res.data;
-      this.noShelfs = null;
+      //console.table( res);
+      [this.AllShelfs, this.showLoader, this.noShelfs] = [res.data, true, null];
       if (this.AllShelfs.length <=0)
         this.noShelfs = 'empty';
     },
       err => {
-
+        this.showLoader = false;
+        //console.warn(err);
         this.noShelfs = 'netErr';
+      },
+      () => {
+        this.showLoader = false;
       }
     );
   }

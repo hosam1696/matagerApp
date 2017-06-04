@@ -18,11 +18,11 @@ export class AddproductPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
     this.addProductForm = new FormGroup({
-      Name: new FormControl('', Validators.required),
+      Name: new FormControl('', [Validators.required, Validators.minLength(8)]),
       Cost: new FormControl('', Validators.required),
       productionDate: new FormControl('', Validators.required),
       ExpireDate: new FormControl('', Validators.required),
-      Description: new FormControl('', Validators.required)
+      Description: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)])
 
     })
 
@@ -32,4 +32,8 @@ export class AddproductPage {
     console.log('ionViewDidLoad AddproductPage');
   }
 
+
+  pickImage() {
+    console.log('picking image');
+  }
 }

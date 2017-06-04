@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController, Events } from 'ionic-angular';
 import { AreaProvider } from '../providers/area';
 import {ImodalData, Iplace} from '../app/service/InewUserData';
 import 'rxjs/operator/filter';
@@ -22,60 +22,47 @@ import 'rxjs/operator/filter';
 
 </ion-header>
     <ion-content>
-        <div id="loader" *ngIf="showLoader">
-            <div class="loader-circle"></div>
-        </div>
+        <p text-center *ngIf="showLoader">
+            <hsa-loader ></hsa-loader>
+        </p>
         <ion-list *ngIf="places.length > 0">
-            <button *ngFor="let place of places, let i = index" ion-item (click)="openNewModal(place)">
-               <p item-left><ion-badge color="primary">{{i+1}}</ion-badge> </p>
+            <button 
+                *ngFor="let place of places, let i = index" 
+                ion-item 
+                (click)="openNewModal(place)">
+               <p item-left><ion-badge color="primary">
+                    {{i+1}}</ion-badge> 
+                </p>
                 <p>{{place.name}}</p>
             </button>
         </ion-list>
 
         <p *ngIf="noPlaces && !errorAccessDB" text-center>
             <br>
-            <ion-icon name="git-branch" color="primaryDark"></ion-icon>
+            <ion-icon name="warning-outline" color="primaryDark"></ion-icon>
             <br>
             لا يوجد أماكن متوفرة لهذا لأختيار حتى الان<ion-icon name="mark"></ion-icon>
          </p>
 
          <p *ngIf="errorAccessDB" text-center wordcolor="blue">
             <br>
-            <ion-icon name="git-branch" ></ion-icon>
+            <ion-icon name="warning-outline" ></ion-icon>
             <br>
-            مشكلة فى الوصول الى قاعدة البيانات
+         تعثر فى الوصول الى قاعدة البيانات
+         </p>
+
+         <p *ngIf="isOffline" text-center wordcolor="blue">
+            <br>
+            <ion-icon name="warning-outline" ></ion-icon>
+            <br>
+            غير متصل بالانترنت
          </p>
     </ion-content>
 
-    `,
-    styles: [`
-        #loader {
-            position: relative;
-            z-index: 5999;
-            width: 100%;
-            top: 15px;
-            height: 20px;
-            //background-color: red;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-}
-            #loader .loader-circle {
-              width: 20px;
-              height: 20px;
-              border-radius: 50%;
-              border:2px solid transparent;
-              border-top-color: #2e8bc9 ;
-              animation: loader 0.6s linear infinite;
-
-            }
-            @keyframes loader {
-              to {
-                transform: rotate(360deg);
-              }
-            }
-          `]
+    `
 })
+
+
 export  class PlacesModal {
     places: [Iplace] | any = [];
     modalData: object;
@@ -84,21 +71,30 @@ export  class PlacesModal {
     errorAccessDB: boolean = false;
     noPlaces: boolean = false;
     showLoader: boolean = true;
+    isOffline: boolean = false;
+
   constructor(
                 params:NavParams,
                 public viewCtrl: ViewController,
-                public areasProviders: AreaProvider)
-  {
+                public areasProviders: AreaProvider, private events:Events
+  ){
 
       this.modalData = params.data;
-
+      
       this.fetchAreas(0, (data) => {
-          if (data == 'err') {
+          // Function for development mode only
+          if (data == 'err')
               console.info('%c%s','font-size: 30px','Error Accessing the database');
-          }
       });
 
   }
+
+  ionViewDidLoad() {
+      console.log(this.events.publish('networkStatus'));
+      
+  }  
+
+
   closeModal():void {
       this.viewCtrl.dismiss(this.finalResult)
   }
@@ -141,24 +137,32 @@ export  class PlacesModal {
 
 
 
-  fetchAreas(parentId: number, callback = (f) => { }): void {
+  fetchAreas(parentId: number, callback = (f) => { }) {
 
-    this.places = [];
-      this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
-          [this.showLoader, this.errorAccessDB] = [true , false];
-          this.places.push(fetched);
-          callback(fetched);
-      },
-          err => {
-              this.showLoader = false;
-              this.errorAccessDB = true;
-              console.warn(err);
-              callback('err');
-          },
-          () => {
-              this.showLoader = false;
-              callback('completed');
+     //TODO: check the network connection after opening the modal [production Mode only]
+      //if (this.events.publish('networkStatus') == [undefined] || [null]) {
+      if(this.showLoader == this.isOffline){ 
+        [this.isOffline, this.showLoader] = [true, false];
+            return false;
+      } else {
+          
+        this.places = [];
+        this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
+            [this.showLoader, this.errorAccessDB] = [true , false];
+            this.places.push(fetched);
+            callback(fetched);
+        },
+            err => {
+                
+                [this.showLoader, this.errorAccessDB] = [false , true];
+                console.warn(err);
+                callback('err');
+            },
+            () => {
+                this.showLoader = false;
+                callback('completed');
+            }
+        )
         }
-      )
-  }
+  }    
 }
