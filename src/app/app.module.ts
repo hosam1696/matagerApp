@@ -23,7 +23,7 @@ import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ImagePicker } from '@ionic-native/image-picker';
-
+import { Camera } from '@ionic-native/camera';
 import { ActionSheet } from '@ionic-native/action-sheet';
 
 
@@ -42,6 +42,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
       backButtonText: '',
       backButtonIcon: 'arrow-forward',
       iconMode: 'ios',
+      mode: 'ios',
       tabsHideOnSubPages: true
     }),
     HsaloaderComponentModule
@@ -65,7 +66,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
     ShelfsProvider,
     { provide: UserLocalData, useClass: UserLocalData }, 
     ImagePicker,
-    ActionSheet
+    ActionSheet,Camera
   ]
 })
 export class AppModule {}

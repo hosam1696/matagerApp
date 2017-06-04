@@ -22,16 +22,19 @@
     <section id="pager">
       <div class="dot"
            [ngClass]="{active: csPage==1}"
-            (click)="csPage=1;lastPage=null"
+            
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==2}"
-           (click)="csPage=2;lastPage=null"
+           
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==3}"
-           (click)="csPage=3;lastPage = 'أضف حساب جديد'"
       ></div>
+      <!--
+          <div class="dot" [ngClass]="{active: csPage==3}" (click)="csPage=3;lastPage = 'أضف حساب جديد'"></div>
+
+        -->
     </section>
 
     <div class="step" [ngClass]="{shownPage: csPage== 1}">
@@ -132,18 +135,18 @@
     <div class="step" [ngClass]="{shownPage: csPage== 3}">
       <br>
       <div class="select-group">
-          <div (click)="openModal('Area', 0)">
+          <div (click)="openModal('المنطقة', 0)">
 
             {{AreaName || 'المنطة'}}
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="Area">
             </div>
-          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
+          <div (click)="openModal('المدينة', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
 
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="City">
           </div>
-          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
+          <div (click)="openModal('الحى',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
             <ion-icon name="arrow-down"></ion-icon>
             <input type="text" 
             formControlName="Dist" id="dist" 
@@ -161,13 +164,14 @@
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="رقم السجل التجارى"        
-          
+           [required]= 'SignUpFrom.value.level_id ==2'
           formControlName="cr_num">
       </div>
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="اسم مدير المنتج" 
-          formControlName='owner_name'       >
+          formControlName='owner_name'
+           [required]= 'SignUpFrom.value.level_id ==2'       >
       </div>
 
 

@@ -51,12 +51,12 @@ import 'rxjs/operator/filter';
          تعثر فى الوصول الى قاعدة البيانات
          </p>
 
-         <p *ngIf="isOffline" text-center wordcolor="blue">
+         <!--<p *ngIf="isOffline" text-center wordcolor="blue">
             <br>
             <ion-icon name="warning-outline" ></ion-icon>
             <br>
             غير متصل بالانترنت
-         </p>
+         </p>-->
     </ion-content>
 
     `
@@ -141,11 +141,11 @@ export  class PlacesModal {
 
      //TODO: check the network connection after opening the modal [production Mode only]
       //if (this.events.publish('networkStatus') == [undefined] || [null]) {
-      if(this.showLoader == this.isOffline){ 
+     /* if(this.showLoader == this.isOffline){ 
         [this.isOffline, this.showLoader] = [true, false];
             return false;
       } else {
-          
+          */
         this.places = [];
         this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
             [this.showLoader, this.errorAccessDB] = [true , false];
@@ -164,5 +164,5 @@ export  class PlacesModal {
             }
         )
         }
-  }    
+ // }    
 }

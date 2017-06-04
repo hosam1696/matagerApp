@@ -154,9 +154,22 @@ page-profile {
             display: flex;
             justify-content: flex-end;
             align-items: flex-end;
-              padding-bottom: 10px;
-              padding-left: 10px;
+            /*padding-bottom: 10px;
+            padding-left: 10px;*/
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            &:after {
+                content: '';
+                width: 100%;
+                height: 100%;
+                position: relative;
+                background:linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%,rgba(0, 0, 0, 0.15) 25%,rgba(0, 0, 0, 0.15) 26%, transparent 50%);
+                position: absolute;
+            }
               ion-icon {
+                  margin: 0 0 10px 10px;
                 color: #fff;
                 text-shadow: 1px 1px #999;
                 font-size: 20px;
@@ -218,6 +231,7 @@ page-profile {
 
             }
             #profile-buttons {
+                margin: 10px 0;
                 @extend %flex-between;
                 button {
                     ion-icon {
@@ -227,7 +241,7 @@ page-profile {
             }
             #profile-follow {
                 @extend %flex-between;
-                margin: -6px auto -16px;
+                margin: -12px auto 6px !important;
                 padding: 0 13px;
                 a {
                     color: color($colors, primary);
