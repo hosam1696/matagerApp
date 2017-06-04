@@ -11,7 +11,7 @@
   <section id="hero-logo">
     <!--<h2>LOGO</h2>-->
 
-    <img src="/assets/img/mainlogo.png" width="80" alt="">
+    <img src="../assets/img/mainlogo.png" width="80" alt="">
   </section>
 
   <form
@@ -84,8 +84,8 @@
         <input type="radio"  formControlName='Gender' value="male" id="gender-male">
         <label for="gender-male">
           <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/male-active.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/male-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../assets/img/male-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../assets/img/male-inactive.png" >
           <!--<p>ذكر</p>-->
         </label>
         </div>
@@ -94,8 +94,10 @@
         <input type="radio" formControlName='Gender' value="female" id="gender-female">
   <label for="gender-female">
           <!--<ion-icon name="woman" ></ion-icon>-->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/female-inactive.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/female-active.png" >
+          <!--<img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/female-inactive.png">
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/female-active.png"> -->
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../assets/img/female-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../assets/img/female-active.png" >
           <!--<p>انثى</p>-->
         </label>
           </div>

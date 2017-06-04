@@ -29,10 +29,9 @@ import 'rxjs/operator/filter';
             <button 
                 *ngFor="let place of places, let i = index" 
                 ion-item 
+                no-padding
                 (click)="openNewModal(place)">
-               <p item-left><ion-badge color="primary">
-                    {{i+1}}</ion-badge> 
-                </p>
+            
                 <p>{{place.name}}</p>
             </button>
         </ion-list>

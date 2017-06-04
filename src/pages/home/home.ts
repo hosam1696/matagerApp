@@ -53,13 +53,13 @@ export class HomePage {
     
     */
    // TODO: check connection
-
+   /*
     this.network.onConnect().subscribe(data=>{
       console.log(data, 'You are connected to the internet');
       //TODO: add a toast to show connection message
       this.showToast('متصل بالانترنت')
     });
-
+    */
   
 
      this.network.onDisconnect().subscribe(data => {
