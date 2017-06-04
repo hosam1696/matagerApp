@@ -10,16 +10,16 @@ page-exporter {
       align-items: center;
       justify-content: space-between;
       padding: 2px 15px 2px 5px;
-      height: 34px;
+      height: 40px;
       line-height: 15px;
       .btn-icon {
         width: 30px;
-        height:30px;
+        height:40px;
         border-left: 1px solid color($colors, bgColor);
         text-align: right;
         ion-icon {
           font-size: 20px;
-          line-height: 30px;
+          line-height: 40px;
           font-weight: bold;
           color: color($colors, primary)
         }
