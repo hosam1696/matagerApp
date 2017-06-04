@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ViewController, Events } from 'ionic-angular';
+import { NavController, AlertController, ViewController, Events, IonicPage } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 //import {levelToAr} from '../../app/service/InewUserData';
 
+@IonicPage()
 @Component({
   selector: 'page-contact',
   templateUrl: './settings.html'
 })
-export class ContactPage {
+export class SettingsPage {
 
   userHasLog:boolean;
   usersavedName: string;
@@ -23,7 +24,8 @@ export class ContactPage {
 
     this.events.subscribe('networkStatus', (data) => {
         
-        console.log('%c%s','font-size: 30px', 'Your connection status is' + this.network.type);
+      console.log('%c%s', 'font-size: 30px', 'Your connection status is' + this.network.type);
+      return this.network.type;
       }); 
      
   }

@@ -1,16 +1,14 @@
-import { Component } from '@angular/core';
-import { NavController, ToastController, ModalController } from 'ionic-angular';
-import {Login} from "../login/login";
-import {Merchant} from "../merchants/merchant";
-import {Exporter} from "../exporter/exporter";
+import { Component, Inject } from '@angular/core';
+import { NavController, ToastController, ModalController, IonicPage } from 'ionic-angular';
 
 import {ShelfsProvider} from "../../providers/shelfs";
 import {UserProvider} from "../../providers/user";
 import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
+import { UserLocalData } from '../../providers/userLocalData';
 
-
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -18,6 +16,7 @@ import {Network} from '@ionic-native/network';
 export class HomePage {
   dataFromModal;
   constructor(
+    @Inject(UserLocalData) localData:UserLocalData,
     public navCtrl: NavController,
     public userProvider: UserProvider,
     public geolocation: Geolocation,
@@ -26,16 +25,14 @@ export class HomePage {
      public modalCrtl: ModalController,
      public shelfsProvider: ShelfsProvider
   ) {
-    
-  if(localStorage.getItem('Username')) {
-      console.info(`User "${localStorage.getItem('Username')}" has loggedin`)
-    } else {
-      console.warn('no user has found..')
-    }
-    
 
+    let userLocalData = localData.userData;
+    console.log(userLocalData);
     
-
+      if(localStorage.getItem('Username'))
+          console.info(`User "${localStorage.getItem('Username')}" has loggedin`)
+      else 
+          console.warn('no user has found..')
 
 
   }
@@ -67,7 +64,7 @@ export class HomePage {
      this.network.onDisconnect().subscribe(data => {
       console.log(data, 'You are disconnected');
       //TODO: add a toast to show connection message
-      this.showToast('عذراً التطبيق يتطلب وجود اتصال للتصفح')
+      this.showToast(' التطبيق يتطلب وجود اتصال للتصفح')
     });
 
 
@@ -92,19 +89,11 @@ showToast(msg, dur=3000) {
     toast.present();
   }
 
-  toLoginPage() {
-    console.log(`to login page`);
-    this.navCtrl.push(Login)
+
+
+  navigateTo(page) {
+    this.navCtrl.push(page);
   }
-  toMerchantPage() {
-    this.navCtrl.push(Merchant)
-  }
-  toExporterPage() {
-    this.navCtrl.push(Exporter)
-  }
-navigateTo(page) {
-  this.navCtrl.push(page);
-}
    openSearchModal() {
 
     let modal = this.modalCrtl.create(PlacesModal, {pageName: 'FilterModal',User: 'Hosam'});
@@ -126,7 +115,7 @@ navigateTo(page) {
 
 
   navToAdv(addsLink) {
-    // navigate to the adverise link or the advertise owner
+    // navigate to the advertise link or the advertise owner
     console.log('You have to go to ' + addsLink)
   }
 }

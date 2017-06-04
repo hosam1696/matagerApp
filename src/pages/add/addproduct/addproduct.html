@@ -18,7 +18,7 @@
   <form novalidate [formGroup]="addProductForm"
         (ngSubmit)="submitForm()">
 
-    <div class="form-group prod-photo" >
+    <div class="form-group prod-photo" (click)="pickImage()">
       <ion-icon name="camera-outline"></ion-icon>
       <p>أضف صورة</p>
     </div>

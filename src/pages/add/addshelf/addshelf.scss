@@ -25,12 +25,20 @@ page-addshelf {
             border-radius: 5px;
             border: 1px solid transparent;
             font-size: 14px;
-
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s ease-in;
+            
             &::-webkit-input-placeholder {
               color: #999 !important;
             }
             &.ng-valid {
                 border: 1px solid green;
+            }
+            &.ng-valid {
+                border-bottom: 2px solid #bfffd2;
+            }
+            &.ng-dirty.ng-invalid {
+                border-bottom: 2px solid #ffe8bf;
             }
         }
         }
@@ -40,6 +48,7 @@ page-addshelf {
            left: 0;
            height: 35px;
            font-size: 14px;
+           margin: 0;
          }
        }
     }

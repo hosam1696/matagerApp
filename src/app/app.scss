@@ -83,10 +83,20 @@
 }
 
 ion-header {
+    &.header {
+      &:after {
+        background-position: 0 -4px;
+        content: ''
+      }
+      box-shadow: none !important;
+    }
     ion-navbar {
         .toolbar-background-ios {
-            border-color: rgba(0,0,0,.1) !important;
+            border-color: rgba(0,0,0,0.06) !important;
         }
+         .toolbar-md {
+             border-color: rgba(0,0,0,0.06) !important;
+         }
         ion-title {
           .toolbar-title {
             font-size: 20px;

@@ -4,13 +4,6 @@ import { NavParams, ViewController } from 'ionic-angular';
 import {AreaProvider } from '../providers/area';
 import 'rxjs/RX';
 
-
-interface maPlaces {
-  id: number,
-  name: string,
-  parent: number,
-  parent_name?: string
-}
 @Component({
     template: `\
      <ion-header>
@@ -54,54 +47,37 @@ interface maPlaces {
 export class ChooseArea {
     modalData: any;
     AllAreas:any= [];
-    constructor(public params:NavParams,
-                public viewCtrl: ViewController,
-                public areasProviders: AreaProvider) {
 
-                    this.modalData = this.params.data.name;
-                    this.areasProviders.filterPlacesByParent(this.params.data.defineSearch)
-                      .subscribe(data=>{
-                        this.AllAreas.push(data);
-                      },
-                      err=>{
-                        console.warn(err)
-                      },
-                      () => {
-                        if (this.AllAreas.length <= 0) {
-                            console.info('No Data',this.AllAreas);
+    constructor(
+          public params:NavParams,
+          public viewCtrl: ViewController,
+          public areasProviders: AreaProvider
+    ) {
 
-                        }
-                        console.info('All Data',this.AllAreas)
-                      }
+        this.modalData = this.params.data.name;
+        this.areasProviders.filterPlacesByParent(this.params.data.defineSearch)
+          .subscribe(data=>{
+            this.AllAreas.push(data);
+          },
+          err=>{
+            console.warn(err)
+          },
+          () => {
+            if (this.AllAreas.length <= 0) {
+                console.info('No Data',this.AllAreas);
 
-                    )
-                    /*let AllPlaces = this.areasProviders.getAreas();
+            }
+            console.info('All Data',this.AllAreas)
+          }
 
-                    AllPlaces
-                    .map(res=>res.json())
-                    .flatMap(res=> Observable.from(res.data))
-                   // .pluck('data')
-                    .filter(res=> res['parent'] == 0 )
-                    .subscribe(data=>{
-                        ArrayData.push(data);
-
-                        },
-                        err=>{
-                            console.warn(err)
-                        },
-                        () => {
-                            this.AllAreas = ArrayData;
-                            console.info('All Data',ArrayData)
-                        }
-                    );
-                    */
+        )
     }
 
-     closeModal() {
+     closeModal():void {
         this.viewCtrl.dismiss();
     }
 
-    choosePlace(...args) {
+    choosePlace(...args):void {
 
       args.unshift(this.params.get('name'));
 

@@ -45,7 +45,7 @@ export class Signup {
       Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       InsurePassword: new FormControl('', [Validators.required,this.insurePass]),
       Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      Email: new FormControl('', [Validators.required,Validators.pattern("[^ @]*@[^ @]*")]),
+      Email: new FormControl('', [Validators.required,Validators.pattern("[^ @$#]*@[^ @#$]*")]),
       Mobile: new FormControl('', [Validators.required]),
       Gender: new FormControl('male', Validators.required),
       Address: new FormControl(''),
