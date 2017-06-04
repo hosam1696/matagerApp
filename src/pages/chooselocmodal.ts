@@ -8,8 +8,8 @@ import 'rxjs/RX';
     template: `\
      <ion-header>
 
-  <ion-navbar color="primary">
-    <ion-title>choose {{modalData}}</ion-title>
+  <ion-navbar color="light">
+    <ion-title>اختر  {{modalData}}</ion-title>
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">

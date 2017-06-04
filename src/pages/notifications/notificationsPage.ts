@@ -8,7 +8,7 @@ import {Network} from '@ionic-native/network';
   templateUrl: 'notifications.html',
 })
 export class NotificationsPage {
-  isOnline: boolean = false;
+  isOnline: boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public network: Network) {
   }
 

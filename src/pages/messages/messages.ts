@@ -52,9 +52,9 @@ export class Messages {
 
   scanBarcode() {
     this.barcodeScanner.scan().then((barcodeData) => {
-      this.showToast(barcodeData);
+      console.log(barcodeData);
     }).catch(err => {
-      this.showToast(err);
+      console.log(err)
     });
   }
   showToast(msg) {

@@ -6,6 +6,7 @@ ion-content {
     &.content {
         background-color: color($colors, bgColor)
       }
+
       #modal-button{
             background-color: color($colors, light);
             width: 100%;
@@ -35,7 +36,7 @@ ion-content {
         //display: flex;
         //margin: 10px;
         //flex-direction: row-reverse ;
-        height: 30px;
+        height: 42px;
         //align-items: center;
         div.no-data {
             display: flex;
@@ -68,8 +69,8 @@ ion-content {
           &:after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
+            left: -2px;
+            top: -2px;
             width: 12px;
             border-radius: 2px;
             height: 12px;

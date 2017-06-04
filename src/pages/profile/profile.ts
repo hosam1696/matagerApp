@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController,IonicPage, AlertController, AlertOptions } from 'ionic-angular';
+import { NavController,IonicPage, AlertController, AlertOptions,ActionSheetController } from 'ionic-angular';
 //import {IlevelId} from '../../app/service/InewUserData';
 import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
-import { ActionSheet, ActionSheetOptions } from '@ionic-native/action-sheet';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { Camera } from '@ionic-native/camera';
 
 
 interface Ishelf {
@@ -31,14 +31,14 @@ export class ProfilePage {
   noShelfs:string;
   alertOptions: AlertOptions;
   showLoader: boolean = false;
-  
-
+  userLevelId: number;
   constructor(
     public navCtrl: NavController,
     public alert: AlertController,
     public shelfsProvider: ShelfsProvider,
     private imgPicker: ImagePicker,
-    private actionSheet: ActionSheet
+    private actionCtrl: ActionSheetController,
+    private camera: Camera
   ) {
       
   }
@@ -46,8 +46,11 @@ export class ProfilePage {
   ionViewDidLoad() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     this.userName = localStorage.getItem('Username');
+    /*this.userLevelId = this.userLocal['level_id'];
 
-    /*console.log(this.userLocal);
+    console.log('LEVEL ID', this.userLevelId);
+
+    console.log(this.userLocal);
     console.log(this.showContent);
 
   if (this.userLocal)
@@ -61,40 +64,83 @@ export class ProfilePage {
   }
 
   pickImage() {
-    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
-    let options: ActionSheetOptions = {
-      title: 'chooseTitle',
-      buttonLabels: [
-        'Camera',
-        'Album'
+
+    let actionSheetCtrl = this.actionCtrl.create({
+      title: 'اختر من',
+      buttons: [
+        {
+          text: 'الكاميرا',
+          handler: () => {
+            console.log('camera clicked');
+            this.openCamera();
+          }
+        },
+        {
+          text: 'البوم الصور',
+          handler: () => {
+            console.log('Photo Album');
+            this.openPicker();
+          }
+        },
+        {
+          text: 'الغاء',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+            
+          }
+        }
       ]
-    };
-    this.actionSheet.show(options)
-      .then(pressed => {
-        console.log('The place to get image is ', pressed);
-      })
-      .catch(err => {
-        console.warn(err);
-      })
-    /*
-    
-    this.imgPicker.getPictures({maximumImagesCount:1,width:400,height:120}).then(imageURI => {
+    });
+
+
+    actionSheetCtrl.present();
+
+    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
+ 
+  }
+
+  
+  openPicker() {
+    this.imgPicker.getPictures({ maximumImagesCount: 1, width: 400, height: 120 }).then(imageURI => {
       console.log(imageURI);
     }).catch(warn => {
       console.warn(warn);
     })
-    */
-
   }
 
 
+  openCamera() {
+    this.camera.getPicture({
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }).then(imageData => {
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      console.log(base64Image);
+      }).catch(err => {
+      console.error(err)
+    })
+  }  
+  
   getShelfs(userId: number): void {
     this.showLoader = true;
     this.shelfsProvider.getShelfs(userId).subscribe(res => {
       //console.table( res);
-      [this.AllShelfs, this.showLoader, this.noShelfs] = [res.data, true, null];
-      if (this.AllShelfs.length <=0)
+      if (res.status == 'success') {
+        [this.AllShelfs, this.showLoader, this.noShelfs] = [res.data, true, null];
+        if (this.AllShelfs.length <= 0) {
+          this.noShelfs = 'empty';
+          this.showLoader = false
+        }
+      } else {
         this.noShelfs = 'empty';
+        this.showLoader = false
+      }
+      
+        
     },
       err => {
         this.showLoader = false;

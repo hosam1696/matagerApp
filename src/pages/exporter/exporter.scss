@@ -10,6 +10,7 @@ page-exporter {
       align-items: center;
       justify-content: space-between;
       padding: 2px 15px 2px 5px;
+
       height: 42px;
       .btn-icon {
         width: 30px;
@@ -30,7 +31,7 @@ page-exporter {
         width: 100%;
         //margin: 10px;
         flex-direction: row-reverse ;
-        height: 30px;
+        height: 42px;
         align-items: center;
         div.no-data {
             display: flex;
@@ -50,11 +51,12 @@ page-exporter {
             display: flex;
             //margin: 10px;
             flex-direction: row ;
-
+            
         span {
           text-align: right;
             min-width: 50px;
             font-size: 10px;
+            
           //background-color: blue;
           margin: 5px;
           color: #777;
@@ -63,8 +65,8 @@ page-exporter {
           &:after {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
+            left: -2px;
+            top: -2px;
             width: 12px;
             border-radius: 2px;
             height: 12px;

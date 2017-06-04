@@ -43,7 +43,7 @@ export class HomePage {
 
     //TODO: pre configuration and  setup for user 
 
-   // Get the current location if he activate the location 
+   /* Get the current location if he activate the location 
     this.geolocation.getCurrentPosition().then((res)=>{
       console.log("User Location:", res.coords.latitude,res.coords.longitude);
       this.showToast("User Location:"+ res.coords.latitude+' | '+res.coords.longitude)
@@ -51,14 +51,15 @@ export class HomePage {
       console.warn(err);
     });
     
+    */
    // TODO: check connection
-
+   /*
     this.network.onConnect().subscribe(data=>{
       console.log(data, 'You are connected to the internet');
       //TODO: add a toast to show connection message
       this.showToast('متصل بالانترنت')
     });
-
+    */
   
 
      this.network.onDisconnect().subscribe(data => {

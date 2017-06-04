@@ -29,10 +29,9 @@ import 'rxjs/operator/filter';
             <button 
                 *ngFor="let place of places, let i = index" 
                 ion-item 
+                no-padding
                 (click)="openNewModal(place)">
-               <p item-left><ion-badge color="primary">
-                    {{i+1}}</ion-badge> 
-                </p>
+            
                 <p>{{place.name}}</p>
             </button>
         </ion-list>
@@ -51,12 +50,12 @@ import 'rxjs/operator/filter';
          تعثر فى الوصول الى قاعدة البيانات
          </p>
 
-         <p *ngIf="isOffline" text-center wordcolor="blue">
+         <!--<p *ngIf="isOffline" text-center wordcolor="blue">
             <br>
             <ion-icon name="warning-outline" ></ion-icon>
             <br>
             غير متصل بالانترنت
-         </p>
+         </p>-->
     </ion-content>
 
     `
@@ -141,11 +140,11 @@ export  class PlacesModal {
 
      //TODO: check the network connection after opening the modal [production Mode only]
       //if (this.events.publish('networkStatus') == [undefined] || [null]) {
-      if(this.showLoader == this.isOffline){ 
+     /* if(this.showLoader == this.isOffline){ 
         [this.isOffline, this.showLoader] = [true, false];
             return false;
       } else {
-          
+          */
         this.places = [];
         this.areasProviders.filterPlacesByParent(parentId).subscribe(fetched => {
             [this.showLoader, this.errorAccessDB] = [true , false];
@@ -164,5 +163,5 @@ export  class PlacesModal {
             }
         )
         }
-  }    
+ // }    
 }

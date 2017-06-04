@@ -1,12 +1,15 @@
 page-notifications {
 
-  ion-navbar {
-    ion-title {
-      .toolbar-title {
-        //color: color($colors, light) !important;
-      }
+  ion-header {
+        ion-navbar {
+            ion-title {
+                .toolbar-title {
+            font-size: 20px;
+            color: color($colors, light) !important
+          }
+            }
+        }
     }
-  }
   ion-content {
     .scroll-content {
       background-color: #eee;
@@ -14,7 +17,7 @@ page-notifications {
     ion-list {
       ion-item {
         ion-avatar {
-          background: url(/assets/img/male-alt.png);
+          background: url(../assets/img/male-alt.png);
           background-size: cover;
           background-size: 100% 96%;
           border-radius: 5px;
@@ -34,7 +37,7 @@ page-notifications {
         }
 
         p {
-          margin-top: -5px !important
+          //margin-top: -5px !important
         }
       }
     }

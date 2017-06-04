@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
-import { HomePage } from '../home/home';
 import { UserProvider } from "../../providers/user";
 
 
@@ -23,7 +21,6 @@ export class Login {
     public navParams: NavParams,
     public userLogin: UserProvider,
     public toastCtrl: ToastController,
-    public storage: Storage,
     public network: Network
   ) {
     this.LoginForm = new FormGroup({
@@ -82,7 +79,7 @@ export class Login {
 
 
               // TODO: navigate to the home page
-              this.navCtrl.setRoot(HomePage);
+              this.navCtrl.setRoot('HomePage');
               this.navCtrl.popToRoot();
 
             } else {

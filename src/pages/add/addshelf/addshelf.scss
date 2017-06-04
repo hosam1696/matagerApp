@@ -31,9 +31,7 @@ page-addshelf {
             &::-webkit-input-placeholder {
               color: #999 !important;
             }
-            &.ng-valid {
-                border: 1px solid green;
-            }
+            
             &.ng-valid {
                 border-bottom: 2px solid #bfffd2;
             }
