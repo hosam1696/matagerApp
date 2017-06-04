@@ -12,7 +12,7 @@
 
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
-      <img src="../../assets/img/adds_01.png" alt="">
+      <img *ngIf="userLocal.avatar" [src]="userLocal.avatar" alt="">
       <button type="button" class="pick-image" (click)="pickImage()"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
@@ -26,9 +26,13 @@
              <button type="button" class="pick-image" (click)="pickImage()">
                <ion-icon name="camera-outline"></ion-icon>
               </button>
-            <img *ngIf="userLocal.gender == 'male'" width="70" src="/assets/img/male-alt.png">
+              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="userLocal.avatar" alt="">
+              <ng-template #avatarIcon>
+                  <img *ngIf="userLocal.gender == 'male'" width="70" src="/assets/img/male-alt.png">
 
-            <img *ngIf="userLocal.gender == 'female'" width="70" src="/assets/img/female-alt.png">
+                  <img *ngIf="userLocal.gender == 'female'" width="70" src="/assets/img/female-alt.png">
+              </ng-template>
+            
           </ion-avatar>
           <div class="clearfix"></div>
         </ion-col>
@@ -98,16 +102,6 @@
 
     </ion-card>
 
-    <!--<p>
-      <ion-icon name="card"></ion-icon> {{userLevel(userLocal.level_id)}}</p>
-    <p>
-      <ion-icon name="mail"></ion-icon> {{userLocal.email}}</p>
-
-    <p>
-      <ion-icon name="phone-portrait"></ion-icon> {{userLocal.mobile}}</p> -->
-    <!-- test data <pre>
-        {{userLocal | json}}
-      </pre> -->
   </ion-card>
   <div class="clearfix"></div>
   <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
@@ -202,22 +196,23 @@
 
   </ion-row>
 </ion-grid>
-<button 
 
-    *ngIf="showContent == 'shelfs'" 
-    ion-button 
-    small 
-    (click)="navigateToPage('AddshelfPage')" 
-    class="float-button"> أضف رف</button>
 
-<button [hidden]="showContent == 'shelfs'" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
 
   </ion-card>
+  <div *ngIf="userLocal">
+    <ng-template #shelBtn>
+      <button ion-button small (click)="navigateToPage('AddshelfPage')" class="float-button"> أضف رف</button>
 
+    </ng-template>
+
+    <button *ngIf="showContent == 'products'; else shelBtn" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
+  </div>
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
+    <br><br>
     <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم بتسجيل الدخول</p>
-    <button ion-button (click)="navigateToPage('Login')">تسجيل الدخول</button>
+    <button ion-button (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
     <p>او قم بتسجيل حساب جديد</p>
     <button ion-button (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
   </ion-card>

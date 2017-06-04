@@ -1,12 +1,15 @@
 page-notifications {
 
-  ion-navbar {
-    ion-title {
-      .toolbar-title {
-        //color: color($colors, light) !important;
-      }
+  ion-header {
+        ion-navbar {
+            ion-title {
+                .toolbar-title {
+            font-size: 20px;
+            color: color($colors, light) !important
+          }
+            }
+        }
     }
-  }
   ion-content {
     .scroll-content {
       background-color: #eee;
@@ -34,7 +37,7 @@ page-notifications {
         }
 
         p {
-          margin-top: -5px !important
+          //margin-top: -5px !important
         }
       }
     }

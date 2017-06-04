@@ -49,6 +49,7 @@ export class AddshelfPage {
             res => {
               console.log(res);
               this.addShelfForm.reset();
+              this.navCtrl.pop();
         },
             err => {
             console.warn(err)

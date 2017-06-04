@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
-/**
- * Generated class for the AddproductPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-addproduct',
@@ -15,7 +10,11 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AddproductPage {
   addProductForm:FormGroup;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private actionCtrl: ActionSheetController
+  ) {
 
     this.addProductForm = new FormGroup({
       Name: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -34,6 +33,39 @@ export class AddproductPage {
 
 
   pickImage() {
-    console.log('picking image');
+
+    let actionSheetCtrl = this.actionCtrl.create({
+      title: 'اختر من',
+      buttons: [
+        {
+          text: 'الكاميرا',
+          handler: () => {
+            console.log('camera clicked');
+            //this.openCamera();
+          }
+        },
+        {
+          text: 'البوم الصور',
+          handler: () => {
+            console.log('Photo Album');
+            //this.openPicker();
+          }
+        },
+        {
+          text: 'الغاء',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+
+          }
+        }
+      ]
+    });
+
+
+    actionSheetCtrl.present();
+
+    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
+
   }
 }

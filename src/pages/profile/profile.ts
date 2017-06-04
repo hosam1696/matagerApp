@@ -71,13 +71,15 @@ export class ProfilePage {
         {
           text: 'الكاميرا',
           handler: () => {
-            console.log('Destructive clicked');
+            console.log('camera clicked');
+            this.openCamera();
           }
         },
         {
-          text: 'الالبوم',
+          text: 'البوم الصور',
           handler: () => {
-            console.log('Archive clicked');
+            console.log('Photo Album');
+            this.openPicker();
           }
         },
         {
@@ -85,7 +87,7 @@ export class ProfilePage {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
-            this.openPicker();
+            
           }
         }
       ]
