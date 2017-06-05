@@ -47,7 +47,7 @@ import 'rxjs/operator/filter';
             <br>
             <ion-icon name="warning-outline" ></ion-icon>
             <br>
-         تعثر فى الوصول الى قاعدة البيانات
+         تعثر  الوصول الى قاعدة البيانات
          </p>
 
          <!--<p *ngIf="isOffline" text-center wordcolor="blue">
@@ -58,7 +58,20 @@ import 'rxjs/operator/filter';
          </p>-->
     </ion-content>
 
+    `,
+  styles: [
     `
+      ion-item {
+        border-bottom: 1px solid #eee !important;
+      }
+      ion-item .item-inner {
+        border-bottom: none !important;
+      }
+      ion-item p {
+        font-size: 16px
+      }
+    `
+  ]
 })
 
 
@@ -79,7 +92,7 @@ export  class PlacesModal {
   ){
 
       this.modalData = params.data;
-      
+
       this.fetchAreas(0, (data) => {
           // Function for development mode only
           if (data == 'err')
@@ -90,8 +103,8 @@ export  class PlacesModal {
 
   ionViewDidLoad() {
       console.log(this.events.publish('networkStatus'));
-      
-  }  
+
+  }
 
 
   closeModal():void {
@@ -140,7 +153,7 @@ export  class PlacesModal {
 
      //TODO: check the network connection after opening the modal [production Mode only]
       //if (this.events.publish('networkStatus') == [undefined] || [null]) {
-     /* if(this.showLoader == this.isOffline){ 
+     /* if(this.showLoader == this.isOffline){
         [this.isOffline, this.showLoader] = [true, false];
             return false;
       } else {
@@ -152,7 +165,7 @@ export  class PlacesModal {
             callback(fetched);
         },
             err => {
-                
+
                 [this.showLoader, this.errorAccessDB] = [false , true];
                 console.warn(err);
                 callback('err');
@@ -163,5 +176,5 @@ export  class PlacesModal {
             }
         )
         }
- // }    
+ // }
 }

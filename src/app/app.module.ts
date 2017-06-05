@@ -9,7 +9,6 @@ import { MyApp } from './app.component';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 
-import {wordColorDirective } from './service/wordcolor.directive';
 import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
 
 import { ShelfsProvider } from '../providers/shelfs';
@@ -30,7 +29,6 @@ import { ActionSheet } from '@ionic-native/action-sheet';
 @NgModule({
   declarations: [
     MyApp,
-    wordColorDirective,
     PlacesModal,
     ChooseArea
   ],
@@ -64,7 +62,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,
-    { provide: UserLocalData, useClass: UserLocalData }, 
+    { provide: UserLocalData, useClass: UserLocalData },
     ImagePicker,
     ActionSheet,Camera
   ]

@@ -4,7 +4,8 @@ import { IonicPageModule } from 'ionic-angular';
 
 import { HomePage } from './home';
 
-import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
+//import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
+//import {wordColorDirective} from "../../app/service/wordcolor.directive";
 
 @NgModule({
     declarations: [
@@ -14,10 +15,9 @@ import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader
         HomePage
     ],
     imports: [
-        IonicPageModule.forChild(HomePage),
-        HsaloaderComponentModule
+        IonicPageModule.forChild(HomePage)
     ]
-    
+
 })
 
 export class HomePageModule {}

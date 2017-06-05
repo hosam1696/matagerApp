@@ -54,8 +54,12 @@
         <!--
         <img *ngIf="userGender == 'female'" src="/assets/img/female-alt.png">
         <img *ngIf="userGender == 'male'" src="/assets/img/male-alt.png"> -->
-        <img *ngIf="userGender == 'female'" src="../assets/img/female-alt.png" >
-        <img *ngIf="userGender == 'male'" src="../assets/img/male-alt.png" >
+
+        <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+        <ng-template #altImages>
+          <img *ngIf="userGender == 'female'" src="/assets/img/female-alt.png" >
+          <img *ngIf="userGender == 'male'" src="/assets/img/male-alt.png" >
+        </ng-template>
         <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
 
       </ion-avatar>
@@ -122,6 +126,8 @@
   </ion-list>
 
   <h4 text-center>Powered By <a href="http://it-plus.co/ar" target="_blank">ITPLUS</a></h4>
-  <p text-center>v1.0.0</p>
+
+  <!-- TODO: view App version
+  <p text-center>v1.0.0</p>-->
 
 </ion-content>
