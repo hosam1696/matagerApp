@@ -205,7 +205,7 @@ export class PlacesModal {
                 } else {
                     if (this.places.length == 0)
                         this.noPlaces = true;
-                    if (keepModalNumber == true)
+                    if (keepModalNumber == false)
                         this.modalNum += 1;
                     console.log('modal number = ', this.modalNum);
                 }
