@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ShelfsProvider } from '../../../providers/shelfs';
-
+import { IlocalUser } from '../../../app/service/inewUserData';
 
 @IonicPage()
 @Component({
@@ -12,9 +12,8 @@ import { ShelfsProvider } from '../../../providers/shelfs';
   })
   
 export class AddshelfPage {
-
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   addShelfForm: FormGroup;
-  userData;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,14 +32,15 @@ export class AddshelfPage {
     this.addShelfForm.valueChanges.subscribe(data => {
       console.log(data);
     });
-    this.userData = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
   submitForm() {
     if (this.addShelfForm.valid) {
       console.log('add shelf form FORM VALUE', this.addShelfForm.value);
       
-      let shelfForm = Object.assign({}, this.addShelfForm.value, { level_id: this.userData['level_id'], "User_id": this.userData['id'] });
+      let shelfForm = Object.assign({}, this.addShelfForm.value, {
+        "level_id": this.userLocal['level_id'], "User_id": this.userLocal.id
+      });
 
       console.log(shelfForm);
 

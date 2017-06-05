@@ -132,7 +132,7 @@ export class Login {
     this.navCtrl.push('ForgetPage')
   }
   backStep():void {
-    this.navCtrl.pop();
+    this.navCtrl.popToRoot();
     console.log('pop this page.. please!');
   }
 }

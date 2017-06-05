@@ -11,7 +11,7 @@
   <section id="hero-logo">
     <!--<h2>LOGO</h2>-->
 
-    <img src="../assets/img/mainlogo.png" width="80" alt="">
+    <img src="assets/img/mainlogo.png" width="80" alt="">
   </section>
 
   <form
@@ -84,8 +84,8 @@
         <input type="radio"  formControlName='Gender' value="male" id="gender-male">
         <label for="gender-male">
           <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../assets/img/male-active.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../assets/img/male-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="assets/img/male-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="assets/img/male-inactive.png" >
           <!--<p>ذكر</p>-->
         </label>
         </div>
@@ -96,8 +96,8 @@
           <!--<ion-icon name="woman" ></ion-icon>-->
           <!--<img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/female-inactive.png">
           <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/female-active.png"> -->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../assets/img/female-inactive.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../assets/img/female-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="assets/img/female-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="assets/img/female-active.png" >
           <!--<p>انثى</p>-->
         </label>
           </div>
@@ -152,28 +152,28 @@
             <ion-icon name="arrow-down"></ion-icon>
             <input type="text" 
             formControlName="Dist" id="dist" 
-            [required]= 'SignUpFrom.value.level_id == 2'>
+            [attr.required]= 'SignUpFrom.value["level_id"] == 2'>
           </div>
 
       </div>
 
       <div class="form-group">
         <input type="text" class="form-control" formControlName="Address"
-          [hidden]="SignUpFrom.value.level_id == 3"
+          [hidden]='SignUpFrom.value["level_id"] == 3'
           placeholder="العنوان" 
-          [required]= 'SignUpFrom.value.level_id !=3'       >
+          [attr.required]= 'SignUpFrom.value["level_id"] !=3'       >
       </div>
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="رقم السجل التجارى"        
-           [required]= 'SignUpFrom.value.level_id ==2'
+           [attr.required]= 'SignUpFrom.value["level_id"] ==2'
           formControlName="cr_num">
       </div>
       <div class="form-group">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="اسم مدير المنتج" 
           formControlName='owner_name'
-           [required]= 'SignUpFrom.value.level_id ==2'       >
+           [attr.required]= 'SignUpFrom.value["level_id"] ==2'       >
       </div>
 
 
@@ -187,6 +187,7 @@
 
   <button
         margin-top
+        margin-bottom
         *ngIf="!lastPage"
          block
          (click)="toNextPage()"

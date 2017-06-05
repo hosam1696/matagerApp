@@ -52,9 +52,7 @@
             &.tab-button[aria-selected=true] {
                 box-shadow: 0 -2px color($colors, primary);
             }
-            &.tab-button {
-                //min-height: 40px !important;
-            }
+
             ion-icon {
                 margin-top: -2px !important;
                 font-size: 28px;
@@ -80,7 +78,8 @@
 */
 ion-item {
   .item-inner {
-    border-bottom: none !important;
+      background-image:none !important; 
+         border-bottom: none !important;
   }
 }
 
@@ -99,11 +98,6 @@ ion-header {
          .toolbar-md {
              border-color: rgba(0,0,0,0.06) !important;
          }
-        ion-title {
-          .toolbar-title {
-            font-size: 20px;
-            color: color($colors, primary) !important
-          }
-        }
+        
     }
 }

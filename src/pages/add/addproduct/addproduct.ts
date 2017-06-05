@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-
-
+import { IlocalUser } from '../../../app/service/inewUserData';
 @IonicPage()
 @Component({
   selector: 'page-addproduct',
   templateUrl: 'addproduct.html',
 })
 export class AddproductPage {
-  addProductForm:FormGroup;
+  addProductForm: FormGroup;
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
