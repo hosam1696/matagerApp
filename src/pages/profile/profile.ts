@@ -25,7 +25,7 @@ interface Ishelf {
 })
 export class ProfilePage {
   userName: string;
-  userLocal: IlocalUser;
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));;
   showContent: string = 'products';
   AllShelfs :[Ishelf];
   noShelfs:string;
@@ -44,7 +44,7 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
     this.userName = localStorage.getItem('Username');
     /*this.userLevelId = this.userLocal['level_id'];
 
@@ -103,6 +103,7 @@ export class ProfilePage {
   
   openPicker() {
     this.imgPicker.getPictures({ maximumImagesCount: 1, width: 400, height: 120 }).then(imageURI => {
+      this.navCtrl.popToRoot();
       console.log(imageURI);
     }).catch(warn => {
       console.warn(warn);
@@ -118,8 +119,9 @@ export class ProfilePage {
       mediaType: this.camera.MediaType.PICTURE
     }).then(imageData => {
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-
-      console.log(base64Image);
+      this.userLocal.avatar = base64Image;
+      //console.log(base64Image);
+      this.navCtrl.popToRoot();
       }).catch(err => {
       console.error(err)
     })

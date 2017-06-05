@@ -8,82 +8,87 @@
 </ion-header>
 
 
-<!-- catch the device connection state [online | offline] -->
-<ion-content *ngIf="isOnline == true" id="offline">
+<ion-content  >
 
-  <div>
-    <h1><ion-icon name="wifi"></ion-icon></h1>
+  <section *ngIf="isOnline == true; else offline"> 
 
-  <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
-  </div>
-
-</ion-content >
-
-
-<ion-content  *ngIf="isOnline == false">
-  <ion-list>
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="/assets/img/male-alt.png"  alt="male">
-      </ion-avatar>
-      <div class="message-sender">
-        <h4>محمد أحمد</h4>
-        <div class="message-et">
-          <ion-icon name="timer-outline"></ion-icon>
-          منذ
-          <span>يومان</span>
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/male-alt.png" alt="male">
+        </ion-avatar>
+        <div class="message-sender">
+          <h4>محمد أحمد</h4>
+          <div class="message-et">
+            <ion-icon name="timer-outline"></ion-icon>
+            منذ
+            <span>يومان</span>
+          </div>
         </div>
-      </div>
-      <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-    </ion-item>
+        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل </p>
+      </ion-item>
 
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="/assets/img/male-alt.png"  alt="male">
-      </ion-avatar>
-      <div class="message-sender">
-        <h4>محمد أحمد</h4>
-        <div class="message-et">
-          <ion-icon name="timer-outline"></ion-icon>
-          منذ
-          <span>يومان</span>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/male-alt.png" alt="male">
+        </ion-avatar>
+        <div class="message-sender">
+          <h4>محمد أحمد</h4>
+          <div class="message-et">
+            <ion-icon name="timer-outline"></ion-icon>
+            منذ
+            <span>يومان</span>
+          </div>
         </div>
-      </div>
-      <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
 
-    </ion-item>
+      </ion-item>
 
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="/assets/img/male-alt.png"  alt="male">
-      </ion-avatar>
-      <div class="message-sender">
-        <h4>محمد أحمد</h4>
-        <div class="message-et">
-          <ion-icon name="timer-outline"></ion-icon>
-          منذ
-          <span>يومان</span>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/male-alt.png" alt="male">
+        </ion-avatar>
+        <div class="message-sender">
+          <h4>محمد أحمد</h4>
+          <div class="message-et">
+            <ion-icon name="timer-outline"></ion-icon>
+            منذ
+            <span>يومان</span>
+          </div>
         </div>
-      </div>
-      <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكلن </p>
 
-    </ion-item>
+      </ion-item>
 
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="/assets/img/male-alt.png"  alt="male">
-      </ion-avatar>
-      <div class="message-sender">
-        <h4>محمد أحمد</h4>
-        <div class="message-et">
-          <ion-icon name="timer-outline"></ion-icon>
-          منذ
-          <span>يومان</span>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="assets/img/male-alt.png" alt="male">
+        </ion-avatar>
+        <div class="message-sender">
+          <h4>محمد أحمد</h4>
+          <div class="message-et">
+            <ion-icon name="timer-outline"></ion-icon>
+            منذ
+            <span>يومان</span>
+          </div>
         </div>
+        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+
+      </ion-item>
+
+    </ion-list>
+
+  </section>
+
+  <ng-template #offline>
+    <section id="offline">
+      <div>
+        <h1>
+          <ion-icon name="wifi"></ion-icon>
+        </h1>
+
+        <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
       </div>
-      <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-
-    </ion-item>
-
-  </ion-list>
+    </section>
+  </ng-template>
 </ion-content>

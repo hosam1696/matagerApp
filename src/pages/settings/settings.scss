@@ -9,21 +9,6 @@ page-contact {
       color: color($colors, primaryDark) !important;
 
   }
-  ion-header {
-    ion-navbar {
-        ion-title {
-          .toolbar-title {
-            font-size: 20px;
-            color: color($colors, primary) !important
-          }
-        }
-        ion-buttons {
-          ion-icon {
-            font-size: 20px
-          }
-        }
-      }
-    }
 
   ion-content {
     &.content {

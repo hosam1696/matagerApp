@@ -19,7 +19,7 @@ export class MyApp {
 
 
       this.events.subscribe('networkStatus', (data) => {
-        console.log( 'font-size: 30px', `Your connection status is: ${data}`);
+        console.log( "%c%s",'font-size: 30px', `Your connection status is: ${data}`);
       })
     });
   }

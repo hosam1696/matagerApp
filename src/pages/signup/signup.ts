@@ -45,8 +45,8 @@ export class Signup {
       Password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       InsurePassword: new FormControl('', [Validators.required,this.insurePass]),
       Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      Email: new FormControl('', [Validators.required,Validators.pattern("[^ @$#]*@[^ @#$]*")]),
-      Mobile: new FormControl('', [Validators.required]),
+      Email: new FormControl('', Validators.required),
+      Mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(5)]),
       Gender: new FormControl('male', Validators.required),
       Address: new FormControl(''),
       Map: new FormControl(''),
@@ -212,7 +212,9 @@ export class Signup {
         }
     });
 
-     } else {
+    } else {
+      console.log(this.SignUpFrom.errors, this.SignUpFrom.validator);
+      console.log(this.SignUpFrom.value);
       console.log('Form Status', this.SignUpFrom.status);
       this.showToast('تأكد من ملىء جميع الحقول')
      }

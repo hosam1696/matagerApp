@@ -3,22 +3,24 @@ import { NavParams, ViewController } from 'ionic-angular';
 
 import {AreaProvider } from '../providers/area';
 import 'rxjs/RX';
- enum IconvertToEng {
-  Area = 'المنطقة',
-  City= 'المدينة',
-  Dist= 'الحى'
-}
+
+let IconvertToEng;
+(function (level_id) {
+  IconvertToEng[IconvertToEng["Area"] = "المنطقة"] = "Area";
+  IconvertToEng[IconvertToEng["City"] = "المدينة"] = "City";
+  IconvertToEng[IconvertToEng["Dist"] = "الحى"] = "Dist";
+})(IconvertToEng || (IconvertToEng = {}));
 
 @Component({
     template: `\
      <ion-header>
 
-  <ion-navbar color="light">
+  <ion-navbar color="primary">
     <ion-title>اختر  {{convertToEng[modalData]}}</ion-title>
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">
-       <ion-icon  name="close-outline" color="primary">
+       <ion-icon  name="close-circle" color="light">
        </ion-icon>
        </button>
     </ion-buttons>
@@ -42,10 +44,18 @@ import 'rxjs/RX';
     `,
     styles: [
       `
-        ion-header ion-navbar ion-title .toolbar-title{
-          color: #fff
-        }
-      `
+      ion-item {
+        border-bottom: 1px solid #eee !important;
+      }
+      ion-item .item-inner {
+          background-image: none !important;
+        border-bottom: 1px solid red !important
+      }
+      ion-item p {
+        font-size: 16px;
+        color: #555
+      }
+    `
     ]
 })
 

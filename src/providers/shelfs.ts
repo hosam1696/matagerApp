@@ -21,7 +21,6 @@ export class ShelfsProvider {
         let apiKey = "add";
 
         let body = Object.assign({}, { apiKey }, shelfData);
-
         return this.http.post(this.shelfs_URl, JSON.stringify(body)).map(res => res.json());
 
     }

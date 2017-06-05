@@ -112,11 +112,11 @@ page-profile {
                                 }
                                 p {
                                     &.prod-desc {
-                                        color: color($colors, primary); font-size: 12px;
+                                        color: color($colors, primary); font-size: 15px;
 
                                     }
                                     &.price {
-                                        margin:-12px auto;
+                                        margin:-10px auto 0;
                                     }
 
                                     text-align: right;
