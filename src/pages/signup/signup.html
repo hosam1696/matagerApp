@@ -137,18 +137,18 @@
     <div class="step" [ngClass]="{shownPage: csPage== 3}">
       <br>
       <div class="select-group">
-          <div (click)="openModal('المنطقة', 0)">
+          <div (click)="openModal('Area', 0)">
 
             {{AreaName || 'المنطة'}}
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="Area">
             </div>
-          <div (click)="openModal('المدينة', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
+          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
 
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="City">
           </div>
-          <div (click)="openModal('الحى',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
+          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
             <ion-icon name="arrow-down"></ion-icon>
             <input type="text" 
             formControlName="Dist" id="dist" 

@@ -3,13 +3,18 @@ import { NavParams, ViewController } from 'ionic-angular';
 
 import {AreaProvider } from '../providers/area';
 import 'rxjs/RX';
+ enum IconvertToEng {
+  Area = 'المنطقة',
+  City= 'المدينة',
+  Dist= 'الحى'
+}
 
 @Component({
     template: `\
      <ion-header>
 
   <ion-navbar color="light">
-    <ion-title>اختر  {{modalData}}</ion-title>
+    <ion-title>اختر  {{convertToEng[modalData]}}</ion-title>
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">
@@ -47,7 +52,7 @@ import 'rxjs/RX';
 export class ChooseArea {
     modalData: any;
     AllAreas:any= [];
-
+    convertToEng = IconvertToEng;
     constructor(
           public params:NavParams,
           public viewCtrl: ViewController,
