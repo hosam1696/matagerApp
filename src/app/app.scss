@@ -78,8 +78,10 @@
 
 }
 */
- .item-inner {
-    background: none !important;
+ion-item {
+  .item-inner {
+    border-bottom: none !important;
+  }
 }
 
 ion-header {

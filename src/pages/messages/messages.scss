@@ -12,18 +12,24 @@ page-messages {
     }
     ion-list {
       ion-item {
+        border-bottom: 1px solid #eee !important;
+        .item-inner {
+          border-bottom: none !important;
+        }
         ion-avatar {
-        background: url(/assets/img/male-alt.png);
-        background-size: cover;
-        background-size: 100% 96%;
         border-radius: 5px;
-
+        border: 1px dashed color($colors, primary);
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
       }
         .message-sender {
           display: flex;
           justify-content: space-between;
           h4 {
-            margin-top: -5px !important;
+            //margin-top: -5px !important;
             color: color($colors, primary);
           }
           .message-et {
@@ -31,9 +37,11 @@ page-messages {
             color: color($colors, lightDark)
           }
         }
-      
+
       p {
-            margin-top: -5px !important
+            height: 45px;
+        white-space: pre-wrap;
+        //line-height: 15px;
       }
       }
     }

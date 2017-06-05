@@ -3,7 +3,7 @@
     justify-content: space-between;
 }
 page-profile {
-    
+
     ion-header {
         ion-navbar {
             ion-title {
@@ -79,7 +79,7 @@ page-profile {
                                 font-size: 14px;
                                 color: color($colors,primaryDark)
                             }
-                            
+
                             }
                             .shelf-controls {
                             ion-icon {
@@ -88,7 +88,7 @@ page-profile {
                             }
                         }
                         }
-                        
+
                     }
                 }
                 ion-grid {
@@ -126,7 +126,7 @@ page-profile {
                                     font-size: 8px;
                                     display: block;
                                     text-align: left;
-                                    padding: 0 6px
+                                    padding: 2px 6px
 
                                 }
                             }
@@ -247,7 +247,7 @@ page-profile {
                 padding: 0 13px;
                 a {
                     color: color($colors, primary);
-                
+
                     span {
                       margin-right: 5px;
                     }
@@ -255,7 +255,7 @@ page-profile {
                 }
             }
 
-          
+
 
 
         }

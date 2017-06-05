@@ -9,7 +9,7 @@ export class TabsPage {
 
   tab1Root = 'HomePage';
   tab2Root = 'ProfilePage';
-  tab3Root = 'Messages';
+  tab3Root = 'BarcodePage';
   tab4Root = 'NotificationsPage';
   tab5Root = 'SettingsPage';
 

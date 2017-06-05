@@ -27,11 +27,11 @@ page-addshelf {
             font-size: 14px;
             border-bottom: 2px solid transparent;
             transition: border-bottom 0.3s ease-in;
-            
+
             &::-webkit-input-placeholder {
               color: #999 !important;
             }
-            
+
             &.ng-valid {
                 border-bottom: 2px solid #bfffd2;
             }
@@ -44,7 +44,7 @@ page-addshelf {
            position: fixed;
            bottom: 0;
            left: 0;
-           height: 35px;
+           height: 40px;
            font-size: 14px;
            margin: 0;
          }

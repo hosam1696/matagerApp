@@ -14,6 +14,8 @@ export class SettingsPage {
   usersavedName: string;
   userFullName: string;
   userGender: string;
+  userImageUrl: string;
+
   static viewCtrl: ViewController;
   constructor(
     public navCtrl: NavController,
@@ -23,44 +25,46 @@ export class SettingsPage {
     this.checkUserLogin();
 
     this.events.subscribe('networkStatus', (data) => {
-        
+
       console.log('%c%s', 'font-size: 30px', 'Your connection status is' + this.network.type);
       return this.network.type;
-      }); 
-     
+      });
+
   }
 
   ionViewDidLoad() {
     this.checkUserLogin();
-    
+
 
     if (this.userHasLog) {
-       this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-    this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
-    this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
+        this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+        this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
+        this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
+        this.userImageUrl = JSON.parse(localStorage.getItem('userLocalData'))['avatar'];
     }
 
 
-    
-     
 
-       
-   
+
+
+
+
   }
   ionViewDidEnter() {
     console.log('user has cached or not',this.userHasLog);
     this.checkUserLogin();
     if (this.userHasLog) {
-       this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-    this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
-    this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
+      this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+      this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
+      this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
+      this.userImageUrl = JSON.parse(localStorage.getItem('userLocalData'))['avatar'];
     }
   }
   ionViewWilleave() {
     this.checkUserLogin();
-    
+
   }
-  
+
   checkUserLogin() {
 
     return localStorage.getItem('userLocalData') ? this.userHasLog = true : this.userHasLog = false;
@@ -75,7 +79,7 @@ export class SettingsPage {
         {
           text: 'الغاء',
           handler: data=> {
-            
+
             //ContactPage.viewCtrl.dismiss();
           }
         },
@@ -91,7 +95,7 @@ export class SettingsPage {
     });
 
     alert.present();
-    
+
     //TODO: move to the home page after logout
   }
   navigateToPage(page) {

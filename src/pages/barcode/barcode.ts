@@ -2,28 +2,23 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the FollowingsPage page.
+ * Generated class for the BarcodePage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-followings',
-  templateUrl: 'followings.html',
+  selector: 'page-barcode',
+  templateUrl: 'barcode.html',
 })
-export class FollowingsPage {
+export class BarcodePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad FollowingsPage');
+    console.log('ionViewDidLoad BarcodePage');
   }
 
-
-  toProfilePage(id:number) {
-    //Todo: Get the user by Id and navigate to it's profile page
-    console.log(`navigate to user with id [ ${id} ]`);
-  }
 }
