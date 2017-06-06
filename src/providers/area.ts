@@ -26,4 +26,14 @@ export class AreaProvider {
         .filter(res=> res['parent'] == parent )
 
     }
+
+    getAreaById(placeId: number) {
+        return this.http.post(this.Areas_URL, JSON.stringify({ "apiKey": "getData" }))
+            .map(res => res.json())
+            //.pluck('data')
+            .flatMap(res => Observable.from(res.data))
+            .filter(place => place['id'] == placeId)
+            .take(1)
+            
+    }
 }

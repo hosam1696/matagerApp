@@ -20,7 +20,7 @@ let IconvertToEng;
 
     <ion-buttons end>
        <button ion-button (click)="closeModal()">
-       <ion-icon  name="close-circle" color="light">
+       <ion-icon  name="close" color="light">
        </ion-icon>
        </button>
     </ion-buttons>

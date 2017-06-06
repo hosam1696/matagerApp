@@ -29,7 +29,12 @@ export class AddproductPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddproductPage');
+    this.addProductForm.valueChanges
+      .debounceTime(500)
+      .distinctUntilChanged()
+      .subscribe(values => {
+        console.log(values);
+      })
   }
 
 
@@ -68,5 +73,9 @@ export class AddproductPage {
 
     console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
 
+  }
+
+  submitForm() {
+    console.log('function submit add product');
   }
 }

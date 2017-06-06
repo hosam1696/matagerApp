@@ -22,7 +22,10 @@ import 'rxjs/operator/filter';
 
 </ion-header>
     <ion-content>
-    <ion-searchbar #searchbar (ionInput)="getItems($event, this.places)" (ionCancel)="onCancel($event)"></ion-searchbar>
+    <ion-searchbar #searchbar 
+    (ionInput)="filterItems($event, this.places)" 
+    placeholder="ابحث عن .."
+    (ionCancel)="onCancel($event)"></ion-searchbar>
 
         <p text-center *ngIf="showLoader">
             <hsa-loader ></hsa-loader>
@@ -140,16 +143,17 @@ export class PlacesModal {
     }
 
 
-    getItems(event, target = this.places) {
+    filterItems(event, target = this.places) {
         let value = event.target.value;
-        let cachedPlaces =  this.places;
-        console.log(cachedPlaces);
-        if (value != "") {
+
+        if (value && value.trim() != '') {
+
             let filtered = this.places.filter(item => {
-                return (item.name.indexOf(value) > -1)
+                return item.name.indexOf(value) > -1
             });
             this.places = filtered;
-        } else {
+
+        }  else {
             switch (this.modalNum) {
                 case 1:
                     this.fetchAreas(0);
@@ -163,9 +167,11 @@ export class PlacesModal {
         }
 
     }
+
+
     onCancel(event) {
         event.target.value = "";
-        this.getItems(event);
+        this.filterItems(event);
     }
 
     fetchAreas(parentId: number, callback = (f) => { }) {
@@ -212,5 +218,5 @@ export class PlacesModal {
             }
         });
     }
-    // }
+
 }

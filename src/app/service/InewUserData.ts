@@ -19,7 +19,7 @@ export interface ImodalData {
 }
 export interface Iplace {
   id: number,
-  name; string,
+  name: string,
   parent: number,
   parent_name: string| null
 }
@@ -33,6 +33,7 @@ export interface IuserData{
   Address:string,
   Map: string,
   Area: number,
+
   City: number,
   Dist: number,
   level_id: number,
@@ -48,8 +49,11 @@ export interface IlocalUser {
   active: number,
   address: string,
   area: number,
+  areaName?: string,
   city: number,
+  cityName?: string,
   dist: number,
+  distName?: string,
   email: string,
   gender: string,
   mobile: string,

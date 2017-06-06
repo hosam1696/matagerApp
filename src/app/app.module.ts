@@ -24,6 +24,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 import { ActionSheet } from '@ionic-native/action-sheet';
+//import { GenderPipe } from '../pipes/gender/gender';
 
 
 @NgModule({

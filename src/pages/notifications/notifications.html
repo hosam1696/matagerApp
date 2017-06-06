@@ -10,11 +10,19 @@
 
 <ion-content  >
 
-  <section *ngIf="isOnline == true; else offline"> 
+  <section *ngIf="isOnline == false; else offline"> 
 
     <ion-list>
       <ion-item>
         <ion-avatar item-left>
+          <!-- To be replaced if the data from server is inistansiated
+            <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+        <ng-template #altImages>
+          <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
+          <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+        </ng-template>
+
+          -->
           <img src="assets/img/male-alt.png" alt="male">
         </ion-avatar>
         <div class="message-sender">
@@ -30,7 +38,7 @@
 
       <ion-item>
         <ion-avatar item-left>
-          <img src="assets/img/male-alt.png" alt="male">
+          <img src="assets/img/female-alt.png" alt="female">
         </ion-avatar>
         <div class="message-sender">
           <h4>محمد أحمد</h4>

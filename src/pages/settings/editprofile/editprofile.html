@@ -1,9 +1,4 @@
-<!--
-  Generated template for the Editprofile page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="primary">
@@ -14,56 +9,225 @@
 
 
 <ion-content no-padding>
-    <ion-card  id="user-info">
-        <ion-avatar>
-          <ion-icon  name="person" color="primaryDark"></ion-icon>
-          <!-- if the user upload profile image
-            <ion-img></ion-img>-->
-            <ion-icon name='add'></ion-icon>
-        </ion-avatar>
-        <h1><b>محمد النبوى أحمد</b>
-          <p>mohamed</p>
-        </h1>
-    </ion-card>
-    <ion-card>
-      <ion-list>
-          <button ion-item (click)="editdetail($event)">change user name</button>
-          <div class="form-edit">
-            <ion-label>Type the new user you want.. username</ion-label>
-            <ion-input inline type="text" placeholder="new user"></ion-input>
-          </div>
-          <button ion-item (click)="editdetail($event)">change  name</button>
-          <div class="form-edit">
-            <ion-label>Type the new user you want.. full</ion-label>
-            <ion-input inline type="text" placeholder="new name "></ion-input>
-          </div>
-          <button ion-item (click)="editdetail($event)">change user password</button>
-          <div class="form-edit">
-            <ion-label>Type the new password you want.. username</ion-label>
-            <ion-input inline type="password" placeholder="new user"></ion-input>
-          </div>
-          <button ion-item (click)="editdetail($event)">change user email</button>
-          <div class="form-edit">
-            <ion-label>Type the new user you want.. email</ion-label>
-            <ion-input inline type="email" placeholder="new email"></ion-input>
-          </div>
-          <button ion-item (click)="editdetail($event)">change user name</button>
-          
-          <button ion-item (click)="editdetail($event)">change mobile number</button>
-          <div class="form-edit">
-            <ion-label>Type the mobile</ion-label>
-            <ion-input inline type="text" placeholder="new user"></ion-input>
-          </div>
-          <button ion-item>تحديد موقعك</button>
-      </ion-list>
-      <br>
-      
 
-    </ion-card>
+<form 
+  novalidate
+  (ngSubmit)="EditForm()"
+  [formGroup]="EditUserForm"
+>
+
+    <ion-list>
+
     
-    <ion-buttons >
-<button ion-button  color="secondary">تأكيد وتعديل</button>
-<button ion-button  color="danger" (click)="goBack()"> الغاء</button>
-    </ion-buttons>
-    
+<ion-item-group no-lines id="personal-info">
+  <ion-item-divider color="bgColor">البيانات الشخصية</ion-item-divider>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        اسم المستخدم
+      </ion-col>
+      <ion-col col-8>
+        <input type="text" #usernameInput formControlName="Username" class="input-as-text" [value]="localUser.username">
+        
+        <ion-icon name="close" color="lightDark" (click)="usernameInput.value = localUser.username">
+
+        </ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          الاسم التجارى
+        </ion-col>
+        <ion-col col-8>
+<input type="text" #nameInput formControlName="Username" class="input-as-text" [value]="localUser.name">
+
+<ion-icon name="close" color="lightDark" (click)="nameInput.value =localUser.name">
+         
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          رقم الهاتف
+        </ion-col>
+        <ion-col>
+        <input type="text" #phoneInput formControlName="Mobile" class="input-as-text" [value]="localUser.mobile">
+
+        <ion-icon name="close" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+كلمة المرور
+        </ion-col>
+        <ion-col>
+          <input type="password" formControlName="Password" class="input-as-text" value="************">
+
+       </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        تأكيد كلمة المرور
+      </ion-col>
+      <ion-col>
+      <input type="password" formControlName="InsurePassword" class="input-as-text" value="************">
+        
+        
+       </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        البريد الالكترونى
+      </ion-col>
+      <ion-col>
+        <input type="email" #emailInput email formControlName="Email" class="input-as-text" [value]="localUser.email">
+
+        <ion-icon name="close" color="lightDark" (click)="emailInput.value= localUser.email"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        الجنس
+      </ion-col>
+      <ion-col>
+        <!--<input type="text" formControlName="Gender" class="input-as-text" [value]="localUser.gender | gender"> -->
+
+        <select formControlName="Gender" id="">
+          <option value="male">ذكر</option>
+          <option value="female">
+            انثى</option>
+        </select>
+        <!--<ion-select formControlName="Gender">
+            <ion-option value="male">ذكر</ion-option>
+            <ion-option value="female">
+              انثى</ion-option>
+        </ion-select> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+</ion-item-group>
+
+
+    <ion-item-group no-lines>
+      <ion-item-divider color="bgColor">بيانات الموقع</ion-item-divider>
+
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4 class="location-title">
+الموقع على الخريطة
+            </ion-col>
+            <ion-col col-8 class="location-place">
+              
+              <span>
+                 Salah Salem Road, Tanamel Ash sharq alwahat, Cairo
+              </span>
+              <ion-icon name="pin-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+            العنوان
+            </ion-col>
+            <ion-col>
+              <input type="text" email formControlName="Email" class="input-as-text" [value]="localUser.address">
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              المنطقة
+            </ion-col>
+            <ion-col (click)="openModal('Area',0)">
+              <span [textContent]="AreaName"></span>
+              <ion-icon name="arrow-down" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+المدينة            </ion-col>
+            <ion-col (click)="openModal('City',EditUserForm.getRawValue()['Area'])">
+              
+              <span [textContent]="CityName"></span>
+<ion-icon name="arrow-down" color="primary"></ion-icon>
+             </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+الحى
+            </ion-col>
+            <ion-col (click)="openModal('Dist',EditUserForm.getRawValue()['City'])">
+              
+                <span [textContent]="DistName"></span>
+                <ion-icon name="arrow-down" color="primary"></ion-icon>
+               </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-group>
+
+
+</ion-list>
+
+
+
+<button id="form-button" ion-button full> حفظ التعديلات</button>
+</form>
+
 </ion-content>

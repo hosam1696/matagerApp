@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ShelfsProvider } from '../../../providers/shelfs';
@@ -17,7 +17,8 @@ export class AddshelfPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public shelfsProvider: ShelfsProvider
+    public shelfsProvider: ShelfsProvider,
+    public toastCtrl: ToastController
   ) {
 
     this.addShelfForm = new FormBuilder().group({
@@ -39,7 +40,7 @@ export class AddshelfPage {
       console.log('add shelf form FORM VALUE', this.addShelfForm.value);
       
       let shelfForm = Object.assign({}, this.addShelfForm.value, {
-        "level_id": this.userLocal['level_id'], "User_id": this.userLocal.id
+        "User_id": this.userLocal.id
       });
 
       console.log(shelfForm);
@@ -48,16 +49,37 @@ export class AddshelfPage {
         .subscribe(
             res => {
               console.log(res);
+              
+              /* if success
+              
               this.addShelfForm.reset();
               this.navCtrl.pop();
+              */
         },
             err => {
             console.warn(err)
           }
         )
+    } else {
+      if (this.addShelfForm.get('Name').value == '') {
+        this.showToast('يرجى ادخال اسم الرف');
+      } else if (this.addShelfForm.get('Area').value == '') {
+
+        this.showToast('يرجى ادخال مساحة الرف');
+      } else {
+        this.showToast('يرجى ادخال تكلفة الرف');
+      }
     }
       
   
+  }
+
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+    });
+    toast.present();
   }
 
 }
