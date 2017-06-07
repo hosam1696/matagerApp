@@ -6,7 +6,7 @@ import { Directive, ElementRef, Renderer2, Input, OnInit } from '@angular/core';
 })
 
 export class wordColorDirective implements OnInit{
-    @Input('changeColor') changeStyle: {
+    @Input('changeColor') changeColor: {
       prop: string,
       value: any
     };
@@ -18,7 +18,7 @@ export class wordColorDirective implements OnInit{
     }
 
     ngOnInit() {
-      this.rendrer.setStyle(this.elm.nativeElement, this.changeStyle.prop, this.changeStyle.value || '#666')
+        this.rendrer.setStyle(this.elm.nativeElement, this.changeColor.prop, this.changeColor.value || '#666')
     }
 
 

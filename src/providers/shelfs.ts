@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 
 
@@ -6,32 +6,38 @@ import { Http } from '@angular/http';
 @Injectable()
 
 export class ShelfsProvider {
-    shelfs_URl: string = 'http://192.168.1.16/matager/api/shelfs.php';
 
-    constructor(public http: Http) {
+    constructor(@Inject('API_URL') private API_URL, public http: Http) {
 
     }
 
     getShelfs(userId: number = 5) {
-        let body = {"apiKey": "all","User_id": userId};
-        return this.http.post(this.shelfs_URl, JSON.stringify(body)).map(res => res.json());
+        let body = {"action": "all","User_id": userId};
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
 
     addShelf(shelfData) {
-        let apiKey = "add";
+        let action = "add";
 
-        let body = Object.assign({}, { apiKey }, shelfData);
-        return this.http.post(this.shelfs_URl, JSON.stringify(body)).map(res => res.json());
+        let body = Object.assign({}, { action }, shelfData);
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
 
     }
 
 
     deleteShelf(shelfData){
-        let apiKey = "delete";
+        let action = "delete";
 
-        let body = Object.assign({}, { apiKey }, shelfData);
-        return this.http.post(this.shelfs_URl, body).map(res => res.json());
+        let body = Object.assign({}, { action }, shelfData);
+        console.log('data to the server', body);
+        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
 
     }
-    editShelf() {}
+    editShelf(editedShelfData) {
+
+        let action = 'edit';
+        let body = Object.assign({}, { action }, editedShelfData);
+        console.log('data to the server', body);
+        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
+    }
 }

@@ -14,7 +14,6 @@ import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.mo
 import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
-import { UserLocalData } from '../providers/userLocalData';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -63,9 +62,9 @@ import { ActionSheet } from '@ionic-native/action-sheet';
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,
-    { provide: UserLocalData, useClass: UserLocalData },
     ImagePicker,
-    ActionSheet,Camera
+    ActionSheet, Camera,
+    { provide: 'API_URL', useValue: 'http://rfapp.net/api/'}
   ]
 })
 export class AppModule {}

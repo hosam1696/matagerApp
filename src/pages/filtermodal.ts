@@ -202,17 +202,22 @@ export class PlacesModal {
         )
     }
 
-    fetchAreaCallback(parentId: number,keepModalNumber:boolean =false) {
+    fetchAreaCallback(parentId: number, keepModalNumber: boolean = false) {
+        this.showLoader = true;
         this.fetchAreas(parentId, (fetched) => {
             if (fetched != 'err' && fetched == 'completed') {
+                
                 if (this.modalNum >= 3) {
                     this.closeModal();
                     //this.viewCtrl.dismiss(this.finalResult)
                 } else {
                     if (this.places.length == 0)
                         this.noPlaces = true;
-                    if (keepModalNumber == false)
+                    if (keepModalNumber == false) 
+                        
                         this.modalNum += 1;
+                    
+                        
                     console.log('modal number = ', this.modalNum);
                 }
             }

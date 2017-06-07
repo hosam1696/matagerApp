@@ -36,7 +36,12 @@ let IconvertToEng;
         {{area.name}}      </ion-item>
     </ion-list>
 
-    <p *ngIf="AllAreas.length <= 0" text-center>
+
+    <p text-center *ngIf="showLoader">
+            <hsa-loader ></hsa-loader>
+        </p>
+
+    <p *ngIf="noData" text-center>
     <br>
       لا يوجد أماكن متوفرة لهذا لأختيار حتى الان<ion-icon name="mark"></ion-icon>
     </p> 
@@ -63,6 +68,8 @@ export class ChooseArea {
     modalData: any;
     AllAreas:any= [];
     convertToEng = IconvertToEng;
+    noData: boolean = false;
+    showLoader: boolean = true;
     constructor(
           public params:NavParams,
           public viewCtrl: ViewController,
@@ -71,14 +78,17 @@ export class ChooseArea {
 
         this.modalData = this.params.data.name;
         this.areasProviders.filterPlacesByParent(this.params.data.defineSearch)
-          .subscribe(data=>{
+          .subscribe(data => {
+            this.showLoader = true;
             this.AllAreas.push(data);
           },
           err=>{
             console.warn(err)
           },
           () => {
+            this.showLoader = false;
             if (this.AllAreas.length <= 0) {
+              this.noData = true;
                 console.info('No Data',this.AllAreas);
 
             }

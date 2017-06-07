@@ -45,13 +45,13 @@ page-profile {
                 box-shadow: none;
 
                 ion-list {
-                    margin-top: 4px;
+                    margin-top: 6px;
                     background-color: transparent !important;
                     ion-item {
                         &:first-child {
                             border-top: none !important;
                         }
-                        border-bottom: 1px solid #ddd !important;
+                        border-bottom: 2px solid #eee !important;
                         height: 55px;
                         p {
                             color: color($colors, primary)
@@ -103,20 +103,23 @@ page-profile {
                                 margin:0
                             }
                             .col-content {
-                                min-height: 120px;
+                                min-height: 200px;
+                                height: 200px;
                                 background-color: #fff;
-
+                                    display: flex;
+                                     flex-direction: column;
                                 img {
                                     width: 100%;
                                     height: 100px;
                                 }
                                 p {
                                     &.prod-desc {
+                                        flex: 1;
                                         color: color($colors, primary); font-size: 15px;
 
                                     }
                                     &.price {
-                                        margin:-10px auto 0;
+                                        height: 30px;
                                     }
 
                                     text-align: right;
@@ -184,6 +187,7 @@ page-profile {
             ion-grid {
                 ion-row {
                     ion-col{
+                    
                         ion-avatar {
                 margin-top: -55px ;
                 width: 70px;

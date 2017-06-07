@@ -104,14 +104,11 @@
 
   </ion-card>
   <div class="clearfix"></div>
-  <ion-card *ngIf="showContent == 'shelfs'" class="show-card">
+  <ion-card *ngIf="showContent == 'shelfs' && userLocal" class="show-card">
 
     <ion-list>
       <!-- add loADER -->
-        <p text-center *ngIf="showLoader">
-          <hsa-loader></hsa-loader>
-        </p>
-
+        
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
              لم يتم اضافة رفوف حتى الان
@@ -126,12 +123,13 @@
 
         <ion-item  *ngFor="let shelf of AllShelfs">
             <div class="shelf-id">
-              <p>رقم الرف <span>{{shelf.id}} </span></p>
-
-              <p>{{shelf.cost}} ج.م  |
+              <p>رقم الرف <span>{{shelf.name}} </span></p>
+<!--
+              <p>{{shelf.cost}} ريال  |
                  {{shelf.area}}
                  متر
                 </p>
+                -->
             </div>
 
             <hr>
@@ -142,7 +140,7 @@
                 </div>
               <div class="shelf-controls">
                 <ion-icon name="open-outline"
-                  (click)="updateShelf(shelf)"
+                  (click)="editShelf('AddshelfPage', shelf)"
                 ></ion-icon>
                 <ion-icon
                   name="trash-outline"
@@ -153,6 +151,10 @@
 
 
         </ion-item>
+        <p text-center *ngIf="showLoader">
+          <hsa-loader></hsa-loader>
+        </p>
+
     </ion-list>
 
 
@@ -165,13 +167,13 @@
     <ion-col col-6>
       <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
 
-        <img src="assets/img/adds_02.png" alt="product">
+        <img src="assets/img/product-iphone.png" alt="product">
 
         <p class="prod-desc">
-          ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+          ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا 
         </p>
         <p class="price">
-          <span class="prod-price"><b>1,500</b></span> ج.م
+          <span class="prod-price"><b>1,500</b></span> ريال
         </p>
 
         <!--<a href="">ابلاغ عن مخالفة</a>-->
@@ -180,13 +182,13 @@
     <ion-col col-6>
       <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
 
-        <img src="assets/img/adds_02.png" alt="product">
+        <img src="assets/img/product-mac.png" alt="product">
 
         <p class="prod-desc">
           ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
         </p>
         <p class="price">
-          <span class="prod-price"><b>1,500</b></span> ج.م
+          <span class="prod-price"><b>3,500</b></span> ريال
         </p>
 
         <!--<a href="">ابلاغ عن مخالفة</a>-->
@@ -201,12 +203,12 @@
 
   </ion-card>
   <div *ngIf="userLocal">
-    <ng-template #shelBtn>
-      <button ion-button small (click)="navigateToPage('AddshelfPage')" class="float-button"> أضف رف</button>
 
-    </ng-template>
+      <button *ngIf="showContent == 'shelfs' && userLocal['level_id'] == 2" ion-button small (click)="navigateToPage('AddshelfPage')" class="float-button"> أضف رف</button>
 
-    <button *ngIf="showContent == 'products'; else shelBtn" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
+   
+
+    <button *ngIf="showContent == 'products' && userLocal['level_id'] == 3" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
   </div>
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">

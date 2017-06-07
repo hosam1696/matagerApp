@@ -4,7 +4,12 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 import { ShelfsProvider } from '../../../providers/shelfs';
 import { IlocalUser } from '../../../app/service/inewUserData';
-
+interface IShelf {
+  'id': number,
+  'user_id': number,
+  name: string,
+  area: string, cost: string
+}
 @IonicPage()
 @Component({
   selector: 'page-addshelf',
@@ -14,6 +19,10 @@ import { IlocalUser } from '../../../app/service/inewUserData';
 export class AddshelfPage {
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   addShelfForm: FormGroup;
+  InitData;
+  actionText: string = 'اضافة رف';
+  formAction: string = 'add';
+  showLoader: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -22,10 +31,11 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      Name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      Name: new FormControl('' , [Validators.required, Validators.minLength(4)]),
       Area: new FormControl('', Validators.required),
-      Cost: new FormControl('', Validators.required)
-      
+      Cost: new FormControl('', Validators.required),
+      salePercentage: new FormControl('0')
+
     });
   }
 
@@ -33,6 +43,23 @@ export class AddshelfPage {
     this.addShelfForm.valueChanges.subscribe(data => {
       console.log(data);
     });
+
+    this.InitData = this.navParams.get('pageData');
+
+    console.log(this.InitData, typeof this.InitData);
+
+    if (typeof this.InitData == 'object') {
+      this.actionText = 'تعديل ';
+      this.addShelfForm.controls.Name.setValue(this.InitData.name);
+
+      this.addShelfForm.controls.Area.setValue(this.InitData.area);
+
+      this.addShelfForm.controls.Cost.setValue(this.InitData.cost);
+
+      this.formAction = 'edit';
+    }
+        
+
   }
 
   submitForm() {
@@ -45,21 +72,43 @@ export class AddshelfPage {
 
       console.log(shelfForm);
 
+
+
+      if (this.formAction == 'add') { 
+
+        this.showLoader = true;
       this.shelfsProvider.addShelf(shelfForm)
         .subscribe(
-            res => {
-              console.log(res);
-              
-              /* if success
-              
-              this.addShelfForm.reset();
-              this.navCtrl.pop();
-              */
+        res => {
+            
+          if (res.status = 'success') {
+            this.addShelfForm.reset();
+            this.navCtrl.pop();
+          }
+         
         },
-            err => {
+        err => {
+          console.warn(err);
+          this.showLoader = false
+        }
+        );
+      
+      } else {
+        shelfForm['Id'] = this.InitData.id;
+        this.shelfsProvider.editShelf(shelfForm).subscribe(
+          res => {
+            console.log(res);
+
+            /* if success
+            */
+            this.addShelfForm.reset();
+            this.navCtrl.pop();
+          },
+          err => {
             console.warn(err)
           }
-        )
+        )  
+    }
     } else {
       if (this.addShelfForm.get('Name').value == '') {
         this.showToast('يرجى ادخال اسم الرف');
@@ -67,7 +116,7 @@ export class AddshelfPage {
 
         this.showToast('يرجى ادخال مساحة الرف');
       } else {
-        this.showToast('يرجى ادخال تكلفة الرف');
+        this.showToast('يرجى ادخال ايجار الرف');
       }
     }
       
@@ -77,7 +126,8 @@ export class AddshelfPage {
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
-      duration: 2000,
+      duration: 3000,
+      position:'top'
     });
     toast.present();
   }

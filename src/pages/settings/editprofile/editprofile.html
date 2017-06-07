@@ -31,7 +31,7 @@
       <ion-col col-8>
         <input type="text" #usernameInput formControlName="Username" class="input-as-text" [value]="localUser.username">
         
-        <ion-icon name="close" color="lightDark" (click)="usernameInput.value = localUser.username">
+        <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username">
 
         </ion-icon>
       </ion-col>
@@ -48,7 +48,7 @@
         <ion-col col-8>
 <input type="text" #nameInput formControlName="Username" class="input-as-text" [value]="localUser.name">
 
-<ion-icon name="close" color="lightDark" (click)="nameInput.value =localUser.name">
+<ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name">
          
           </ion-icon>
         </ion-col>
@@ -67,7 +67,7 @@
         <ion-col>
         <input type="text" #phoneInput formControlName="Mobile" class="input-as-text" [value]="localUser.mobile">
 
-        <ion-icon name="close" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
+        <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -110,7 +110,7 @@
       <ion-col>
         <input type="email" #emailInput email formControlName="Email" class="input-as-text" [value]="localUser.email">
 
-        <ion-icon name="close" color="lightDark" (click)="emailInput.value= localUser.email"></ion-icon>
+        <ion-icon name="refresh" color="lightDark" (click)="emailInput.value= localUser.email"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>

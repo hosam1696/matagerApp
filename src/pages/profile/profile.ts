@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,IonicPage, AlertController, AlertOptions,ActionSheetController } from 'ionic-angular';
+import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController } from 'ionic-angular';
 //import {IlevelId} from '../../app/service/InewUserData';
 import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
 import { ShelfsProvider } from '../../providers/shelfs';
@@ -25,20 +25,22 @@ interface Ishelf {
 })
 export class ProfilePage {
   userName: string;
-  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));;
+  userLocal: IlocalUser;
   showContent: string = 'products';
   AllShelfs :[Ishelf];
   noShelfs:string;
   alertOptions: AlertOptions;
   showLoader: boolean = false;
   userLevelId: number;
+
   constructor(
     public navCtrl: NavController,
     public alert: AlertController,
     public shelfsProvider: ShelfsProvider,
     private imgPicker: ImagePicker,
     private actionCtrl: ActionSheetController,
-    private camera: Camera
+    private camera: Camera,
+    public toastCtrl: ToastController
   ) {
       
   }
@@ -46,20 +48,24 @@ export class ProfilePage {
   ionViewDidLoad() {
 
     this.userName = localStorage.getItem('Username');
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     /*this.userLevelId = this.userLocal['level_id'];
 
     console.log('LEVEL ID', this.userLevelId);
 
     console.log(this.userLocal);
     console.log(this.showContent);
-
-  if (this.userLocal)
-    this.getShelfs(this.userLocal['id']);
     */
+    if (this.userLocal)
+      this.getShelfs(this.userLocal['id']);
+    
   }
 
 
   ionViewWillEnter() {
+    if (this.userLocal)
+      this.getShelfs(this.userLocal['id']);
+    
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
@@ -128,7 +134,8 @@ export class ProfilePage {
   }  
   
   getShelfs(userId: number): void {
-    this.showLoader = true;
+    [this.showLoader, this.noShelfs] = [true, null];
+    
     this.shelfsProvider.getShelfs(userId).subscribe(res => {
       //console.table( res);
       if (res.status == 'success') {
@@ -157,46 +164,56 @@ export class ProfilePage {
 
 
   deleteShelf(shelf: Ishelf):void {
-    console.log(shelf);
-    let shelfData = Object.assign({}, {
-      "level_id": this.userLocal['level_id'],
-      "User_id": this.userLocal['id'],
-      Id: shelf.id
-    });
+    //console.log(shelf);
+    if (shelf.close == 1) {
+      this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه')
+    } else {
 
-    this.alertOptions = {
-      title: 'حذف رف',
-      message: 'هل انت متأكد من رغبتك فى حذف هذا الرف؟',
-      buttons: [
-        {
-          text: 'الغاء',
-          handler: data => {
+      let shelfData = Object.assign({}, {
+        "User_id": this.userLocal['id'],
+        Id: shelf.id
+      });
 
-            //ContactPage.viewCtrl.dismiss();
+      this.alertOptions = {
+        title: 'حذف رف',
+        message: 'هل انت متأكد من رغبتك فى حذف هذا الرف؟',
+        buttons: [
+          {
+            text: 'الغاء',
+            handler: data => {
+
+              //ContactPage.viewCtrl.dismiss();
+            }
+          },
+          {
+            text: 'حذف',
+            handler: (data) => {
+              this.shelfsProvider.deleteShelf(shelfData).subscribe(res => {
+                if (res.status == 'success') {
+                  this.getShelfs(this.userLocal['id'])
+                }
+              });
+            }
           }
-        },
-        {
-          text: 'حذف',
-          handler: (data)=> {
-            this.shelfsProvider.deleteShelf(shelfData).subscribe(res => {
-              if (res.status == 'success') {
-                this.getShelfs(this.userLocal['id'])
-              }
-            });
-          }
-        }
-      ]
-    }    
-    let alert = this.alert.create(this.alertOptions);
+        ]
+      }
+      let alert = this.alert.create(this.alertOptions);
 
-    alert.present();
+      alert.present();
+    }
+
     
   }
 
+  editShelf(page, pageParams) {
 
-  updateShelf(shelf) {
-    console.log(shelf);
-  }  
+    if (pageParams.close == 1) 
+      this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
+     else 
+        this.navigateToPage('AddshelfPage', pageParams)
+  }
+
+  
 
   navigateToPage(page, pageData=165):void {
     this.navCtrl.push(page ,{pageData})
@@ -204,5 +221,14 @@ export class ProfilePage {
 
   userLevel(level:number):string {
     return levelToAr[level]
+  }
+
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 }

@@ -1,0 +1,263 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>المبيعات</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <button type="button" id="modal-button" color="light">
+
+  <div class="btn-icon">
+    <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
+  </div>
+  
+  <div id="search-result" >
+     <!-- <div *ngIf="dataFromModal" class="found-data">
+        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
+        </div> -->
+        <div *ngIf="!dataFromModal" class="no-data">
+          <span color="primary">خيارات البحث</span>
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+    </div>
+</button>
+
+
+    <ion-list padding no-lines>
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+                  <img src="assets/img/product-mac.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                450
+              </span> ريال
+                  </p>
+                </div>
+                </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-camera.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                  كاميرا مراقبة عالية الجودة
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                900
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-iphone.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                ايفون 7 رامات 2 جيجا وكاميرا 16 ميجا
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                1200
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-camera.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                   كاميرا مراقبة عالية الجودة
+
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                450
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-mac.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                450
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-camera.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 1</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                 1250
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item no-padding margin-bottom="4px" text-start>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              <img src="assets/img/product-iphone.png" alt="">
+            </ion-col>
+            <ion-col col-8>
+              <h3>
+                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+              </h3>
+              <div class="product-info">
+                <p> رقم الرف
+                  <span class="kilos">16544</span> </p>
+                <div class="info-detail">
+                  <p>
+                    الكمية
+                    <span> 6</span>
+                  </p>
+                  <p>
+                    السعر
+                    <span>
+                1505
+              </span> ريال
+                  </p>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+    
+    </ion-list>
+
+  
+</ion-content>

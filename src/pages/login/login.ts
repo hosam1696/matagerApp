@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
 
-import { Iplace } from '../../app/service/InewUserData';
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
@@ -41,11 +40,7 @@ export class Login {
 
   }
 
-  ionViewWillEnter() {
 
-    //TODO: hide the tabs on login page
-
-}
   ionViewWillLeave() {
 
   }
@@ -66,52 +61,23 @@ export class Login {
 
         this.showLoader = true;
         this.userLogin.LoginUser(this.LoginForm.value).subscribe(
-          data => {
+          resBody => {
             //TODO: if data is correct navigate to the home page
-            if (data.status == 'success') {
-              let userLocalData = data.data;
-              
+            if (resBody.status == 'success') {
+              let userLocalData = resBody.data;
+              this.showLoader = false;
+              localStorage.setItem('Username', this.LoginForm.value.Username);
+              localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
 
-              this.areaProvider.getAreaById(data.data.area).subscribe((res:Iplace) => {
-                userLocalData = Object.assign({}, userLocalData, {
-                  areaName: res.name
-                })
-              },
-                err => { },
-                () => {
-                  this.areaProvider.getAreaById(data.data.city).subscribe((res: Iplace) => {
-                    userLocalData = Object.assign({}, userLocalData, {
-                      cityName: res.name
-                    })
-                  },
-                    err => { },
-                    () => {
-                      this.areaProvider.getAreaById(data.data.dist).subscribe((res: Iplace) => {
-                        userLocalData = Object.assign({}, userLocalData, {
-                          distName: res.name
-                        })
-                      },
-                        err => { },
-                        () => {
-                          this.showLoader = false;
-                          localStorage.setItem('Username', this.LoginForm.value.Username);
-                          localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-
-                          // TODO: navigate to the home page
-                          this.navCtrl.setRoot('HomePage');
-                          this.navCtrl.popToRoot();
-                        }
-                      );
-                    }
-                  );
-                }
-            );
+              // TODO: navigate to the home page
+              this.navCtrl.setRoot('HomePage');
+              this.navCtrl.popToRoot();  
 
               console.table(localStorage.getItem('userLocalData'));    
 
             } else {
               this.showLoader = false;
-              this.showToast(`${data.message}`)
+              this.showToast(`${resBody.message}`)
             }
           },
           err => {
@@ -150,7 +116,7 @@ export class Login {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 2000,
-      cssClass: 'danger-toast'
+      //cssClass: 'danger-toast'
     });
     toast.present();
   }

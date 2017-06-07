@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ToastController, ModalController, IonicPage } from 'ionic-angular';
 
 import {ShelfsProvider} from "../../providers/shelfs";
@@ -6,7 +6,7 @@ import {UserProvider} from "../../providers/user";
 import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
-import { UserLocalData } from '../../providers/userLocalData';
+
 
 @IonicPage()
 @Component({
@@ -16,7 +16,6 @@ import { UserLocalData } from '../../providers/userLocalData';
 export class HomePage {
   dataFromModal;
   constructor(
-    @Inject(UserLocalData) localData:UserLocalData,
     public navCtrl: NavController,
     public userProvider: UserProvider,
     public geolocation: Geolocation,
@@ -26,9 +25,6 @@ export class HomePage {
      public shelfsProvider: ShelfsProvider
   ) {
 
-    let userLocalData = localData.userData;
-    console.log(userLocalData);
-    
       if(localStorage.getItem('Username'))
           console.info(`User "${localStorage.getItem('Username')}" has loggedin`)
       else 
@@ -38,7 +34,6 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-
 
 
     //TODO: pre configuration and  setup for user 

@@ -10,11 +10,15 @@
 
 <ion-content padding>
 
+  <h3 text-center> 
+    اضافة رف جديد
+  </h3>
+
   <form novalidate [formGroup]="addShelfForm"
   (ngSubmit)="submitForm()">
     <div class="form-group">
       <input type="text"
-      placeholder="اسم الرف"
+      placeholder="رقم الرف"
       formControlName = "Name"
       class="form-control">
     </div>
@@ -36,8 +40,16 @@
       </div>
     </div>
 
-
-    <button id="form-button" ion-button full> اضافة رف</button>
+    <div class="form-group">
+      <input type="text" placeholder="نسبة على البيع" class="form-control" formControlName="salePercentage">
+      <div class="identify-value">
+        <span>%</span>
+      </div>
+    </div>
+    <button id="form-button" ion-button full>
+       {{actionText}} &nbsp;
+       <hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+    </button>
   </form>
 
 </ion-content>

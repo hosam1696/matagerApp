@@ -14,7 +14,7 @@ export class BarcodePage {
   }
 
   ionViewDidLoad() {
-    this.scanBarcode();
+    // this.scanBarcode();
   }
 
   scanBarcode() {

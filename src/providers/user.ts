@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/RX';
@@ -6,18 +6,18 @@ import 'rxjs/RX';
 @Injectable()
 export class UserProvider {
 
-  API_URL:string = "http://192.168.1.16/matager/api/users.php";
-  Areas_URL:string = 'http://192.168.1.16/matager/api/places.php';
-
-  constructor(public http: Http) {
+  //API_URL: string = "http://rfapp.net/api/";
+  Areas_URL: string = "http://rfapp.net/api/places.php";
+  constructor( @Inject('API_URL') private API_URL, public http: Http) {
   }
 
   LoginUser(userData){
-    let apiKey = 'loginUser';
+    let action = 'loginUser';
 
-    let data = JSON.stringify(Object.assign({}, {apiKey}, userData));
-    console.log('Data entered',data, typeof data);
-    return this.http.post(this.API_URL, data).map(res=> res.json());
+    let data = JSON.stringify(Object.assign({}, { action}, userData));
+    console.log('Data entered', data, typeof data);
+    
+    return this.http.post(this.API_URL +'users.php', data).map(res=> res.json());
   }
 
 
@@ -26,10 +26,10 @@ export class UserProvider {
 
 addUser(newUserData) {
 
-  let apiKey = 'newUser';
-  let data = JSON.stringify(Object.assign({}, {apiKey}, newUserData));
+  let action = 'newUser';
+  let data = JSON.stringify(Object.assign({}, { action}, newUserData));
   console.log('Data entered', data);
-  return this.http.post(this.API_URL+'/user.php', data).map(res=>res.json());
+  return this.http.post(this.API_URL+'users.php', data).map(res=>res.json());
 
 }
 

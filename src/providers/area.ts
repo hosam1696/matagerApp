@@ -1,4 +1,4 @@
-import { Injectable} from '@angular/core';
+import { Injectable, Inject} from '@angular/core';
 import { Http } from '@angular/http';
 import {Observable} from "rxjs/Observable";
 
@@ -6,20 +6,19 @@ import {Observable} from "rxjs/Observable";
 @Injectable()
 
 export class AreaProvider {
-    Areas_URL:string = 'http://192.168.1.16/matager/api/places.php';
 
-    constructor ( public http: Http) {}
+    constructor ( @Inject('API_URL') private API_URL,public http: Http) {}
 
 
     getAreas() {
 
-        return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"})).map(res=>res.json());
+        return this.http.post(this.API_URL+'places.php', JSON.stringify({"action": "getData"})).map(res=>res.json());
     }
 
 
     filterPlacesByParent(parent:number) {
 
-      return this.http.post(this.Areas_URL, JSON.stringify({"apiKey": "getData"}))
+        return this.http.post(this.API_URL + 'places.php', JSON.stringify({"action": "getData"}))
         .map(res=>res.json())
         .flatMap(res=> Observable.from(res.data))
         // .pluck('data')
@@ -28,7 +27,7 @@ export class AreaProvider {
     }
 
     getAreaById(placeId: number) {
-        return this.http.post(this.Areas_URL, JSON.stringify({ "apiKey": "getData" }))
+        return this.http.post(this.API_URL + 'places.php', JSON.stringify({ "action": "getData" }))
             .map(res => res.json())
             //.pluck('data')
             .flatMap(res => Observable.from(res.data))
