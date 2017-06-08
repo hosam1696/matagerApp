@@ -6,6 +6,7 @@ import {UserProvider} from "../../providers/user";
 import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
+import {IlocalUser} from "../../app/service/InewUserData";
 
 
 @IonicPage()
@@ -15,6 +16,7 @@ import {Network} from '@ionic-native/network';
 })
 export class HomePage {
   dataFromModal;
+  userLocalData: IlocalUser;
   constructor(
     public navCtrl: NavController,
     public userProvider: UserProvider,
@@ -27,26 +29,32 @@ export class HomePage {
 
       if(localStorage.getItem('Username'))
           console.info(`User "${localStorage.getItem('Username')}" has loggedin`)
-      else 
+      else
           console.warn('no user has found..')
 
 
   }
 
   ionViewDidLoad() {
+    this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
+    //TODO: pre configuration and  setup for user
 
-
-    //TODO: pre configuration and  setup for user 
-
-   /* Get the current location if he activate the location 
+   /* Get the current location if he activate the location */
     this.geolocation.getCurrentPosition().then((res)=>{
-      console.log("User Location:", res.coords.latitude,res.coords.longitude);
-      this.showToast("User Location:"+ res.coords.latitude+' | '+res.coords.longitude)
+      let coords = res.coords.latitude+'-'+res.coords.longitude;
+      console.log(`User Location: ${coords}`);
+      this.showToast(`User Location: ${coords}`)
+      if (this.userLocalData) {
+        this.userLocalData.map = coords;
+        localStorage.setItem('userLocalData', JSON.stringify(this.userLocalData)) ;
+      } else {
+        console.warn('No user had signed in or the user didn\'t allow geolocation ')
+      }
     }).catch(err=> {
       console.warn(err);
     });
-    
-    */
+
+
    // TODO: check connection
    /*
     this.network.onConnect().subscribe(data=>{
@@ -55,7 +63,7 @@ export class HomePage {
       this.showToast('متصل بالانترنت')
     });
     */
-  
+
 
      this.network.onDisconnect().subscribe(data => {
       console.log(data, 'You are disconnected');
@@ -79,7 +87,7 @@ showToast(msg, dur=3000) {
     toast.onDidDismiss(()=>{
       //TODO: pop to the main page of the user
       //console.log('moving to main page ..');
-  
+
     });
 
     toast.present();
@@ -96,7 +104,7 @@ showToast(msg, dur=3000) {
     modal.onDidDismiss(data=> {
       //console.log('Data from Modal',data);
       this.searchData(data);
-      
+
     });
     modal.present();
 

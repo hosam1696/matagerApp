@@ -23,7 +23,7 @@ page-sales {
           font-weight: bold;
           color: color($colors, primary)
         }
-      
+
     }
     #search-result{
         min-width: 100px;
@@ -51,12 +51,12 @@ page-sales {
             display: flex;
             //margin: 10px;
             flex-direction: row ;
-            
+
         span {
           text-align: right;
             min-width: 50px;
             font-size: 10px;
-            
+
           //background-color: blue;
           margin: 5px;
           color: #777;
@@ -104,6 +104,12 @@ page-sales {
             color: #111 !important;
             ion-row {
                 ion-col {
+                  min-height: 90px;
+                  padding-right: 10px;
+                  padding-bottom:0 !important;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: space-between;
                     &:first-child {
                         padding: 0;
                         img {
@@ -113,7 +119,7 @@ page-sales {
                     }
                     &:last-child {
                         padding-right: 10px;
-                        
+
                         h3 {
                             color: color($colors, primary
                             )
@@ -133,5 +139,5 @@ page-sales {
         }
     }
 
-} 
-}  
+}
+}

@@ -104,11 +104,11 @@
 
   </ion-card>
   <div class="clearfix"></div>
-  <ion-card *ngIf="showContent == 'shelfs' && userLocal" class="show-card">
+  <ion-card  *ngIf="showContent == 'shelfs' && userLocal" class="show-card shelfcard">
 
     <ion-list>
       <!-- add loADER -->
-        
+
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
              لم يتم اضافة رفوف حتى الان
@@ -170,7 +170,7 @@
         <img src="assets/img/product-iphone.png" alt="product">
 
         <p class="prod-desc">
-          ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا 
+          ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا
         </p>
         <p class="price">
           <span class="prod-price"><b>1,500</b></span> ريال
@@ -206,7 +206,7 @@
 
       <button *ngIf="showContent == 'shelfs' && userLocal['level_id'] == 2" ion-button small (click)="navigateToPage('AddshelfPage')" class="float-button"> أضف رف</button>
 
-   
+
 
     <button *ngIf="showContent == 'products' && userLocal['level_id'] == 3" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
   </div>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavParams, ViewController, Events } from 'ionic-angular';
 import { AreaProvider } from '../providers/area';
-import { ImodalData, Iplace } from '../app/service/InewUserData';
+import { ImodalData, Iplace} from '../app/service/InewUserData';
 import 'rxjs/operator/filter';
 
 
@@ -38,7 +38,6 @@ import 'rxjs/operator/filter';
                 no-padding
                 (click)="openNewModal(place)"
                 (tab)="openNewModal(place)">
-            
                 <p>{{place.name}}</p>
             </ion-item>
         </ion-list>
@@ -68,6 +67,7 @@ import 'rxjs/operator/filter';
     `,
     styles: [
         `
+        
       ion-item {
         border-bottom: 1px solid #eee !important;
       }
@@ -139,7 +139,7 @@ export class PlacesModal {
         console.log(this.modalNum, this.finalResult);
 
         this.fetchAreaCallback(choosenPlace.id,false);
-       
+
     }
 
 
@@ -206,18 +206,18 @@ export class PlacesModal {
         this.showLoader = true;
         this.fetchAreas(parentId, (fetched) => {
             if (fetched != 'err' && fetched == 'completed') {
-                
+
                 if (this.modalNum >= 3) {
                     this.closeModal();
                     //this.viewCtrl.dismiss(this.finalResult)
                 } else {
                     if (this.places.length == 0)
                         this.noPlaces = true;
-                    if (keepModalNumber == false) 
-                        
+                    if (keepModalNumber == false)
+
                         this.modalNum += 1;
-                    
-                        
+
+
                     console.log('modal number = ', this.modalNum);
                 }
             }

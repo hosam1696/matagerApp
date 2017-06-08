@@ -30,7 +30,9 @@ let IconvertToEng;
     
     <ion-list *ngIf="AllAreas.length > 0">
       
-      <ion-item *ngFor="let area of AllAreas;let i =index"
+      <ion-item 
+        *ngFor="let area of AllAreas;let i =index"
+        [ngClass]="{'hovered': area.id == localUser[modalData.toLowerCase()]}"
       (click)="choosePlace(area.name, area.id)">
         <!--<ion-badge>{{i}}</ion-badge>-->
         {{area.name}}      </ion-item>
@@ -49,6 +51,9 @@ let IconvertToEng;
     `,
     styles: [
       `
+        .hovered {
+          border-right: 5px solid #2e8bc9 !important;
+        }
       ion-item {
         border-bottom: 1px solid #eee !important;
       }
@@ -65,6 +70,7 @@ let IconvertToEng;
 })
 
 export class ChooseArea {
+    localUser = JSON.parse(localStorage.getItem('userLocalData'));
     modalData: any;
     AllAreas:any= [];
     convertToEng = IconvertToEng;
