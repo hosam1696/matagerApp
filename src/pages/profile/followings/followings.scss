@@ -1,5 +1,8 @@
 page-followings {
   ion-content {
+    &.content {
+      background-color: color($colors, bgColor);
+    }
     ion-list {
       ion-item {
         border-bottom: 1px solid #eee !important;
@@ -20,10 +23,10 @@ page-followings {
             width: 50px !important;
             height: 50px !important
           }
-          
+
         }
         p {
-          color:color($colors, primary) !important; 
+          color:color($colors, primary) !important;
           }
       }
     }

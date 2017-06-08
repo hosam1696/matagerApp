@@ -57,8 +57,8 @@ page-profile {
                             color: color($colors, primary)
                         }
                         hr {
-                            margin: 0;
-                            background:rgba(0, 0, 0, 0.05);
+                            margin: 4px 0 2px;
+                            background:rgba(0, 0, 0, 0.02);
                             z-index: 15
                         }
                         .shelf-id {
@@ -103,7 +103,7 @@ page-profile {
                                 margin:0
                             }
                             .col-content {
-                                min-height: 200px;
+                                min-height: 210px;
                                 height: 200px;
                                 background-color: #fff;
                                     display: flex;
@@ -116,7 +116,7 @@ page-profile {
                                     &.prod-desc {
                                         flex: 1;
                                         color: color($colors, primary); font-size: 15px;
-
+                                        max-height: 90px;
                                     }
                                     &.price {
                                         height: 30px;
@@ -187,7 +187,7 @@ page-profile {
             ion-grid {
                 ion-row {
                     ion-col{
-                    
+
                         ion-avatar {
                 margin-top: -55px ;
                 width: 70px;

@@ -2,26 +2,23 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the ReportsPage page.
+ * Generated class for the ShelfsreportsPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-reports',
-  templateUrl: 'reports.html',
+  selector: 'page-shelfsreports',
+  templateUrl: 'shelfsreports.html',
 })
-export class ReportsPage {
+export class ShelfsreportsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ReportsPage');
+    console.log('ionViewDidLoad ShelfsreportsPage');
   }
 
-  navigateToPage(page):void {
-    this.navCtrl.push(page);
-  }
 }

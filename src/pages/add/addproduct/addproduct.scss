@@ -28,6 +28,7 @@ page-addproduct {
           }
         .form-control {
           width: 100%;
+          height: 40px;
           background-color: rgba(255, 255, 255, 1);
           color: color($colors, primaryDark);
           padding: 7px 10px;
@@ -35,6 +36,7 @@ page-addproduct {
           border: 1px solid #ddd;
             font-size: 14px;
             border-bottom: 1px solid #ddd;
+
           transition: border-bottom 0.3s ease-in;
 
           &::-webkit-input-placeholder {

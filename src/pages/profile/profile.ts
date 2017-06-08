@@ -42,30 +42,17 @@ export class ProfilePage {
     private camera: Camera,
     public toastCtrl: ToastController
   ) {
-      
+
   }
 
   ionViewDidLoad() {
-
-    this.userName = localStorage.getItem('Username');
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-    /*this.userLevelId = this.userLocal['level_id'];
-
-    console.log('LEVEL ID', this.userLevelId);
-
-    console.log(this.userLocal);
-    console.log(this.showContent);
-    */
-    if (this.userLocal)
-      this.getShelfs(this.userLocal['id']);
-    
+    this.ionViewWillEnter()
   }
 
-
-  ionViewWillEnter() {
+  ionViewWillEnter():void {
     if (this.userLocal)
       this.getShelfs(this.userLocal['id']);
-    
+
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
@@ -78,14 +65,19 @@ export class ProfilePage {
           text: 'الكاميرا',
           handler: () => {
             console.log('camera clicked');
+            /* open camera
             this.openCamera();
+            */
           }
         },
         {
           text: 'البوم الصور',
           handler: () => {
             console.log('Photo Album');
+
+            /* open photo album
             this.openPicker();
+            */
           }
         },
         {
@@ -93,7 +85,7 @@ export class ProfilePage {
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
-            
+
           }
         }
       ]
@@ -103,10 +95,10 @@ export class ProfilePage {
     actionSheetCtrl.present();
 
     console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
- 
+
   }
 
-  
+
   openPicker() {
     this.imgPicker.getPictures({ maximumImagesCount: 1, width: 400, height: 120 }).then(imageURI => {
       this.navCtrl.popToRoot();
@@ -131,11 +123,12 @@ export class ProfilePage {
       }).catch(err => {
       console.error(err)
     })
-  }  
-  
+  }
+
   getShelfs(userId: number): void {
+
     [this.showLoader, this.noShelfs] = [true, null];
-    
+
     this.shelfsProvider.getShelfs(userId).subscribe(res => {
       //console.table( res);
       if (res.status == 'success') {
@@ -148,8 +141,8 @@ export class ProfilePage {
         this.noShelfs = 'empty';
         this.showLoader = false
       }
-      
-        
+
+
     },
       err => {
         this.showLoader = false;
@@ -192,7 +185,14 @@ export class ProfilePage {
                 if (res.status == 'success') {
                   this.getShelfs(this.userLocal['id'])
                 }
-              });
+              },
+                err => {
+                  console.warn(err)
+                },
+                ()=> {
+                  this.getShelfs(this.userLocal.id);
+                }
+              );
             }
           }
         ]
@@ -202,18 +202,18 @@ export class ProfilePage {
       alert.present();
     }
 
-    
+
   }
 
   editShelf(page, pageParams) {
 
-    if (pageParams.close == 1) 
+    if (pageParams.close == 1)
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
-     else 
+     else
         this.navigateToPage('AddshelfPage', pageParams)
   }
 
-  
+
 
   navigateToPage(page, pageData=165):void {
     this.navCtrl.push(page ,{pageData})

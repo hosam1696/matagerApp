@@ -2,12 +2,22 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>barcode</ion-title>
+    <ion-title>فحص المنتج</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <h4 text-center color="primary">
+    نتائج فحص الباركود
+  </h4>
+  <p *ngIf="BarcodeResult">Bracode Link: <a [attr.href]="BarcodeResult.text"></a></p>
+
+    <p>
+      {{BarcodeResult | json}}
+    </p>
+
 
 </ion-content>

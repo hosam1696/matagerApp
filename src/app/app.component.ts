@@ -15,11 +15,12 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.backgroundColorByHexString('#2e8bc9');
+
       splashScreen.hide();
 
 
       this.events.subscribe('networkStatus', (data) => {
-        console.log( "%c%s",'font-size: 30px', `Your connection status is: ${data}`);
+        console.log( 'font-size: 30px', `Your connection status is: ${data}`);
       })
     });
   }

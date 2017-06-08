@@ -1,7 +1,7 @@
-page-recpermissions {
+page-exporterreports {
   ion-content {
     &.content {
-      background: #eee;
+      background: #eee
     }
     ion-list {
       margin-top: 5px !important;
@@ -36,22 +36,12 @@ page-recpermissions {
 
         }
         ion-label {
-          //margin: -10px 8px 11px 0 !important;
+          margin: -10px 8px 11px 0 !important;
         }
-        .item-info {
-          display: flex;
-          justify-content: space-between;
-          margin-bottom: 5px;
-          p{
-            &:first-child {
-              color:color($colors, primary) !important;
-              font-size: 18px !important;
+        p{
 
-            }
-
-              color: #ccc !important
-
-          }
+            color:color($colors, primary) !important;
+            font-size: 18px !important;
         }
       }
     }

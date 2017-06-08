@@ -15,7 +15,7 @@ interface IShelf {
   selector: 'page-addshelf',
   templateUrl: 'addshelf.html',
   })
-  
+
 export class AddshelfPage {
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   addShelfForm: FormGroup;
@@ -31,7 +31,7 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      Name: new FormControl('' , [Validators.required, Validators.minLength(4)]),
+      Name: new FormControl('' , Validators.required),
       Area: new FormControl('', Validators.required),
       Cost: new FormControl('', Validators.required),
       salePercentage: new FormControl('0')
@@ -58,41 +58,40 @@ export class AddshelfPage {
 
       this.formAction = 'edit';
     }
-        
+
 
   }
 
   submitForm() {
+
     if (this.addShelfForm.valid) {
-      console.log('add shelf form FORM VALUE', this.addShelfForm.value);
-      
+      this.showLoader = true;
       let shelfForm = Object.assign({}, this.addShelfForm.value, {
         "User_id": this.userLocal.id
       });
 
       console.log(shelfForm);
 
+      if (this.formAction == 'add') {
 
 
-      if (this.formAction == 'add') { 
-
-        this.showLoader = true;
       this.shelfsProvider.addShelf(shelfForm)
         .subscribe(
         res => {
-            
+
           if (res.status = 'success') {
             this.addShelfForm.reset();
             this.navCtrl.pop();
           }
-         
+
         },
         err => {
           console.warn(err);
+          this.showToast(err);
           this.showLoader = false
         }
         );
-      
+
       } else {
         shelfForm['Id'] = this.InitData.id;
         this.shelfsProvider.editShelf(shelfForm).subscribe(
@@ -101,26 +100,32 @@ export class AddshelfPage {
 
             /* if success
             */
-            this.addShelfForm.reset();
-            this.navCtrl.pop();
+            if (res.status = 'success') {
+              this.addShelfForm.reset();
+              this.navCtrl.pop();
+            } else {
+              console.warn(res);
+            }
           },
           err => {
-            console.warn(err)
+            console.warn(err);
+            this.showToast(err);
+            this.showLoader = false
           }
-        )  
+        )
     }
     } else {
       if (this.addShelfForm.get('Name').value == '') {
-        this.showToast('يرجى ادخال اسم الرف');
+        this.showToast('يرجى ادخال رقم الرف');
       } else if (this.addShelfForm.get('Area').value == '') {
 
         this.showToast('يرجى ادخال مساحة الرف');
-      } else {
+      } else if(this.addShelfForm.get('Cost').value == ''){
         this.showToast('يرجى ادخال ايجار الرف');
       }
     }
-      
-  
+
+
   }
 
   showToast(msg) {

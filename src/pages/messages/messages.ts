@@ -18,13 +18,13 @@ export class Messages {
     public toastCtrl: ToastController
   ) {
 
-    
+
 
   }
 
   ionViewDidLoad() {
 
-    
+
 
 
     //console.log('ionViewDidLoad Messages');
@@ -41,7 +41,7 @@ export class Messages {
   }
 
   ionViewDidEnter() {
-    this.scanBarcode();
+    //this.scanBarcode();
     /*
     if ( this.network.type == 'none' || this.network.type == null) {
       this.isOnline = false;
@@ -65,5 +65,5 @@ export class Messages {
     });
     toast.present();
   }
-   
+
 }
