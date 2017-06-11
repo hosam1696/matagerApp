@@ -3,16 +3,18 @@ import { IonicPageModule} from 'ionic-angular';
 
 import { ProfilePage } from './profile';
 import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
+import {changePropDirective} from "../../app/service/changeprop.directive";
 
 @NgModule({
-    declarations: [ProfilePage],
+    declarations: [ProfilePage,changePropDirective
+    ],
     imports: [
         IonicPageModule.forChild(ProfilePage),
         HsaloaderComponentModule
-    ],
+      ],
     exports: [
         ProfilePage
     ]
 })
 
-export class AbouModule {}
+export class ProfilePageModule {}

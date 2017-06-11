@@ -1,10 +1,19 @@
 page-exporterreports {
+  $diffCols: #ccc #ebd5b0 #1494ff #727272 #2ec95c;
   ion-content {
     &.content {
       background: #eee
     }
     ion-list {
       margin-top: 5px !important;
+      @each $index ,$color in (1,#ccc),(2,#557997),(3,#ebebeb),(4, #b7ddff),(5,#999),(6,#ebd5b0),(7, #ebebeb),(8,#999) {
+        button:nth-of-type(#{$index}) {
+          ion-avatar {
+            background-color:  $color;
+          }
+        }
+
+      }
       button {
         &:first-child {
           border-top-color: transparent !important;
@@ -19,8 +28,10 @@ page-exporterreports {
         ion-icon {
           color: #ccc !important;
         }
+
+
         ion-avatar {
-          border-radius: 5px;
+          border-radius: 2px;
           // border: 1px dashed color($colors, primary);
           background-color: #eee;
           width: 50px;
@@ -35,6 +46,7 @@ page-exporterreports {
           }
 
         }
+
         ion-label {
           margin: -10px 8px 11px 0 !important;
         }

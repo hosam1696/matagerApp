@@ -9,8 +9,8 @@
 
 
 <ion-content padding>
-  <form novalidate 
-    [formGroup]="contactForm" 
+  <form novalidate
+    [formGroup]="contactForm"
     (ngSubmit)="submitForm()">
 
 
@@ -19,8 +19,8 @@
     </div>
 
     <div class="form-group">
-      <input type="email" 
-      placeholder="البريد الالكترونى" 
+      <input type="email"
+      placeholder="البريد الالكترونى"
       email
       formControlName="Email" class="form-control">
     </div>
@@ -30,8 +30,7 @@
     <div class="form-group message">
       <textarea class="form-control"
         placeholder="رسالتك"
-       formControlName="Message"
-       rows="5"
+       formControlName="Message" rows="8"
        >
 
       </textarea>

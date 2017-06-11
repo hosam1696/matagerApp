@@ -22,11 +22,11 @@
     <section id="pager">
       <div class="dot"
            [ngClass]="{active: csPage==1}"
-            
+
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==2}"
-           
+
       ></div>
       <div class="dot"
            [ngClass]="{active: csPage==3}"
@@ -38,22 +38,22 @@
     </section>
 
     <div class="step" [ngClass]="{shownPage: csPage== 1}">
- 
-      <div class = "form-group">
+
+      <div class = "form-group animate-input">
         <input type="text" class="form-control"
           placeholder="اسم المستخدم"
         formControlName="Username"
         >
       </div>
 
-      <div class = "form-group">
+      <div class = "form-group animate-input">
         <input type="password"
         placeholder="كلمة المرور"
         class="form-control"
         formControlName="Password">
       </div>
 
-      <div class = "form-group">
+      <div class = "form-group animate-input">
         <input type="password"
         placeholder="تأكيد كلمة المرور"
         class="form-control"
@@ -61,20 +61,20 @@
          >
       </div>
 
-      <div class = "form-group">
+      <div class = "form-group animate-input">
         <input type="text" class="form-control" formControlName="Name"
-        placeholder="الاسم بالكامل"
+        placeholder="الاسم التجارى بالكامل"
         >
       </div>
 
-      <div class = "form-group">
-        <input type="email" class="form-control" 
+      <div class = "form-group animate-input">
+        <input type="email" class="form-control"
         formControlName="Email"
         email
           placeholder="البريد الالكترونى"
         >
       </div>
-        <div class = "form-group">
+        <div class = "form-group animate-input">
         <input type="text" class="form-control" formControlName="Mobile"
           placeholder="رقم التليفون المحمول"        >
       </div>
@@ -107,20 +107,20 @@
     </div>
 
     <div class="step" [ngClass]="{shownPage: csPage== 2}">
-      
+
       <h6 text-center style="color: #fff">من فضلك قم باختيار نوع العضوية</h6>
       <div id="radio-group" class="form-group">
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="store" formControlName="level_id" value="2">
-            <label for="store"><ion-icon name="person"></ion-icon>متجر</label>
+            <label for="store" class="member"><ion-icon name="person"></ion-icon>متجر</label>
 
           </div>
         </div>
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
             <input type="radio" id="client" formControlName="level_id" value="3">
-            <label for="client"><ion-icon name="person"></ion-icon>عميل</label>
+            <label for="client" class="member"><ion-icon name="person"></ion-icon>عميل</label>
 
           </div>
         </div>
@@ -128,7 +128,7 @@
           <div class="almostwidth group-bg">
 
           <input type="radio" id="exporter" formControlName="level_id" value="4">
-            <label for="exporter"><ion-icon name="person"></ion-icon>مورد</label>
+            <label for="exporter" class="member"><ion-icon name="person"></ion-icon>مورد</label>
           </div>
         </div>
       </div>
@@ -151,28 +151,28 @@
           </div>
           <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
             <ion-icon name="arrow-down"></ion-icon>
-            <input type="text" 
-            formControlName="Dist" id="dist" 
+            <input type="text"
+            formControlName="Dist" id="dist"
             [attr.required]= 'SignUpFrom.value["level_id"] == 2'>
           </div>
 
       </div>
 
-      <div class="form-group">
+      <div class="form-group animate-input">
         <input type="text" class="form-control" formControlName="Address"
           [hidden]='SignUpFrom.value["level_id"] == 3'
-          placeholder="العنوان" 
+          placeholder="العنوان"
           [attr.required]= 'SignUpFrom.value["level_id"] !=3'       >
       </div>
-      <div class="form-group">
+      <div class="form-group animate-input">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
-          placeholder="رقم السجل التجارى"        
+          placeholder="رقم السجل التجارى"
            [attr.required]= 'SignUpFrom.value["level_id"] ==2'
           formControlName="cr_num">
       </div>
-      <div class="form-group">
+      <div class="form-group animate-input">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
-          placeholder="اسم مدير المنتج" 
+          placeholder="اسم مدير المنتج"
           formControlName='owner_name'
            [attr.required]= 'SignUpFrom.value["level_id"] ==2'       >
       </div>

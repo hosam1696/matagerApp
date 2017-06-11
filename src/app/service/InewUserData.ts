@@ -41,7 +41,7 @@ export interface IuserData{
   directorProductName?: string
 }
 
-export interface IlocalUser {
+export interface IlocalUser{
   username: string,
   name: string,
   id: number,
@@ -58,6 +58,7 @@ export interface IlocalUser {
   gender: string,
   mobile: string,
   avatar: string,
+  bgImage?: string,
   owner_name?: string,
   cr_num?: number,
   map: string

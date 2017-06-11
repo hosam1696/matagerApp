@@ -27,24 +27,15 @@ export class Exporter {
   }
 
 
-  searchData(modalData:ImodalData) {
+  searchData(modalData:ImodalData):void {
       // GET the names of the  final places results
     if (Object.keys(modalData).length != 0) {
       let filterPlaces = [modalData.AreaName || null, modalData.CityName || null, modalData.DistName || null];
       this.dataFromModal = filterPlaces.filter(n => n);
     }
 
-    
-      
-    
-    console.log(this.dataFromModal);
+    console.log('Data From Modal',this.dataFromModal);
 
-    /*this.userProvider.getAreas().subscribe(data=>{
-
-        this.dataFromModal = data.data.filter(place=> place.id == modalData.AreaId || place.id == modalData.CityId || place.id == modalData.DistId);
-        console.log(this.dataFromModal);
-      });
-      */
   }
 
   openFilterModal() {

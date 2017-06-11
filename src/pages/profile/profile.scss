@@ -27,7 +27,7 @@ page-profile {
             clear: both
         }
       .shelfcard {
-        padding-bottom: 100px !important;
+        padding-bottom: 70px !important;
       }
         ion-card {
 
@@ -195,8 +195,9 @@ page-profile {
                 margin-top: -55px ;
                 width: 70px;
                 height: 70px;
-                background-color: #ccc;
+                //background-color: #ccc;
                 border-radius: 50%;
+                          background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);
                 border: 3px solid color($colors, light);
                 overflow: hidden;
                 display: flex;

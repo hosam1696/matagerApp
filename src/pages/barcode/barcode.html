@@ -10,14 +10,27 @@
 
 <ion-content padding>
 
-  <h4 text-center color="primary">
-    نتائج فحص الباركود
-  </h4>
-  <p *ngIf="BarcodeResult">Bracode Link: <a [attr.href]="BarcodeResult.text"></a></p>
+  <button block color="primary" ion-button (click)="scanBarcode()" >
+    افحص الباركود
+    &nbsp; &nbsp;<ion-icon name="search"></ion-icon>
+  </button>
 
-    <p>
-      {{BarcodeResult | json}}
-    </p>
+  <ion-card *ngIf="showData" margin-top>
+    <h4 text-center color="primary">
+      نتائج فحص الباركود
+    </h4>
+    <br>
+    <div *ngFor="let result of BarcodeResult">
+      <p text-left>Bracode Link: <a [attr.href]="result['text']">{{result['text']}}</a></p>
+      <br>
+      <p text-left>
+        {{result | json}}
+      </p>
+      <hr>
+    </div>
+
+  </ion-card>
+
 
 
 </ion-content>

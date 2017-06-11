@@ -57,8 +57,8 @@
 
         <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
         <ng-template #altImages>
-          <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
-          <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+          <img class="alt" *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
+          <img class="alt" *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
         </ng-template>
         <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
 

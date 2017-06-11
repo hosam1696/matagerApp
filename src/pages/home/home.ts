@@ -17,6 +17,7 @@ import {IlocalUser} from "../../app/service/InewUserData";
 export class HomePage {
   dataFromModal;
   userLocalData: IlocalUser;
+  showLocalData: boolean = false;
   constructor(
     public navCtrl: NavController,
     public userProvider: UserProvider,
@@ -41,9 +42,9 @@ export class HomePage {
 
    /* Get the current location if he activate the location */
     this.geolocation.getCurrentPosition().then((res)=>{
-      let coords = res.coords.latitude+'-'+res.coords.longitude;
+      let coords = res.coords.longitude+','+res.coords.latitude;
       console.log(`User Location: ${coords}`);
-      this.showToast(`User Location: ${coords}`)
+      this.showToast(`User Location: ${coords}`);
       if (this.userLocalData) {
         this.userLocalData.map = coords;
         localStorage.setItem('userLocalData', JSON.stringify(this.userLocalData)) ;

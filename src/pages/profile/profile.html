@@ -12,8 +12,8 @@
 
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
-      <img *ngIf="userLocal.avatar" [src]="userLocal.avatar" alt="">
-      <button type="button" class="pick-image" (click)="pickImage()"><ion-icon name="camera-outline"></ion-icon></button>
+      <img *ngIf="userLocal.bgImage" [src]="userLocal.bgImage" alt="user background image">
+      <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
     <ion-card>
@@ -23,7 +23,7 @@
         <ion-col col-3>
 
           <ion-avatar>
-             <button type="button" class="pick-image" (click)="pickImage()">
+             <button type="button" class="pick-image" (click)="pickImage('avatar')">
                <ion-icon name="camera-outline"></ion-icon>
               </button>
               <img *ngIf="userLocal.avatar;else avatarIcon" [src]="userLocal.avatar" alt="">
@@ -115,13 +115,11 @@
         </p>
         <p text-center *ngIf="noShelfs =='netErr'">
          <br>
-         تعثر فى الاتصال
+         تعثر الاتصال
          <br>
-         <span text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
+         <span [change]="{prop:'font-size', value: '30px'}" text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
         </p>
-
-
-        <ion-item  *ngFor="let shelf of AllShelfs">
+        <ion-item  *ngFor="let shelf of AllShelfs" (click)="showShelf(shelf)">
             <div class="shelf-id">
               <p>رقم الرف <span>{{shelf.name}} </span></p>
 <!--

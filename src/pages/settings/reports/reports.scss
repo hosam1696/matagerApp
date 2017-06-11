@@ -1,11 +1,13 @@
 page-reports {
+
 ion-item-divider {
       padding-right: 10px !important;
       height: 40px;
       color: color($colors, primaryDark) !important;
-
+      font-size: 15px !important;
   }
  ion-content {
+
      .scroll-content {
          background-color: #eee;
      }
@@ -19,7 +21,7 @@ ion-item-divider {
 
       ion-item {
         color: color($colors, primaryDark) !important;
-        font-weight:bold;
+        font-size: 15px !important;
         padding-left: 13px;
         &.item-md:first-of-type {
 
@@ -33,6 +35,7 @@ ion-item-divider {
           &:last-of-type {
             font-size: 18px;
             line-height:28px;
+
           }
         }
         .item-block {
@@ -43,6 +46,6 @@ ion-item-divider {
 
       }
     }
-  
+
  }
 }

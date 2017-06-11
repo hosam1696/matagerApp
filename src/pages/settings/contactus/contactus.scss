@@ -10,8 +10,12 @@ page-contactus {
 
         .form-group {
           padding: 5px 0;
+          textarea {
+            height: auto !important;
+          }
           .form-control {
-              height: 40px;
+            height: 40px;
+
             width: 100%;
             background-color: rgba(255, 255, 255, 1);
             color: color($colors, primaryDark);

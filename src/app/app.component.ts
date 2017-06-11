@@ -18,10 +18,6 @@ export class MyApp {
 
       splashScreen.hide();
 
-
-      this.events.subscribe('networkStatus', (data) => {
-        console.log( 'font-size: 30px', `Your connection status is: ${data}`);
-      })
     });
   }
 }

@@ -32,13 +32,13 @@
     <ion-row>
 
 
-      <ion-col (click)="navigateTo('StoresPage')">
+      <ion-col (click)="navigateTo('StoresPage')" class="animate">
         <h4 >متاجر</h4>
         <img src="assets/img/store-icon.png" alt="">
         <ion-icon name="arrow-dropleft-circle"></ion-icon>
       </ion-col>
 
-      <ion-col (click)="navigateTo('Exporter')">
+      <ion-col (click)="navigateTo('Exporter')" class="animate">
         <h4>موردين</h4>
         <img src="assets/img/exporter-icon.png" alt="">
         <ion-icon name="arrow-dropleft-circle"></ion-icon>
@@ -48,7 +48,12 @@
 
   </ion-grid>
 
+  <button ion-button (click)="showLocalData = !showLocalData">toggle localStorage Data</button>
 
+  <p *ngIf="showLocalData" item-left>
+    {{ userLocalData | json }}
+  </p>
 
+  <div id="map"></div>
 </ion-content>
 

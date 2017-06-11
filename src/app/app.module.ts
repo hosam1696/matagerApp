@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
 import { MyApp } from './app.component';
-
+import { ShelfModal } from '../pages/profile/shelf/shelf';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 
@@ -19,10 +19,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
+import { GoogleMaps } from '@ionic-native/google-maps';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 import { ActionSheet } from '@ionic-native/action-sheet';
+import {changePropDirectiveModule} from "./service/changeprop.directive.module";
 //import { GenderPipe } from '../pipes/gender/gender';
 
 
@@ -30,7 +32,8 @@ import { ActionSheet } from '@ionic-native/action-sheet';
   declarations: [
     MyApp,
     PlacesModal,
-    ChooseArea
+    ChooseArea,
+    ShelfModal
   ],
   imports: [
     BrowserModule,
@@ -41,16 +44,19 @@ import { ActionSheet } from '@ionic-native/action-sheet';
       backButtonIcon: 'arrow-forward',
       iconMode: 'ios',
       mode: 'ios',
-      tabsHideOnSubPages: true
+      tabsHideOnSubPages: true,
+      activator : 'ripple'
     }),
-    HsaloaderComponentModule
+    HsaloaderComponentModule,
+    changePropDirectiveModule
   ],
 
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     PlacesModal,
-    ChooseArea
+    ChooseArea,
+    ShelfModal
   ],
   providers: [
     StatusBar,
@@ -63,6 +69,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
     AreaProvider,
     ShelfsProvider,
     ImagePicker,
+    GoogleMaps,
     ActionSheet, Camera,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'}
   ]

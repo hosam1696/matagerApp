@@ -10,7 +10,7 @@
 
 <ion-content no-padding>
 
-<form 
+<form
   novalidate
   (ngSubmit)="EditForm()"
   [formGroup]="EditUserForm"
@@ -18,7 +18,7 @@
 
     <ion-list>
 
-    
+
 <ion-item-group no-lines id="personal-info">
   <ion-item-divider color="bgColor">البيانات الشخصية</ion-item-divider>
 
@@ -30,7 +30,7 @@
       </ion-col>
       <ion-col col-8>
         <input type="text" #usernameInput formControlName="Username" class="input-as-text" [value]="localUser.username">
-        
+
         <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username">
 
         </ion-icon>
@@ -49,7 +49,7 @@
 <input type="text" #nameInput formControlName="Username" class="input-as-text" [value]="localUser.name">
 
 <ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name">
-         
+
           </ion-icon>
         </ion-col>
       </ion-row>
@@ -94,8 +94,8 @@
       </ion-col>
       <ion-col>
       <input type="password" formControlName="InsurePassword" class="input-as-text" value="************">
-        
-        
+
+
        </ion-col>
     </ion-row>
   </ion-grid>
@@ -153,8 +153,8 @@
             <ion-col col-4 class="location-title">
 الموقع على الخريطة
             </ion-col>
-            <ion-col col-8 class="location-place">
-              
+            <ion-col col-8 class="location-place" (click)="navigateToPage('GmapsPage')">
+
               <span>
                  Salah Salem Road, Tanamel Ash sharq alwahat, Cairo
               </span>
@@ -199,7 +199,7 @@
             <ion-col col-4>
 المدينة            </ion-col>
             <ion-col (click)="openModal('City',EditUserForm.getRawValue()['Area'])">
-              
+
               <span [textContent]="CityName"></span>
 <ion-icon name="arrow-down" color="primary"></ion-icon>
              </ion-col>
@@ -213,7 +213,7 @@
 الحى
             </ion-col>
             <ion-col (click)="openModal('Dist',EditUserForm.getRawValue()['City'])">
-              
+
                 <span [textContent]="DistName"></span>
                 <ion-icon name="arrow-down" color="primary"></ion-icon>
                </ion-col>

@@ -9,8 +9,23 @@
 page-home {
     ion-content {
       &.content {
-    
+
         background-color: #eee
+      }
+      .animate{
+        animation: animateCol 0.3s linear 0.1s;
+        animation-fill-mode: forwards;
+        &:last-child {
+          animation-delay: 0.25s;
+        }
+      }
+      @keyframes animateCol {
+        0% {
+          transform: scale(0);
+        }
+        100% {
+          transform: scale(1);
+        }
       }
        #modal-button{
       background-color: #fff;
@@ -135,6 +150,7 @@ page-home {
         }
         ion-row {
           ion-col {
+            transform:scale(0);
             margin: 10px;
             height: auto;
             flex-direction: column;
@@ -182,7 +198,7 @@ page-home {
          direction: ltr;
           background-color: #ccc;
           height: 170px;
-         
+
           img {
             width: 100% !important;
             height: 170px !important;

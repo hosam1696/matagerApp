@@ -61,13 +61,11 @@ page-signup {
           align-items: center;
           width: 100%;
           justify-content: center;
-          padding: 5px;
-          height: 35px;
+          height: 44px;
           border-radius: 4px;
           background-color: color($colors, light);
           color: #008bff;
           min-height: 32px;
-          padding-top: 10px;
           #loader {
             position: relative;
             z-index: 5999;
@@ -126,7 +124,7 @@ page-signup {
     form {
 
 
-      
+
       #pager {
         display: flex;
         justify-content: center;
@@ -174,6 +172,26 @@ page-signup {
         }
 
       .form-group {
+
+        &.animate-input {
+          transform: translateY(20px) rotateX(-90deg);
+          animation: animateInput 0.5s ease-out forwards ;
+          @for  $num from 1 to 7{
+              &:nth-of-type(#{$num}) {
+                  animation-delay: #{$num/10}s;
+              }
+          }
+
+
+        }
+        @keyframes animateInput {
+          0% {
+            transform: translateY(20px) rotateX(-90deg)
+          }
+          100% {
+            transform: translateY(0) rotateX(0);
+          }
+        }
         padding: 2px 0;
         .form-control {
           font-size: 14px;
@@ -226,7 +244,7 @@ page-signup {
           ion-icon {
             color: #c5ebfd;
           }
-          
+
         .almostwidth {
           width: 90% !important;
           background-color: rgba(255, 255, 255, 0.3);
@@ -245,7 +263,7 @@ page-signup {
             ion-icon {
               font-size: 60px;
               padding: 0 5px;
-              
+
             }
             p {
               font-size: 10px;
@@ -261,8 +279,17 @@ page-signup {
             color:#1a6da5;
             text-shadow: 1px -1px #a1cdf4
           }
-          input[type='radio']:checked ~ label {
-            color: #fff;
+          input[type='radio']:checked ~ .almostwidth {
+            background-color: #eee !important;
+          }
+          input[type='radio']:checked ~ label.member {
+            transition: background-color 0.2s linear;
+            background-color: #e6f4ff;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px;
+            display: inline-block;
+            color: #2675ab;
           }
         }
 

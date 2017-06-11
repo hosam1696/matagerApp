@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController } from 'ionic-angular';
+import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController, ModalController } from 'ionic-angular';
 //import {IlevelId} from '../../app/service/InewUserData';
 import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
 import { ShelfsProvider } from '../../providers/shelfs';
-import { ImagePicker } from '@ionic-native/image-picker';
-import { Camera } from '@ionic-native/camera';
+import { ShelfModal } from './shelf/shelf';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 interface Ishelf {
@@ -37,10 +37,10 @@ export class ProfilePage {
     public navCtrl: NavController,
     public alert: AlertController,
     public shelfsProvider: ShelfsProvider,
-    private imgPicker: ImagePicker,
     private actionCtrl: ActionSheetController,
     private camera: Camera,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public modalCtrl: ModalController
   ) {
 
   }
@@ -56,7 +56,7 @@ export class ProfilePage {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
-  pickImage() {
+  pickImage(cameraImage:string):void {
 
     let actionSheetCtrl = this.actionCtrl.create({
       title: 'اختر من',
@@ -66,15 +66,15 @@ export class ProfilePage {
           handler: () => {
             console.log('camera clicked');
             /* open camera
-            this.openCamera();
-            */
+            */this.openCamera('CAMERA', cameraImage);
+
           }
         },
         {
           text: 'البوم الصور',
           handler: () => {
             console.log('Photo Album');
-
+            this.openCamera('PHOTOLIBRARY', cameraImage);
             /* open photo album
             this.openPicker();
             */
@@ -99,27 +99,33 @@ export class ProfilePage {
   }
 
 
-  openPicker() {
-    this.imgPicker.getPictures({ maximumImagesCount: 1, width: 400, height: 120 }).then(imageURI => {
-      this.navCtrl.popToRoot();
-      console.log(imageURI);
-    }).catch(warn => {
-      console.warn(warn);
-    })
-  }
 
+  openCamera(type:string='CAMERA', cameraImage:string = 'avatar') {
 
-  openCamera() {
-    this.camera.getPicture({
+    let cameraOptions:CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }).then(imageData => {
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      allowEdit: true,
+      sourceType: this.camera.PictureSourceType[type]
+    };
+
+
+    this.camera.getPicture(cameraOptions).then(imageData => {
+      console.log(imageData);
       let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.userLocal.avatar = base64Image;
-      //console.log(base64Image);
-      this.navCtrl.popToRoot();
+      this.userLocal[cameraImage] = base64Image;
+
+      //TODO: preserve the image url to the DATABASE and LOCALSTORAGE
+
+      // (1) save to the local storage
+        localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+
+      //(2) save to the database
+
+
       }).catch(err => {
       console.error(err)
     })
@@ -214,7 +220,11 @@ export class ProfilePage {
   }
 
 
+  showShelf(shelfInfo) {
+    let shelf = this.modalCtrl.create(ShelfModal, { shelfInfo: shelfInfo });
 
+    shelf.present();
+  }
   navigateToPage(page, pageData=165):void {
     this.navCtrl.push(page ,{pageData})
   }

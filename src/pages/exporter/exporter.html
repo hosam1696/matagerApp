@@ -12,23 +12,25 @@
 
 
   <button type="button" id="modal-button"
-        color="light"
-        (click)="openFilterModal()" >
+          color="light"
+          (click)="openFilterModal()">
 
-  <div class="btn-icon">
-    <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
-  </div>
-  <div id="search-result" >
-      <div *ngIf="dataFromModal" class="found-data">
-        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
-        </div>
-        <div *ngIf="!dataFromModal" class="no-data">
-          <span color="primary">المدينة</span>
-          <ion-icon name="arrow-back"></ion-icon>
-        </div>
+    <div class="btn-icon">
+      <ion-icon item-right id="search-icon" name="funnel-outline"></ion-icon>
     </div>
 
+    <div id="search-result">
+      <div *ngIf="dataFromModal; else initFiilter" class="found-data">
+        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
+      </div>
+    </div>
 
+    <ng-template #initFiilter>
+      <div class="no-data">
+        <span color="primary">المدينة</span>
+        <ion-icon name="arrow-back"></ion-icon>
+      </div>
+    </ng-template>
 
   </button>
   <!-- List of the neerer exporters -->

@@ -92,7 +92,26 @@ page-login {
 
         }
         .form-group {
-        padding: 5px 0;
+
+          padding: 5px 0;
+
+         /* animate login buttons
+          &.animate-input {
+            transform: translateY(20px) rotateX(-90deg);
+            animation: animateInput 0.5s ease-out forwards ;
+            &:last-of-type {
+              animation-delay: 0.2s;
+            }
+          }
+          */
+          @keyframes animateInput {
+            0% {
+              transform: translateY(15px) rotateX(-90deg)
+            }
+            100% {
+              transform: translateY(0) rotateX(0);
+            }
+          }
         .form-control {
           width: 100%;
           background-color: rgba(255, 255, 255, 0.3);
@@ -101,7 +120,7 @@ page-login {
           border-radius: 5px;
           border: none;
           font-size: 14px;
-
+          height: 44px;
           &::-webkit-input-placeholder {
             color: #d6ecff !important;
           }
@@ -119,7 +138,7 @@ page-login {
           width: 100%;
           justify-content: center;
           padding: 6px;
-          height: 40px;
+          height: 44px;
           border-radius: 4px;
           background-color: color($colors, light);
           color: #008bff;
