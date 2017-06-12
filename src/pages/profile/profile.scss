@@ -67,10 +67,13 @@ page-profile {
                         .shelf-id {
                             display: flex;
                             justify-content: space-between;
+
+
                             p {
-                                &:last-child {
+                                font-size:14px;
+                               /* &:last-of-type {
                                     font-size: 12px;
-                                }
+                                }*/
                             }
                         }
                         .shelf-status {

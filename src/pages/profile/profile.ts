@@ -27,7 +27,7 @@ export class ProfilePage {
   userName: string;
   userLocal: IlocalUser;
   showContent: string = 'products';
-  AllShelfs :[Ishelf];
+  AllShelfs :[Ishelf]| any = [];
   noShelfs:string;
   alertOptions: AlertOptions;
   showLoader: boolean = false;
@@ -49,11 +49,13 @@ export class ProfilePage {
     this.ionViewWillEnter()
   }
 
-  ionViewWillEnter():void {
+  ionViewWillEnter(): void {
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
     if (this.userLocal)
       this.getShelfs(this.userLocal['id']);
 
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+    
   }
 
   pickImage(cameraImage:string):void {
@@ -131,14 +133,26 @@ export class ProfilePage {
     })
   }
 
+  refreshShelfs(event) {
+    console.log(event);
+    this.getShelfs(this.userLocal['id']);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.complete();
+    }, 2000);
+  
+  }  
   getShelfs(userId: number): void {
 
     [this.showLoader, this.noShelfs] = [true, null];
 
-    this.shelfsProvider.getShelfs(userId).subscribe(res => {
+    this.shelfsProvider.getShelfs(userId).subscribe(({ status, data }) => {
+      console.log(status, data);
       //console.table( res);
-      if (res.status == 'success') {
-        [this.AllShelfs, this.showLoader, this.noShelfs] = [res.data, true, null];
+      if (status == 'success') {
+        [this.AllShelfs, this.showLoader, this.noShelfs] = [data, true, null];
+        console.log(this.AllShelfs);
         if (this.AllShelfs.length <= 0) {
           this.noShelfs = 'empty';
           this.showLoader = false

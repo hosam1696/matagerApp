@@ -92,7 +92,7 @@
               المنتجات
             </ion-segment-button>
 
-            <ion-segment-button value="shelfs" (click)="getShelfs(userLocal.id)">
+            <ion-segment-button value="shelfs" >
               الرفوف
             </ion-segment-button>
           </ion-segment>
@@ -106,8 +106,18 @@
   <div class="clearfix"></div>
   <ion-card  *ngIf="showContent == 'shelfs' && userLocal" class="show-card shelfcard">
 
+    
+          <!-- add loADER -->
+          <!--<ion-scroll scrollY="true">
+
+          
+          <ion-refresher (ionRefresh)="refreshShelfs($event)">
+              <hsa-loader></hsa-loader>
+          </ion-refresher>
+
+          </ion-scroll> -->
+
     <ion-list>
-      <!-- add loADER -->
 
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
@@ -117,19 +127,13 @@
          <br>
          تعثر الاتصال
          <br>
-         <span [change]="{prop:'font-size', value: '30px'}" text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
+        <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
         </p>
-        <ion-item  *ngFor="let shelf of AllShelfs" >
+        
+        <ion-item  *ngFor="let shelf of AllShelfs; let i = index" >
             <div class="shelf-id" (click)="showShelf(shelf)">
               <p>رقم الرف <span>{{shelf.name}} </span></p>
-<!--
-              <p>{{shelf.cost}} ريال  |
-                 {{shelf.area}}
-                 متر
-                </p>
-                -->
             </div>
-
             <hr>
             <div class="shelf-status">
               <div class="reserved">
@@ -146,9 +150,8 @@
                   ></ion-icon>
               </div>
             </div>
-
-
         </ion-item>
+
         <p text-center *ngIf="showLoader">
           <hsa-loader></hsa-loader>
         </p>

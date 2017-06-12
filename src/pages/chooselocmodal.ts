@@ -58,6 +58,9 @@ let IconvertToEng;
   `,
   styles: [
       `
+      ion-content.content {
+        background-color: #eee
+      }
       ion-buttons .close-btn {
         font-size: 25px;
       }
