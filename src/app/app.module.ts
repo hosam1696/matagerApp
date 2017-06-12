@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { ShelfModal } from '../pages/profile/shelf/shelf';
+import { ShelfModal } from '../pages/profile/shelf/shelfpage';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 

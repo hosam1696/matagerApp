@@ -66,6 +66,9 @@ import 'rxjs/operator/filter';
   `,
   styles: [
       `
+      ion-content.content {
+        background-color: #eee;
+      }
       ion-buttons .close-btn {
         font-size: 25px;
       }

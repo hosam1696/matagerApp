@@ -2,7 +2,7 @@
     <ion-navbar color="primary">
         <ion-title>عرض الرف</ion-title>
         <ion-buttons end>
-            <button ion-button (click)="closeModal()">
+            <button ion-button (click)="closeModal()" class="close-btn">
                 <ion-icon name="close" ></ion-icon>
             </button>
         </ion-buttons>
@@ -10,9 +10,34 @@
 </ion-header>
 
 <ion-content>
-     <section >
+    <ion-list>  
+        <ion-item>
+            رقم الرف 
+            <p>{{modalInfo.name}} </p>
+        </ion-item>
+        <ion-item>
+            
+            سعر الرف
+            <p>{{modalInfo.cost}} ريال </p>
+        </ion-item>
+        <ion-item>
+            مساحة الرف
+            <p>
+                {{modalInfo.area}}
+                 متر
+            </p>
+        </ion-item>
+        <ion-item>
+            حالة الرف
+            <p>
+                <span *ngIf="modalInfo.close == 0">غير محجوز</span>
+                <span *ngIf="modalInfo.close == 1"> محجوز</span>
+            </p>
+        </ion-item>
+    </ion-list>
+    <!-- <section >
             <div class="shelf-id">
-              <p>رقم الرف <span>{{modalInfo.name}} </span></p>
+              
 
               <p>{{modalInfo.cost}} ريال  |
                  {{modalInfo.area}}
@@ -37,9 +62,9 @@
                   ></ion-icon>
               </div>
             </div>
-<!--(click)="deleteShelf(shelf)"
+(click)="deleteShelf(shelf)"
 (click)="editShelf('AddshelfPage', shelf)"
--->
 
-     </section>
+
+     </section>-->
 </ion-content>

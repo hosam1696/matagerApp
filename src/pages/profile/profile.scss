@@ -195,10 +195,10 @@ page-profile {
                 margin-top: -55px ;
                 width: 70px;
                 height: 70px;
-                //background-color: #ccc;
+                background-color: #eee;
                 border-radius: 50%;
-                          background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);
-                border: 3px solid color($colors, light);
+                         /* background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);*/
+                border: 3px solid color($colors, light); 
                 overflow: hidden;
                 display: flex;
                 justify-content: center;
@@ -219,6 +219,9 @@ page-profile {
                 img {
                     width:100%;
                     height: 100%;
+                    &.avatar-alt {
+                        margin-top:5px 
+                    }
                 }
 
             }

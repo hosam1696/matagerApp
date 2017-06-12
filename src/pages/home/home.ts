@@ -65,14 +65,14 @@ export class HomePage {
     });
     */
 
-
+/*
      this.network.onDisconnect().subscribe(data => {
       console.log(data, 'You are disconnected');
       //TODO: add a toast to show connection message
       this.showToast(' التطبيق يتطلب وجود اتصال للتصفح')
     });
 
-
+*/
 
   }
 

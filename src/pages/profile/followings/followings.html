@@ -10,41 +10,55 @@
 
 <ion-content no-padding>
   <ion-list>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
+        <!-- To be replaced if the data from server is inistansiated
+            <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+        <ng-template #altImages>
+          <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
+          <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+        </ng-template>
+
+          -->
+        <img src="assets/img/male-alt.png" alt="male">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>أحمد السورى</p>
     </ion-item>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
         <img src="assets/img/male-alt.png" alt="">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>متاجر على عبده</p>
     </ion-item>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
         <img src="assets/img/male-alt.png" alt="">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>محمد الشامى</p>
     </ion-item>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
         <img src="assets/img/male-alt.png" alt="">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>حسين شرف</p>
     </ion-item>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
         <img src="assets/img/male-alt.png" alt="">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>متاجر على عبده</p>
     </ion-item>
-    <ion-item no-padding (click)="toProfilePage()">
+    <ion-item>
       <ion-avatar item-left>
         <img src="assets/img/male-alt.png" alt="">
       </ion-avatar>
-      <p>Hassan Ashraf</p>
+      <p>محمد الشامى</p>
+    </ion-item>
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="assets/img/male-alt.png" alt="">
+      </ion-avatar>
+      <p>حسين شرف</p>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -1,26 +1,20 @@
-import {Component} from '@angular/core';
+import {Component,ViewChild} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
   LatLng,
-  CameraPosition,
-  MarkerOptions
+  CameraPosition
 } from '@ionic-native/google-maps';
-/**
- * Generated class for the GmapsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-gmaps',
   templateUrl: 'gmaps.html',
 })
 export class GmapsPage {
-
+  @ViewChild('maps') maps:any;
   constructor(private googleMaps: GoogleMaps,public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -28,12 +22,7 @@ export class GmapsPage {
     console.log('ionViewDidLoad GmapsPage');
     this.loadMap();
   }
-  ngAfterViewInit() {
-    this.loadMap();
-  }
-  ngOnInit() {
-    this.loadMap()
-  }
+
   addMarker() {
     console.log('add maker')
   }
@@ -45,9 +34,9 @@ export class GmapsPage {
     // </ion-content>
 
     // create a new map by passing HTMLElement
-    let element: HTMLElement = document.getElementById('map');
+    //let element: HTMLElement = document.getElementById('map');
     //console.log(element);
-    let map: GoogleMap = this.googleMaps.create(element);
+    let map: GoogleMap = this.googleMaps.create('maps');
 
     // listen to MAP_READY event
     // You must wait for this event to fire before adding something to the map or modifying it in anyway
@@ -69,20 +58,7 @@ export class GmapsPage {
 
     // move the map's camera to position
     map.moveCamera(position);
-    
-    // create new marker
-    let markerOptions: MarkerOptions = {
-      position: ionic,
-      title: 'Ionic'
-    };
-    /*
-    const marker = map.addMarker(markerOptions)
-      .then((marker) => {
-        marker.showInfoWindow();
-      });
-    // move the map's camera to position
-    map.moveCamera(position);
-    */
+ 
       }
     ).catch(
       err=>{

@@ -28,9 +28,9 @@
               </button>
               <img *ngIf="userLocal.avatar;else avatarIcon" [src]="userLocal.avatar" alt="">
               <ng-template #avatarIcon>
-                  <img *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
+                  <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
 
-                  <img *ngIf="userLocal.gender == 'female'" width="70" src="assets/img/female-alt.png">
+                  <img class="avatar-alt" *ngIf="userLocal.gender == 'female'" width="70" src="assets/img/female-alt.png">
               </ng-template>
 
           </ion-avatar>
@@ -119,8 +119,8 @@
          <br>
          <span [change]="{prop:'font-size', value: '30px'}" text-center (click)="getShelfs(userLocal.id)"><ion-icon name="refresh"></ion-icon></span>
         </p>
-        <ion-item  *ngFor="let shelf of AllShelfs" (click)="showShelf(shelf)">
-            <div class="shelf-id">
+        <ion-item  *ngFor="let shelf of AllShelfs" >
+            <div class="shelf-id" (click)="showShelf(shelf)">
               <p>رقم الرف <span>{{shelf.name}} </span></p>
 <!--
               <p>{{shelf.cost}} ريال  |

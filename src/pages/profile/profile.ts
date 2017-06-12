@@ -3,7 +3,7 @@ import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetCon
 //import {IlevelId} from '../../app/service/InewUserData';
 import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
 import { ShelfsProvider } from '../../providers/shelfs';
-import { ShelfModal } from './shelf/shelf';
+import { ShelfModal } from './shelf/shelfpage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 

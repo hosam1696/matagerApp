@@ -1,0 +1,21 @@
+shelf-modal{
+    ion-content {
+        &.content {
+            background-color: #eee
+        }
+        .close-btn {
+            font-size: 25px;
+        }
+        ion-list {
+        ion-item {
+          border-bottom: 1px solid #eee !important;
+          .item-inner {
+            border-bottom: none !important;
+          }
+          p {
+              color: color($colors, primary) !important;
+          }
+        }
+        }
+    }
+}

@@ -1,9 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {NavParams, ViewController} from 'ionic-angular';
 
 @Component({
     selector: 'shelf-modal',
-    templateUrl: './shelf.html'
+    templateUrl: './shelfpage.html',
+    styleUrls: ['/app/pages/profile/shelf/shelfpage.scss'],
+    encapsulation: ViewEncapsulation.None
 }) 
 export class ShelfModal {
     modalInfo: any;
