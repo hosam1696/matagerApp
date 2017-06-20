@@ -119,7 +119,7 @@
         </div>
         <div class="radio-group  ">
           <div class="almostwidth group-bg">
-            <input type="radio" id="client" formControlName="level_id" value="3">
+            <input type="radio" id="client" formControlName="level_id" value="4">
             <label for="client" class="member"><ion-icon name="person"></ion-icon>عميل</label>
 
           </div>
@@ -127,7 +127,7 @@
         <div class="radio-group ">
           <div class="almostwidth group-bg">
 
-          <input type="radio" id="exporter" formControlName="level_id" value="4">
+          <input type="radio" id="exporter" formControlName="level_id" value="3">
             <label for="exporter" class="member"><ion-icon name="person"></ion-icon>مورد</label>
           </div>
         </div>
@@ -140,41 +140,38 @@
       <div class="select-group">
           <div (click)="openModal('Area', 0)">
 
-            {{AreaName || 'المنطة'}}
+            <span> {{AreaName || 'المنطة'}}  </span>
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="Area">
             </div>
-          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">{{CityName || 'المدينة'}}
-
+          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">
+            <span>{{CityName || 'المدينة'}}</span>
             <ion-icon name="arrow-down" ></ion-icon>
             <input type="text" formControlName="City">
           </div>
-          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">{{DistName || 'الحى'}}
+          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">
+            <span>{{DistName || 'الحى'}}</span>
             <ion-icon name="arrow-down"></ion-icon>
             <input type="text"
-            formControlName="Dist" id="dist"
-            [attr.required]= 'SignUpFrom.value["level_id"] == 2'>
+            formControlName="Dist" id="dist">
           </div>
 
       </div>
 
       <div class="form-group animate-input">
         <input type="text" class="form-control" formControlName="Address"
-          [hidden]='SignUpFrom.value["level_id"] == 3'
-          placeholder="العنوان"
-          [attr.required]= 'SignUpFrom.value["level_id"] !=3'       >
+          [hidden]='SignUpFrom.value["level_id"] == 4'
+          placeholder="العنوان"    >
       </div>
       <div class="form-group animate-input">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="رقم السجل التجارى"
-           [attr.required]= 'SignUpFrom.value["level_id"] ==2'
           formControlName="cr_num">
       </div>
       <div class="form-group animate-input">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
           placeholder="اسم مدير المنتج"
-          formControlName='owner_name'
-           [attr.required]= 'SignUpFrom.value["level_id"] ==2'       >
+          formControlName='owner_name'       >
       </div>
 
 
@@ -183,7 +180,12 @@
 
 
 
-    <button *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}</button>
+    <button *ngIf="lastPage && csPage ==3" block ion-button type="submit">{{lastPage}}
+
+       <div id="loader" *ngIf="showLoader">
+            <div class="loader-circle"></div>
+        </div>
+    </button>
   </form>
 
   <button
@@ -194,9 +196,7 @@
          (click)="toNextPage()"
         id="next-button"
       >{{lastPage || "التالى" }}
-      <div id="loader" *ngIf="showLoader">
-            <div class="loader-circle"></div>
-        </div>
+     
   </button>
 <!--
 <ion-card padding>

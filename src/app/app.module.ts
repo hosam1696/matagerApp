@@ -1,3 +1,4 @@
+///<reference path="../../node_modules/@ionic-native/native-geocoder/index.d.ts"/>
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -14,17 +15,22 @@ import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.mo
 import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
+import { ItemProvider } from '../providers/item';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import {NativeGeocoder} from "@ionic-native/native-geocoder";
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
+import { Transfer} from '@ionic-native/transfer';
 import { ActionSheet } from '@ionic-native/action-sheet';
 import {changePropDirectiveModule} from "./service/changeprop.directive.module";
+import {MapsModal} from "../pages/mapsmodal";
+
 //import { GenderPipe } from '../pipes/gender/gender';
 
 
@@ -33,7 +39,8 @@ import {changePropDirectiveModule} from "./service/changeprop.directive.module";
     MyApp,
     PlacesModal,
     ChooseArea,
-    ShelfModal
+    ShelfModal,
+    MapsModal
   ],
   imports: [
     BrowserModule,
@@ -56,7 +63,8 @@ import {changePropDirectiveModule} from "./service/changeprop.directive.module";
     MyApp,
     PlacesModal,
     ChooseArea,
-    ShelfModal
+    ShelfModal,
+    MapsModal
   ],
   providers: [
     StatusBar,
@@ -70,8 +78,11 @@ import {changePropDirectiveModule} from "./service/changeprop.directive.module";
     ShelfsProvider,
     ImagePicker,
     GoogleMaps,
+    NativeGeocoder,
     ActionSheet, Camera,
-    { provide: 'API_URL', useValue: 'http://rfapp.net/api/'}
+    ItemProvider,
+    { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
+    Transfer
   ]
 })
 export class AppModule {}

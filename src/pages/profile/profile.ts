@@ -1,22 +1,17 @@
 import { Component } from '@angular/core';
-import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController, ModalController } from 'ionic-angular';
-//import {IlevelId} from '../../app/service/InewUserData';
-import {IlocalUser, levelToAr} from '../../app/service/InewUserData';
+import { NavController, IonicPage, AlertController, AlertOptions, PopoverController ,ActionSheetController, ToastController, ModalController } from 'ionic-angular';
+
+
+import {IlocalUser, levelToAr, Ishelf} from '../../app/service/InewUserData';
+import {IProduct} from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
+import { ItemProvider } from '../../providers/item';
 import { ShelfModal } from './shelf/shelfpage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
 
 
-interface Ishelf {
-  area: number,
-  close: number,
-  cost: number,
-  id: number,
-  name: string,
-  user_id: number,
-  data_added?: Date,
-  data_modified?: Date
-}
+
 
 @IonicPage()
 @Component({
@@ -24,14 +19,15 @@ interface Ishelf {
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
-  userName: string;
   userLocal: IlocalUser;
   showContent: string = 'products';
-  AllShelfs :[Ishelf]| any = [];
+  AllShelfs :Ishelf[]| any = [];
   noShelfs:string;
+  AllProducts: IProduct[] = [];
   alertOptions: AlertOptions;
   showLoader: boolean = false;
   userLevelId: number;
+  showSettings: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -40,22 +36,26 @@ export class ProfilePage {
     private actionCtrl: ActionSheetController,
     private camera: Camera,
     public toastCtrl: ToastController,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController,
+    private productsProvider: ItemProvider,
+    public popover: PopoverController,
+    private transfer: Transfer
   ) {
 
   }
 
   ionViewDidLoad() {
-    this.ionViewWillEnter()
+    this.ionViewWillEnter();
+   
   }
 
   ionViewWillEnter(): void {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
-    if (this.userLocal)
-      this.getShelfs(this.userLocal['id']);
-
-    
+    if (this.userLocal){
+      this.getShelfs(this.userLocal.id);
+      this.getProducts(this.userLocal.id);
+    }
   }
 
   pickImage(cameraImage:string):void {
@@ -100,13 +100,26 @@ export class ProfilePage {
 
   }
 
+  showProductSettings(event) {
+    
+      console.log(event);
+      console.log(event.target.parentElement.nextElementSibling);
+      event.target.parentElement.nextElementSibling.style.display = 'block';
+      event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;
+    
+  }
 
+  popSettings() {
+    const popOver = this.popover.create('popped up');
+
+    popOver.present();
+  }
 
   openCamera(type:string='CAMERA', cameraImage:string = 'avatar') {
 
-    let cameraOptions:CameraOptions = {
+    const cameraOptions:CameraOptions = {
       quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -116,10 +129,12 @@ export class ProfilePage {
 
 
     this.camera.getPicture(cameraOptions).then(imageData => {
-      console.log(imageData);
+      
+      //templates/uploads/users/
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.userLocal[cameraImage] = base64Image;
-
+      console.log(base64Image);
       //TODO: preserve the image url to the DATABASE and LOCALSTORAGE
 
       // (1) save to the local storage
@@ -133,6 +148,28 @@ export class ProfilePage {
     })
   }
 
+  uploadImage(file) {
+    
+    const upladOptions: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: file
+
+    }
+
+    const fto: TransferObject = this.transfer.create();
+
+
+    fto.upload('file url', 'url', upladOptions)
+      .then(res=> {
+        console.log(res);
+      })
+      .catch(err=> {
+        console.warn(err);
+      });
+
+
+  }
+
   refreshShelfs(event) {
     console.log(event);
     this.getShelfs(this.userLocal['id']);
@@ -141,8 +178,9 @@ export class ProfilePage {
       console.log('Async operation has ended');
       event.complete();
     }, 2000);
-  
-  }  
+
+  }
+
   getShelfs(userId: number): void {
 
     [this.showLoader, this.noShelfs] = [true, null];
@@ -151,8 +189,7 @@ export class ProfilePage {
       console.log(status, data);
       //console.table( res);
       if (status == 'success') {
-        [this.AllShelfs, this.showLoader, this.noShelfs] = [data, true, null];
-        console.log(this.AllShelfs);
+        [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
         if (this.AllShelfs.length <= 0) {
           this.noShelfs = 'empty';
           this.showLoader = false
@@ -175,6 +212,23 @@ export class ProfilePage {
     );
   }
 
+
+  getProducts(id:number) {
+    const prodService = this.productsProvider.getProductByUserId(id);
+
+    prodService.subscribe(({status, errors, data})=>{
+      if (status.message == 'success') {
+        this.AllProducts = data;
+        console.table(data);
+      } else {
+        console.warn(errors);
+      }
+    },
+    err => {
+      console.warn(err);
+    }
+    )
+  }
 
   deleteShelf(shelf: Ishelf):void {
     //console.log(shelf);
@@ -202,15 +256,16 @@ export class ProfilePage {
             text: 'حذف',
             handler: (data) => {
               this.shelfsProvider.deleteShelf(shelfData).subscribe(res => {
+                console.log(res);
                 if (res.status == 'success') {
-                  this.getShelfs(this.userLocal['id'])
+
+                  let shelfIndex = this.AllShelfs.indexOf(shelf);
+                  this.AllShelfs.splice(shelfIndex, 1);
+                  //this.getShelfs(this.userLocal['id'])
                 }
               },
                 err => {
                   console.warn(err)
-                },
-                ()=> {
-                  this.getShelfs(this.userLocal.id);
                 }
               );
             }
@@ -239,12 +294,17 @@ export class ProfilePage {
 
     shelf.present();
   }
+
   navigateToPage(page, pageData=165):void {
     this.navCtrl.push(page ,{pageData})
   }
 
   userLevel(level:number):string {
     return levelToAr[level]
+  }
+
+  limitString(str:string) {
+    return (str.length > 55)? str.slice(0,50)+ '.....': str;
   }
 
   showToast(msg) {

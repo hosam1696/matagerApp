@@ -34,7 +34,7 @@ export class AddshelfPage {
       Name: new FormControl('' , Validators.required),
       Area: new FormControl('', Validators.required),
       Cost: new FormControl('', Validators.required),
-      salePercentage: new FormControl('0')
+      salePercentage: new FormControl('')
 
     });
   }
@@ -122,6 +122,8 @@ export class AddshelfPage {
         this.showToast('يرجى ادخال مساحة الرف');
       } else if(this.addShelfForm.get('Cost').value == ''){
         this.showToast('يرجى ادخال ايجار الرف');
+      } else {
+        this.showToast('تأكد من ملىء البيانات صحيحة')
       }
     }
 

@@ -38,7 +38,7 @@ let IconvertToEng;
           <span>
             {{area.name}}
         </span>
-            <ion-icon class="checkmark-icon" *ngIf="area.id == localUser[modalData.toLowerCase()]" name="checkmark"
+            <ion-icon class="checkmark-icon" *ngIf="localUser&&area.id == localUser[modalData.toLowerCase()]" name="checkmark"
                       color="primary"></ion-icon>
           </div>
         </ion-item>
@@ -110,9 +110,9 @@ export class ChooseArea {
 
     this.modalData = this.params.data.name;
     this.areasProviders.filterPlacesByParent( this.params.data.defineSearch )
-      .subscribe( data => {
+      .subscribe( ({data })=> {
           this.showLoader = true;
-          this.AllAreas.push( data );
+          this.AllAreas = data
         },
         err => {
           console.warn( err )

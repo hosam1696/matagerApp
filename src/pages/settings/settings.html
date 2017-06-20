@@ -14,7 +14,7 @@
 <ion-content>
 
 
-  <ion-list *ngIf="!userHasLog" no-lines>
+  <ion-list *ngIf="!userLocalData" no-lines>
     <ion-item-group>
       <ion-item-divider color="bgColor"><br></ion-item-divider>
     </ion-item-group>
@@ -23,31 +23,31 @@
       (click)="navigateToPage('Login')">
         <ion-icon name="log-in-outline" color="primary"></ion-icon>
         تسجيل الدخول
-        <ion-icon name="arrow-back" item-right></ion-icon>
+        <ion-icon name="arrow-back" item-right color="primary"></ion-icon>
         </ion-item>
       <ion-item padding-left ion-item
        (click)="navigateToPage('Signup')">
        <ion-icon name="add-circle-outline" color="primary"></ion-icon>
        تسجيل حساب جديد
 
-        <ion-icon name="arrow-back" item-right></ion-icon>
+        <ion-icon name="arrow-back" item-right color="primary"></ion-icon>
         </ion-item>
       <ion-item padding-left ion-item color="light" (click)="navigateToPage('Useterms')">
         <ion-icon name="folder-outline" color="primary"></ion-icon>سياسة الأستخدام
 
-        <ion-icon name="arrow-back" item-right></ion-icon>
+        <ion-icon name="arrow-back" item-right color="primary"></ion-icon>
         </ion-item>
       <ion-item padding-left ion-item color="light" (click)="navigateToPage('Contactus')">
         <ion-icon name="call-outline" color="primary"></ion-icon>اتصل
         بنا
 
-        <ion-icon name="arrow-back" item-right></ion-icon>
+        <ion-icon name="arrow-back" item-right ></ion-icon>
         </ion-item>
   </ion-list>
 
 
 
-  <ion-list *ngIf="userHasLog">
+  <ion-list *ngIf="userLocalData">
 
     <ion-item no-lines id="hero">
       <ion-avatar item-left>
@@ -55,16 +55,16 @@
         <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png">
         <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png"> -->
 
-        <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+        <img *ngIf = "userLocalData.avatar != '' ;else altImages" [src]="userLocalData.avatar" alt="profile image">
         <ng-template #altImages>
-          <img class="alt" *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
-          <img class="alt" *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+          <img class="alt" *ngIf="userLocalData.gender == 'female'" src="assets/img/female-alt.png" >
+          <img class="alt" *ngIf="userLocalData.gender == 'male'" src="assets/img/male-alt.png" >
         </ng-template>
         <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
 
       </ion-avatar>
-      <h3>{{userFullName}}</h3>
-      <p>{{usersavedName}}</p>
+      <h3>{{ userLocalData.name }}</h3>
+      <p>{{ userLocalData.username}}</p>
     </ion-item>
 
     <ion-item-group no-lines>
@@ -102,7 +102,7 @@
         <ion-icon name="arrow-back" item-right></ion-icon>
       </ion-item>
 
-      <ion-item padding-left ion-item (click)="navigateToPage('RecpermissionsPage')">
+      <ion-item padding-left ion-item *ngIf="userLocalData['level_id'] == 2" (click)="navigateToPage('RecpermissionsPage')">
           <ion-icon name="paper-outline" color="primary"></ion-icon>
           اذون استلام مستحقات
 
@@ -110,13 +110,12 @@
       </ion-item>
 
 
-        <ion-item padding-left ion-item (click)="navigateToPage('RequestsPage')">
+        <ion-item  padding-left  *ngIf="userLocalData['level_id'] == 3" ion-item (click)="navigateToPage('RequestsPage')">
           <ion-icon name="git-branch" color="primary"></ion-icon>طلبات المستحقات
 
           <ion-icon name="arrow-back" item-right></ion-icon>
         </ion-item>
     </ion-item-group>
-
 
     <ion-item-group no-lines>
       <ion-item-divider color="bgColor">التطبيق</ion-item-divider>

@@ -11,7 +11,7 @@
 
 <ion-content  *ngIf="isOnline == true">
   <ion-list>
-    <ion-item>
+    <ion-item (click)="openMessage('MessagePage')">
       <ion-avatar item-left>
 <!--
         <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
@@ -35,7 +35,7 @@
       </div>
       <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
     </ion-item>
-<ion-item>
+<ion-item (click)="openMessage('MessagePage')">
   <ion-avatar item-left>
     <img src="assets/img/male-alt.png"  alt="male">
   </ion-avatar>
@@ -52,7 +52,7 @@
   <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
 </ion-item>
 
-<ion-item>
+<ion-item (click)="openMessage('MessagePage')">
   <ion-avatar item-left>
     <img src="assets/img/male-alt.png"  alt="male">
   </ion-avatar>
@@ -69,7 +69,7 @@
   <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
 </ion-item>
 
-<ion-item>
+<ion-item (click)="openMessage('sender Mohamed Ahmed ')">
   <ion-avatar item-left>
     <img src="assets/img/male-alt.png"  alt="male">
   </ion-avatar>
@@ -87,7 +87,7 @@
 
 </ion-item>
 
-<ion-item>
+<ion-item (click)="openMessage('message hi to all')">
   <ion-avatar item-left>
     <img src="assets/img/male-alt.png"  alt="male">
   </ion-avatar>

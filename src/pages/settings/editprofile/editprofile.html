@@ -31,7 +31,7 @@
       <ion-col col-8>
         <input type="text" #usernameInput formControlName="Username" class="input-as-text" [value]="localUser.username">
 
-        <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username">
+        <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username;EditUserForm.value.Username = localUser.username">
 
         </ion-icon>
       </ion-col>
@@ -46,9 +46,9 @@
           الاسم التجارى
         </ion-col>
         <ion-col col-8>
-<input type="text" #nameInput formControlName="Username" class="input-as-text" [value]="localUser.name">
+<input type="text" #nameInput formControlName="Name" class="input-as-text" [value]="localUser.name">
 
-<ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name">
+<ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name;EditUserForm.value.Name = localUser.name">
 
           </ion-icon>
         </ion-col>
@@ -80,20 +80,20 @@
 كلمة المرور
         </ion-col>
         <ion-col>
-          <input type="password" formControlName="Password" class="input-as-text" value="************">
+          <input type="password" (focus)="passFocus()" (blur)="passBlur()" formControlName="Password" class="input-as-text">
 
        </ion-col>
       </ion-row>
     </ion-grid>
   </ion-item>
-<ion-item padding-left ion-item>
+<ion-item padding-left ion-item [hidden]="hidepass">
   <ion-grid>
     <ion-row>
       <ion-col col-4>
         تأكيد كلمة المرور
       </ion-col>
       <ion-col>
-      <input type="password" formControlName="InsurePassword" class="input-as-text" value="************">
+      <input type="password" formControlName="InsurePassword" class="input-as-text">
 
 
        </ion-col>
@@ -171,7 +171,7 @@
             العنوان
             </ion-col>
             <ion-col>
-              <input type="text" email formControlName="Email" class="input-as-text" [value]="localUser.address">
+              <input type="text" formControlName="Address" class="input-as-text" [value]="localUser.address">
 
             </ion-col>
           </ion-row>
@@ -185,7 +185,7 @@
             <ion-col col-4>
               المنطقة
             </ion-col>
-            <ion-col (click)="openModal('Area',0)">
+            <ion-col class="modal" (click)="openModal('Area',0)">
               <span [textContent]="AreaName"></span>
               <ion-icon name="arrow-down" color="primary"></ion-icon>
             </ion-col>
@@ -196,9 +196,9 @@
       <ion-item padding-left ion-item>
         <ion-grid>
           <ion-row>
-            <ion-col col-4>
+            <ion-col col-4 >
 المدينة            </ion-col>
-            <ion-col (click)="openModal('City',EditUserForm.getRawValue()['Area'])">
+            <ion-col class="modal" (click)="openModal('City',EditUserForm.getRawValue()['Area'])">
 
               <span [textContent]="CityName"></span>
 <ion-icon name="arrow-down" color="primary"></ion-icon>
@@ -209,10 +209,10 @@
       <ion-item padding-left ion-item>
         <ion-grid>
           <ion-row>
-            <ion-col col-4>
+            <ion-col col-4 >
 الحى
             </ion-col>
-            <ion-col (click)="openModal('Dist',EditUserForm.getRawValue()['City'])">
+            <ion-col class="modal" (click)="openModal('Dist',EditUserForm.getRawValue()['City'])">
 
                 <span [textContent]="DistName"></span>
                 <ion-icon name="arrow-down" color="primary"></ion-icon>
@@ -227,7 +227,11 @@
 
 
 
-<button id="form-button" ion-button full> حفظ التعديلات</button>
+<button id="form-button" ion-button full> حفظ التعديلات
+  <div id="loader" *ngIf="showLoader">
+    <div class="loader-circle"></div>
+  </div>
+</button>
 </form>
 
 </ion-content>

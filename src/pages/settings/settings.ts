@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController, Events, IonicPage } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-//import {levelToAr} from '../../app/service/InewUserData';
+import {IlocalUser} from '../../app/service/InewUserData';
 
 @IonicPage()
 @Component({
@@ -11,10 +11,7 @@ import { Network } from '@ionic-native/network';
 export class SettingsPage {
 
   userHasLog:boolean;
-  usersavedName: string;
-  userFullName: string;
-  userGender: string;
-  userImageUrl: string;
+  userLocalData:IlocalUser;
 
   static viewCtrl: ViewController;
   constructor(
@@ -33,32 +30,27 @@ export class SettingsPage {
   }
 
   ionViewDidLoad() {
-    this.checkUserLogin();
+   /* this.checkUserLogin();
 
 
     if (this.userHasLog) {
-        this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-        this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
-        this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
-        this.userImageUrl = JSON.parse(localStorage.getItem('userLocalData'))['avatar'];
+        this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'))
     }
 
 
 
-
-
-
+*/
+    this.ionViewWillEnter();    
+    console.log(this.userLocalData);
 
   }
-  ionViewDidEnter() {
+
+
+  ionViewWillEnter() {
     console.log('user has cached or not',this.userHasLog);
-    this.checkUserLogin();
-    if (this.userHasLog) {
-      this.usersavedName = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-      this.userGender = JSON.parse(localStorage.getItem('userLocalData'))['gender'];
-      this.userFullName = JSON.parse(localStorage.getItem('userLocalData'))['name'];
-      this.userImageUrl = JSON.parse(localStorage.getItem('userLocalData'))['avatar'];
-    }
+    
+      this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
+    
   }
   ionViewWilleave() {
     this.checkUserLogin();

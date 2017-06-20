@@ -55,7 +55,7 @@
              متابعة
         </button>
 
-            <button ion-button color="primary" small outline>
+            <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage')">
               <ion-icon name="chatboxes"></ion-icon>
            راسلنا
           </button>
@@ -162,45 +162,88 @@
 
   </ion-card>
 
-  <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card">
-<ion-grid padding-horizontal>
-  <ion-row>
-    <ion-col col-6>
-      <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
+  <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card products-card">
+    <ion-grid padding-horizontal>
+      <ion-row>
+        <ion-col col-6>
+          <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
 
-        <img src="assets/img/product-iphone.png" alt="product">
+            <img src="assets/img/product-iphone.png" alt="product">
 
-        <p class="prod-desc">
-          ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا
-        </p>
-        <p class="price">
-          <span class="prod-price"><b>1,500</b></span> ريال
-        </p>
+            <p class="prod-desc">
+              ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>1,500</b></span> ريال
+            </p>
 
-        <!--<a href="">ابلاغ عن مخالفة</a>-->
-      </div>
-    </ion-col>
-    <ion-col col-6>
-      <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
 
-        <img src="assets/img/product-mac.png" alt="product">
+         
+        </ion-col>
+        <ion-col col-6>
+          <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
 
-        <p class="prod-desc">
-          ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
-        </p>
-        <p class="price">
-          <span class="prod-price"><b>3,500</b></span> ريال
-        </p>
+            <img src="assets/img/product-mac.png" alt="product">
 
-        <!--<a href="">ابلاغ عن مخالفة</a>-->
-      </div>
-    </ion-col>
+            <p class="prod-desc">
+              ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>3,500</b></span> ريال
+            </p>
 
-
-  </ion-row>
-</ion-grid>
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
+        </ion-col>
 
 
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid padding-horizontal>
+      <ion-row>
+        <ion-col col-6 *ngFor="let product of AllProducts">
+          <div class="col-content"(click)="navigateToPage('ProductPage', product)">
+
+            <img src="assets/img/product-iphone.png" alt="product">
+
+            <p class="prod-desc">
+              {{limitString(product.item_desc)}}
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>{{product.item_price}}</b></span> ريال
+            </p>
+
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
+
+          <div class="prodcut-controls" (click)="showProductSettings($event)">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+           <ion-list no-lines class="product-settings" hidden>
+              <ion-item>
+                <ion-icon color="primary" name="open-outline" item-left></ion-icon>
+                <ion-label>تعديل المنتج</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-icon  color="primary" name="trash-outline" item-left> </ion-icon>
+                <ion-label>حذف المنتج</ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-icon  color="primary" name="warning-outline" item-left></ion-icon>
+                <ion-label>ابلاغ عن المنتج</ion-label>
+              </ion-item>
+            </ion-list>
+
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
   </ion-card>
   <div *ngIf="userLocal">

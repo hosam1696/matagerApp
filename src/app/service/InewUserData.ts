@@ -1,7 +1,7 @@
-export class IlevelId {
-  'store' = 2;
-  'exporter';
-  'client'
+export enum IlevelId {
+  store = 2,
+  exporter,
+  client
 }
 export enum levelToAr {
   'متجر'= 2,
@@ -33,7 +33,6 @@ export interface IuserData{
   Address:string,
   Map: string,
   Area: number,
-
   City: number,
   Dist: number,
   level_id: number,
@@ -63,4 +62,15 @@ export interface IlocalUser{
   cr_num?: number,
   map: string
 
+}
+
+export interface Ishelf {
+  area: number,
+  close: number,
+  cost: number,
+  id: number,
+  name: string,
+  user_id: number,
+  data_added?: Date,
+  data_modified?: Date
 }

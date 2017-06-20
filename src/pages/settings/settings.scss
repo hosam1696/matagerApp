@@ -42,7 +42,8 @@ page-contact {
           border: 2px solid color($colors, primaryDark) ;
           img {
             width: 100% !important;
-            height: auto;
+            height: 100% !important;
+            //height: auto;
             &.alt {
               width: 45px !important;
             }
@@ -74,6 +75,7 @@ page-contact {
         ion-icon {
           margin: 0 0 0 15px ;
           font-size: 15px;
+          font-weight: bold;
           &:last-of-type {
             font-size: 18px;
             line-height:28px;

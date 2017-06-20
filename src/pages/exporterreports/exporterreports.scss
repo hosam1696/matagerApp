@@ -26,12 +26,16 @@ page-exporterreports {
           padding-right: 5px !important;
         }
         ion-icon {
-          color: #ccc !important;
+          color: #999 !important;
+          font-size: 18px !important;
+          font-weight: bold;
+          display: flex;
+          align-items: center;
         }
 
 
         ion-avatar {
-          border-radius: 2px;
+          //border-radius: 2px;
           // border: 1px dashed color($colors, primary);
           background-color: #eee;
           width: 50px;

@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>اضافة رف</ion-title>
+    <ion-title>{{actionText}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,8 +10,8 @@
 
 <ion-content padding>
 
-  <h3 text-center> 
-    اضافة رف جديد
+  <h3 text-center *ngIf=" actionText=='اضافة رف'"> 
+     اضافة رف جديد
   </h3>
 
   <form novalidate [formGroup]="addShelfForm"
@@ -47,7 +47,7 @@
       </div>
     </div>
     <button id="form-button" ion-button full>
-       {{actionText}} &nbsp;
+       {{actionText}}
        <hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
     </button>
   </form>

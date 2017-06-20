@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, ModalController, IonicPage } from 'ionic-angular';
+import { NavController, ToastController, IonicPage } from 'ionic-angular';
 
-import {ShelfsProvider} from "../../providers/shelfs";
-import {UserProvider} from "../../providers/user";
-import {PlacesModal} from '../filtermodal';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
 import {IlocalUser} from "../../app/service/InewUserData";
+import {UserProvider} from "../../providers/user";
 
 
 @IonicPage()
@@ -17,34 +15,35 @@ import {IlocalUser} from "../../app/service/InewUserData";
 export class HomePage {
   dataFromModal;
   userLocalData: IlocalUser;
-  showLocalData: boolean = false;
   constructor(
     public navCtrl: NavController,
-    public userProvider: UserProvider,
     public geolocation: Geolocation,
      public network: Network,
      public toastCont: ToastController,
-     public modalCrtl: ModalController,
-     public shelfsProvider: ShelfsProvider
+    public userProvider: UserProvider
   ) {
-
-      if(localStorage.getItem('Username'))
-          console.info(`User "${localStorage.getItem('Username')}" has loggedin`)
-      else
-          console.warn('no user has found..')
-
-
+    this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
   ionViewDidLoad() {
-    this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
-    //TODO: pre configuration and  setup for user
 
-   /* Get the current location if he activate the location */
+    // testing get user
+
+    this.userProvider.getUserById(5)
+      .subscribe(
+        (data)=>{
+          console.log(data);
+        },
+        (err)=> {
+          console.warn(err)
+        }
+      );
+
+   /* Get the current location if user activates the location */
     this.geolocation.getCurrentPosition().then((res)=>{
-      let coords = res.coords.longitude+','+res.coords.latitude;
+      let coords = res.coords.latitude+','+res.coords.longitude;
       console.log(`User Location: ${coords}`);
-      this.showToast(`User Location: ${coords}`);
+      //this.showToast(`User Location: ${coords}`);
       if (this.userLocalData) {
         this.userLocalData.map = coords;
         localStorage.setItem('userLocalData', JSON.stringify(this.userLocalData)) ;
@@ -76,7 +75,7 @@ export class HomePage {
 
   }
 
-showToast(msg, dur=3000) {
+  showToast(msg, dur=3000) {
     let toast = this.toastCont.create({
       message: msg,
       duration: dur,
@@ -94,30 +93,9 @@ showToast(msg, dur=3000) {
     toast.present();
   }
 
-
-
   navigateTo(page) {
     this.navCtrl.push(page);
   }
-   openSearchModal() {
-
-    let modal = this.modalCrtl.create(PlacesModal, {pageName: 'FilterModal',User: 'Hosam'});
-    modal.onDidDismiss(data=> {
-      //console.log('Data from Modal',data);
-      this.searchData(data);
-
-    });
-    modal.present();
-
-  }
-  searchData(modalData) {
-    this.userProvider.getAreas().subscribe(data=>{
-        //console.log('Data entered',modalData,'Matched Area from Database', data.data);
-        this.dataFromModal = data.data.filter(place=> place.id == modalData.AreaId || place.id == modalData.CityId || place.id == modalData.DistId);
-        console.log(this.dataFromModal);
-      })
-  }
-
 
   navToAdv(addsLink) {
     // navigate to the advertise link or the advertise owner

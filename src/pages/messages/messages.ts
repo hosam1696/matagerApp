@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
 @IonicPage()
 @Component({
   selector: 'page-messages',
@@ -14,7 +12,6 @@ export class Messages {
     public navCtrl: NavController,
     public navParams: NavParams,
     public network: Network,
-    public barcodeScanner: BarcodeScanner,
     public toastCtrl: ToastController
   ) {
 
@@ -49,13 +46,8 @@ export class Messages {
       this.isOnline = true
     }*/
   }
-
-  scanBarcode() {
-    this.barcodeScanner.scan().then((barcodeData) => {
-      console.log(barcodeData);
-    }).catch(err => {
-      console.log(err)
-    });
+  openMessage( messageData= "supposed to be message info") {
+    this.navCtrl.push('MessagePage', {messageData});
   }
   showToast(msg) {
     let toast = this.toastCtrl.create({

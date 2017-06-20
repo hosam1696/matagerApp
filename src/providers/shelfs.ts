@@ -20,6 +20,9 @@ export class ShelfsProvider {
         let action = "add";
 
         let body = Object.assign({}, { action }, shelfData);
+
+        console.log('data to the server', body);
+
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
 
     }
@@ -29,14 +32,18 @@ export class ShelfsProvider {
         let action = "delete";
 
         let body = Object.assign({}, { action }, shelfData);
+
         console.log('data to the server', body);
-        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
+
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
 
     }
     editShelf(editedShelfData) {
 
         let action = 'edit';
+        
         let body = Object.assign({}, { action }, editedShelfData);
+
         console.log('data to the server', body);
         return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
     }

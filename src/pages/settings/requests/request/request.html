@@ -1,0 +1,72 @@
+<!--
+  صفحة طلب استلام مبلغ
+  صفحة الطلب
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>
+       طلب استلام مبلغ
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content fullscreen>
+
+  <ion-list>
+    <ion-item>
+      <ion-avatar item-left>  </ion-avatar>
+      <h2>
+        {{storeInfo}}
+      </h2>
+      <p>
+        اجمالى المستحقات: 
+        1200 ريال
+      </p>
+    </ion-item>
+
+    <ion-item-group>
+      <ion-item-divider>
+        <ion-label>
+          كافة الرفوف
+        </ion-label>
+        <ion-checkbox item-left>
+
+        </ion-checkbox>
+      </ion-item-divider>
+      <ion-item>
+          
+          <ion-checkbox item-left></ion-checkbox> 
+          <ion-label>
+            <p>رف رقم:
+             51654
+          </p>
+          <p>
+            المستحقات :
+             1000
+             ريال
+          </p>
+          </ion-label>
+      </ion-item>
+      <ion-item>
+          <ion-checkbox item-left></ion-checkbox>
+          <ion-label>
+            <p>رف رقم:
+             54678
+          </p>
+          <p>
+            المستحقات :
+             200 
+             ريال
+          </p>
+          </ion-label>
+      </ion-item>
+    </ion-item-group>
+
+  </ion-list>
+
+  <button id="form-button" ion-button full> ارسل الطلب</button>
+  
+</ion-content>

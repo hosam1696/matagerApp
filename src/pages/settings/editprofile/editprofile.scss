@@ -9,11 +9,39 @@ ion-item-divider {
      .scroll-content {
          background-color: #eee;
      }
+
+   #loader {
+     position: relative;
+     z-index: 5999;
+     width: 20px;
+     height: 20px;
+     //background-color: red;
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     margin: 0 10px;
+     .loader-circle {
+       width: 80%;
+       height: 80%;
+       border-radius: 50%;
+       border:2px solid transparent;
+       border-top-color: color($colors, light);
+       animation: loader 0.6s linear infinite;
+
+     }
+     @keyframes loader {
+       to {
+         transform: rotate(360deg);
+       }
+     }
+   }
+
      #personal-info {
          ion-item {
              ion-grid {
                  ion-row {
                      ion-col {
+
                          &:last-child {
                              ion-icon {
              position: absolute;
@@ -29,9 +57,14 @@ ion-item-divider {
      }
      .input-as-text {
          border: none;
+         border-bottom: 1px solid transparent;
          border-radius: 4px;
-         transition: background-color 0.2s linear;
+         transition: background-color 0.2s linear,border-bottom 0.2s ease;
          width: 100%;
+         padding:  5px 5px 2px;
+       &.ng-dirty.ng-invalid {
+         border-bottom: 1px solid #ffe8bf;
+       }
          &:focus {
              background-color: #f5f5f5;
              &+ion-icon {
@@ -68,6 +101,9 @@ ion-item-divider {
             padding: 5px 0 !important;
             ion-row {
                 ion-col {
+                  &.modal {
+                    padding-right: 5px !important;
+                  }
                     display: flex;
                     padding-right: 0 !important;
                     white-space:normal;

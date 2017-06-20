@@ -190,10 +190,10 @@ export class PlacesModal {
      */
     this.places = [];
     this.areasProviders.filterPlacesByParent( parentId )
-      .subscribe( fetched => {
+      .subscribe( ({data}) => {
         [this.showLoader, this.errorAccessDB] = [true, false];
-        this.places.push( fetched );
-        callback( fetched );
+        this.places = data ;
+        callback( data );
       },
       err => {
 

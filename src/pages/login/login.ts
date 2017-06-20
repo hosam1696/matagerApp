@@ -62,6 +62,7 @@ export class Login {
         this.showLoader = true;
         this.userLogin.LoginUser(this.LoginForm.value).subscribe(
           resBody => {
+            console.log(resBody);
             //TODO: if data is correct navigate to the home page
             if (resBody.status == 'success') {
               let userLocalData = resBody.data;
@@ -71,9 +72,9 @@ export class Login {
 
               // TODO: navigate to the home page
               this.navCtrl.setRoot('HomePage');
-              this.navCtrl.popToRoot();  
+              this.navCtrl.popToRoot();
 
-              console.table(localStorage.getItem('userLocalData'));    
+              console.table(localStorage.getItem('userLocalData'));
 
             } else {
               this.showLoader = false;
@@ -81,7 +82,7 @@ export class Login {
             }
           },
           err => {
-            this.showToast('مشكلة فى الوصول الى قاعدة البيانات');
+            this.showToast(' تعثر الوصول الرجاء المحاولة مرة اخرى');
             console.warn(err);
             this.showLoader = false;
           }
