@@ -27,17 +27,6 @@ export class HomePage {
 
   ionViewDidLoad() {
 
-    // testing get user
-
-    this.userProvider.getUserById(5)
-      .subscribe(
-        (data)=>{
-          console.log(data);
-        },
-        (err)=> {
-          console.warn(err)
-        }
-      );
 
    /* Get the current location if user activates the location */
     this.geolocation.getCurrentPosition().then((res)=>{

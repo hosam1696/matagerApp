@@ -5,13 +5,16 @@ page-contactus {
         &.content {
             background-color: #eee;
         }
-
+        
+            
+        
         form {
 
         .form-group {
           padding: 5px 0;
           textarea {
             height: auto !important;
+            resize: none;
           }
           .form-control {
             height: 40px;

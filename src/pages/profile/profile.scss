@@ -112,8 +112,8 @@ page-profile {
                                 margin:0
                             }
                             .col-content {
-                                min-height: 210px;
-                                height: 200px;
+                                //min-height: 200px;
+                                height: 100%;
                                 background-color: #fff;
                                     display: flex;
                                      flex-direction: column;
@@ -126,11 +126,11 @@ page-profile {
                                     &.prod-desc {
                                         flex: 1;
                                         color: color($colors, primary); font-size: 15px;
-                                        max-height: 90px;
+                                    
                                     }
-                                    &.price {
+                                    /*&.price {
                                         height: 30px;
-                                    }
+                                    }*/
 
                                     text-align: right;
                                      padding: 0 6px;

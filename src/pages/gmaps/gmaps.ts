@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage,Events } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
@@ -23,7 +23,8 @@ export class GmapsPage  {
   constructor(
     private googleMaps: GoogleMaps,
     public geolocation: Geolocation,
-    public geocoderNative: NativeGeocoder
+    public geocoderNative: NativeGeocoder,
+    public events: Events
 
   ) {
   }
@@ -109,7 +110,10 @@ export class GmapsPage  {
 
 
   getAddress(latitude, longitude) {
+    
     this.geocoderNative.reverseGeocode(latitude, longitude).then((res:NativeGeocoderReverseResult)=>{
+      let address = res.street + " " + res.houseNumber + ", " + res.postalCode + " " + res.city + " " + res.district + " in " + res.countryName + " - " + res.countryCode;
+      this.events.publish('GoogleAddress',address);
       console.log(`${res.district} - ${res.city} - ${res.countryName} ${res.countryCode}`);
       console.log(res);
     }).then(err=>{

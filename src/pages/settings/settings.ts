@@ -23,7 +23,7 @@ export class SettingsPage {
 
     this.events.subscribe('networkStatus', (data) => {
 
-      console.log('%c%s', 'font-size: 30px', 'Your connection status is' + this.network.type);
+      console.log('%c%s', 'font-size: 30px', 'Your connection status is: ' + this.network.type);
       return this.network.type;
       });
 

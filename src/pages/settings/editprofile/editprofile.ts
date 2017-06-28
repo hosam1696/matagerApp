@@ -52,6 +52,12 @@ export class Editprofile {
 
   ionViewDidLoad() {
     this.events.publish( 'networkStatus', 'Is connected' );
+
+    this.events.subscribe('GoogleAddress', (address)=> {
+      console.log(address);
+    })
+
+
     this.EditUserForm
       .valueChanges
       .debounceTime( 400 )

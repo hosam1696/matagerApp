@@ -4,8 +4,13 @@ page-addproduct {
       background: #eee;
       //background-color: color($colors, bgColor)
     }
+    
     form {
-
+      ion-datetime {
+        .datetime-text {
+          //direction: ltr
+        }
+      }
       .form-group {
         padding: 5px 0;
         position: relative;
@@ -13,21 +18,39 @@ page-addproduct {
             background:color($colors, light);
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
             height: 120px;
             color: #999;
             border-radius: 5px;
             margin-bottom: 5px;
-            ion-icon {
-              font-size: 35px;
+            .image-btn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              width: 40%;
+              ion-icon {
+                font-size: 35px;
+              }
+              p {
+                margin: 0
+              }
             }
-            p {
-              margin: 0
+            .images-viewer {
+              display: flex;
+              word-wrap: normal;
+              .image {
+                margin-right: 5px;
+                display: inline;
+                img {
+                  height: 100%;
+                }
+              }
             }
+            
           }
           textarea {
-            height: auto !important
+            height: auto !important;
+            resize: none;
           }
         .form-control {
           width: 100%;

@@ -1,0 +1,101 @@
+page-productreport {
+    ion-content {
+        &.content {
+            background-color: #eee;
+
+        }
+      
+        
+        .report-subject {
+                display: flex;
+                //height: 100px;
+                align-items: center;
+                flex: 1;
+                margin-bottom: 8px;
+                height: 36px;
+               // border-bottom: 1px solid #eee;
+                p {
+                    &:last-child {
+                        flex: 1;
+                        background-color: #fdfdfd;
+                        height: 100%;
+                        line-height: 36px;
+                        text-align: center;
+                        font-weight: bold;
+                    }
+                        &:first-child {
+                            font-size: 12px;
+                        color: #999;
+                        position: relative;
+                        height: 100%;
+                        background-color: #fbfbfb;
+                        line-height: 36px;
+                        z-index: 22;
+                        padding-right: 8px;
+                    
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        top: 5px;
+                        left: -13px;
+                        height: 25px;
+                        width: 25px;
+                        z-index: -1;
+                        border-radius: 4px;
+                        background-color: #fbfbfb;
+                        border: 1px solid transparent;
+                        border-bottom-color: #eee;
+                        border-left-color: #eee;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+                }
+                
+            }
+        }
+        .product-id {
+                color: color($colors, primary) ;
+                font-weight: bold;
+            }
+        form {
+
+            .form-group {
+          padding: 5px 0;
+          textarea {
+            height: auto !important;
+            resize: none;
+          }
+          .form-control {
+            height: 40px;
+
+            width: 100%;
+            background-color: rgba(255, 255, 255, 1);
+            color: color($colors, primaryDark);
+            padding: 7px 10px;
+            border-radius: 5px;
+            border:none;
+            border-bottom: 2px solid transparent;
+            font-size: 14px;
+            transition: border-bottom 0.3s ease-in;
+            &::-webkit-input-placeholder {
+              color: #999 !important;
+            }
+            &.ng-valid {
+                border-bottom: 2px solid #bfffd2;
+            }
+            &.ng-dirty.ng-invalid {
+                border-bottom: 2px solid #ffe8bf;
+            }
+        }
+        }
+
+            .float-btn {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+            }
+            
+        }
+        
+    }
+}

@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
 import { MyApp } from './app.component';
+import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
@@ -40,7 +41,8 @@ import {MapsModal} from "../pages/mapsmodal";
     PlacesModal,
     ChooseArea,
     ShelfModal,
-    MapsModal
+    MapsModal,
+    PopSettings
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import {MapsModal} from "../pages/mapsmodal";
     PlacesModal,
     ChooseArea,
     ShelfModal,
-    MapsModal
+    MapsModal,
+    PopSettings
   ],
   providers: [
     StatusBar,
