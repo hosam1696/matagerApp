@@ -2,41 +2,31 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>راسل</ion-title>
+    <ion-title>
+      راسل
+      {{reciever}}
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content no-padding>
-
   <section id="messages-container">
-    <div class="message-id">
-      <div>
-        <div class="title">
-          من
-        </div>
-        <div class="input">
-          <input type="text">
-        </div>
+
+      <div class="msg-subject">
+        <!--<span>
+          عنوان الرسالة
+        </span>-->
+        <input type="text" placeholder="عنوان الرسالة">
       </div>
-      <div>
-<div class="title">
-  الى
-</div>
-        <div class="input">
-          <input type="text">
-        </div>
-      </div>
-      <div>
-<div class="title">
-  الموضوع
-</div>
-        <div class="input">
-          <input type="text">
-        </div>
-      </div>
-    </div>
+      
+     <textarea  class="msg-body" placeholder="محتوى الرسالة" rows="5" (input)="watchHeight($event)"></textarea>
+
+
+     <button ion-button block class="float-btn">ارسل رسالتك</button>
+
+    <!--
     <div class="messages">
 
       <ion-list>
@@ -116,20 +106,21 @@
       </ion-list>
 
     </div>
+-->
 
-
-    <section id="message-controls">
+    <!--<section id="message-controls">
       <div class="input-controls">
         <input type="text">
         <div class="controls-icon">
           <ion-icon name="camera-outline" color="primaryDark"></ion-icon>
-          <!--<ion-icon name=""></ion-icon>-->
+          
         </div>
       </div>
+      
       <button ion-button small outline color="primary">
         <ion-icon name="send"></ion-icon>
       </button>
-    </section>
+    </section>-->
   </section>
 
 

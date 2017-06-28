@@ -54,6 +54,14 @@ let IconvertToEng;
         لا يوجد أماكن متوفرة لهذا لأختيار حتى الان
         <ion-icon name="mark"></ion-icon>
       </p>
+
+      <ion-infinite-scroll (ionInfinite)="fetchMoreData($event)">
+            <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="جلب مزيد من المنتجات...">
+            ></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
     </ion-content>
   `,
   styles: [
@@ -130,6 +138,10 @@ export class ChooseArea {
 
   closeModal(): void {
     this.viewCtrl.dismiss();
+  }
+
+  fetchMoreData(event) {
+    console.log('fetch more data');
   }
 
   choosePlace(...args): void {

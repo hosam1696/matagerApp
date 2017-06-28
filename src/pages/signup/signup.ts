@@ -275,15 +275,16 @@ export class Signup {
       console.log(this.SignUpFrom.value);
 
 
-      if (this.SignUpFrom.get('Address').getError('required')) {
-        this.showToast('يرجى ادخال العنوان')
-      } else if (this.SignUpFrom.get('Area').getError('required')) {
+      
+      if (this.SignUpFrom.get('Area').getError('required')) {
         this.showToast('يرجى ادخال المنطقة')
       } else if (this.SignUpFrom.get('City').getError('required')) {
         this.showToast('يرجى ادخال المدينة')
-      }else if (this.SignUpFrom.get('Dist').getError('required')) {
+      } else if (this.SignUpFrom.get('Dist').getError('required')) {
         this.showToast('يرجى ادخال الحى')
-      }else {
+      } else if (this.SignUpFrom.get('Address').getError('required')) {
+        this.showToast('يرجى ادخال العنوان')
+      } else {
           this.showToast('تأكد من ملىء جميع الحقول')
       }
 
@@ -294,7 +295,7 @@ export class Signup {
 
   addUserProvider(formValue) {
     
-      delete this.SignUpFrom.value.InsurePassword;
+    delete this.SignUpFrom.value.InsurePassword;
 
     this.userProvider.addUser(formValue).subscribe(({status, data})=>{
       console.log(status, data);

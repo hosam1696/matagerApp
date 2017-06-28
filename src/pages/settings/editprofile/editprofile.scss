@@ -1,15 +1,16 @@
 page-editprofile {
-ion-item-divider {
+    ion-item-divider {
       padding-right: 10px !important;
       height: 40px;
       color: color($colors, primaryDark) !important;
 
-  }
- ion-content {
+    }
+    
+    ion-content {
      .scroll-content {
          background-color: #eee;
      }
-
+     
    #loader {
      position: relative;
      z-index: 5999;

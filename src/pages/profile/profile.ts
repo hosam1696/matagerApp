@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,Inject,Renderer2 } from '@angular/core';
 import { NavController, IonicPage, AlertController, AlertOptions, PopoverController ,ActionSheetController, ToastController, ModalController } from 'ionic-angular';
-
-
 import {IlocalUser, levelToAr, Ishelf} from '../../app/service/InewUserData';
 import {IProduct} from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
@@ -9,7 +7,7 @@ import { ItemProvider } from '../../providers/item';
 import { ShelfModal } from './shelf/shelfpage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
-
+//import {PopSettings} from './popsetting';
 
 
 
@@ -23,13 +21,15 @@ export class ProfilePage {
   showContent: string = 'products';
   AllShelfs :Ishelf[]| any = [];
   noShelfs:string;
+  noProducts: string;
   AllProducts: IProduct[] = [];
   alertOptions: AlertOptions;
   showLoader: boolean = false;
   userLevelId: number;
   showSettings: boolean = false;
-
+  cameraError: any;
   constructor(
+    @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
     public alert: AlertController,
     public shelfsProvider: ShelfsProvider,
@@ -39,7 +39,8 @@ export class ProfilePage {
     public modalCtrl: ModalController,
     private productsProvider: ItemProvider,
     public popover: PopoverController,
-    private transfer: Transfer
+    private transfer: Transfer,
+    public rendrer: Renderer2
   ) {
 
   }
@@ -67,8 +68,9 @@ export class ProfilePage {
           text: 'الكاميرا',
           handler: () => {
             console.log('camera clicked');
-            /* open camera
-            */this.openCamera('CAMERA', cameraImage);
+
+            /* open camera*/
+            this.openCamera('CAMERA', cameraImage);
 
           }
         },
@@ -100,13 +102,18 @@ export class ProfilePage {
 
   }
 
-  showProductSettings(event) {
-    
-      console.log(event);
+  showProductSettings(event, product, index) {
+    //console.log(product);
+    //let popOver = this.popover.create(PopSettings, {thePage: product})
+      const targetElement = document.getElementById(index);
+
+      console.log(targetElement);
+      /*console.log(event);
       console.log(event.target.parentElement.nextElementSibling);
       event.target.parentElement.nextElementSibling.style.display = 'block';
-      event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;
-    
+      event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;*/
+      this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
+   // popOver.present();
   }
 
   popSettings() {
@@ -118,7 +125,7 @@ export class ProfilePage {
   openCamera(type:string='CAMERA', cameraImage:string = 'avatar') {
 
     const cameraOptions:CameraOptions = {
-      quality: 100,
+      quality: 70,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
@@ -127,39 +134,54 @@ export class ProfilePage {
       sourceType: this.camera.PictureSourceType[type]
     };
 
+    // returned File URI => file:///storage/emulated/0/Android/data/co.itplus.rf/cache/.Pic.jpg?1498042093580
+
 
     this.camera.getPicture(cameraOptions).then(imageData => {
-      
-      //templates/uploads/users/
+      console.log(imageData);
+      // detect image extension
+      let extension:string = 'jpg';
+    
+      let extIndex = imageData.lastIndexOf('.');
+
+      extension = extIndex.match(/\w+/)[0];
+
+      this.uploadImage(imageData, extension, cameraImage)
+
+      //(2) save to the database
+      /* if the camera destination type: data url
 
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.userLocal[cameraImage] = base64Image;
       console.log(base64Image);
-      //TODO: preserve the image url to the DATABASE and LOCALSTORAGE
-
       // (1) save to the local storage
         localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
-
-      //(2) save to the database
+      */
 
 
       }).catch(err => {
-      console.error(err)
-    })
+        
+        console.error('getPicture Error ', err);
+        this.cameraError = err;
+      })
   }
 
-  uploadImage(file) {
+  uploadImage(file, type, cameraImage) {
     
-    const upladOptions: FileUploadOptions = {
+    const uploadOptions: FileUploadOptions = {
       fileKey: 'file',
       fileName: file
 
     }
 
     const fto: TransferObject = this.transfer.create();
+    let filePath = this.API_URL + '/templates/default/uploads/' + (cameraImage == 'avatar')?'avatars': 'covers';
 
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + filePath + "&userId=" + this.userLocal.id + "&type=" + type;
 
-    fto.upload('file url', 'url', upladOptions)
+    console.log('server file & path', serverFile);
+
+    fto.upload(serverFile, file, uploadOptions)
       .then(res=> {
         console.log(res);
       })
@@ -213,22 +235,6 @@ export class ProfilePage {
   }
 
 
-  getProducts(id:number) {
-    const prodService = this.productsProvider.getProductByUserId(id);
-
-    prodService.subscribe(({status, errors, data})=>{
-      if (status.message == 'success') {
-        this.AllProducts = data;
-        console.table(data);
-      } else {
-        console.warn(errors);
-      }
-    },
-    err => {
-      console.warn(err);
-    }
-    )
-  }
 
   deleteShelf(shelf: Ishelf):void {
     //console.log(shelf);
@@ -280,12 +286,62 @@ export class ProfilePage {
 
   }
 
+
+    
   editShelf(page, pageParams) {
 
     if (pageParams.close == 1)
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
      else
         this.navigateToPage('AddshelfPage', pageParams)
+  }
+
+  getProducts(id:number) {
+    const prodService = this.productsProvider.getProductByUserId(id).retry(2);
+    [this.showLoader, this.noProducts] = [true, null];
+    prodService.subscribe(({status, data})=>{
+      if (status.message == 'success') {
+        if (data.length == 0) {
+          [this.showLoader, this.noProducts] = [false, 'empty'];
+          return false;
+        }
+        this.AllProducts = data;
+        [this.showLoader, this.noProducts] = [false, null];
+        console.table(data);
+      } else {
+        this.noProducts = 'empty';
+      }
+    },
+    err => {
+      console.warn(err);
+      this.noProducts = 'empty';
+    }
+    )
+  }
+
+  deleteProduct(product: IProduct) {
+    
+    let productIndex = this.AllProducts.indexOf(product);
+
+    this.productsProvider.deleteItem({ id: product.id, 'user_id': this.userLocal.id })
+      .subscribe(response => {
+        console.log(response);
+        if (response.status.message == 'success') {
+          
+          this.showToast('تم حذف المنتج بنجاح');
+          this.AllProducts.splice(productIndex, 1);
+        }
+    })
+  }
+  
+  fetchMoreProducts(event) {
+    setTimeout(function(){
+      event.complete();
+    },2000)
+  }
+
+  editProduct(pageParams) {
+    this.navigateToPage('AddproductPage', pageParams, null)
   }
 
 
@@ -295,8 +351,10 @@ export class ProfilePage {
     shelf.present();
   }
 
-  navigateToPage(page, pageData=165):void {
-    this.navCtrl.push(page ,{pageData})
+  navigateToPage(page, pageData="test product", reciever=null):void {
+
+    this.navCtrl.push(page ,{reciever,pageData});
+    
   }
 
   userLevel(level:number):string {
@@ -315,4 +373,6 @@ export class ProfilePage {
     });
     toast.present();
   }
+
+
 }

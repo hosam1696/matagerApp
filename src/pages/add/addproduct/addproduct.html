@@ -1,13 +1,8 @@
-<!--
-  Generated template for the AddproductPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>اضافة منتج</ion-title>
+    <ion-title>{{actionText}} منتج</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -18,10 +13,30 @@
   <form novalidate [formGroup]="addProductForm"
         (ngSubmit)="submitForm()">
 
-    <div class="form-group prod-photo" (click)="pickImage()">
-      <ion-icon name="camera-outline"></ion-icon>
-      <p>أضف صورة</p>
+    <div class="form-group prod-photo">
+      <!--
+      <ion-slides class="images-viewer">
+        <ion-slide class="image">
+          <img src="assets/img/adds_02.png" alt="fsfs">
+        </ion-slide>
+        <ion-slide class="image">
+          <img src="assets/img/adds_02.png" alt="fsfs">
+        </ion-slide>
+        <ion-slide class="image">
+          <img src="assets/img/adds_02.png" alt="fsfs">
+        </ion-slide>
+      </ion-slides>
+      -->
+      <div class="image-btn" (click)="pickImage()">
+        <ion-icon name="camera-outline"></ion-icon>
+        <p>أضف صورة</p>
+      </div>
+
+      
+      
     </div>
+
+
     <div class="form-group">
       <input type="text"
              placeholder="اسم المنتج"
@@ -44,9 +59,26 @@
              formControlName="item_production_date"
              class="form-control">
 
-            <ion-datetime class="form-control" displayFormat="YYYY MMMM DD" pickerFormat="YYYY MMMM DD"
-            placeholder="تاريخ الانتاج"
-            formControlName="item_production_date"></ion-datetime>
+            <ion-datetime 
+              text-center 
+              class="form-control" 
+              displayFormat="YYYY / MMMM / DD" 
+              pickerFormat="YYYY MMMM DD"
+              monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر"
+              placeholder="تاريخ الانتاج"
+              formControlName="item_production_date">
+            </ion-datetime>
     </div>
 
 
@@ -59,9 +91,22 @@
         class="form-control">
 
         <ion-datetime 
+          text-center
           class="form-control" 
-          displayFormat="YYYY MMMM DD" 
+          displayFormat="YYYY / MMMM / DD" 
           pickerFormat="YYYY MMMM DD" 
+          monthNames="يناير,
+            فبراير,
+            مارس,
+            ابريل,
+            مايو,
+            يونيو,
+            يوليو,
+            اغسطس,
+            سبتمبر,
+            اكتوبر,
+            نوفمبر,
+            ديسمبر"
           placeholder="تاريخ الانتهاء"
           class="form-control"
           formControlName="item_expiry_date">
@@ -79,9 +124,11 @@
     </div>
 
 
-    <button id="form-button" ion-button full> اضف 
-      منتج
-      <hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+    <button id="form-button" ion-button full> 
+       {{actionBtnTxt || 'اضف 
+       منتج'}}
+
+       &nbsp;<hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
       </button>
   </form>
 

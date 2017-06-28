@@ -10,6 +10,15 @@ interface IShelf {
   name: string,
   area: string, cost: string
 }
+
+var ArShelfForm;
+(function (ArShelfForm) {
+    ArShelfForm[ArShelfForm["Name"] = "رقم الرف"] = "Name";
+    ArShelfForm[ArShelfForm["Area"] = "مساحة الرف"] = "Area";
+    ArShelfForm[ArShelfForm["Cost"] = "سعر الرف"] = "Cost";
+})(ArShelfForm || (ArShelfForm = {}));
+
+
 @IonicPage()
 @Component({
   selector: 'page-addshelf',
@@ -115,26 +124,40 @@ export class AddshelfPage {
         )
     }
     } else {
-      if (this.addShelfForm.get('Name').value == '') {
-        this.showToast('يرجى ادخال رقم الرف');
-      } else if (this.addShelfForm.get('Area').value == '') {
-
-        this.showToast('يرجى ادخال مساحة الرف');
-      } else if(this.addShelfForm.get('Cost').value == ''){
-        this.showToast('يرجى ادخال ايجار الرف');
-      } else {
-        this.showToast('تأكد من ملىء البيانات صحيحة')
-      }
+      this.detectUnvalidFormErrors();
     }
 
 
+  }
+
+  detectUnvalidFormErrors(form:FormGroup = this.addShelfForm, formKeys: string[] = Object.keys(form.value) ) {
+
+
+    formKeys.every((value, index)=> {
+
+      if(form.get(value).getError('required')) {
+
+        this.showToast(`يرجى ادخال ${ArShelfForm[value]}`);  
+
+        return false;  
+
+      } else if(form.get(value).getError('minlength')) {
+
+        this.showToast(`${ArShelfForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
+
+        return false; 
+      }else {
+
+        return true;
+      }
+
+    });
   }
 
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position:'top'
     });
     toast.present();
   }

@@ -61,6 +61,15 @@ import 'rxjs/operator/filter';
          <br>
          غير متصل بالانترنت
       </p>-->
+
+      <ion-infinite-scroll (ionInfinite)="fetchMoreData($event)">
+            <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="جلب مزيد من المنتجات...">
+            ></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+
+
     </ion-content>
 
   `,
@@ -125,7 +134,9 @@ export class PlacesModal {
     this.viewCtrl.dismiss( this.finalResult )
   }
 
-
+  fetchMoreData(event) {
+    console.log('fetch more data');
+  }
   openNewModal(choosenPlace: Iplace): void {
 
     switch (this.modalNum) {

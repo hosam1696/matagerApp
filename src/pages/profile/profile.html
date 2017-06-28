@@ -55,13 +55,10 @@
              متابعة
         </button>
 
-            <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage')">
+            <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage', 'messageData', userLocal.name)">
               <ion-icon name="chatboxes"></ion-icon>
            راسلنا
           </button>
-
-
-
           </div>
 
         </ion-col>
@@ -163,6 +160,8 @@
   </ion-card>
 
   <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card products-card">
+    
+    <!--
     <ion-grid padding-horizontal>
       <ion-row>
         <ion-col col-6>
@@ -177,7 +176,7 @@
               <span class="prod-price"><b>1,500</b></span> ريال
             </p>
 
-            <!--<a href="">ابلاغ عن مخالفة</a>-->
+    
           </div>
 
          
@@ -194,17 +193,21 @@
               <span class="prod-price"><b>3,500</b></span> ريال
             </p>
 
-            <!--<a href="">ابلاغ عن مخالفة</a>-->
           </div>
         </ion-col>
 
 
       </ion-row>
     </ion-grid>
+    -->
 
+    <p text-center *ngIf="noProducts== 'empty'">
+      <br>
+      لا يوجد منتجات حتى الان ليتم عرضها
+    </p>
     <ion-grid padding-horizontal>
       <ion-row>
-        <ion-col col-6 *ngFor="let product of AllProducts">
+        <ion-col col-6 *ngFor="let product of AllProducts;let i = index">
           <div class="col-content"(click)="navigateToPage('ProductPage', product)">
 
             <img src="assets/img/product-iphone.png" alt="product">
@@ -219,32 +222,47 @@
             <!--<a href="">ابلاغ عن مخالفة</a>-->
           </div>
 
-          <div class="prodcut-controls" (click)="showProductSettings($event)">
+          <div class="prodcut-controls" (click)="showProductSettings($event, product, i)">
             <span></span>
             <span></span>
             <span></span>
           </div>
-           <ion-list no-lines class="product-settings" hidden>
-              <ion-item>
+          
+           <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
+              <ion-item (click)="editProduct(product)">
                 <ion-icon color="primary" name="open-outline" item-left></ion-icon>
                 <ion-label>تعديل المنتج</ion-label>
               </ion-item>
-              <ion-item>
+              <ion-item (click)="deleteProduct(product)">
                 <ion-icon  color="primary" name="trash-outline" item-left> </ion-icon>
                 <ion-label>حذف المنتج</ion-label>
               </ion-item>
 
-              <ion-item>
+              <ion-item (click)="navigateToPage('ProductreportPage', product)">
                 <ion-icon  color="primary" name="warning-outline" item-left></ion-icon>
                 <ion-label>ابلاغ عن المنتج</ion-label>
               </ion-item>
             </ion-list>
 
-
         </ion-col>
       </ion-row>
     </ion-grid>
+     <p text-center *ngIf="showLoader">
+          <hsa-loader></hsa-loader>
+        </p>
 
+        <!--
+          <ion-infinite-scroll (ionInfinite)="fetchMoreProducts($event)">
+            <ion-infinite-scroll-content
+              loadingSpinner="bubbles"
+              loadingText="جلب مزيد من المنتجات...">
+            ></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+       
+        -->
+
+
+        {{ cameraError | json}}
   </ion-card>
   <div *ngIf="userLocal">
 

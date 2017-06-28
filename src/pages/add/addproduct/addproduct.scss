@@ -4,8 +4,13 @@ page-addproduct {
       background: #eee;
       //background-color: color($colors, bgColor)
     }
+    
     form {
-
+      ion-datetime {
+        .datetime-text {
+          //direction: ltr
+        }
+      }
       .form-group {
         padding: 5px 0;
         position: relative;
@@ -13,21 +18,70 @@ page-addproduct {
             background:color($colors, light);
             display: flex;
             justify-content: center;
-            align-items: center;
-            flex-direction: column;
             height: 120px;
             color: #999;
             border-radius: 5px;
             margin-bottom: 5px;
-            ion-icon {
-              font-size: 35px;
+            .image-btn {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              width: 40%;
+              ion-icon {
+                font-size: 35px;
+              }
+              p {
+                margin: 0;
+                color: #666
+              }
             }
-            p {
-              margin: 0
+
+            .images-viewer {
+              width: 100%;
+              //background-color: #abc;
+                  box-shadow: inset 17px 0 15px #dadada;
+              word-wrap: initial;
+              overflow-x: scroll;
+              overflow-y: hidden;
+              direction: ltr;
+              
+              .image {
+                direction: ltr;
+                padding: 10px 20px;
+               
+              }
             }
+            /*
+            .images-viewer {
+              //display: inline-flex;
+              width: 120px;
+              overflow-y: auto;
+              overflow-x: hidden;
+              transform: rotate(-90deg) translateY(-100%);
+              transform-origin: right top;
+              height: 250px;
+              .image {
+                width: calc(100vw - 20px);
+                height: 100%;
+                position: relative;
+                display:block;
+                //padding:5px;
+                //background:#cab;
+                 transform-origin: right top;
+                  transform: rotate(90deg) translateX(250px);
+                  padding-right: 10px;
+                img {
+                  height: 100%;
+                }
+              }
+            }
+            */
+            
           }
           textarea {
-            height: auto !important
+            height: auto !important;
+            resize: none;
           }
         .form-control {
           width: 100%;

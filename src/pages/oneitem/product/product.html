@@ -11,15 +11,29 @@
 <ion-content>
   <section id="hero">
     <!--<img src="/../../assets/img/adds_01.png" width="100%" height="100%"> -->
-    <img src="assets/img/adds_02.png" width="100%" height="100%">
+    <ion-slides pager="true">
+      <ion-slide>
+        <img src="assets/img/adds_02.png" width="100%" height="100%">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/img/adds_02.png" width="100%" height="100%">
+      </ion-slide>
+      <ion-slide>
+        <img src="assets/img/adds_02.png" width="100%" height="100%">
+      </ion-slide>
+    </ion-slides>
   </section>
   <section id="product">
-    <h4>{{productData}}</h4>
-    <p class="price"><span>1500</span> ج.م</p>
-    <p class="description">مجموعة متنوعة من الهواتف الذكية لماركة سامسونج وبأسعار وتخفيضات هائلة وعروض مميزة بادر بالحجز وتواصل معنا للحصول على الهاتف</p>
+    <h4> {{ productData['item_name'] }}</h4>
+    <p class="price"><span>{{ productData['item_price'] }}</span> ريال</p>
+    <p class="description">
+      {{productData['item_desc']}}
+      
+      <!--مجموعة متنوعة من الهواتف الذكية لماركة سامسونج وبأسعار وتخفيضات هائلة وعروض مميزة بادر بالحجز وتواصل معنا للحصول على الهاتف-->
+    </p>
     <div class="product-date">
-      <p >انتاج: <span class="production-date"> 1 /3 /2018</span></p>
-      <p >انتهاء: <span class="expire-date">1 / 5 / 2019</span></p>
+      <p >انتاج: <span class="production-date">{{productData['item_production_date'] }}</span></p>
+      <p >انتهاء: <span class="expire-date">{{productData['item_expiry_date']}}</span></p>
     </div>
 
   </section>

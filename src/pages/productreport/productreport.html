@@ -1,0 +1,40 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>ابلاغ عن منتج</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="report-subject">
+    <p>
+    ابلاغ عن المنتج رقم 
+    
+   <!-- {{productInfo.item_name}} -->
+    </p>
+    <p class="product-id">{{productInfo.id}}</p>
+  </div>
+  
+  
+<form novalidate>
+<div class="form-group">
+<input type="text" placeholder="عنوان البلاغ" class="form-control">
+</div>
+  
+<div class="form-group">
+<textarea name="" id="" cols="" rows="10" placeholder="تفاصيل البلاغ" class="form-control"></textarea>
+
+</div>
+
+
+   <button ion-button full class="float-btn">
+    ارسال البلاغ
+  </button>
+
+
+</form>
+  
+</ion-content>
