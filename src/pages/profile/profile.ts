@@ -267,11 +267,15 @@ export class ProfilePage {
 
                   let shelfIndex = this.AllShelfs.indexOf(shelf);
                   this.AllShelfs.splice(shelfIndex, 1);
-                  //this.getShelfs(this.userLocal['id'])
+                  //this.getShelfs(this.userLocal['id']);
+                  this.showToast(`تم حذف الرف رقم ${shelfData.Id} بنجاح`)
+                } else {
+                  this.showToast('لم يتم حذ الرف الرجاء المحاولة فى وقت لاحق')
                 }
               },
                 err => {
-                  console.warn(err)
+                  console.warn(err);
+                  this.showToast('لم يتم حذ الرف الرجاء المحاولة فى وقت لاحق')
                 }
               );
             }

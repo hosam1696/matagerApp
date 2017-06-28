@@ -41,8 +41,8 @@ export class AddshelfPage {
 
     this.addShelfForm = new FormBuilder().group({
       Name: new FormControl('' , Validators.required),
-      Area: new FormControl('', Validators.required),
-      Cost: new FormControl('', Validators.required),
+      Area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
+      Cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required]),
       salePercentage: new FormControl('')
 
     });
@@ -113,12 +113,12 @@ export class AddshelfPage {
               this.addShelfForm.reset();
               this.navCtrl.pop();
             } else {
-              console.warn(res);
+              this.showToast(`مشكلة فى الاتصال الرجاء المحاولة فى وقت لاحق`);
             }
           },
           err => {
             console.warn(err);
-            this.showToast(err);
+            this.showToast(`مشكلة فى الاتصال الرجاء المحاولة فى وقت لاحق`);
             this.showLoader = false
           }
         )
