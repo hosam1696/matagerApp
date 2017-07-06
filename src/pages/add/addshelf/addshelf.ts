@@ -40,7 +40,7 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      Name: new FormControl('' , Validators.required),
+      Name: new FormControl('',[Validators.pattern('[0-9]+'), Validators.required]),
       Area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
       Cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required]),
       salePercentage: new FormControl('')

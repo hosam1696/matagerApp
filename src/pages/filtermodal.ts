@@ -10,7 +10,7 @@ import 'rxjs/operator/filter';
     <ion-header>
 
       <ion-navbar color="primary">
-        <ion-title>{{modalData.pageName}}</ion-title>
+        <ion-title>{{modalData}}</ion-title>
         <ion-buttons end>
           <button ion-button class="close-btn" (click)="closeModal()">
             <ion-icon name="close-outline" color="light">
@@ -21,15 +21,23 @@ import 'rxjs/operator/filter';
 
     </ion-header>
     <ion-content>
-      <ion-searchbar #searchbar
+      
+      <ion-searchbar #searchbar 
                      (ionInput)="filterItems($event, this.places)"
                      placeholder="ابحث عن .."
-                     (ionCancel)="onCancel($event)"></ion-searchbar>
+                     (ionCancel)="onCancel($event)">
+      </ion-searchbar>
 
-      <p text-center *ngIf="showLoader">
-        <hsa-loader></hsa-loader>
-      </p>
-      
+    
+    <ion-content>
+     <ion-refresher (ionRefresh)="refreshPlaces($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="اسحب لتحديث المحتوى"
+      refreshingSpinner="circles"
+      refreshingText="جلب المحتوى"
+    ></ion-refresher-content>
+  </ion-refresher>
       <ion-list *ngIf="places.length > 0">
         <ion-item
           *ngFor="let place of places"
@@ -40,7 +48,7 @@ import 'rxjs/operator/filter';
         </ion-item>
       </ion-list>
 
-      <p *ngIf="noPlaces && !errorAccessDB" text-center>
+      <p *ngIf="noPlaces && !errorAccessDB" text-center class="small">
         <br>
         <ion-icon name="warning-outline" color="primaryDark"></ion-icon>
         <br>
@@ -48,27 +56,35 @@ import 'rxjs/operator/filter';
         <ion-icon name="mark"></ion-icon>
       </p>
 
-      <p *ngIf="errorAccessDB" text-center wordcolor="blue">
+      <p *ngIf="errorAccessDB" text-center wordcolor="blue" class="small">
         <br>
-        <ion-icon name="warning-outline"></ion-icon>
+        <ion-icon name="warning-outline" ></ion-icon>
         <br>
-        تعثر الوصول الى قاعدة البيانات
+          التطبيق يتطلب اتصال بالانترنت
       </p>
 
       <!--<p *ngIf="isOffline" text-center wordcolor="blue">
          <br>
          <ion-icon name="warning-outline" ></ion-icon>
          <br>
-         غير متصل بالانترنت
+        التطبيق يتطلب اتصال بالانترنت
       </p>-->
 
-      <ion-infinite-scroll (ionInfinite)="fetchMoreData($event)">
+      <p text-center *ngIf="showLoader">
+        <hsa-loader></hsa-loader>
+      </p>
+      
+      <p text-center *ngIf="!moreData" class="small">
+        لا يوجد محتوى اخر
+      </p>
+
+      <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
             <ion-infinite-scroll-content
               loadingSpinner="bubbles"
-              loadingText="جلب مزيد من المنتجات...">
+              loadingText="جلب مزيد من المحتوى...">
             ></ion-infinite-scroll-content>
       </ion-infinite-scroll>
-
+    </ion-content>
 
     </ion-content>
 
@@ -81,7 +97,7 @@ import 'rxjs/operator/filter';
       ion-buttons .close-btn {
         font-size: 25px;
       }
-
+      
       ion-item {
         border-bottom: 1px solid #eee !important;
       }
@@ -90,10 +106,21 @@ import 'rxjs/operator/filter';
         background-image: none !important;
         border-bottom: 1px solid red !important
       }
-
+      ion-content ion-refresher ion-refresher-content {
+        font-size: 12px !important;
+        margin-top: 15px;
+        color: #ccc !important
+      }
       ion-item p {
-        font-size: 16px;
-        color: #555
+        margin-top: 0 !important;
+      color: #666;
+
+      }
+      .small {
+        margin-top: 0 !important;
+        font-size: 10px;
+        color: #666;
+        background-color: #eee 
       }
     `
   ]
@@ -102,25 +129,29 @@ import 'rxjs/operator/filter';
 
 export class PlacesModal {
   places: [Iplace] | any = [];
-  modalData: object;
+  modalData: string;
   modalNum: number = 1;
   finalResult: ImodalData = {};
   errorAccessDB: boolean = false;
   noPlaces: boolean = false;
   showLoader: boolean = true;
   isOffline: boolean = false;
-
+  initStart: number = 0;
+  initLimit: number = 10;
+  choosenParent: number = 0;
+  moreData: boolean = true;
+  noRefresh: boolean = true;
   constructor(params: NavParams,
               public viewCtrl: ViewController,
               public areasProviders: AreaProvider, private events: Events) {
 
-    this.modalData = params.data;
+    this.modalData = params.get('pageName');
 
-    this.fetchAreas( 0, (data) => {
+    this.fetchAreas((data) => {
       // Function for development mode only
       if (data == 'err')
         console.info( '%c%s', 'font-size: 30px', 'Error Accessing the database' );
-    } );
+    }, this.initLimit, this.initStart );
 
   }
 
@@ -134,11 +165,63 @@ export class PlacesModal {
     this.viewCtrl.dismiss( this.finalResult )
   }
 
-  fetchMoreData(event) {
-    console.log('fetch more data');
+  refreshPlaces(event) {
+    this.noRefresh = false;
+    console.log(event);
+    this.fetchAreas(() => true, this.initLimit, this.initStart);
+    setTimeout(() => {
+      event.complete();
+    }, 1500)
   }
+
+  fetchMoreData(event) {
+    
+    if (this.moreData) {
+     /* this.fetchAreas((data) => {
+        if (data != 'err' && data != 'completed') {
+          if (data.length < this.initLimit)
+            this.moreData = false;
+          this.places = [...this.places, ...data]; // this.places = this.places.concat(data);
+          console.log(this.places);
+        } else if (data == 'completed') {
+          event.complete();
+        } else {
+          console.warn('error') // catch the error
+        }
+      })
+      */
+      this.areasProviders.filterPlacesByParent(this.choosenParent, this.initLimit, this.initStart += this.initLimit)
+        .subscribe(({ data }) => {
+          if (data.length < this.initLimit)
+            this.moreData = false;  
+          this.places = [...this.places, ...data];
+          console.log(this.places);
+          
+        },
+        (err) => {
+          console.warn('error', err)
+        },
+        () => {
+          event.complete();
+        }
+        
+        );
+      
+    } else {
+      event.complete();
+      console.log('there is no data');
+      return false;
+    }
+    
+    //this.fetchAreas(this.choosenParent, () => true, this.initLimit, this.initStart += this.initLimit);
+    
+  }
+
+
   openNewModal(choosenPlace: Iplace): void {
 
+    [this.choosenParent, this.moreData, this.initStart] = [choosenPlace.id, true, 0];
+    console.log(this.choosenParent, choosenPlace);
     switch (this.modalNum) {
       case 1:
         [this.finalResult.AreaId, this.finalResult.AreaName] = [choosenPlace.id, choosenPlace.name];
@@ -153,8 +236,8 @@ export class PlacesModal {
     }
 
     console.log( this.modalNum, this.finalResult ); // for testing
-
-    this.fetchAreaCallback( choosenPlace.id, false );
+    
+    (this.modalNum >= 3) ? this.closeModal() : this.fetchAreaCallback(false);
 
   }
 
@@ -172,13 +255,13 @@ export class PlacesModal {
     } else {
       switch (this.modalNum) {
         case 1:
-          this.fetchAreas( 0 );
+          this.fetchAreas();
           break;
         case 2:
-          this.fetchAreaCallback( this.finalResult.AreaId, true );
+          this.fetchAreaCallback( true );
           break;
         case 3:
-          this.fetchAreaCallback( this.finalResult.CityId, true )
+          this.fetchAreaCallback( true )
       }
     }
 
@@ -190,7 +273,15 @@ export class PlacesModal {
     this.filterItems( event );
   }
 
-  fetchAreas(parentId: number, callback = f => f):void {
+  defaultFunc(data) {
+    if (typeof data == 'object') {
+      console.log(data, 'there is a data');
+      [this.showLoader, this.errorAccessDB] = [true, false];
+      this.places = data;
+    }
+    
+  }
+  fetchAreas(callback = (data)=>{} , limit:number= this.initLimit, start:number= this.initStart):void {
 
     //TODO: check the network connection after opening the modal [production Mode only]
     //if (this.events.publish('networkStatus') == [undefined] || [null]) {
@@ -199,12 +290,11 @@ export class PlacesModal {
      return false;
      } else {
      */
-    this.places = [];
-    this.areasProviders.filterPlacesByParent( parentId )
-      .subscribe( ({data}) => {
+    console.info('choosen parent',this.choosenParent, typeof this.choosenParent);
+    this.areasProviders.filterPlacesByParent( this.choosenParent, limit, start )
+      .subscribe(({ data }) => {
         [this.showLoader, this.errorAccessDB] = [true, false];
-        this.places = data ;
-        callback( data );
+        this.places = data;
       },
       err => {
 
@@ -219,9 +309,9 @@ export class PlacesModal {
     )
   }
 
-  fetchAreaCallback(parentId: number, keepModalNumber: boolean = false):void {
+  fetchAreaCallback( keepModalNumber: boolean = false):void {
     this.showLoader = true;
-    this.fetchAreas( parentId, (fetched) => {
+    this.fetchAreas((fetched) => {
       if (fetched != 'err' && fetched == 'completed') {
 
         if (this.modalNum >= 3) {

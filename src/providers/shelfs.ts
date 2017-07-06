@@ -11,7 +11,7 @@ export class ShelfsProvider {
 
     }
 
-    getShelfs(userId: number = 5) {
+    getShelfs(userId: number) {
         let body = {"action": "all","User_id": userId};
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
@@ -21,7 +21,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({}, { action }, shelfData);
 
-        console.log('data to the server', body);
+        console.info('data to the server', body);
 
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
 
@@ -33,11 +33,12 @@ export class ShelfsProvider {
 
         let body = Object.assign({}, { action }, shelfData);
 
-        console.log('data to the server', body);
+        console.info('data to the server', body);
 
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
 
     }
+
     editShelf(editedShelfData) {
 
         let action = 'edit';
@@ -45,6 +46,17 @@ export class ShelfsProvider {
         let body = Object.assign({}, { action }, editedShelfData);
 
         console.log('data to the server', body);
-        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
+
+    reserveShelf(reservedShelfData) {
+        const action = 'reserve';
+
+        let body = Object.assign({}, { action }, reservedShelfData);
+
+        console.log('Data will be sent to the server\n', body);
+
+        //return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+    }
+
 }

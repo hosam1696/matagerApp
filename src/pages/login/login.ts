@@ -25,8 +25,8 @@ export class Login {
     public network: Network
   ) {
     this.LoginForm = new FormGroup({
-      Username: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      Password: new FormControl('', [Validators.required])
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     });
   }
 
@@ -47,27 +47,23 @@ export class Login {
 
   submitLogin() {
 
-
     //TODO: chech the internet connection || works  on device only
-
-    if ( this.network.type == 'none') {
+    console.log(this.network.type);
+    /*if ( this.network.type == 'none') {
       //if ('1' == '2') {
-      this.showToast('انت غير متصل بالانترنت ');
+      this.showToast('التطبيق يتطلب اتصال بالانترنت');
       this.showLoader = false;
     } else {
-      // test the type of connection
-      //this.showToast('you are connected to ' + this.network.type);
-      if (this.LoginForm.value.Username && this.LoginForm.value.Username != "" && this.LoginForm.value.Password && this.LoginForm.value.Password != "") {
-
+      */
+        if (this.LoginForm.valid) {
         this.showLoader = true;
-        this.userLogin.LoginUser(this.LoginForm.value).subscribe(
-          resBody => {
+        this.userLogin.LoginUser(this.LoginForm.value)
+          .subscribe(resBody => {
             console.log(resBody);
             //TODO: if data is correct navigate to the home page
             if (resBody.status == 'success') {
               let userLocalData = resBody.data;
               this.showLoader = false;
-              localStorage.setItem('Username', this.LoginForm.value.Username);
               localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
 
               // TODO: navigate to the home page
@@ -82,26 +78,39 @@ export class Login {
             }
           },
           err => {
-            this.showToast(' تعثر الوصول الرجاء المحاولة مرة اخرى');
+            this.showToast('التطبيق يتطلب اتصال بالانترنت');
             console.warn(err);
             this.showLoader = false;
           }
         );
-      } else {
-        this.showLoader = false;
-        if (this.LoginForm.value.Username == "")
-          this.showToast(' يرجى ادخال اسم  المستخدم');
-        else {
-          this.showToast('يرجى ادخال كلمة المرور')
-        }
+        } else {
+          let formKeys = Object.keys(this.LoginForm.value);
+          this.showLoader = false;
+          for (let value of formKeys) {
+            if (this.LoginForm.get(value).getError('required')) {
+              value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
+              this.showToast(`يرجى ادخال ${value}`);
+              break;
+            }
+          }
+
+          /*
+          
+          if (this.LoginForm.value.Username == "")
+            this.showToast(' يرجى ادخال اسم  المستخدم');
+          else {
+            this.showToast('يرجى ادخال كلمة المرور')
+          }
+          */
       }
-    }
+   // }
 
   }
 
   toRegisterPage() {
     this.navCtrl.push('Signup')
   }
+
   checkConnection() {
     if (this.network.type == 'none') {
       this.showToast('You are not connected to the internet ');
@@ -125,8 +134,10 @@ export class Login {
   toForgetPass():void {
     this.navCtrl.push('ForgetPage')
   }
+
   backStep():void {
     this.navCtrl.popToRoot();
     console.log('pop this page.. please!');
   }
+
 }

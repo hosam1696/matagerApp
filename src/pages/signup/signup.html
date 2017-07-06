@@ -42,7 +42,7 @@
       <div class = "form-group animate-input">
         <input type="text" class="form-control"
           placeholder="اسم المستخدم"
-        formControlName="Username"
+        formControlName="username"
         >
       </div>
 
@@ -50,7 +50,7 @@
         <input type="password"
         placeholder="كلمة المرور"
         class="form-control"
-        formControlName="Password">
+        formControlName="password">
       </div>
 
       <div class = "form-group animate-input">
@@ -62,43 +62,43 @@
       </div>
 
       <div class = "form-group animate-input">
-        <input type="text" class="form-control" formControlName="Name"
+        <input type="text" class="form-control" formControlName="name"
         placeholder="الاسم التجارى بالكامل"
         >
       </div>
 
       <div class = "form-group animate-input">
         <input type="email" class="form-control"
-        formControlName="Email"
+        formControlName="email"
         email
           placeholder="البريد الالكترونى"
         >
       </div>
         <div class = "form-group animate-input">
-        <input type="text" class="form-control" formControlName="Mobile"
+        <input type="text" class="form-control" formControlName="mobile"
           placeholder="رقم التليفون المحمول"        >
       </div>
 
       <div id="radio-group" class="form-group group-bg">
         <div class="radio-group gender">
 
-        <input type="radio"  formControlName='Gender' value="male" id="gender-male">
+        <input type="radio"  formControlName='gender' value="male" id="gender-male">
         <label for="gender-male">
           <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="assets/img/male-active.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="assets/img/male-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['gender'] == 'male'" src="assets/img/male-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['gender'] == 'female'" src="assets/img/male-inactive.png" >
           <!--<p>ذكر</p>-->
         </label>
         </div>
         <div  class="radio-group gender">
 
-        <input type="radio" formControlName='Gender' value="female" id="gender-female">
+        <input type="radio" formControlName='gender' value="female" id="gender-female">
   <label for="gender-female">
           <!--<ion-icon name="woman" ></ion-icon>-->
           <!--<img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="../../assets/img/female-inactive.png">
           <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="../../assets/img/female-active.png"> -->
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'male'" src="assets/img/female-inactive.png" >
-          <img *ngIf="SignUpFrom.getRawValue()['Gender'] == 'female'" src="assets/img/female-active.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['gender'] == 'male'" src="assets/img/female-inactive.png" >
+          <img *ngIf="SignUpFrom.getRawValue()['gender'] == 'female'" src="assets/img/female-active.png" >
           <!--<p>انثى</p>-->
         </label>
           </div>
@@ -140,26 +140,25 @@
       <div class="select-group">
           <div (click)="openModal('Area', 0)">
 
-            <span> {{AreaName || 'المنطة'}}  </span>
+            <span> {{AreaName || 'المنطة'}} <input type="text" formControlName="area"> </span>
             <ion-icon name="arrow-down" ></ion-icon>
-            <input type="text" formControlName="Area">
+            
             </div>
-          <div (click)="openModal('City', SignUpFrom.getRawValue()['Area'])">
-            <span>{{CityName || 'المدينة'}}</span>
+          <div (click)="openModal('City', SignUpFrom.getRawValue()['area'])">
+            <span>{{CityName || 'المدينة'}} <input type="text" formControlName="city"></span>
             <ion-icon name="arrow-down" ></ion-icon>
-            <input type="text" formControlName="City">
+            
           </div>
-          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['City'])">
-            <span>{{DistName || 'الحى'}}</span>
+          <div (click)="openModal('Dist',SignUpFrom.getRawValue()['city'])">
+            <span>{{DistName || 'الحى'}} <input type="text" formControlName="dist" id="dist"></span>
             <ion-icon name="arrow-down"></ion-icon>
-            <input type="text"
-            formControlName="Dist" id="dist">
+            
           </div>
 
       </div>
 
       <div class="form-group animate-input">
-        <input type="text" class="form-control" formControlName="Address"
+        <input type="text" class="form-control" formControlName="address"
           [hidden]='SignUpFrom.value["level_id"] == 4'
           placeholder="العنوان"    >
       </div>
@@ -170,7 +169,7 @@
       </div>
       <div class="form-group animate-input">
         <input *ngIf="SignUpFrom.value.level_id == 2" type="text" class="form-control"
-          placeholder="اسم مدير المنتج"
+          placeholder="اسم مدير المتجر"
           formControlName='owner_name'       >
       </div>
 

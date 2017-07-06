@@ -1,0 +1,223 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>صفحة شخصية</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-card *ngIf="userData; else noUser" id="user-info">
+    <section id="hero">
+      <img *ngIf="userData.cover" [src]="userData.cover" alt="user background image">
+    </section>
+
+    <ion-card>
+      <ion-grid>
+        <ion-row>
+
+          <ion-col col-3>
+
+            <ion-avatar>
+
+              <img *ngIf="userData.avatar;else avatarIcon" [src]="userData.avatar" alt="">
+              <ng-template #avatarIcon>
+                <img class="avatar-alt" *ngIf="userData.gender == 'male'" width="70" src="assets/img/male-alt.png">
+
+                <img class="avatar-alt" *ngIf="userData.gender == 'female'" width="70" src="assets/img/female-alt.png">
+              </ng-template>
+
+            </ion-avatar>
+            <div class="clearfix"></div>
+          </ion-col>
+
+          <ion-col>
+            <h4>{{userData.name}}</h4>
+            <div id="rank">
+              <ion-icon name="star" color="light"></ion-icon>
+              <ion-icon name="star" color="light"></ion-icon>
+              <ion-icon name="star" color="light"></ion-icon>
+              <ion-icon name="star" color="light"></ion-icon>
+              <ion-icon name="star-outline" color="light"></ion-icon>
+              &nbsp;
+              <span class="user-rank">4</span> / 5
+            </div>
+
+            <div id="profile-buttons">
+
+              <button 
+                ion-button 
+                color="primary" 
+                small
+                class="follow-btn"
+                [outline]="!isFollowed"
+                (click)="follow(userData.id)"
+              >
+              <ion-icon name="person"></ion-icon>
+             <span *ngIf="!isFollowed;else followed">متابعة</span>
+             <ng-template #followed>
+               <span>
+                 الغاء متابعة
+               </span>
+             </ng-template>
+        </button>
+
+              <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage', 'messageData', userData.name)">
+              <ion-icon name="chatboxes"></ion-icon>
+           راسلنا
+          </button>
+            </div>
+
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+
+      <div class="map-btn">
+
+        <button ion-button color="lightDark" block text-center>
+          المكان على الخريطة
+        </button>
+      </div>
+
+      <div id="profile-follow">
+        <a color="primary" (click)="navigateToPage('FollowersPage', userData.id)">
+          <ion-icon name="people"></ion-icon>
+          المتابِعون
+
+          <span class="following">{{numbersOfFollowers}}</span>
+        </a>
+
+        <a color="primary" (click)="navigateToPage('FollowingsPage')">
+          <ion-icon name="people"></ion-icon>
+          المتابَعون <span class="followers">113</span>
+
+        </a>
+      </div>
+      <div id="page-segments" padding [hidden]="userData.level_id == 3 || userLocal.level_id == 2">
+        <ion-segment [(ngModel)]="showContent">
+
+          <ion-segment-button value="products" (click)="getProducts()">
+            المنتجات
+          </ion-segment-button>
+
+          <ion-segment-button value="shelfs" (click)="getShelfs()">
+            الرفوف
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+
+
+
+    </ion-card>
+
+  </ion-card>
+
+  <ion-card class="show-card" *ngIf="showContent == 'products'">
+    <p text-center *ngIf="netError" class="small">
+      التطبيق يتطلب اتصال بالانترنت
+    </p>
+    <p text-center *ngIf="noProducts" class="small">
+      لا يوجد منتجات لعرضها حتى الان
+    </p>
+    <ion-grid padding-horizontal>
+      <ion-row>
+        <ion-col col-6 *ngFor="let product of allProducts;let i = index">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product)">
+
+            <img src="assets/img/product-iphone.png" alt="product">
+
+            <p class="prod-desc">
+              {{limitString(product.item_desc)}}
+            </p>
+            <p class="price">
+              <span class="prod-price"><b>{{product.item_price}}</b></span> ريال
+            </p>
+
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
+
+          <div class="prodcut-controls" (click)="showProductSettings($event, product, i)">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
+            <!--
+              <ion-item (click)="editProduct(product)">
+                <ion-icon color="primary" name="open-outline" item-left></ion-icon>
+                <ion-label>تعديل المنتج</ion-label>
+              </ion-item>
+              <ion-item (click)="deleteProduct(product)">
+                <ion-icon color="primary" name="trash-outline" item-left> </ion-icon>
+                <ion-label>حذف المنتج</ion-label>
+              </ion-item>
+              -->
+            <ion-item (click)="navigateToPage('ProductreportPage', product)">
+              <ion-icon color="primary" name="warning-outline" item-left></ion-icon>
+              <ion-label>ابلاغ عن المنتج</ion-label>
+            </ion-item>
+          </ion-list>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <p text-center *ngIf="showLoader">
+      <hsa-loader></hsa-loader>
+    </p>
+
+  </ion-card>
+  <!-- products tab -->
+
+
+  <ion-card class="show-card" *ngIf="showContent == 'shelfs'">
+    <p text-center *ngIf="netError" class="small">
+      التطبيق يتطلب اتصال بالانترنت
+    </p>
+    <p text-center *ngIf="noShelfs" class="small">
+      لا يوجد رفوف لعرضها حتى الان
+    </p>
+    <ion-list>
+      
+      <ion-item (click)="showShelf(shelf)" *ngFor="let shelf of allShelfs; let i = index">
+        <div class="shelf-id" >
+          <p>رقم الرف <span>{{shelf.name}} </span></p>
+          <ion-badge>المساحة : {{shelf.area}} متر</ion-badge>
+        </div>
+        <hr>
+        <div class="shelf-status">
+          <div class="reserved">
+            <span *ngIf="shelf.close == 0">غير محجوز</span>
+            <ion-badge *ngIf="shelf.close == 1"> محجوز</ion-badge>
+          </div>
+
+
+          <div class="shelf-controls">
+            <ion-badge >السعر : {{shelf.cost}} ريال</ion-badge>
+            
+            <!--  <ion-icon name="open-outline" (click)="editShelf('AddshelfPage', shelf)"></ion-icon>
+        <ion-icon name="trash-outline" (click)="deleteShelf(shelf)"></ion-icon>-->
+          </div>
+        </div>
+      </ion-item>
+
+      <p text-center *ngIf="showLoader">
+        <hsa-loader></hsa-loader>
+      </p>
+
+    </ion-list>
+  </ion-card>
+  <!-- shelfs tab -->
+
+
+  <ng-template #noUser>
+    <p text-center>
+      <hsa-loader></hsa-loader>
+    </p>
+  </ng-template>
+
+
+</ion-content>

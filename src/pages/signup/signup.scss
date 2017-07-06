@@ -67,11 +67,11 @@ page-signup {
         color: #fff;
         //text-align: center;
         display: flex;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: center;
         ion-icon {
-          margin-left: -7px;
-    margin-top: 2px;
+          //margin-left: -7px;
+          margin-top: 2px;
           color: #eee;
           font-size: 12px;
         }
@@ -94,7 +94,7 @@ page-signup {
           background-color: color($colors, light);
           color: #008bff;
           min-height: 32px;
-          
+          font-size: 16px;
         }
     #form-navigate {
       height: 30px;

@@ -10,15 +10,12 @@ export class AreaProvider {
     constructor ( @Inject('API_URL') private API_URL,public http: Http) {}
 
 
-    getAreas() {
-
-        return this.http.post(this.API_URL+'places.php', JSON.stringify({"action": "getData"})).map(res=>res.json());
-    }
-
-
-  filterPlacesByParent(parent:number) {
-
-    return this.http.post( this.API_URL + 'places.php', JSON.stringify( {"action": "getData",parent} ) ).map(res=>res.json());
+    filterPlacesByParent(parent:number, limit?: number, start?: number) {
+        console.log('parent', parent, typeof parent);
+      return this.http.post(
+          this.API_URL + 'places.php',
+          JSON.stringify({ "action": "getData", parent, limit, start })
+      ).map(res => res.json());
 
     }
 /*

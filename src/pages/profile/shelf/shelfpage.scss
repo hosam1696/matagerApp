@@ -6,6 +6,14 @@ shelf-modal{
         .close-btn {
             font-size: 25px;
         }
+        .float-btn {
+            position: fixed;
+           bottom: 0;
+           left: 0;
+           height: 40px;
+           font-size: 14px;
+           margin: 0;
+        }
         ion-list {
         ion-item {
           border-bottom: 1px solid #eee !important;

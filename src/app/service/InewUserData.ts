@@ -57,7 +57,7 @@ export interface IlocalUser{
   gender: string,
   mobile: string,
   avatar: string,
-  bgImage?: string,
+  cover?: string,
   owner_name?: string,
   cr_num?: number,
   map: string

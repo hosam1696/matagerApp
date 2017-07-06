@@ -4,6 +4,7 @@ $font-path: "../assets/fonts";
 $content-padding: 13px;
 $content-margin: 9px;
 $searchbar-ios-background-color: #eee;
+
 @font-face {
     font-family: 'jf-flat-regular';
     src: url('../assets/fonts/jf-flat-regular.ttf');
@@ -45,7 +46,10 @@ $colors: (
   bgColor: #eee 
 );
 
-
+$refresher-height: 40px ;
+$refresher-text-font-size: 10px;
+$refresher-icon-font-size	: 20px;
+$refresher-text-color: #666;
 $tabs-ios-background: #fff;
 $tabs-tab-color-active: #2e8bc9 !important;
 // App iOS Variables

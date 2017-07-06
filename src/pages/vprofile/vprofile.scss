@@ -2,29 +2,42 @@
     display: flex;
     justify-content: space-between;
 }
-page-profile {
-
-    ion-header {
-        ion-navbar {
-            ion-title {
-                .toolbar-title {
-            font-size: 20px;
-            color: color($colors, light) !important
-          }
-            }
-        }
+page-vprofile {
+    .label-ios {
+        margin: 0 8px 0 0
     }
-
-    ion-content {
+ion-content {
         button.pick-image {
             background: transparent;
             z-index: 165
+        }
+        /*button.follow-btn {
+            border: 1px solid color($colors, primary);
+            min-width: 77px;
+        }*/
+            .map-btn {
+                padding: 0 13px;
+                button {
+                    height: 32px;
+                    background-color: #ebebeb !important;
+                    color: #666
+                }
+            }
+        ion-badge {
+            font-size: 12px !important;
+            color: #2e8bc9 !important;
+            background-color: #eaeaea !important;
+            min-width: 115px
         }
         &.content {
             background-color: color($colors, bgColor);
         }
         .clearfix {
             clear: both
+        }
+        .small {
+            font-size: 13px;
+            margin-top: 10px;
         }
       .shelfcard {
         padding-bottom: 70px !important;
@@ -35,13 +48,20 @@ page-profile {
         }
         ion-card {
             &:first-child {
-
+                box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+                //box-shadow: 0 1px 40px rgba(0, 0, 0, 0.1) !important;
+            }
+            &.card-ios {
+                &:first-of-type {
+                box-shadow: 0 1px 5px rgba(0, 0, 0, 0.051) !important;
+                //box-shadow: 0 1px 40px rgba(0, 0, 0, 0.1) !important;
+            }
             }
 
             margin: 0 !important;
             width : 100% !important;
             padding: 0 !important;
-            box-shadow: none !important;
+            
             overflow: visible;
             &.show-card {
                 color: red;
@@ -53,12 +73,18 @@ page-profile {
                 ion-list {
                     margin-top: 6px;
                     background-color: transparent !important;
+                    ion-list-header {
+                        min-height: 30px;
+                        font-size: 12px;
+                        text-align: right;
+                        padding-right: 10px !important;
+                    }
                     ion-item {
                         &:first-child {
                             border-top: none !important;
                         }
                         border-bottom: 2px solid #eee !important;
-                        height: 55px;
+                       // height: 55px;
                         p {
                             color: color($colors, primary)
                         }
@@ -70,7 +96,7 @@ page-profile {
                         .shelf-id {
                             display: flex;
                             justify-content: space-between;
-
+                                align-items: flex-end;
 
                             p {
                                 font-size:14px;
@@ -216,7 +242,10 @@ page-profile {
                                 
                                 font-size: 12px !important;
                                 border-bottom: 0 !important;
-                                
+                                .item-avatar {
+                                    width: 52px;
+
+                                }
                                 &.item-block {
                                     min-height: 35px !important;
                                     height: 30px !important;
@@ -309,8 +338,9 @@ page-profile {
                 text-shadow: 1px 1px 4px #444;
 
             }
+
             #profile-buttons {
-                margin: 5px 0;
+                margin: 10px 0;
                 @extend %flex-between;
                 button {
                     ion-icon {
@@ -318,21 +348,10 @@ page-profile {
                     }
                 }
             }
-
-            .map-btn {
-                padding: 0 13px;
-                button {
-                    height: 32px;
-                    background-color: #ebebeb !important;
-                    color: #666
-                }
-            }
-
             #profile-follow {
                 @extend %flex-between;
-                margin: 0 auto 7px !important;
-                padding: 0 13px;
-                font-size: 13px;
+                margin: -12px auto 6px !important;
+                padding:  13px 9px;
                 a {
                     color: color($colors, primary);
 

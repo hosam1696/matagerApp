@@ -29,7 +29,7 @@
         اسم المستخدم
       </ion-col>
       <ion-col col-8>
-        <input type="text" #usernameInput formControlName="Username" class="input-as-text" [value]="localUser.username">
+        <input type="text" #usernameInput formControlName="username" class="input-as-text" [value]="localUser.username">
 
         <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username;EditUserForm.value.Username = localUser.username">
 
@@ -46,7 +46,7 @@
           الاسم التجارى
         </ion-col>
         <ion-col col-8>
-<input type="text" #nameInput formControlName="Name" class="input-as-text" [value]="localUser.name">
+<input type="text" #nameInput formControlName="name" class="input-as-text" [value]="localUser.name">
 
 <ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name;EditUserForm.value.Name = localUser.name">
 
@@ -65,7 +65,7 @@
           رقم الهاتف
         </ion-col>
         <ion-col>
-        <input type="text" #phoneInput formControlName="Mobile" class="input-as-text" [value]="localUser.mobile">
+        <input type="text" #phoneInput formControlName="mobile" class="input-as-text" [value]="localUser.mobile">
 
         <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
         </ion-col>
@@ -80,7 +80,7 @@
 كلمة المرور
         </ion-col>
         <ion-col>
-          <input type="password" (focus)="passFocus()" (blur)="passBlur()" formControlName="Password" class="input-as-text">
+          <input type="password" (focus)="passFocus()" (blur)="passBlur()" formControlName="password" class="input-as-text">
 
        </ion-col>
       </ion-row>
@@ -108,7 +108,7 @@
         البريد الالكترونى
       </ion-col>
       <ion-col>
-        <input type="email" #emailInput email formControlName="Email" class="input-as-text" [value]="localUser.email">
+        <input type="email" #emailInput email formControlName="email" class="input-as-text" [value]="localUser.email">
 
         <ion-icon name="refresh" color="lightDark" (click)="emailInput.value= localUser.email"></ion-icon>
       </ion-col>
@@ -125,7 +125,7 @@
       <ion-col>
         <!--<input type="text" formControlName="Gender" class="input-as-text" [value]="localUser.gender | gender"> -->
 
-        <select formControlName="Gender" id="">
+        <select formControlName="gender" id="">
           <option value="male">ذكر</option>
           <option value="female">
             انثى</option>
@@ -171,7 +171,7 @@
             العنوان
             </ion-col>
             <ion-col>
-              <input type="text" formControlName="Address" class="input-as-text" [value]="localUser.address">
+              <input type="text" formControlName="address" class="input-as-text" [value]="localUser.address">
 
             </ion-col>
           </ion-row>
@@ -221,8 +221,38 @@
         </ion-grid>
       </ion-item>
     </ion-item-group>
+    <ion-item-group no-lines *ngIf="localUser.level_id == 2">
+      <ion-item-divider color="bgColor">بيانات المتجر</ion-item-divider>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+            <ion-row>
+              <ion-col col-4 style="font-size:14px">
+                رقم السجل التجارى
+              </ion-col>
+              <ion-col>
+                <input type="text" formControlName="cr_num" class="input-as-text" [value]="localUser.cr_num">
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+      </ion-item>
 
 
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            
+            <ion-col col-4>
+              اسم مدير المتجر
+            </ion-col>
+            <ion-col>
+                <input type="text" formControlName="owner_name" class="input-as-text" [value]="localUser.owner_name">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-group>
+<br><br>
 </ion-list>
 
 

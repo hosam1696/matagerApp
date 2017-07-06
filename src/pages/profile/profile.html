@@ -6,13 +6,9 @@
 </ion-header>
 
 <ion-content>
-
-
-
-
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
-      <img *ngIf="userLocal.bgImage" [src]="userLocal.bgImage" alt="user background image">
+      <img *ngIf="userLocal.cover" [src]="userLocal.cover" alt="user background image">
       <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
@@ -48,18 +44,29 @@
             &nbsp;
             <span class="user-rank">4</span> / 5
           </div>
+          
           <div id="profile-buttons">
 
-            <button ion-button color="primary" small outline>
+            <button 
+              (click)="navigateToPage('Editprofile')"
+              ion-button 
+              color="primary" 
+              small 
+              outline>
               <ion-icon name="person"></ion-icon>
-             متابعة
-        </button>
+             تعديل البيانات
+            </button>
 
-            <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage', 'messageData', userLocal.name)">
+            <button 
+              ion-button 
+              color="primary" 
+              small 
+              outline 
+              (click)="navigateToPage('Messages')">
               <ion-icon name="chatboxes"></ion-icon>
-           راسلنا
+           الرسائل
           </button>
-          </div>
+          </div> 
 
         </ion-col>
 
@@ -67,21 +74,25 @@
       </ion-grid>
 
         <div id="profile-follow">
-          <a  color="primary" (click)="navigateToPage('FollowingsPage')">
-                      <ion-icon name="people"></ion-icon>
-                      المتابِعون
+          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
+            <ion-icon name="people"></ion-icon>
+            المتابِعون
 
-                      <span class="following">154</span>
-                      </a>
+            <span class="following">{{numbersOfFollowers |async}}</span>
+          </a>
 
-          <a color="primary" (click)="navigateToPage('FollowersPage')">
-                      <ion-icon name="people"></ion-icon>
-                      المتابَعون                      <span class="followers">113</span>
+          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
+            <ion-icon name="people"></ion-icon>
+            المتابَعون <span class="followers">113</span>
 
-                    </a>
+          </a>
         </div>
+        <div class="map-btn">
 
-
+        <button  ion-button color="lightDark" block text-center>
+          المكان على الخريطة
+        </button>
+        </div>
         <div id="page-segments" padding>
           <ion-segment [(ngModel)]="showContent">
 
@@ -122,7 +133,7 @@
         </p>
         <p text-center *ngIf="noShelfs =='netErr'">
          <br>
-          تعثر الاتصال الرجاء المحاولة فى وقت لاحق
+          التطبيق يتطلب اتصال بالانترنت
          <br>
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
         </p>

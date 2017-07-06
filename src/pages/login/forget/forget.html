@@ -1,47 +1,37 @@
-<ion-header>
+<!-- <ion-header>
 
   <ion-navbar color="primary">
     <ion-title>ارجاع كلمة المرور</ion-title>
   </ion-navbar>
 
 </ion-header>
-
+-->
 
 <ion-content no-padding>
 
-  <section id="logo-hero">
-    <img src="assets/img/mainlogo.png" width="40%">
-  </section>
 
-  <ion-card>
-        <form novalidate
-          [formGroup]="ForgetPassForm"
-          (ngSubmit)="onSubmit()"
-    >
+  <section id="container">
+    <section id="logo-hero">
+      <img src="assets/img/mainlogo.png" width="40%">
+    </section>
 
-    <div class="form-group">
-      <input
-      placeholder="البريد الالكترونى"
-          type="email"
-          class="form-control"
-          formControlName="email"
-          required>
-    </div>
-<button
+    <ion-card>
+      <form novalidate [formGroup]="ForgetPassForm" (ngSubmit)="onSubmit()">
 
-        type="submit"
-        color="primary"
-         block
-        id="login-button"
-      >ارسال كلمة المرور
+        <div class="form-group">
+          <input placeholder="البريد الالكترونى" type="email" class="form-control" formControlName="email" required>
+        </div>
+        <button type="submit" color="primary" block id="login-button">ارسال كلمة المرور
 
       </button>
 
-        </form>
-        <div class="navigatelinks">
-    <button (click)="navigateTo('Login')">تسجيل الدخول</button>
-    <button (click)="navigateTo('Signup')">تسجيل حساب جديد</button>
-  </div>
-  </ion-card>
+      </form>
+      <div class="navigatelinks">
+        <button (click)="navigateTo('Login')">تسجيل الدخول</button>
+        <button (click)="navigateTo('Signup')">تسجيل حساب جديد</button>
+      </div>
+    </ion-card>
+  </section>
+  
 
 </ion-content>

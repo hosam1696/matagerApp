@@ -8,6 +8,23 @@ import {ChooseArea} from '../../chooselocmodal';
 import { UserProvider } from '../../../providers/user';
 import {MapsModal} from "../../mapsmodal";
 
+
+var ArEditForm;
+(function (ArEditForm) {
+  ArEditForm[ArEditForm["username"] = 'اسم المستخدم'] = "username";
+  ArEditForm[ArEditForm["name"] = 'الاسم التجارى بالكامل'] = "name";
+  ArEditForm[ArEditForm["mobile"] = 'رقم الهاتف'] = "mobile";
+  ArEditForm[ArEditForm["password"] = 'كلمة المرور'] = "password";
+  ArEditForm[ArEditForm["email"] = 'البريد الالكترونى'] = "email";
+  ArEditForm[ArEditForm["gender"] = 'الجنس'] = "gender";
+  ArEditForm[ArEditForm["address"] = 'العنوان'] = "address";
+  ArEditForm[ArEditForm["area"] = "المنطقة"] = "area";
+  ArEditForm[ArEditForm["city"] = "المدينة"] = "city";
+  ArEditForm[ArEditForm["dist"] = "الحى"] = "dist";
+  ArEditForm[ArEditForm["cr_num"] = 'رقم السجل التجارى'] = "cr_num";
+  ArEditForm[ArEditForm["owner_name"] = 'اسم مدير المتجر'] = "owner_name";
+})(ArEditForm || (ArEditForm = {}));
+
 @IonicPage()
 @Component( {
   selector: 'page-editprofile',
@@ -31,21 +48,21 @@ export class Editprofile {
               public toastCont: ToastController, private userprovider: UserProvider) {
 
     this.EditUserForm =fb.group( {
-      Name: new FormControl( this.localUser.name),
-      Username: new FormControl( this.localUser.username, Validators.minLength( 5 ) ),
-      Password: new FormControl(''),
-      InsurePassword: new FormControl( ''),
+      name:  [ this.localUser.name],
+      username: [this.localUser.username, Validators.compose([Validators.minLength(5)])],
+      password: [],
+      InsurePassword: [],
 
-      Email: new FormControl( this.localUser.email ),
-      Mobile: new FormControl( this.localUser.mobile, [Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )] ),
-      Gender: new FormControl( this.localUser.gender ),
-      Address: new FormControl( this.localUser.address ),
-      Map: new FormControl( this.localUser.map ),
-      Area: new FormControl( this.localUser.area ),
-      City: new FormControl( this.localUser.city ),
-      Dist: new FormControl( this.localUser.dist ),
-      cr_num: new FormControl( this.localUser.cr_num || '' ),
-      owner_name: new FormControl( this.localUser.owner_name || '' )
+      email: [ this.localUser.email ],
+      mobile: [this.localUser.mobile, Validators.compose([Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )])] ,
+      gender: [ this.localUser.gender ],
+      address:  [ this.localUser.address ],
+      map: [ this.localUser.map ],
+      area: [ this.localUser.area ],
+      city: [ this.localUser.city ],
+      dist:[ this.localUser.dist ],
+      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]^"), Validators.minLength(1)] : null)],
+      owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ?[Validators.minLength(3)]:null )]
     } )
 
   }
@@ -57,6 +74,11 @@ export class Editprofile {
       console.log(address);
     })
 
+    console.log(this.EditUserForm);
+    console.log(this.EditUserForm.get('name'));
+    for (let key of Object.keys(this.EditUserForm.value)) {
+      console.info(key,this.EditUserForm.get(key));
+    }
 
     this.EditUserForm
       .valueChanges
@@ -74,7 +96,7 @@ export class Editprofile {
     if (!input.root || !input.root.value) {
       return null;
     }
-    const exactMatch = input.root.value['Password'] === input.value;
+    const exactMatch = input.root.value['password'] === input.value;
 
     return exactMatch ? null : {uninsured: true};
   }
@@ -109,14 +131,14 @@ console.log(form, form.valid);
     }*/
 
     if (form.valid) {
-      if(form.dirty) {
+      if (form.dirty) {
 
         delete form.value['InsurePassword'];
-        Object.assign(form.value, {id: this.localUser['id']});
+        Object.assign(form.value, { id: this.localUser['id'] });
         console.log('edited form', form);
         console.log(Object.keys(form.controls));
 
-        this.userprovider.editUser(form.value).map(res => res.json()).subscribe(({status, data, errors}) => {
+        this.userprovider.editUser(form.value).map(res => res.json()).subscribe(({ status, data, errors }) => {
           console.log(status, data);
           if (status.message == "success") {
             localStorage.setItem('userLocalData', JSON.stringify(data));
@@ -134,9 +156,40 @@ console.log(form, form.valid);
         this.navCtrl.pop();
       }
     } else {
-     
-        this.showLoader = false;
-        console.warn(this.EditUserForm);
+
+      console.warn(form);
+
+      let formKeys = Object.keys(form.value);
+      console.log(formKeys);
+      this.showLoader = false;
+      for (let value of formKeys) {
+        //console.log(value,form.get(value));
+        if (form.get(value).getError('required')) {
+          //value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
+          if (value != "InsurePassword") {
+            this.showToast(`يرجى ادخال ${ArEditForm[value]}`);
+            break;
+          } else {
+            continue;
+          }
+            
+        } else if (form.get(value).getError('minlength')) {
+          this.showToast(`${ArEditForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
+        }
+        else if (form.get(value).getError('pattern')) {
+          this.showToast(`${ArEditForm[value]} غير صحيح`); 
+          console.log(form.get(value).getError('pattern'));
+        }
+        else if (form.get('InsurePassword').getError('uninsured')) {
+            this.showToast(`كلمات المرور غير متطابقة`);
+            break;
+          } 
+        }
+        //this.showToast('تأكد من ملىء جميع الحقول')
+
+
+        console.log('Form Status', form.status);
+      /*
          console.log(form.get('Password').getError('minlength'));
          console.log(form.get('Username').getError('minlength'))
   
@@ -162,7 +215,7 @@ console.log(form, form.valid);
       
 
 
-
+*/
       //this.navCtrl.pop();
     }
   }
@@ -180,28 +233,46 @@ console.log(form, form.valid);
   }
 
   passBlur() {
-    if (this.EditUserForm.get('Password').value == '') {
+    if (!this.EditUserForm.get('password').value) {
       this.hidepass = true;
-      this.EditUserForm.get('Password').setValidators(null);
-      this.EditUserForm.get('InsurePassword').setValidators(null);
-    } else {
-      this.EditUserForm = this.fb.group( {
-      Name: new FormControl( this.EditUserForm.get('Name').value),
-      Username: new FormControl( this.EditUserForm.get('Username').value, Validators.minLength( 5 ) ),
-      Password: new FormControl(this.EditUserForm.get('Password').value, [Validators.required, Validators.minLength(8)]),
-      InsurePassword: new FormControl( '', [this.insurePass, Validators.required]),
+      this.EditUserForm = this.fb.group({
+        name: [this.EditUserForm.get('name').value],
+        username: [this.EditUserForm.get('username').value, Validators.minLength(5)],
+        password: [this.EditUserForm.get('password').value],
+        InsurePassword: [''],
 
-      Email: new FormControl( this.EditUserForm.get('Email').value),
-      Mobile: new FormControl( this.EditUserForm.get('Mobile').value, [Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )] ),
-      Gender: new FormControl( this.EditUserForm.get('Gender').value ),
-      Address: new FormControl( this.EditUserForm.get('Address').value ),
-      Map: new FormControl( this.localUser.map ),
-      Area: new FormControl( this.EditUserForm.get('Area').value ),
-      City: new FormControl( this.EditUserForm.get('City').value ),
-      Dist: new FormControl( this.EditUserForm.get('Dist').value ),
-      cr_num: new FormControl( this.localUser.cr_num || '' ),
-      owner_name: new FormControl( this.localUser.owner_name || '' )
-    } )
+        email: [this.EditUserForm.get('email').value],
+        mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.pattern("[0-9]*"), Validators.minLength(5)])],
+        gender: [this.EditUserForm.get('gender').value],
+        address: [this.EditUserForm.get('address').value],
+        map: [this.localUser.map],
+        area: [this.EditUserForm.get('area').value],
+        city: [this.EditUserForm.get('city').value],
+        dist: [this.EditUserForm.get('dist').value],
+        cr_num: [this.localUser.cr_num || ''],
+        owner_name: [this.localUser.owner_name || '']
+      })
+    } else {
+
+      
+      this.EditUserForm = this.fb.group( {
+      name: [this.EditUserForm.get('name').value],
+      username: [ this.EditUserForm.get('username').value, Validators.minLength( 5 ) ],
+      password: [this.EditUserForm.get('password').value, Validators.compose([Validators.required, Validators.minLength(8)])],
+      InsurePassword: ['', Validators.compose([this.insurePass, Validators.required])],
+
+      email: [ this.EditUserForm.get('email').value],
+      mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )]) ],
+      gender: [this.EditUserForm.get('gender').value ],
+      address: [this.EditUserForm.get('address').value ],
+      map: [ this.localUser.map ],
+      area: [this.EditUserForm.get('area').value ],
+      city:[this.EditUserForm.get('city').value ],
+      dist: [this.EditUserForm.get('dist').value ],
+      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]^"), Validators.minLength(1)] : null)],
+      owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.minLength(3)] : null)]
+      })
+     
     }
     //
   }
@@ -239,24 +310,24 @@ console.log(form, form.valid);
 
       // Hint DATA is Array [PLaceType, placeName, placeId]
 
-      if (data && this.EditUserForm.get( data[0] ).value != data[2]) {
+      if (data && this.EditUserForm.get( data[0].toLowerCase() ).value != data[2]) {
         console.log( data );
         switch (data[0]) {
           case 'Area':
             [this.AreaName, this.CityName, this.DistName] = [data[1], null, null];
-            this.EditUserForm.get( 'City' ).setValue( null );
-            this.EditUserForm.get( 'Dist' ).setValue( null );
+            this.EditUserForm.get( 'city' ).setValue( null );
+            this.EditUserForm.get( 'dist' ).setValue( null );
             break;
           case 'City':
             [this.CityName, this.DistName] = [data[1], null];
-            this.EditUserForm.get( 'Dist' ).setValue( null );
+            this.EditUserForm.get( 'dist' ).setValue( null );
             break;
           case 'Dist':
             this.DistName = data[1];
             break;
         }
 
-        this.EditUserForm.get( data[0] ).setValue( data[2] );
+        this.EditUserForm.get( data[0].toLowerCase() ).setValue( data[2] );
       } else {
         return false
       }
@@ -272,10 +343,10 @@ console.log(form, form.valid);
       this.initModal( name, searchId );
     } else if (name == "City") {
 
-      (this.EditUserForm.get('Area').value) ? this.initModal( name, searchId ) : this.showToast( 'يرجى تعديل المنطقة أولاً' );
+      (this.EditUserForm.get('area').value) ? this.initModal( name, searchId ) : this.showToast( 'يرجى تعديل المنطقة أولاً' );
     } else if (name == 'Dist') {
 
-      (this.EditUserForm.get('City').value) ? this.initModal( name, searchId ) : this.showToast( 'يرجى تعديل المدينة أولاً' );
+      (this.EditUserForm.get('city').value) ? this.initModal( name, searchId ) : this.showToast( 'يرجى تعديل المدينة أولاً' );
     } else {
       return false;
     }
@@ -289,12 +360,6 @@ console.log(form, form.valid);
       showCloseButton: true,
       closeButtonText: 'x',
       cssClass: toastClass
-    } );
-
-    toast.onDidDismiss( () => {
-      //TODO: pop to the main page of the user
-      console.log( 'moving to main page ..' );
-
     } );
 
     toast.present();

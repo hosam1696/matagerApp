@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { Exporter } from './exporter';
+import { VprofilePage } from './vprofile';
 import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
+
+
 @NgModule({
   declarations: [
-    Exporter,
+    VprofilePage,
   ],
   imports: [
-    IonicPageModule.forChild(Exporter),
+    IonicPageModule.forChild(VprofilePage),
     HsaloaderComponentModule
   ],
   exports: [
-    Exporter
+    VprofilePage
   ]
 })
-export class ExporterModule {}
+export class VprofilePageModule {}

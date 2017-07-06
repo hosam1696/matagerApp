@@ -4,6 +4,7 @@ import {IlocalUser, levelToAr, Ishelf} from '../../app/service/InewUserData';
 import {IProduct} from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { ItemProvider } from '../../providers/item';
+import { UserProvider } from '../../providers/user';
 import { ShelfModal } from './shelf/shelfpage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
@@ -17,7 +18,7 @@ import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/trans
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
-  userLocal: IlocalUser;
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   showContent: string = 'products';
   AllShelfs :Ishelf[]| any = [];
   noShelfs:string;
@@ -28,6 +29,7 @@ export class ProfilePage {
   userLevelId: number;
   showSettings: boolean = false;
   cameraError: any;
+  numbersOfFollowers: any = 0;
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -40,14 +42,30 @@ export class ProfilePage {
     private productsProvider: ItemProvider,
     public popover: PopoverController,
     private transfer: Transfer,
-    public rendrer: Renderer2
+    public rendrer: Renderer2,
+    public userProvider: UserProvider
   ) {
 
   }
 
   ionViewDidLoad() {
     this.ionViewWillEnter();
-   
+
+    this.numbersOfFollowers = this.userProvider.getNumbersOfFollowers(this.userLocal.id)
+
+    if (this.userLocal) {
+
+      if (this.userLocal.level_id == 2) {
+      
+        this.showContent = 'shelfs';
+
+      } else if (this.userLocal.level_id == 3) {
+      
+        this.showContent = 'products'
+      } else {
+        // client profile
+      }
+    }
   }
 
   ionViewWillEnter(): void {
@@ -224,9 +242,8 @@ export class ProfilePage {
 
     },
       err => {
-        this.showLoader = false;
-        //console.warn(err);
-        this.noShelfs = 'netErr';
+        console.warn(err);
+        [this.showLoader, this.noShelfs, this.AllShelfs] = [false,'netErr',[]];
       },
       () => {
         this.showLoader = false;
@@ -326,16 +343,42 @@ export class ProfilePage {
   deleteProduct(product: IProduct) {
     
     let productIndex = this.AllProducts.indexOf(product);
+    const alertOptions:AlertOptions = {
+      title: 'حذف منتج',
+      message: `هل انت متأكد من رغبتك فى حذف 
+      " ${product.item_name} "`,
+      buttons: [
+        {
+          text: 'الغاء',
+          handler: (data) => {
+            
+          }
+        },
+        {
+          text: 'حذف',
+          handler: (data) => {
+            this.productsProvider.deleteItem({ id: product.id, 'user_id': this.userLocal.id })
+              .subscribe(response => {
+                console.log(response);
+                if (response.status.message == 'success') {
 
-    this.productsProvider.deleteItem({ id: product.id, 'user_id': this.userLocal.id })
-      .subscribe(response => {
-        console.log(response);
-        if (response.status.message == 'success') {
-          
-          this.showToast('تم حذف المنتج بنجاح');
-          this.AllProducts.splice(productIndex, 1);
+                  this.showToast('تم حذف المنتج بنجاح');
+                  this.AllProducts.splice(productIndex, 1);
+                } else {
+                  this.showToast('الرجاء المحاولة فى وقت لاحق')
+                }
+              },
+              (err) => {
+                this.showToast('الرجاء المحاولة فى وقت لاحق')
+              }
+              );
+          }
         }
-    })
+      ]
+    };
+
+
+    this.alert.create(alertOptions).present();
   }
   
   fetchMoreProducts(event) {
@@ -355,7 +398,7 @@ export class ProfilePage {
     shelf.present();
   }
 
-  navigateToPage(page, pageData="test product", reciever=null):void {
+  navigateToPage(page, pageData="test", reciever=null):void {
 
     this.navCtrl.push(page ,{reciever,pageData});
     

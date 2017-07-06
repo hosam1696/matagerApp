@@ -2,8 +2,7 @@ page-forget {
 ion-content {
     
     &.content {
-      background-color: #028cff;
-      background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../assets/img/logo.png);
+      background: url(../assets/img/logo2.png);
       background-position: 100%;
 
     }
@@ -14,6 +13,8 @@ ion-content {
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      height: 44px;
+      padding: 10px 6px;
       h1 {
         color: #fff;
         font-size: 60px
@@ -40,13 +41,14 @@ ion-content {
         .form-group {
         padding: 5px 0;
         .form-control {
-          width: 100%;
-          background-color: rgba(255, 255, 255, 0.3);
-          color: #fff;
-          padding: 7px 10px;
-          border-radius: 5px;
-          border: none;
-          font-size: 14px;
+             width: 100%;
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    height: 44px;
 
           &::-webkit-input-placeholder {
             color: #d6ecff !important;
@@ -64,13 +66,12 @@ ion-content {
           align-items: center;
           width: 100%;
           justify-content: center;
-          padding: 5px;
-          height: 35px;
+          padding: 10px 6px;
           border-radius: 4px;
           background-color: color($colors, light);
           color: #008bff;
-          min-height: 32px;
-          margin-top: 10px;
+          min-height: 44px;
+          font-size: 16px
         }
     }
 }
