@@ -3,6 +3,20 @@ page-followings {
     &.content {
       background-color: color($colors, bgColor);
     }
+    .small {
+        margin-top: 0 !important;
+        font-size: 10px;
+        color: #666;
+        background-color: #eee 
+      }
+      ion-refresher {
+        ion-refresher-content {
+          font-size: 12px !important;
+          margin-top: 15px;
+          color: #ccc !important
+        }
+      }
+      
     ion-list {
       ion-item {
         border-bottom: 1px solid #eee !important;

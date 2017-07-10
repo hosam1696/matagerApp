@@ -5,6 +5,7 @@ import {IlevelId, Iplace} from "../../app/service/InewUserData";
 import {UserProvider} from "../../providers/user";
 import { Geolocation } from '@ionic-native/geolocation';
 import {ChooseArea } from '../chooselocmodal';
+import {MapsModal} from "../mapsmodal";
 
 let ArSignForm;
 (function (ArArea) {
@@ -95,7 +96,8 @@ export class Signup {
       email: new FormControl('', Validators.required),
       mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
       gender: new FormControl('male', Validators.required),
-      map: new FormControl(''),
+      latitude: new FormControl(''),
+      longitude: new FormControl(''),
       area: new FormControl('',[Validators.required]),
       city: new FormControl('', [Validators.required]),
       dist: new FormControl('', this.insureStoreUser),
@@ -169,7 +171,8 @@ export class Signup {
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
           mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
           gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-          map: new FormControl(''),
+          latitude: new FormControl(''),
+          longitude: new FormControl(''),
           area: new FormControl('' ,[Validators.required]),
           city: new FormControl('', [Validators.required]),
           dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
@@ -177,7 +180,7 @@ export class Signup {
           address: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, Validators.minLength(3)]),
           cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1),Validators.pattern("[0-9]*")]),
 
-          
+
           owner_name: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required:null,this.insureStoreUser,Validators.minLength(4)])
         });
     } else if (this.SignUpFrom.value.level_id == 3) {
@@ -191,7 +194,8 @@ export class Signup {
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        map: new FormControl(''),
+        latitude: new FormControl(''),
+        longitude: new FormControl(''),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('', [Validators.required]),
         dist: new FormControl('' ),
@@ -204,7 +208,7 @@ export class Signup {
       console.log('client');
 
       [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
-      
+
       this.SignUpFrom = this.fb.group({
         username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(4)]),
         password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(8)]),
@@ -213,7 +217,8 @@ export class Signup {
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        map: new FormControl(''),
+        latitude: new FormControl(''),
+        longitude: new FormControl(''),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('' , [Validators.required]),
         dist: new FormControl('' ),
@@ -222,7 +227,7 @@ export class Signup {
         cr_num: new FormControl(''),
         owner_name: new FormControl('')
       });
-      
+
     }
 
     }
@@ -232,7 +237,7 @@ export class Signup {
   }
 
   decreasePageNum(): number {
-    
+
     let num = Math.max(Math.min(3, this.csPage-1), 1);
 
     if (num < 3 )
@@ -247,7 +252,7 @@ export class Signup {
 
     this.showLoader = true;
     console.log('not checked yet',this.SignUpFrom.value);
-    
+
     if (this.SignUpFrom.valid) {
 
       console.log(this.SignUpFrom.value, this.SignUpFrom.status);
@@ -256,13 +261,14 @@ export class Signup {
           .then((response)=> {
             console.log('get an access to geolocation plugin',response);
 
-            this.SignUpFrom.get('map').setValue(`${response.coords.latitude},${response.coords.longitude}`);
+            this.SignUpFrom.get('latitude').setValue(response.coords.latitude);
+            this.SignUpFrom.get('longitude').setValue(response.coords.longitude);
             console.log(this.SignUpFrom.value);
 
             return Promise.resolve(this.SignUpFrom.value);
           })
           .then((formValue)=> {
-            
+
             this.addUserProvider(formValue);
 
           })
@@ -270,12 +276,12 @@ export class Signup {
             console.log('can\'t access geolocation plugin');
             this.showLoader = false;
             console.warn(err);
-
-            this.addUserProvider(this.SignUpFrom.value);
+            this.showToast('يرجى تفعيل خدمة المواقع او GPS');
+            //this.addUserProvider(this.SignUpFrom.value);
 
           });
 
-      
+
 
     } else {
 
@@ -309,7 +315,7 @@ export class Signup {
           }
         }
           //this.showToast('تأكد من ملىء جميع الحقول')
-      
+
 
       console.log('Form Status', this.SignUpFrom.status);
 
@@ -317,20 +323,20 @@ export class Signup {
   }
 
   addUserProvider(formValue) {
-    
+
     delete this.SignUpFrom.value.InsurePassword;
 
     this.userProvider.addUser(formValue)
       .subscribe(({ status, data, errors }) => {
         console.log(status, data);
-        
+
         if (status.message == 'success') {
 
-          this.showToast('تم اضافة حسابك بنجاح');
+
           this.SignUpFrom.reset();
 
           localStorage.setItem('userLocalData', JSON.stringify(data)); //TODO: save the user data to local storage and navigate to the homepage
-
+          this.showToast('تم اضافة حسابك بنجاح');
           // TODO: navigate to the home page
           this.navCtrl.setRoot('HomePage');
           this.navCtrl.popToRoot();
@@ -344,7 +350,7 @@ export class Signup {
           let keys = Object.keys(errors);
           let errMsg: string = '';
           for (let key of keys) {
-            
+
               errMsg = errors[key][0];
           }
 
@@ -383,6 +389,13 @@ export class Signup {
       this.decreasePageNum();
   }
 
+  openMaps() {
+    let modal = this.modalCrtl.create(MapsModal);
+    modal.onDidDismiss((data)=>{
+      console.log(data);
+    });
+    modal.present();
+  }
   openModal(name: string, searchId: number) {
 
     if (name == 'Area') {

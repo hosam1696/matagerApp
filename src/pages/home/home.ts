@@ -27,18 +27,21 @@ export class HomePage {
 
   ionViewDidLoad() {
 
-
    /* Get the current location if user activates the location */
-    this.geolocation.getCurrentPosition().then((res)=>{
+    this.geolocation.getCurrentPosition()
+      .then((res)=>{
       let coords = res.coords.latitude+','+res.coords.longitude;
       console.log(`User Location: ${coords}`);
-      //this.showToast(`User Location: ${coords}`);
+        localStorage.setItem('currentLocation', coords);
+
+      /*
       if (this.userLocalData) {
         this.userLocalData.map = coords;
         localStorage.setItem('userLocalData', JSON.stringify(this.userLocalData)) ;
       } else {
         console.warn('No user had signed in or the user didn\'t allow geolocation ')
       }
+      */
     }).catch(err=> {
       console.warn(err);
     });

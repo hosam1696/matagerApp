@@ -57,11 +57,15 @@ export interface IlocalUser{
   gender: string,
   mobile: string,
   avatar: string,
+  latitude: string,
+  longitude: string,
   cover?: string,
   owner_name?: string,
   cr_num?: number,
-  map: string
-
+  map: string,
+  followers?: number,
+  followings?: number,
+  follow?: boolean | any
 }
 
 export interface Ishelf {

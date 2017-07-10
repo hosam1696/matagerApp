@@ -25,6 +25,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import {NativeGeocoder} from "@ionic-native/native-geocoder";
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 import { Transfer} from '@ionic-native/transfer';
@@ -82,6 +83,7 @@ import {MapsModal} from "../pages/mapsmodal";
     ImagePicker,
     GoogleMaps,
     NativeGeocoder,
+    InAppBrowser,
     ActionSheet, Camera,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},

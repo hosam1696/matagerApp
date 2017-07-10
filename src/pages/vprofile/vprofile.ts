@@ -1,11 +1,13 @@
 import { Component, Renderer2 } from '@angular/core';
-import { IonicPage, ModalController, ToastController, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, AlertOptions,AlertController,ModalController, ToastController, NavController, NavParams } from 'ionic-angular';
 import { ItemProvider } from "../../providers/item";
 import { ShelfsProvider } from "../../providers/shelfs";
 import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
 import { IProduct } from '../../app/service/interfaces';
 import { ShelfModal } from '../profile/shelf/shelfpage';
 import { UserProvider } from '../../providers/user';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 @IonicPage()
 @Component({
   selector: 'page-vprofile',
@@ -17,8 +19,6 @@ export class VprofilePage {
   showLoader: boolean = true;
   allProducts: IProduct[];
   allShelfs: Ishelf[];
-  isStore: boolean;
-  isExporter: boolean;
   noShelfs: boolean = false;
   noProducts: boolean = false;
   isFollowed: boolean = false;
@@ -26,6 +26,7 @@ export class VprofilePage {
   showContent: string;
   numbersOfFollowers: any;
   numbersOfFollowings: any;
+  navigatedUserId: number;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -34,13 +35,15 @@ export class VprofilePage {
     public modalCtrl: ModalController,
     public rendrer: Renderer2,
     public toastCtrl: ToastController,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public iab: InAppBrowser,
+    public alertCtrl: AlertController
   ) {
-    
-    
 
-    
-    
+
+
+
+
 
 
   }
@@ -52,57 +55,66 @@ export class VprofilePage {
 
 
   ionViewDidLoad() {
-
+    function type(data) {
+      return Object.prototype.toString.call(data).match(/\s+[a-zA-Z]+/)[0].trim()
+    }
     const userData = this.navParams.get('userData');
-    if (typeof userData == 'object') { //navigation parameter is not given by user id
+    console.log(type(userData), userData);
+    if (type(userData) == 'Object') { //navigation parameter is not given by user id
       this.userData = userData;
       console.log(userData, typeof userData);
-      
       this.configProfile();
-
-      this.getNumbersOfFollowers();
-
-          
-
-    } else {
-      this.userProvider.getUserById(userData)
+    } else { // navigation parameter is Array Type
+      this.navigatedUserId = userData[1];
+      this.userProvider.getUserById(userData[0], userData[1])
         .subscribe(({status, data}) => {
           if(status == 'success')
             this.userData = data;
           else
-            this.showToast('no User')  
+            this.showToast('no User')
         },
         err => {
-
+          console.warn(err)
         },
         () => {
 
           this.configProfile();
 
-          this.getNumbersOfFollowers();
-
-
         }
         )
     }
-    console.log(this.showContent);
+    console.log('Show Content',this.showContent, 'navigated user Id',this.navigatedUserId);
 
-    
+
 
   }
 
+  openBrowserMap(maps = '30.0371616,31.0033728') {
+    if (this.userData.latitude && this.userData.longitude) {
+      maps = this.userData.latitude + ','+this.userData.longitude
+    };
+
+    console.info(maps);
+    const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
+    const tab = this.iab.create(url);
+
+    tab.show();
+  }
+
   configProfile() {
-    
+
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     if (this.userData.level_id == 2) {
-      (this.userLocal.level_id == 2 || this.userLocal.level_id == 4) ? this.showContent = 'products' : this.showContent = 'shelfs';
+      (!this.userLocal ||this.userLocal.level_id == 2 || this.userLocal.level_id == 4) ? this.showContent = 'products' : this.showContent = 'shelfs';
 
     } else if (this.userData.level_id == 3) {
 
       this.showContent = 'products'
     }
 
-    (this.showContent == 'shelfs') ? this.getShelfs() : this.getProducts();  
+    (this.showContent == 'shelfs') ? this.getShelfs() : this.getProducts();
+
+    console.log('local User', this.userLocal, 'user Data', this.userData);
 
   }
 
@@ -111,12 +123,25 @@ export class VprofilePage {
       this.numbersOfFollowers = res
     });
   }
+
+  chunk(arr, limit) {
+    let length = arr.length;
+    let chunked = [];
+    let start = 0;
+    while (start < length) {
+      chunked.push(arr.slice(start,limit+start));
+      start+=limit
+    }
+    return chunked;
+  }
+
   getProducts() {
     this.showLoader = true;
     this.itemProvider.getProductByUserId(this.userData.id)
       .subscribe(({ status, data }) => {
         if (status.message == 'success') {
-          this.allProducts = data.reverse();
+          this.allProducts = this.chunk(data, 2);
+          console.log(this.allProducts);
           if (data.length <= 0)
             this.noProducts = true;
         } else {
@@ -183,56 +208,84 @@ export class VprofilePage {
 
   follow(user_id: number) {
 
-    let followData = {
-      user_id,
-      follower_id: this.userLocal.id
-    };
 
-    console.log(followData, this.isFollowed);
 
-    let FollowOrUnFollow = (followOrNot: boolean = true) => {
-      this.userProvider.follow(followData, followOrNot = !this.isFollowed)
-        .subscribe(
-        res => {
-          if (res.status == 'success') {
-            
-            if (followOrNot) {
-              this.numbersOfFollowers += 1;
-              console.log(this.numbersOfFollowers);
-            } else {
-              this.numbersOfFollowers -= 1;
-              console.log(this.numbersOfFollowers);
+
+    if (this.navigatedUserId != 0) {
+      let followData = {
+        user_id,
+        follower_id: this.userLocal.id
+      };
+      console.log(followData, this.userData.follow);
+
+      let FollowOrUnFollow = (followOrNot: boolean = true) => {
+        this.userProvider.follow(followData, followOrNot)
+          .subscribe(
+            res => {
+              if (res.status == 'success') {
+
+                if (followOrNot) {
+                  this.userData.followers += 1;
+                  console.log('numbers of followers', this.userData.followers);
+                } else {
+                  this.userData.followers -= 1;
+                  console.log('numbers of followers', this.userData.followers);
+                }
+
+                console.log(res, this.isFollowed, 'isFollowed');
+              } else {
+                this.showToast(res.errors);
+
+                console.log(res, this.isFollowed, 'isFollowed');
+              }
+            },
+            err => {
+              console.warn(err)
+            },
+            () => {
+              this.userData.follow = !this.userData.follow;
+              (this.userData.follow == false) ? this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بمتابعة ${this.userData.name}`);
             }
-           
-            console.log(res, this.isFollowed, 'isFollowed');
-          } else {
-            this.showToast(res.errors);
-            
-            console.log(res, this.isFollowed, 'isFollowed');
-          }
-        },
-        err => {
-          console.warn(err)
-        },
-        () => {
-          this.isFollowed = !this.isFollowed;
-          (this.isFollowed == true) ? this.showToast(`لقد قمت بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`);
-        }
+          );
 
-        );
+
+      };
+
+
+      (!this.userData.follow) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
+    } else {
+      this.showLoginAction()
     }
-
-    (!this.isFollowed) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
-    
-
-    
-    
-    
-
 
   }
 
-  navigateToPage(page, pageData = "test product", reciever?: string) {
+
+  showLoginAction() {
+    let alertOptions: AlertOptions = {
+      title: 'تسجيل',
+      message: 'يرجى تسجيل الدخول بحسابك لكى يتم تنفيذ طلبك',
+      buttons:[
+        {
+          text: 'تسجيل الدخول',
+          handler: ()=>{
+            this.navigateToPage('Login', null);
+          }
+        },
+        {
+          text: 'تسجيل حساب جديد',
+          handler: ()=>{
+            this.navigateToPage('Signup', null);
+          }
+        }
+      ],
+      enableBackdropDismiss: true
+    };
+    let alert = this.alertCtrl.create(alertOptions);
+
+    alert.present();
+  }
+
+  navigateToPage(page, pageData , reciever?: string) {
     this.navCtrl.push(page, { pageData, reciever });
   }
 
