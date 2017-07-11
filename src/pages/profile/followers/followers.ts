@@ -16,6 +16,8 @@ export class FollowersPage {
   noFollowers: boolean = false;
   netErr: boolean = false;
   initLimit: number = 10;
+  initStart: number = 0;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public userProvider: UserProvider
@@ -26,11 +28,11 @@ export class FollowersPage {
   }
 
   ionViewDidLoad() {
-   
+
     if (!this.userLocal)
-      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));  
-    
-    this.userProvider.getUserFollowers(this.profileUserId)
+      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
+    this.userProvider.getUserFollowers(this.profileUserId, this.initLimit, this.initStart)
       .subscribe(
       ({ data, status}) => {
         if (status == 'success') {
@@ -56,14 +58,17 @@ export class FollowersPage {
 
     if (this.moreData) {
 
-    
-    this.userProvider.getUserFollowers(this.profileUserId)
+    this.initStart +=this.initLimit;
+    this.userProvider.getUserFollowers(this.profileUserId, this.initLimit, this.initStart)
       .subscribe(
       ({ data, status }) => {
         if (status == 'success') {
           //this.userFollowers = [...this.userFollowers,...data];
           this.showLoader = false;
-          this.userFollowers = data;
+          this.userFollowers = [...this.userFollowers, ...data];
+          if (data.length < this.initLimit) {
+            this.moreData = false;
+          }
         }
       },
       err => {
@@ -82,14 +87,15 @@ export class FollowersPage {
   }
 
   refreshUsers(event) {
-    this.userProvider.getUserFollowers(this.profileUserId)
+    this.initStart = 0;
+    this.userProvider.getUserFollowers(this.profileUserId, this.initLimit, this.initStart)
       .subscribe(
       ({ data, status }) => {
         if (status == 'success') {
           this.userFollowers = data
           this.showLoader = false;
           if (data.length <= 0)
-            this.noFollowers = true;  
+            this.noFollowers = true;
         }
       },
       err => {

@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>المتابَعون</ion-title>
+    <ion-title>المتابعون</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,8 +15,8 @@
   <p class="small" text-center *ngIf="netErr">
     تفقد الاتصال وحاول مجددا
   </p>
-  <p class="small" text-center *ngIf="noFollowers">
-    لا يوجد متابعون حتى الان
+  <p class="small" text-center *ngIf="noFollowings">
+      <br>{{noFollowings}}
   </p>
   <p text-center *ngIf="showLoader">
     <hsa-loader></hsa-loader>
@@ -35,7 +35,9 @@
     </ion-item>
 
   </ion-list>
-
+  <p text-center *ngIf="!moreData" class="small">
+    لا يوجد مزيد من المتابعين
+  </p>
   <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>

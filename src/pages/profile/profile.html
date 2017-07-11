@@ -44,29 +44,29 @@
             &nbsp;
             <span class="user-rank">4</span> / 5
           </div>
-          
+
           <div id="profile-buttons">
 
-            <button 
+            <button
               (click)="navigateToPage('Editprofile')"
-              ion-button 
-              color="primary" 
-              small 
+              ion-button
+              color="primary"
+              small
               outline>
               <ion-icon name="person"></ion-icon>
              تعديل البيانات
             </button>
 
-            <button 
-              ion-button 
-              color="primary" 
-              small 
-              outline 
+            <button
+              ion-button
+              color="primary"
+              small
+              outline
               (click)="navigateToPage('Messages')">
               <ion-icon name="chatboxes"></ion-icon>
            الرسائل
           </button>
-          </div> 
+          </div>
 
         </ion-col>
 
@@ -74,14 +74,14 @@
       </ion-grid>
 
         <div id="profile-follow">
-          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
+          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
             <ion-icon name="people"></ion-icon>
             المتابِعون
 
             <span class="following">{{""||numbersOfFollowers |async}}</span>
           </a>
 
-          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
+          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
             <ion-icon name="people"></ion-icon>
             المتابَعون <span class="followers">{{""||numbersOfFollowings |async }}</span>
 
@@ -115,11 +115,11 @@
   <div class="clearfix"></div>
   <ion-card  *ngIf="showContent == 'shelfs' && userLocal" class="show-card shelfcard">
 
-    
+
           <!-- add loADER -->
           <!--<ion-scroll scrollY="true">
 
-          
+
           <ion-refresher (ionRefresh)="refreshShelfs($event)">
               <hsa-loader></hsa-loader>
           </ion-refresher>
@@ -138,7 +138,7 @@
          <br>
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
         </p>
-        
+
         <ion-item  *ngFor="let shelf of AllShelfs; let i = index" >
             <div class="shelf-id" (click)="showShelf(shelf)">
               <p>رقم الرف <span>{{shelf.name}} </span></p>
@@ -172,7 +172,7 @@
   </ion-card>
 
   <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card products-card">
-    
+
     <!--
     <ion-grid padding-horizontal>
       <ion-row>
@@ -188,10 +188,10 @@
               <span class="prod-price"><b>1,500</b></span> ريال
             </p>
 
-    
+
           </div>
 
-         
+
         </ion-col>
         <ion-col col-6>
           <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
@@ -218,9 +218,9 @@
       لا يوجد منتجات حتى الان ليتم عرضها
     </p>
     <ion-grid padding-horizontal>
-      <ion-row>
-        <ion-col col-6 *ngFor="let product of AllProducts;let i = index">
-          <div class="col-content"(click)="navigateToPage('ProductPage', product)">
+      <ion-row *ngFor="let products of AllProducts">
+        <ion-col col-6 *ngFor="let product of products;let i = index">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product)">
 
             <img src="assets/img/product-iphone.png" alt="product">
 
@@ -239,7 +239,7 @@
             <span></span>
             <span></span>
           </div>
-          
+
            <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
               <ion-item (click)="editProduct(product)">
                 <ion-icon color="primary" name="open-outline" item-left></ion-icon>
@@ -270,7 +270,7 @@
               loadingText="جلب مزيد من المنتجات...">
             ></ion-infinite-scroll-content>
           </ion-infinite-scroll>
-       
+
         -->
 
         {{ cameraError | json}}
@@ -285,10 +285,10 @@
   </div>
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
-    <br><br>
-    <p>انت غير مسجل لدينا اذا كنت تملك حساب فقم </p>
-    <button ion-button small (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
-    <p>او </p>
-    <button ion-button small (click)="navigateToPage('Signup')">تسجيل حساب جديد</button>
+
+    <p text-center class="small">انت غير مسجل لدينا </p>
+    <button ion-button  round (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
+
+    <button ion-button round (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>
   </ion-card>
 </ion-content>

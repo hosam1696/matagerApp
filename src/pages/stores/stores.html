@@ -29,15 +29,19 @@
     </div>
   </button>
   <ion-content>
+
+    <p text-center *ngIf="locationError" class="small">
+        {{locationError}}
+    </p>
   <ion-refresher (ionRefresh)="refreshStores($event)">
   <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
   </ion-refresher>
   <p text-center *ngIf="showLoader == true">
     <hsa-loader></hsa-loader>
   </p>
-  
+
   <ion-list padding no-lines>
-    <ion-item 
+    <ion-item
     *ngFor="let store of allStores"
       (click)="navigateToPage('VprofilePage', store.id)"
      no-padding margin-bottom="4px" text-start>
@@ -48,12 +52,15 @@
         {{ store.name }}
 
       </h2>
-      <div class="exporter-info">
-        <p><span class="kilos">{{twoDigitsFloats(store.distance)}}</span> ك.م</p>
+      <div class="exporter-info" *ngIf="store.distance">
+        <p><span class="kilos">
+          {{twoDigitsFloats(store.distance)}}
+        </span>
+          ك.م        </p>
 
       </div>
     </ion-item>
-    
+
   </ion-list>
   <p class="small" text-center *ngIf="!moreData">
     لا يوجد محتوى آخر

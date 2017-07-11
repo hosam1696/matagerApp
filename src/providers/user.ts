@@ -55,21 +55,22 @@ export class UserProvider {
     let body = Object.assign({}, {action}, followerData);
 
     return this.http.post(this.API_URL + 'users.php', JSON.stringify(body)).map(res => res.json());
-  }  
+  }
 
-  getUserFollowers(user_id: number, membersType: boolean = true) {
-    
+  getUserFollowers(user_id: number,limit:number, start:number, membersType: boolean = true) {
+
     const action = membersType ? 'getFollowers' : 'getFollowings';
 
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, user_id })).map(res => res.json());
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, limit, start ,user_id })).map(res => res.json());
 
   }
 
   getNumbersOfFollowers(user_id: number) {
-    return this.getUserFollowers(user_id).pluck('data').map((data:any[])=>data.length)
+    return this.getUserFollowers(user_id, 100, 0).pluck('data').map((data:any[])=>data.length)
   }
   getNumbersOfFollowings(user_id: number) {
-    return this.getUserFollowers(user_id, false).pluck('data').map((data: any[]) => data.length)
+    return this.getUserFollowers(user_id,100,0, false).pluck('data').map((data: any[]) => data.length)
   }
+  
 
 }

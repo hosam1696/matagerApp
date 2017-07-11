@@ -10,6 +10,7 @@ import {
 } from '@ionic-native/google-maps';
 import { Geolocation} from '@ionic-native/geolocation';
 import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult} from "@ionic-native/native-geocoder";
+import {IlocalUser} from "../app/service/InewUserData";
 
 
 @Component({
@@ -22,6 +23,12 @@ import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult
         <!--<ion-buttons end>
           <button ion-button (click)="addMarker()"><ion-icon name="add"></ion-icon>Add Marker</button>
         </ion-buttons> -->
+        <ion-buttons end>
+          <button ion-button class="close-btn" (click)="closeModal()">
+            <ion-icon name="close-outline" color="light">
+            </ion-icon>
+          </button>
+        </ion-buttons>
       </ion-navbar>
 
     </ion-header>
@@ -45,8 +52,12 @@ import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult
 })
 
 export class MapsModal {
-  user: string = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-  userMap: string = JSON.parse(localStorage.getItem('userLocalData'))['map'];
+  user:string;
+  userMap:string;
+  userLocal:IlocalUser;
+  modalData: object;
+  latitude:any;
+  longitude: any;
   constructor(params:NavParams, public viewCtrl:ViewController, private googleMaps: GoogleMaps,
               public geolocation: Geolocation,
               public geocoderNative: NativeGeocoder) {
@@ -56,16 +67,31 @@ export class MapsModal {
 
 
   ionViewDidLoad() {
-    console.log(this.user, this.userMap);
 
-    this.getAddress(this.userMap.split(',')[0],this.userMap.split(',')[1] );
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
+    if (this.userLocal) {
+      this.user = JSON.parse(localStorage.getItem('userLocalData'))['username'];
+      this.userMap = JSON.parse(localStorage.getItem('userLocalData'))['map'];
+      console.log(this.user, this.userMap);
+
+      this.getAddress(this.userMap.split(',')[0],this.userMap.split(',')[1] );
+    }
+
 
     let geolocate = this.geolocation.getCurrentPosition();
 
 
     geolocate.then((res)=>{
       console.log('your current locations are \n'+res.coords.latitude+'\n'+res.coords.longitude);
-      this.loadMap(res.coords.latitude, res.coords.longitude);
+
+      [this.latitude, this.longitude] = [res.coords.latitude, res.coords.longitude];
+      this.loadMap();
+      this.modalData = {
+        latitude: this.latitude,
+        longitude: this.longitude
+      };
+
     })
       .catch((err)=>{
         console.warn(err);
@@ -75,7 +101,7 @@ export class MapsModal {
 
   }
 
-  loadMap(latitude=30.032035799999996, longitude= 30.9818849) {
+  loadMap(latitude=this.latitude, longitude= this.longitude) {
     // make sure to create following structure in your view.html file
     // and add a height (for example 100%) to it, else the map won't be visible
     // <ion-content>
@@ -137,5 +163,7 @@ export class MapsModal {
     })
   }
 
-
+  closeModal(): void {
+    this.viewCtrl.dismiss( this.modalData )
+  }
 }

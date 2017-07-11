@@ -1,6 +1,6 @@
 page-forget {
 ion-content {
-    
+
     &.content {
       background: url(../assets/img/logo2.png);
       background-position: 100%;
@@ -41,21 +41,21 @@ ion-content {
         .form-group {
         padding: 5px 0;
         .form-control {
-             width: 100%;
-    background-color: rgba(255, 255, 255, 0.3);
-    color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    height: 44px;
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.3);
+          color: #fff;
+          padding: 10px;
+          border-radius: 5px;
+          border: none;
+          font-size: 16px;
+          height: 44px;
 
           &::-webkit-input-placeholder {
             color: #d6ecff !important;
           }
-        } 
+        }
 
-        
+
         }
 
         direction: rtl;
@@ -77,6 +77,6 @@ ion-content {
 }
 
 
-    
+
 
 }

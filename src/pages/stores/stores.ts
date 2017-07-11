@@ -10,7 +10,7 @@ import { ImodalData } from "../../app/service/InewUserData";
 })
 export class StoresPage {
   userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-
+  locationError:any = null;
   dataFromModal: ImodalData;
   initLimit: number = 10;
   initStart: number = 0;
@@ -28,9 +28,9 @@ export class StoresPage {
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
+    console.log(this.userLocal);
     this.fetchStores();
   }
-
 
   openFilterModal() {
 
@@ -44,7 +44,6 @@ export class StoresPage {
 
   }
 
-  
   searchData(modalData: ImodalData) {
     if (Object.keys(modalData).length != 0) {
       let filterPlaces = [modalData.AreaName || null, modalData.CityName || null, modalData.DistName || null];
@@ -61,14 +60,12 @@ export class StoresPage {
           if (status = 'success') {
             if ((data.length - 1) < this.initLimit)
               this.moreData = false;
-            
             /*if (this.userLocal) {
               const selfIndex = data.findIndex(oneItem => {
                 return oneItem.id == this.userLocal.id;
               }); // remove user himself from being listed
               selfIndex > 0 && data.splice(selfIndex, 1);
             }*/
-            
             this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
 
           }
@@ -91,7 +88,6 @@ export class StoresPage {
     }
   }
 
-
   refreshStores(event) {
     this.initStart = 0;
     this.getStores()
@@ -105,7 +101,6 @@ export class StoresPage {
             }); // remove user himself from being listed
             selfIndex > 0 && data.splice(selfIndex, 1);
           }*/
-          
 
 
           this.allStores = data;
@@ -124,16 +119,20 @@ export class StoresPage {
     console.log('fetched ');
   }
 
-
-
   getStores(limit: number = this.initLimit, start: number = this.initStart) {
-    return this.userProvider.getUsersByLevel(2, limit, start, this.userLocal.id||"1", this.userLocal.map||"");
+
+    let id = (this.userLocal&&this.userLocal.id) ? this.userLocal.id : 0;
+    let map = (localStorage.getItem('currentLocation'))?localStorage.getItem('currentLocation'):(this.userLocal&&this.userLocal.latitude && this.userLocal.longitude)?this.userLocal.latitude+','+this.userLocal.longitude:'';
+
+    //console.log(map);
+
+    return this.userProvider.getUsersByLevel(2, limit, start, id, map);
   }
 
   fetchStores(limit?: number, start?: number) {
     this.getStores(limit, start)
       .subscribe(
-      ({ status, data }) => {
+      ({ status, data, errors }) => {
         if (status == 'success') {
 
           console.log('Data',data);
@@ -146,6 +145,9 @@ export class StoresPage {
 
           this.allStores = data;
           console.log(this.allStores)
+        } else {
+          this.locationError = errors;
+          console.log(errors);
         }
       },
       err => {
@@ -160,10 +162,11 @@ export class StoresPage {
   }
 
   navigateToPage(page, user_id) {
-    this.navCtrl.push(page, { userData:[user_id, this.userLocal.id] })
+    let id = (this.userLocal&&this.userLocal.id)? this.userLocal.id : 0;
+    this.navCtrl.push(page, { userData:[user_id, id] })
   }
 
-  twoDigitsFloats(float) {
+  twoDigitsFloats(float){
     float = parseFloat(float);
     return float.toFixed(2);
   }

@@ -55,19 +55,19 @@ export class ProfilePage {
     this.ionViewWillEnter();
 
 
-    
+
 
     if (this.userLocal) {
-      this.numbersOfFollowers = this.userProvider.getNumbersOfFollowers(this.userLocal.id)
+      this.numbersOfFollowers = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
 
-      this.numbersOfFollowings = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
+      this.numbersOfFollowings = this.userProvider.getNumbersOfFollowers(this.userLocal.id);
 
       if (this.userLocal.level_id == 2) {
-      
+
         this.showContent = 'shelfs';
 
       } else if (this.userLocal.level_id == 3) {
-      
+
         this.showContent = 'products'
       } else {
         // client profile
@@ -166,7 +166,7 @@ export class ProfilePage {
       console.log(imageData);
       // detect image extension
       let extension:string = 'jpg';
-    
+
       let extIndex = imageData.lastIndexOf('.');
 
       extension = extIndex.match(/\w+/)[0];
@@ -185,14 +185,14 @@ export class ProfilePage {
 
 
       }).catch(err => {
-        
+
         console.error('getPicture Error ', err);
         this.cameraError = err;
       })
   }
 
   uploadImage(file, type, cameraImage) {
-    
+
     const uploadOptions: FileUploadOptions = {
       fileKey: 'file',
       fileName: file
@@ -315,7 +315,7 @@ export class ProfilePage {
   }
 
 
-    
+
   editShelf(page, pageParams) {
 
     if (pageParams.close == 1)
@@ -324,16 +324,27 @@ export class ProfilePage {
         this.navigateToPage('AddshelfPage', pageParams)
   }
 
+  chunk(arr, limit) {
+    let length = arr.length;
+    let chunked = [];
+    let start = 0;
+    while (start < length) {
+      chunked.push(arr.slice(start,limit+start));
+      start+=limit
+    }
+    return chunked;
+  }
   getProducts(id:number) {
     const prodService = this.productsProvider.getProductByUserId(id).retry(2);
     [this.showLoader, this.noProducts] = [true, null];
     prodService.subscribe(({status, data})=>{
       if (status.message == 'success') {
-        if (data.length == 0) {
+        if (data.length <= 0) {
           [this.showLoader, this.noProducts] = [false, 'empty'];
           return false;
         }
-        this.AllProducts = data;
+        this.AllProducts = this.chunk(data, 2);
+        console.log(this.AllProducts);
         [this.showLoader, this.noProducts] = [false, null];
         console.table(data);
       } else {
@@ -348,7 +359,7 @@ export class ProfilePage {
   }
 
   deleteProduct(product: IProduct) {
-    
+
     let productIndex = this.AllProducts.indexOf(product);
     const alertOptions:AlertOptions = {
       title: 'حذف منتج',
@@ -358,7 +369,7 @@ export class ProfilePage {
         {
           text: 'الغاء',
           handler: (data) => {
-            
+
           }
         },
         {
@@ -387,7 +398,7 @@ export class ProfilePage {
 
     this.alert.create(alertOptions).present();
   }
-  
+
   fetchMoreProducts(event) {
     setTimeout(function(){
       event.complete();
@@ -418,7 +429,7 @@ export class ProfilePage {
   navigateToPage(page, pageData="test", reciever=null):void {
 
     this.navCtrl.push(page ,{reciever,pageData});
-    
+
   }
 
   userLevel(level:number):string {

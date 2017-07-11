@@ -37,11 +37,13 @@
 
   <ion-content>
 
-  
+    <p text-center *ngIf="locationError" class="small">
+      {{locationError}}
+    </p>
 
   <ion-refresher (ionRefresh)="refreshExporter($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى">
-      
+
     </ion-refresher-content>
   </ion-refresher>
 
@@ -51,7 +53,7 @@
 
 
   <ion-list padding no-lines>
-    <ion-item 
+    <ion-item
      *ngFor="let exporter of allExporters"
      (click)="navigateToPage('VprofilePage', exporter.id)"
       no-padding margin-bottom="4px" text-start>
@@ -63,21 +65,21 @@
         {{exporter.name}}
         <!-- <ion-icon name="pin"></ion-icon> -->
       </h2>
-      <div class="exporter-info">
+      <div class="exporter-info" *ngIf="exporter.distance">
         <p><span class="kilos">{{twoDigitsFloats(exporter.distance)}}</span> ك.م</p>
         <!--
         <p><span class="stars">5</span> نجوم</p>
         -->
       </div>
     </ion-item>
-    
+
   </ion-list>
 
   <p class="small" text-center *ngIf="!moreData">
     لا يوجد محتوى آخر
   </p>
 
-  
+
   <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>

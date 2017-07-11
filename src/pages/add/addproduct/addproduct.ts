@@ -38,8 +38,8 @@ export class AddproductPage {
     this.addProductForm = new FormGroup({
       item_name: new FormControl('', [Validators.required, Validators.minLength(4)]),
       item_price: new FormControl('', [Validators.required,Validators.pattern('[0-9]*\.?[0-9]*')]),
-      item_production_date: new FormControl('', Validators.required),
-      item_expiry_date: new FormControl('', Validators.required),
+      item_production_date: new FormControl(''),
+      item_expiry_date: new FormControl(''),
       item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)]),
       item_image: new FormControl('')
     })
@@ -47,7 +47,7 @@ export class AddproductPage {
   }
 
   ionViewDidLoad() {
-    
+
     this.InitData = this.navParams.get('pageData');
     //console.log(Object.prototype.toString.call(new Date(this.InitData.item_expiry_date)),new Date(this.InitData.item_expiry_date).toISOString());
 
@@ -55,7 +55,7 @@ export class AddproductPage {
     if (typeof this.InitData == 'object') {
       const formKeys = Object.keys(this.addProductForm.value);
 
-      
+
       this.actionText = 'تعديل';
       this.actionBtnTxt = 'تعديل';
       formKeys.forEach((value, index)=> {
@@ -80,7 +80,7 @@ export class AddproductPage {
             'نوفمبر',
             'ديسمبر'
           ]*/
-      
+
       });
     }
 
@@ -96,7 +96,7 @@ export class AddproductPage {
   getDataType(val) {
     return Object.prototype.toString.call(new Date(val)).slice(7,-1).trim()
   }
-  
+
   pickImage() {
 
     let actionSheetCtrl = this.actionCtrl.create({
@@ -138,26 +138,26 @@ export class AddproductPage {
     // action: addItem;
     const form = this.addProductForm;
     // YYYY-MMMM-DD HH:mm:ss
- 
+
     console.log(Object.keys(this.addProductForm.value));
 
     if(form.valid) {
       this.showLoader = true;
-      
+
 
       if (this.actionText != 'تعديل') {
 
         let productForm = Object.assign(this.addProductForm.value, { 'user_id': this.userLocal.id });
         console.log(productForm);
-        
+
         this.productProvider.addProduct(productForm)
           .subscribe(({ status, errors }) => {
             console.log(status);
             if (status.message == 'success') {
-            
+
               this.addProductForm.reset();
               this.navCtrl.pop();
-            
+
             } else {
               // get the first error from database
               let keys = Object.keys(errors);
@@ -165,7 +165,7 @@ export class AddproductPage {
               this.showToast(errMsg);
 
             }
-            
+
           },
           (err) => {
             console.warn(err);
@@ -194,7 +194,7 @@ export class AddproductPage {
             }
 
           })
-  
+
 
       }
 
@@ -205,7 +205,7 @@ export class AddproductPage {
       this.detectUnvalidFormErrors();
     }
 
-    
+
   }
 
 
@@ -216,15 +216,15 @@ export class AddproductPage {
 
       if(form.get(value).getError('required')) {
 
-        this.showToast(`يرجى ادخال ${ArProductForm[value]}`);  
+        this.showToast(`يرجى ادخال ${ArProductForm[value]}`);
 
-        return false;  
+        return false;
 
       } else if(form.get(value).getError('minlength')) {
 
         this.showToast(`${ArProductForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
 
-        return false; 
+        return false;
       }else {
 
         return true;

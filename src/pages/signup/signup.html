@@ -142,17 +142,17 @@
 
             <span> {{AreaName || 'المنطة'}} <input type="text" formControlName="area"> </span>
             <ion-icon name="arrow-down" ></ion-icon>
-            
+
             </div>
           <div (click)="openModal('City', SignUpFrom.getRawValue()['area'])">
             <span>{{CityName || 'المدينة'}} <input type="text" formControlName="city"></span>
             <ion-icon name="arrow-down" ></ion-icon>
-            
+
           </div>
           <div (click)="openModal('Dist',SignUpFrom.getRawValue()['city'])">
             <span>{{DistName || 'الحى'}} <input type="text" formControlName="dist" id="dist"></span>
             <ion-icon name="arrow-down"></ion-icon>
-            
+
           </div>
 
       </div>
@@ -160,6 +160,15 @@
       <div class="form-group animate-input">
         <input type="text" class="form-control" formControlName="maps" placeholder="الموقع على الخريطة">
       </div> -->
+<<<<<<< HEAD
+=======
+
+      <div class="form-group animate-input">
+        <input type="text" class="form-control"
+               (focus)="openMaps()"
+               placeholder="المكان على الخريطة"    >
+      </div>
+>>>>>>> b54228f60b5cd0bbc3da79dafea638ed77b9885b
 
       <div class="form-group animate-input">
         <input type="text" class="form-control" formControlName="address"
@@ -199,7 +208,7 @@
          (click)="toNextPage()"
         id="next-button"
       >{{lastPage || "التالى" }}
-     
+
   </button>
 <!--
 <ion-card padding>

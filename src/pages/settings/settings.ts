@@ -30,27 +30,18 @@ export class SettingsPage {
   }
 
   ionViewDidLoad() {
-   /* this.checkUserLogin();
 
-
-    if (this.userHasLog) {
-        this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'))
-    }
-
-
-
-*/
-    this.ionViewWillEnter();    
-    console.log(this.userLocalData);
+    this.ionViewWillEnter();
+    //console.log(this.userLocalData);
 
   }
 
 
   ionViewWillEnter() {
     console.log('user has cached or not',this.userHasLog);
-    
+
       this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
-    
+
   }
   ionViewWilleave() {
     this.checkUserLogin();

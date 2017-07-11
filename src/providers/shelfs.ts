@@ -12,7 +12,7 @@ export class ShelfsProvider {
     }
 
     getShelfs(userId: number) {
-        let body = {"action": "all","User_id": userId};
+        let body = {"action": "all","user_id": userId};
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
 
@@ -42,7 +42,7 @@ export class ShelfsProvider {
     editShelf(editedShelfData) {
 
         let action = 'edit';
-        
+
         let body = Object.assign({}, { action }, editedShelfData);
 
         console.log('data to the server', body);
@@ -50,13 +50,13 @@ export class ShelfsProvider {
     }
 
     reserveShelf(reservedShelfData) {
-        const action = 'reserve';
+        const action = 'reserveShelf';
 
         let body = Object.assign({}, { action }, reservedShelfData);
 
         console.log('Data will be sent to the server\n', body);
 
-        //return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
 
 }

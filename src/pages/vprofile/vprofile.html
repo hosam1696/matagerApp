@@ -46,12 +46,12 @@
 
             <div id="profile-buttons">
 
-              <button 
-                ion-button 
-                color="primary" 
+              <button
+                ion-button
+                color="primary"
                 small
                 class="follow-btn"
-                [outline]="userData.follow"
+                [outline]="!userData.follow"
                 (click)="follow(userData.id)"
               >
               <ion-icon name="person"></ion-icon>
@@ -74,7 +74,6 @@
         </ion-row>
       </ion-grid>
 
-      
 
       <div id="profile-follow">
         <a color="primary" (click)="navigateToPage('FollowersPage', userData.id)">
@@ -99,7 +98,7 @@
           المكان على الخريطة
           </button>
       </div>
-      <div id="page-segments" padding [hidden]="userData.level_id == 3 || userLocal.level_id == 2||userLocal.level_id == 4">
+      <div id="page-segments" padding [hidden]="!userLocal || userData.level_id == 3 || userLocal.level_id == 2||userLocal.level_id == 4">
         <ion-segment [(ngModel)]="showContent">
 
           <ion-segment-button value="products" (click)="getProducts()">
@@ -127,8 +126,8 @@
       لا يوجد منتجات لعرضها حتى الان
     </p>
     <ion-grid padding-horizontal>
-      <ion-row>
-        <ion-col col-6 *ngFor="let product of allProducts;let i = index">
+      <ion-row *ngFor="let products of allProducts">
+        <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product)">
 
             <img src="assets/img/product-iphone.png" alt="product">
@@ -185,7 +184,7 @@
       لا يوجد رفوف لعرضها حتى الان
     </p>
     <ion-list>
-      
+
       <ion-item (click)="showShelf(shelf)" *ngFor="let shelf of allShelfs; let i = index">
         <div class="shelf-id" >
           <p>رقم الرف <span>{{shelf.name}} </span></p>
@@ -201,7 +200,7 @@
 
           <div class="shelf-controls">
             <ion-badge >السعر : {{shelf.cost}} ريال</ion-badge>
-            
+
             <!--  <ion-icon name="open-outline" (click)="editShelf('AddshelfPage', shelf)"></ion-icon>
         <ion-icon name="trash-outline" (click)="deleteShelf(shelf)"></ion-icon>-->
           </div>

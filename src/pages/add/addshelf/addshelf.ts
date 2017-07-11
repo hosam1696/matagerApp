@@ -8,14 +8,15 @@ interface IShelf {
   'id': number,
   'user_id': number,
   name: string,
-  area: string, cost: string
+  area: string,
+  cost: string
 }
 
 var ArShelfForm;
 (function (ArShelfForm) {
-    ArShelfForm[ArShelfForm["Name"] = "رقم الرف"] = "Name";
-    ArShelfForm[ArShelfForm["Area"] = "مساحة الرف"] = "Area";
-    ArShelfForm[ArShelfForm["Cost"] = "سعر الرف"] = "Cost";
+    ArShelfForm[ArShelfForm["name"] = "رقم الرف"] = "name";
+    ArShelfForm[ArShelfForm["area"] = "مساحة الرف"] = "area";
+    ArShelfForm[ArShelfForm["cost"] = "سعر الرف"] = "cost";
 })(ArShelfForm || (ArShelfForm = {}));
 
 
@@ -40,9 +41,9 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      Name: new FormControl('',[Validators.pattern('[0-9]+'), Validators.required]),
-      Area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
-      Cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required]),
+      name: new FormControl('',[Validators.pattern('[0-9]+'), Validators.required]),
+      area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
+      cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required]),
       salePercentage: new FormControl('')
 
     });
@@ -59,11 +60,11 @@ export class AddshelfPage {
 
     if (typeof this.InitData == 'object') {
       this.actionText = 'تعديل ';
-      this.addShelfForm.controls.Name.setValue(this.InitData.name);
+      this.addShelfForm.controls.name.setValue(this.InitData.name);
 
-      this.addShelfForm.controls.Area.setValue(this.InitData.area);
+      this.addShelfForm.controls.area.setValue(this.InitData.area);
 
-      this.addShelfForm.controls.Cost.setValue(this.InitData.cost);
+      this.addShelfForm.controls.cost.setValue(this.InitData.cost);
 
       this.formAction = 'edit';
     }
@@ -76,7 +77,7 @@ export class AddshelfPage {
     if (this.addShelfForm.valid) {
       this.showLoader = true;
       let shelfForm = Object.assign({}, this.addShelfForm.value, {
-        "User_id": this.userLocal.id
+        "user_id": this.userLocal.id
       });
 
       console.log(shelfForm);
@@ -102,7 +103,7 @@ export class AddshelfPage {
         );
 
       } else {
-        shelfForm['Id'] = this.InitData.id;
+        shelfForm['id'] = this.InitData.id;
         this.shelfsProvider.editShelf(shelfForm).subscribe(
           res => {
             console.log(res);
@@ -137,15 +138,15 @@ export class AddshelfPage {
 
       if(form.get(value).getError('required')) {
 
-        this.showToast(`يرجى ادخال ${ArShelfForm[value]}`);  
+        this.showToast(`يرجى ادخال ${ArShelfForm[value]}`);
 
-        return false;  
+        return false;
 
       } else if(form.get(value).getError('minlength')) {
 
         this.showToast(`${ArShelfForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
 
-        return false; 
+        return false;
       }else {
 
         return true;

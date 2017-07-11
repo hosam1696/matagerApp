@@ -15,15 +15,15 @@
     </ion-refresher>
     <p class="small" text-center *ngIf="netErr">
       تفقد الاتصال وحاول مجددا
-    </p> 
+    </p>
     <p class="small" text-center *ngIf="noFollowers">
       لا يوجد متابعون حتى الان
     </p>
     <p text-center *ngIf="showLoader">
-    <hsa-loader></hsa-loader>      
+    <hsa-loader></hsa-loader>
     </p>
   <ion-list>
-    <ion-item 
+    <ion-item
       *ngFor="let follower of userFollowers"
       (click)="navigateToProfile(follower.id)"
       >
@@ -37,9 +37,11 @@
       </ion-avatar>
       <p>{{follower.name}}</p>
     </ion-item>
-    
-  </ion-list>
 
+  </ion-list>
+  <p text-center *ngIf="!moreData" class="small">
+      لا يوجد مزيد من المتابعين
+  </p>
   <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>

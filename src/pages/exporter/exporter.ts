@@ -14,6 +14,7 @@ import { ImodalData } from "../../app/service/InewUserData";
 export class Exporter {
   userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   dataFromModal;
+  locationError: any = null;
   initLimit: number = 10;
   initStart: number = 0;
   showLoader: boolean = true;
@@ -35,11 +36,11 @@ export class Exporter {
 
     this.getExporters()
       .subscribe(
-      ({ status, data }) => {
+      ({ status, data,errors }) => {
 
         if (status == 'success') {
 
-          console.log('Data', data)
+          console.log('Data', data);
           /*
           const selfIndex = data.findIndex(oneItem => {
             return oneItem.id == this.userLocal.id;
@@ -50,6 +51,8 @@ export class Exporter {
           */
           this.allExporters = data;
 
+        } else {
+          this.locationError = errors
         }
       },
       err => {
@@ -148,12 +151,15 @@ export class Exporter {
   }
 
   getExporters(limit: number = this.initLimit, start: number = this.initStart) {
-    return this.userProvider.getUsersByLevel(3, limit, start, this.userLocal.id||"0" , this.userLocal.map || "")
+    let id = (this.userLocal&&this.userLocal.id) ? this.userLocal.id : 0;
+    let map = (localStorage.getItem('currentLocation'))?localStorage.getItem('currentLocation'):(this.userLocal&&this.userLocal.latitude && this.userLocal.longitude)?this.userLocal.latitude+','+this.userLocal.longitude:'';
+
+    return this.userProvider.getUsersByLevel(3, limit, start, id , map)
   }
 
   navigateToPage(page, user_id): void {
-
-    this.navCtrl.push(page, { userData:[user_id, this.userLocal.id] });
+    let id = (this.userLocal&&this.userLocal.id)? this.userLocal.id : 0;
+    this.navCtrl.push(page, { userData:[user_id, id] });
   }
 
   twoDigitsFloats(float) {
