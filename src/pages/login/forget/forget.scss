@@ -6,8 +6,24 @@ ion-content {
       background-position: 100%;
 
     }
-
+    hsa-loader {
+      #loader {
+        margin: 0 !important;
+      }
+    }
+#form-navigate {
+      height: 30px;
+      padding-top: 10px;
+      margin-right: -5px;
+      button {
+        background: transparent;
+        margin-top: 0;
+        margin-right: 5px;
+        box-shadow: none;
+      }
+    }
     #logo-hero {
+      margin-top: 40%;
       height: 150px;
       width: 100%;
       display: flex;
@@ -32,14 +48,20 @@ ion-content {
             display: flex;
             justify-content: space-between;
             margin-top:15px;
+            
             button {
                 border: none;
                 background: transparent;
                 color: #fff;
+               
             }
         }
+        #no-pad-h {
+          padding-right: 0 !important;
+          padding-left: 0 !important;
+        }
         .form-group {
-        padding: 5px 0;
+        padding: 8px 0;
         .form-control {
           width: 100%;
           background-color: rgba(255, 255, 255, 0.3);
@@ -49,7 +71,7 @@ ion-content {
           border: none;
           font-size: 16px;
           height: 44px;
-
+          
           &::-webkit-input-placeholder {
             color: #d6ecff !important;
           }

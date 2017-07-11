@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController, IonicPage } from 'ionic-angular';
-
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
 import {IlocalUser} from "../../app/service/InewUserData";
@@ -20,9 +20,10 @@ export class HomePage {
     public geolocation: Geolocation,
      public network: Network,
      public toastCont: ToastController,
-    public userProvider: UserProvider
+     public userProvider: UserProvider,
+     public push: Push
   ) {
-    this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
+   
   }
 
   ionViewDidLoad() {
@@ -41,12 +42,34 @@ export class HomePage {
       } else {
         console.warn('No user had signed in or the user didn\'t allow geolocation ')
       }
-      */
+      */ 
     }).catch(err=> {
       console.warn(err);
     });
 
+    
+    let pushOptios: PushOptions = {
+      android: {
+        senderID: '12345679'
+      },
+      ios: {
+        alert: 'true',
+        badge: true,
+        sound: 'false'
+      },
+      windows: {}
+    };
 
+    let push: PushObject = this.push.init(pushOptios);
+
+    push.on('notification').subscribe(d => {
+      console.log('recieve a notification');
+    });
+
+    push.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+
+    push.on('error').subscribe(error => console.error('Error with Push plugin', error));  
+    
    // TODO: check connection
    /*
     this.network.onConnect().subscribe(data=>{

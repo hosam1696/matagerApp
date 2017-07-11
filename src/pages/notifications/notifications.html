@@ -10,93 +10,114 @@
 
 <ion-content  >
 
-  <section *ngIf="isOnline == true; else offline"> 
-
-    <ion-list>
-      <ion-item>
+  <section *ngIf="isOnline; else offline"> 
+<ion-refresher (ionRefresh)="refreshData($event)">
+  <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+</ion-refresher>
+<p class="small" text-center *ngIf="netErr">
+  تفقد الاتصال وحاول مجددا
+</p>
+<p class="small" text-center *ngIf="noData">
+  لا يوجد اشعارات حتى الان
+</p>
+<p text-center *ngIf="showLoader">
+  <hsa-loader></hsa-loader>
+</p>
+    <ion-list >
+      <ion-item 
+        *ngFor="let notification of AllNotifications"
+        (click)="navigateToPage(notification)"
+         
+      >
         <ion-avatar item-left>
-          <!-- To be replaced if the data from server is inistansiated
-            <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+          
+            <img *ngIf = "notification.avatar;else altImages" [src]="notification.avatar" alt="profile image">
         <ng-template #altImages>
-          <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
-          <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+          <img *ngIf="notification.gender == 'female'" src="assets/img/female-alt.png" >
+          <img *ngIf="notification.gender == 'male'" src="assets/img/male-alt.png" >
+          <img src="assets/img/male-alt.png">
         </ng-template>
 
-          -->
-          <img src="assets/img/male-alt.png" alt="male">
         </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
+        <div class="message-sender" [ngClass]="{'unread': notification.status == 0}">
+          <h4>{{ notification.name || 'محمد النبوى' }}</h4>
+          <div class="message-et" >
             <ion-icon name="timer-outline"></ion-icon>
             منذ
-            <span>يومان</span>
+            <span >{{getDateSince(notification.date_added)}}</span>
           </div>
         </div>
-        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل </p>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/female-alt.png" alt="female">
-        </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
-            <ion-icon name="timer-outline"></ion-icon>
-            منذ
-            <span>يومان</span>
-          </div>
-        </div>
-        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/male-alt.png" alt="male">
-        </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
-            <ion-icon name="timer-outline"></ion-icon>
-            منذ
-            <span>يومان</span>
-          </div>
-        </div>
-        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكلن </p>
-
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/male-alt.png" alt="male">
-        </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
-            <ion-icon name="timer-outline"></ion-icon>
-            منذ
-            <span>يومان</span>
-          </div>
-        </div>
-        <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-
+        <p [ngClass]="{' dark': notification.status == 0}">
+          {{ notification['notifiy_message'] }} 
+         </p>
       </ion-item>
 
     </ion-list>
-
+    <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getNotifications($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+        ></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </section>
 
   <ng-template #offline>
     <section id="offline">
       <div>
-        <h1>
-          <ion-icon name="wifi"></ion-icon>
-        </h1>
+          
 
-        <p>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
+        <p><ion-icon name="wifi"></ion-icon>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
       </div>
     </section>
   </ng-template>
 </ion-content>
+
+
+<!--
+<ion-item>
+  <ion-avatar item-left>
+    <img src="assets/img/female-alt.png" alt="female">
+  </ion-avatar>
+  <div class="message-sender">
+    <h4>محمد أحمد</h4>
+    <div class="message-et">
+      <ion-icon name="timer-outline"></ion-icon>
+      منذ
+      <span>يومان</span>
+    </div>
+  </div>
+  <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+
+</ion-item>
+
+<ion-item>
+  <ion-avatar item-left>
+    <img src="assets/img/male-alt.png" alt="male">
+  </ion-avatar>
+  <div class="message-sender">
+    <h4>محمد أحمد</h4>
+    <div class="message-et">
+      <ion-icon name="timer-outline"></ion-icon>
+      منذ
+      <span>يومان</span>
+    </div>
+  </div>
+  <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكلن </p>
+
+</ion-item>
+
+<ion-item>
+  <ion-avatar item-left>
+    <img src="assets/img/male-alt.png" alt="male">
+  </ion-avatar>
+  <div class="message-sender">
+    <h4>محمد أحمد</h4>
+    <div class="message-et">
+      <ion-icon name="timer-outline"></ion-icon>
+      منذ
+      <span>يومان</span>
+    </div>
+  </div>
+  <p>الأشعار الأول من متجر بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+
+</ion-item>
+
+  -->

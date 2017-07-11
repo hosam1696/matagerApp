@@ -14,3 +14,20 @@ export interface Iplace {
   parent: number,
   parent_name: string| null
 }
+export enum ERead{
+  unread,
+  read
+}
+export interface INotification {
+  id: number,
+  user_id: number,
+  notifiy_message: string | any,
+  type: string,
+  url: number,
+  status: ERead,
+  date_added:  any,
+  avatar: string, 
+  gender: string,
+  name: string
+
+}

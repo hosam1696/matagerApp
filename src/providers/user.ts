@@ -27,6 +27,11 @@ export class UserProvider {
 
   }
 
+  forgetPassword(email) {
+    const action = 'forgetPassword';
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, email })).map(res => res.json());
+  }
+
   editUser(userData) {
     const action = 'editUser';
     let body = Object.assign({}, {action}, userData);
@@ -68,6 +73,7 @@ export class UserProvider {
   getNumbersOfFollowers(user_id: number) {
     return this.getUserFollowers(user_id, 100, 0).pluck('data').map((data:any[])=>data.length)
   }
+
   getNumbersOfFollowings(user_id: number) {
     return this.getUserFollowers(user_id,100,0, false).pluck('data').map((data: any[]) => data.length)
   }

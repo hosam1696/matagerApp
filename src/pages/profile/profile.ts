@@ -19,7 +19,7 @@ import {InAppBrowser} from '@ionic-native/in-app-browser'
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
-  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
+  userLocal: IlocalUser;
   showContent: string = 'products';
   AllShelfs :Ishelf[]| any = [];
   noShelfs:string;
@@ -57,6 +57,11 @@ export class ProfilePage {
 
 
 
+    
+  }
+
+  ionViewWillEnter(): void {
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     if (this.userLocal) {
       this.numbersOfFollowers = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
 
@@ -66,22 +71,18 @@ export class ProfilePage {
 
         this.showContent = 'shelfs';
 
+        this.getShelfs(this.userLocal.id);
+
+
       } else if (this.userLocal.level_id == 3) {
 
         this.showContent = 'products'
+        this.getProducts(this.userLocal.id);
       } else {
         // client profile
       }
     }
-  }
-
-  ionViewWillEnter(): void {
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-
-    if (this.userLocal){
-      this.getShelfs(this.userLocal.id);
-      this.getProducts(this.userLocal.id);
-    }
+    
   }
 
   pickImage(cameraImage:string):void {
@@ -267,8 +268,8 @@ export class ProfilePage {
     } else {
 
       let shelfData = Object.assign({}, {
-        "User_id": this.userLocal['id'],
-        Id: shelf.id
+        "user_id": this.userLocal['id'],
+        id: shelf.id
       });
 
       this.alertOptions = {
@@ -292,7 +293,7 @@ export class ProfilePage {
                   let shelfIndex = this.AllShelfs.indexOf(shelf);
                   this.AllShelfs.splice(shelfIndex, 1);
                   //this.getShelfs(this.userLocal['id']);
-                  this.showToast(`تم حذف الرف رقم ${shelfData.Id} بنجاح`)
+                  this.showToast(`تم حذف الرف بنجاح`)
                 } else {
                   this.showToast('لم يتم حذ الرف الرجاء المحاولة فى وقت لاحق')
                 }
@@ -348,7 +349,7 @@ export class ProfilePage {
         [this.showLoader, this.noProducts] = [false, null];
         console.table(data);
       } else {
-        this.noProducts = 'empty';
+        [this.showLoader, this.noProducts] = [false, 'empty'];
       }
     },
     err => {

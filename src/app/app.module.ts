@@ -17,13 +17,15 @@ import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
 import { ItemProvider } from '../providers/item';
+import { NotificationsProvider } from '../providers/notifications';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
-import {NativeGeocoder} from "@ionic-native/native-geocoder";
+import { NativeGeocoder } from "@ionic-native/native-geocoder";
+import { Push } from '@ionic-native/push';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ImagePicker } from '@ionic-native/image-picker';
@@ -80,6 +82,7 @@ import {MapsModal} from "../pages/mapsmodal";
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,
+    NotificationsProvider,
     ImagePicker,
     GoogleMaps,
     NativeGeocoder,
@@ -87,7 +90,8 @@ import {MapsModal} from "../pages/mapsmodal";
     ActionSheet, Camera,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
-    Transfer
+    Transfer,
+    Push
   ]
 })
 export class AppModule {}

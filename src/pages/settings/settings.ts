@@ -38,7 +38,9 @@ export class SettingsPage {
 
 
   ionViewWillEnter() {
-    console.log('user has cached or not',this.userHasLog);
+    console.log('user has cached or not', this.userHasLog);
+    
+    
 
       this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
 

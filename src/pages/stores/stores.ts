@@ -9,7 +9,7 @@ import { ImodalData } from "../../app/service/InewUserData";
   templateUrl: 'stores.html',
 })
 export class StoresPage {
-  userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+  userLocal;
   locationError:any = null;
   dataFromModal: ImodalData;
   initLimit: number = 10;

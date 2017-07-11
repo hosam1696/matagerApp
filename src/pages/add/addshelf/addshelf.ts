@@ -41,11 +41,9 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      name: new FormControl('',[Validators.pattern('[0-9]+'), Validators.required]),
+      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
       area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
-      cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required]),
-      salePercentage: new FormControl('')
-
+      cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required])
     });
   }
 
@@ -59,7 +57,7 @@ export class AddshelfPage {
     console.log(this.InitData, typeof this.InitData);
 
     if (typeof this.InitData == 'object') {
-      this.actionText = 'تعديل ';
+      this.actionText = 'تعديل الرف';
       this.addShelfForm.controls.name.setValue(this.InitData.name);
 
       this.addShelfForm.controls.area.setValue(this.InitData.area);
@@ -89,9 +87,15 @@ export class AddshelfPage {
         .subscribe(
         res => {
 
-          if (res.status = 'success') {
-            this.addShelfForm.reset();
+          if (res.status == 'success') {
+            this.showToast('تم اضافة الرف بنجاح');
+            
             this.navCtrl.pop();
+          } else {
+            
+            let errorsKeys = Object.keys(res.errors);
+            let msg = res.errors[errorsKeys[0]][0];
+            this.showToast(msg);
           }
 
         },
@@ -99,30 +103,43 @@ export class AddshelfPage {
           console.warn(err);
           this.showToast(err);
           this.showLoader = false
+        }, () => {
+          this.showLoader = false;
         }
         );
 
       } else {
-        shelfForm['id'] = this.InitData.id;
-        this.shelfsProvider.editShelf(shelfForm).subscribe(
-          res => {
-            console.log(res);
+        
+        if (this.addShelfForm.dirty) {
+          shelfForm['id'] = this.InitData.id;
+          this.shelfsProvider.editShelf(shelfForm).subscribe(
+            res => {
+              console.log(res);
 
-            /* if success
-            */
-            if (res.status = 'success') {
-              this.addShelfForm.reset();
-              this.navCtrl.pop();
-            } else {
+
+              if (res.status == 'success') {
+                
+                this.navCtrl.pop();
+              } else {
+
+                let errorsKeys = Object.keys(res.errors);
+                let msg = res.errors[errorsKeys[0]][0];
+                this.showToast(msg);
+              }
+            },
+            err => {
+              console.warn(err);
               this.showToast(`مشكلة فى الاتصال الرجاء المحاولة فى وقت لاحق`);
+              this.showLoader = false
             }
-          },
-          err => {
-            console.warn(err);
-            this.showToast(`مشكلة فى الاتصال الرجاء المحاولة فى وقت لاحق`);
-            this.showLoader = false
-          }
-        )
+          )
+        } else {
+
+          console.log('no data has been changed');
+          this.navCtrl.pop();
+        }
+          
+        
     }
     } else {
       this.detectUnvalidFormErrors();

@@ -97,11 +97,11 @@
         <div id="page-segments" padding>
           <ion-segment [(ngModel)]="showContent">
 
-            <ion-segment-button value="products">
+            <ion-segment-button value="products" (click)="getProducts(userLocal.id)">
               المنتجات
             </ion-segment-button>
 
-            <ion-segment-button value="shelfs" >
+            <ion-segment-button value="shelfs"  (click)="getShelfs(userLocal.id)">
               الرفوف
             </ion-segment-button>
           </ion-segment>

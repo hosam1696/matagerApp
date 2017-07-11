@@ -13,11 +13,19 @@ page-addshelf {
             background: #eee;
             //background-color: color($colors, bgColor)
         }
+        h3 {
+            color: color($colors, primaryDark);
+        }
        form {
 
         .form-group {
           padding: 5px 0;
           position: relative;
+          .form-label {
+              padding-right: 5px;
+    color: #2e8bc9;
+    text-shadow: 1px 1px #fff;
+          }
           .form-control {
             height: 40px;
             width: 100%;
@@ -45,7 +53,7 @@ page-addshelf {
                 position: absolute;
                 left: 0;
                 z-index: 10;
-                top: 5px;
+                bottom: 5px;
                 box-sizing: border-box;
                 color: color($colors, primaryDark);
                 height: 40px;

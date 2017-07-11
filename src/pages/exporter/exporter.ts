@@ -12,7 +12,7 @@ import { ImodalData } from "../../app/service/InewUserData";
 })
 
 export class Exporter {
-  userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+  userLocal;
   dataFromModal;
   locationError: any = null;
   initLimit: number = 10;
