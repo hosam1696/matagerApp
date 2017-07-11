@@ -95,7 +95,8 @@ export class Signup {
       email: new FormControl('', Validators.required),
       mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
       gender: new FormControl('male', Validators.required),
-      map: new FormControl(''),
+      latitude: new FormControl(''),
+      longitude: new FormControl(''),
       area: new FormControl('',[Validators.required]),
       city: new FormControl('', [Validators.required]),
       dist: new FormControl('', this.insureStoreUser),
@@ -169,7 +170,8 @@ export class Signup {
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
           mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
           gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-          map: new FormControl(''),
+          latitude: new FormControl(''),
+          longitude: new FormControl(''),
           area: new FormControl('' ,[Validators.required]),
           city: new FormControl('', [Validators.required]),
           dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
@@ -191,7 +193,8 @@ export class Signup {
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        map: new FormControl(''),
+        latitude: new FormControl(''),
+        longitude: new FormControl(''),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('', [Validators.required]),
         dist: new FormControl('' ),
@@ -213,7 +216,8 @@ export class Signup {
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        map: new FormControl(''),
+        latitude: new FormControl(''),
+        longitude: new FormControl(''),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('' , [Validators.required]),
         dist: new FormControl('' ),
@@ -256,7 +260,8 @@ export class Signup {
           .then((response)=> {
             console.log('get an access to geolocation plugin',response);
 
-            this.SignUpFrom.get('map').setValue(`${response.coords.latitude},${response.coords.longitude}`);
+            this.SignUpFrom.get('latitude').setValue(`${response.coords.latitude}`);
+            this.SignUpFrom.get('longitude').setValue(`${response.coords.longitude}`);
             console.log(this.SignUpFrom.value);
 
             return Promise.resolve(this.SignUpFrom.value);

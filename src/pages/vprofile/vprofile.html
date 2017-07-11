@@ -35,10 +35,10 @@
           <ion-col>
             <h4>{{userData.name}}</h4>
             <div id="rank">
-              <ion-icon name="star" color="light"></ion-icon>
-              <ion-icon name="star" color="light"></ion-icon>
-              <ion-icon name="star" color="light"></ion-icon>
-              <ion-icon name="star" color="light"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
               <ion-icon name="star-outline" color="light"></ion-icon>
               &nbsp;
               <span class="user-rank">4</span> / 5
@@ -51,11 +51,11 @@
                 color="primary" 
                 small
                 class="follow-btn"
-                [outline]="!isFollowed"
+                [outline]="userData.follow"
                 (click)="follow(userData.id)"
               >
               <ion-icon name="person"></ion-icon>
-             <span *ngIf="!isFollowed;else followed">متابعة</span>
+             <span *ngIf="!userData.follow;else followed">متابعة</span>
              <ng-template #followed>
                <span>
                  الغاء متابعة
@@ -74,28 +74,32 @@
         </ion-row>
       </ion-grid>
 
-      <div class="map-btn">
-
-        <button ion-button color="lightDark" block text-center>
-          المكان على الخريطة
-        </button>
-      </div>
+      
 
       <div id="profile-follow">
         <a color="primary" (click)="navigateToPage('FollowersPage', userData.id)">
           <ion-icon name="people"></ion-icon>
           المتابِعون
 
-          <span class="following">{{numbersOfFollowers}}</span>
+          <span class="following">{{userData.followers}}</span>
         </a>
 
-        <a color="primary" (click)="navigateToPage('FollowingsPage')">
+        <a color="primary" (click)="navigateToPage('FollowingsPage', userData.id)">
           <ion-icon name="people"></ion-icon>
-          المتابَعون <span class="followers">113</span>
+          المتابَعون <span class="followers">
+             {{userData.followings}}
+          </span>
 
         </a>
       </div>
-      <div id="page-segments" padding [hidden]="userData.level_id == 3 || userLocal.level_id == 2">
+      <div class="map-btn">
+
+        <button (click)="openBrowserMap()" ion-button full clear text-center>
+          <ion-icon name="pin" color="primary"></ion-icon> &nbsp;
+          المكان على الخريطة
+          </button>
+      </div>
+      <div id="page-segments" padding [hidden]="userData.level_id == 3 || userLocal.level_id == 2||userLocal.level_id == 4">
         <ion-segment [(ngModel)]="showContent">
 
           <ion-segment-button value="products" (click)="getProducts()">

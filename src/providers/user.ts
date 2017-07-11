@@ -36,15 +36,18 @@ export class UserProvider {
     return this.http.post(this.API_URL + 'users.php', JSON.stringify(body));
   }
 
-  getUserById(id: number) {
-    return this.http.post(this.API_URL+'users.php', JSON.stringify({"action": "getUser", id})).map(res=>res.json());
+  getUserById(id: number, visited_id:number) {
+    return this.http.post(this.API_URL+'users.php', JSON.stringify({"action": "getUser", id, visited_id})).map(res=>res.json());
   }
 
-  getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number) {
-
+  getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {
+    let [latitude, longitude] = Array(2).fill('');
     const action = 'getUserByLevel';
-
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start })).map(res => res.json());    
+    if (map) {
+     [latitude, longitude] = map.split(',');
+    }
+    
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude })).map(res => res.json());    
   }
 
   follow(followerData, newFollow:boolean) {
@@ -64,6 +67,9 @@ export class UserProvider {
 
   getNumbersOfFollowers(user_id: number) {
     return this.getUserFollowers(user_id).pluck('data').map((data:any[])=>data.length)
+  }
+  getNumbersOfFollowings(user_id: number) {
+    return this.getUserFollowers(user_id, false).pluck('data').map((data: any[]) => data.length)
   }
 
 }

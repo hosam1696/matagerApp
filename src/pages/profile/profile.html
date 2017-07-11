@@ -36,10 +36,10 @@
         <ion-col>
           <h4>{{userLocal.name}}</h4>
           <div id="rank">
-            <ion-icon name="star" color="light"></ion-icon>
-            <ion-icon name="star" color="light"></ion-icon>
-            <ion-icon name="star" color="light"></ion-icon>
-            <ion-icon name="star" color="light"></ion-icon>
+            <ion-icon name="star" color="yellow"></ion-icon>
+            <ion-icon name="star" color="yellow"></ion-icon>
+            <ion-icon name="star" color="yellow"></ion-icon>
+            <ion-icon name="star" color="yellow"></ion-icon>
             <ion-icon name="star-outline" color="light"></ion-icon>
             &nbsp;
             <span class="user-rank">4</span> / 5
@@ -78,20 +78,21 @@
             <ion-icon name="people"></ion-icon>
             المتابِعون
 
-            <span class="following">{{numbersOfFollowers |async}}</span>
+            <span class="following">{{""||numbersOfFollowers |async}}</span>
           </a>
 
           <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
             <ion-icon name="people"></ion-icon>
-            المتابَعون <span class="followers">113</span>
+            المتابَعون <span class="followers">{{""||numbersOfFollowings |async }}</span>
 
           </a>
         </div>
         <div class="map-btn">
 
-        <button  ion-button color="lightDark" block text-center>
+          <button (click)="openBrowserMap()" ion-button  full clear text-center>
+          <ion-icon name="pin" color="primary"></ion-icon> &nbsp;
           المكان على الخريطة
-        </button>
+          </button>
         </div>
         <div id="page-segments" padding>
           <ion-segment [(ngModel)]="showContent">

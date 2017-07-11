@@ -62,12 +62,12 @@ export class StoresPage {
             if ((data.length - 1) < this.initLimit)
               this.moreData = false;
             
-            if (this.userLocal) {
+            /*if (this.userLocal) {
               const selfIndex = data.findIndex(oneItem => {
                 return oneItem.id == this.userLocal.id;
               }); // remove user himself from being listed
               selfIndex > 0 && data.splice(selfIndex, 1);
-            }
+            }*/
             
             this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
 
@@ -99,12 +99,12 @@ export class StoresPage {
       ({ status, data }) => {
         if (status == 'success') {
 
-          if (this.userLocal) {
+         /* if (this.userLocal) {
             const selfIndex = data.findIndex(oneItem => {
               return oneItem.id == this.userLocal.id;
             }); // remove user himself from being listed
             selfIndex > 0 && data.splice(selfIndex, 1);
-          }
+          }*/
           
 
 
@@ -127,7 +127,7 @@ export class StoresPage {
 
 
   getStores(limit: number = this.initLimit, start: number = this.initStart) {
-    return this.userProvider.getUsersByLevel(2, limit, start, this.userLocal.id||0);
+    return this.userProvider.getUsersByLevel(2, limit, start, this.userLocal.id||"1", this.userLocal.map||"");
   }
 
   fetchStores(limit?: number, start?: number) {
@@ -137,12 +137,12 @@ export class StoresPage {
         if (status == 'success') {
 
           console.log('Data',data);
-          if (this.userLocal) {
+          /*if (this.userLocal) {
             const selfIndex = data.findIndex(oneItem => {
               return oneItem.id == this.userLocal.id;
             }); // remove user himself from being listed
             selfIndex > 0 && data.splice(selfIndex, 1);
-          }
+          } */
 
           this.allStores = data;
           console.log(this.allStores)
@@ -159,9 +159,13 @@ export class StoresPage {
       )
   }
 
-  navigateToPage(page, userData) {
-    this.navCtrl.push(page, { userData })
+  navigateToPage(page, user_id) {
+    this.navCtrl.push(page, { userData:[user_id, this.userLocal.id] })
   }
 
+  twoDigitsFloats(float) {
+    float = parseFloat(float);
+    return float.toFixed(2);
+  }
 
 }

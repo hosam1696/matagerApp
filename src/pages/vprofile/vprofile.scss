@@ -15,11 +15,25 @@ ion-content {
             border: 1px solid color($colors, primary);
             min-width: 77px;
         }*/
-            .map-btn {
+        .col {
+                                max-height: 100px;
+                            }
+        #page-segments {
+            padding-top: 0 !important
+        }
+        .map-btn {
+                display: inline-block;
+    width: 100%;
                 padding: 0 13px;
+                margin-bottom: 9px;
+                background-color: #eee;
+                background-image: url('../assets/img/gmaps.png');
+                background-size: 50px 50px;
+                //background-position: right;
+                background-repeat: no-repeat;
                 button {
                     height: 32px;
-                    background-color: #ebebeb !important;
+                    //background-color: #ebebeb !important;
                     color: #666
                 }
             }
@@ -84,7 +98,7 @@ ion-content {
                             border-top: none !important;
                         }
                         border-bottom: 2px solid #eee !important;
-                       // height: 55px;
+                        height: 80px !important;
                         p {
                             color: color($colors, primary)
                         }
@@ -131,7 +145,7 @@ ion-content {
                     ion-row {
                         flex-wrap: wrap;
                         ion-col {
-
+                            
                             margin-bottom: 5px;
                             padding: 2px;
                             &:last-child {
@@ -139,7 +153,7 @@ ion-content {
                             }
                             .col-content {
                                 //min-height: 200px;
-                                height: 100%;
+                                //height: 100%;
                                 background-color: #fff;
                                     display: flex;
                                      flex-direction: column;
@@ -217,10 +231,7 @@ ion-content {
                 font-size: 20px;
               }
             }
-            #page-segments {
-
-
-            }
+            
             ion-grid {
                 ion-row {
                     ion-col{
@@ -350,8 +361,9 @@ ion-content {
             }
             #profile-follow {
                 @extend %flex-between;
-                margin: -12px auto 6px !important;
-                padding:  13px 9px;
+                    margin: 0 auto 7px !important;
+    padding: 0 13px;
+    font-size: 13px;
                 a {
                     color: color($colors, primary);
 

@@ -40,14 +40,14 @@ export class Exporter {
         if (status == 'success') {
 
           console.log('Data', data)
-
+          /*
           const selfIndex = data.findIndex(oneItem => {
             return oneItem.id == this.userLocal.id;
           }); // remove user himself from being listed
           selfIndex > 0 && data.splice(selfIndex, 1);
-
+          
           data.splice(selfIndex, 1);
-
+          */
           this.allExporters = data;
 
         }
@@ -71,10 +71,11 @@ export class Exporter {
           if (status = 'success') {
             if (data.length < this.initLimit)
               this.moreData = false;
-            const selfIndex = data.findIndex(oneItem => {
+            /*const selfIndex = data.findIndex(oneItem => {
               return oneItem.id == this.userLocal.id;
             }); // remove user himself from being listed
             selfIndex > 0 && data.splice(selfIndex, 1);
+            */
             this.allExporters = [...this.allExporters, ...data];//es6 destruction : concat data to the allExporter array
           }
 
@@ -102,12 +103,12 @@ export class Exporter {
       ({ status, data }) => {
 
         if (status == 'success') {
-
+          /*
           const selfIndex = data.findIndex(oneItem => {
             return oneItem.id == this.userLocal.id;
           }); // remove user himself from being listed
           selfIndex > 0 && data.splice(selfIndex, 1);
-
+          */
           this.allExporters = data;
 
         }
@@ -147,12 +148,17 @@ export class Exporter {
   }
 
   getExporters(limit: number = this.initLimit, start: number = this.initStart) {
-    return this.userProvider.getUsersByLevel(3, limit, start, this.userLocal.id)
+    return this.userProvider.getUsersByLevel(3, limit, start, this.userLocal.id||"0" , this.userLocal.map || "")
   }
 
-  navigateToPage(page, userData): void {
+  navigateToPage(page, user_id): void {
 
-    this.navCtrl.push(page, { userData });
+    this.navCtrl.push(page, { userData:[user_id, this.userLocal.id] });
+  }
+
+  twoDigitsFloats(float) {
+    float = parseFloat(float);
+    return float.toFixed(2);
   }
 
 }

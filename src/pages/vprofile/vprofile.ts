@@ -6,6 +6,8 @@ import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
 import { IProduct } from '../../app/service/interfaces';
 import { ShelfModal } from '../profile/shelf/shelfpage';
 import { UserProvider } from '../../providers/user';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 @IonicPage()
 @Component({
   selector: 'page-vprofile',
@@ -34,7 +36,8 @@ export class VprofilePage {
     public modalCtrl: ModalController,
     public rendrer: Renderer2,
     public toastCtrl: ToastController,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public iab: InAppBrowser
   ) {
     
     
@@ -52,20 +55,20 @@ export class VprofilePage {
 
 
   ionViewDidLoad() {
-
-    const userData = this.navParams.get('userData');
-    if (typeof userData == 'object') { //navigation parameter is not given by user id
+    function type(data) {
+      return Object.prototype.toString.call(data).match(/\s+[a-zA-Z]+/)[0].trim()
+    }
+    const userData = this.navParams.get('userData'); // [user_id, localUserId]
+    console.log(type(userData), userData);
+    if (type(userData) == 'Object') { //navigation parameter is not given by user id
       this.userData = userData;
       console.log(userData, typeof userData);
       
       this.configProfile();
-
-      this.getNumbersOfFollowers();
-
           
 
-    } else {
-      this.userProvider.getUserById(userData)
+    } else { // navigation given by array
+      this.userProvider.getUserById(userData[0], userData[1])
         .subscribe(({status, data}) => {
           if(status == 'success')
             this.userData = data;
@@ -79,8 +82,7 @@ export class VprofilePage {
 
           this.configProfile();
 
-          this.getNumbersOfFollowers();
-
+          this.numbersOfFollowings = this.userProvider.getNumbersOfFollowings(this.userData.id);
 
         }
         )
@@ -89,6 +91,18 @@ export class VprofilePage {
 
     
 
+  }
+
+  openBrowserMap(maps = '30.0371616,31.0033728') {
+    if (this.userData.latitude && this.userData.longitude) {
+      maps = this.userData.latitude + ','+this.userData.longitude
+    };
+
+    console.info(maps);
+    const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
+    const tab = this.iab.create(url);
+
+    tab.show();
   }
 
   configProfile() {
@@ -103,6 +117,8 @@ export class VprofilePage {
     }
 
     (this.showContent == 'shelfs') ? this.getShelfs() : this.getProducts();  
+
+    console.log('local User', this.userLocal, 'user Data', this.userData);
 
   }
 
@@ -188,20 +204,20 @@ export class VprofilePage {
       follower_id: this.userLocal.id
     };
 
-    console.log(followData, this.isFollowed);
+    console.log(followData, this.userData.follow);
 
     let FollowOrUnFollow = (followOrNot: boolean = true) => {
-      this.userProvider.follow(followData, followOrNot = !this.isFollowed)
+      this.userProvider.follow(followData, followOrNot )
         .subscribe(
         res => {
           if (res.status == 'success') {
             
             if (followOrNot) {
-              this.numbersOfFollowers += 1;
-              console.log(this.numbersOfFollowers);
+              this.userData.followers += 1;
+              console.log('numbers of followers',this.userData.followers);
             } else {
-              this.numbersOfFollowers -= 1;
-              console.log(this.numbersOfFollowers);
+              this.userData.followers -= 1;
+              console.log('numbers of followers',this.userData.followers);
             }
            
             console.log(res, this.isFollowed, 'isFollowed');
@@ -215,14 +231,14 @@ export class VprofilePage {
           console.warn(err)
         },
         () => {
-          this.isFollowed = !this.isFollowed;
-          (this.isFollowed == true) ? this.showToast(`لقد قمت بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`);
+          this.userData.follow = !this.userData.follow;
+          (this.userData.follow == false) ? this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بمتابعة ${this.userData.name}`);
         }
 
         );
     }
 
-    (!this.isFollowed) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
+    (!this.userData.follow) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
     
 
     
@@ -232,7 +248,7 @@ export class VprofilePage {
 
   }
 
-  navigateToPage(page, pageData = "test product", reciever?: string) {
+  navigateToPage(page, pageData , reciever?: string) {
     this.navCtrl.push(page, { pageData, reciever });
   }
 

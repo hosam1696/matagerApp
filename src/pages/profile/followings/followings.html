@@ -7,64 +7,38 @@
 
 </ion-header>
 
-
 <ion-content no-padding>
+
+  <ion-refresher (ionRefresh)="refreshUsers($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+  </ion-refresher>
+  <p class="small" text-center *ngIf="netErr">
+    تفقد الاتصال وحاول مجددا
+  </p>
+  <p class="small" text-center *ngIf="noFollowers">
+    لا يوجد متابعون حتى الان
+  </p>
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
   <ion-list>
-    <ion-item (click)="navigateToProfile('page')">
+    <ion-item *ngFor="let follower of userFollowings" (click)="navigateToProfile(follower.id)">
       <ion-avatar item-left>
-        <!-- To be replaced if the data from server is inistansiated
-            <img *ngIf = "userImageUrl;else altImages" [src]="userImageUrl" alt="profile image">
+        <!-- To be replaced if the data from server is inistansiated -->
+        <img *ngIf="follower.avatar;else altImages" [src]="follower.avatar" alt="profile image">
         <ng-template #altImages>
-          <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png" >
-          <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png" >
+          <img *ngIf="follower.gender == 'female'" src="assets/img/female-alt.png">
+          <img *ngIf="follower.gender == 'male'" src="assets/img/male-alt.png">
         </ng-template>
-
-          -->
-        <img src="assets/img/male-alt.png" alt="male">
       </ion-avatar>
-      <p>أحمد السورى</p>
-    </ion-item>
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>متاجر على عبده</p>
+      <p>{{follower.name}}</p>
     </ion-item>
 
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>محمد الشامى</p>
-    </ion-item>
-
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>حسين شرف</p>
-    </ion-item>
-
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>متاجر على عبده</p>
-    </ion-item>
-
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>محمد الشامى</p>
-    </ion-item>
-
-
-    <ion-item (click)="navigateToProfile('page')">
-      <ion-avatar item-left>
-        <img src="assets/img/male-alt.png" alt="">
-      </ion-avatar>
-      <p>حسين شرف</p>
-    </ion-item>
   </ion-list>
+
+  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+      ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>

@@ -8,6 +8,7 @@ import { UserProvider } from '../../providers/user';
 import { ShelfModal } from './shelf/shelfpage';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import {InAppBrowser} from '@ionic-native/in-app-browser'
 //import {PopSettings} from './popsetting';
 
 
@@ -30,6 +31,7 @@ export class ProfilePage {
   showSettings: boolean = false;
   cameraError: any;
   numbersOfFollowers: any = 0;
+  numbersOfFollowings: any = 0;
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -43,7 +45,8 @@ export class ProfilePage {
     public popover: PopoverController,
     private transfer: Transfer,
     public rendrer: Renderer2,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public iab: InAppBrowser
   ) {
 
   }
@@ -51,9 +54,13 @@ export class ProfilePage {
   ionViewDidLoad() {
     this.ionViewWillEnter();
 
-    this.numbersOfFollowers = this.userProvider.getNumbersOfFollowers(this.userLocal.id)
+
+    
 
     if (this.userLocal) {
+      this.numbersOfFollowers = this.userProvider.getNumbersOfFollowers(this.userLocal.id)
+
+      this.numbersOfFollowings = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
 
       if (this.userLocal.level_id == 2) {
       
@@ -391,6 +398,16 @@ export class ProfilePage {
     this.navigateToPage('AddproductPage', pageParams, null)
   }
 
+  openBrowserMap(maps = '30.0371616,31.0033728') {
+    if (this.userLocal.latitude && this.userLocal.longitude) {
+      maps = this.userLocal.latitude + ',' + this.userLocal.longitude;
+    }
+    console.info(maps);
+    const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
+    const tab = this.iab.create(url);
+
+    tab.show();
+  }
 
   showShelf(shelfInfo) {
     let shelf = this.modalCtrl.create(ShelfModal, { shelfInfo: shelfInfo });

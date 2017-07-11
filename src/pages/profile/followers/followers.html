@@ -9,11 +9,19 @@
 
 
 <ion-content no-padding>
-  <ion-content>
+
     <ion-refresher (ionRefresh)="refreshUsers($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
     </ion-refresher>
-
+    <p class="small" text-center *ngIf="netErr">
+      تفقد الاتصال وحاول مجددا
+    </p> 
+    <p class="small" text-center *ngIf="noFollowers">
+      لا يوجد متابعون حتى الان
+    </p>
+    <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>      
+    </p>
   <ion-list>
     <ion-item 
       *ngFor="let follower of userFollowers"

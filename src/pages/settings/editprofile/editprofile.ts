@@ -50,14 +50,16 @@ export class Editprofile {
     this.EditUserForm =fb.group( {
       name:  [ this.localUser.name],
       username: [this.localUser.username, Validators.compose([Validators.minLength(5)])],
-      password: [],
+      password: [''],
       InsurePassword: [],
 
       email: [ this.localUser.email ],
       mobile: [this.localUser.mobile, Validators.compose([Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )])] ,
       gender: [ this.localUser.gender ],
       address:  [ this.localUser.address ],
-      map: [ this.localUser.map ],
+      latitude: [this.localUser.latitude],
+
+      longitude: [this.localUser.longitude],
       area: [ this.localUser.area ],
       city: [ this.localUser.city ],
       dist:[ this.localUser.dist ],
@@ -135,7 +137,7 @@ console.log(form, form.valid);
 
         delete form.value['InsurePassword'];
         Object.assign(form.value, { id: this.localUser['id'] });
-        console.log('edited form', form);
+        console.log('edited form', form.value);
         console.log(Object.keys(form.controls));
 
         this.userprovider.editUser(form.value).map(res => res.json()).subscribe(({ status, data, errors }) => {

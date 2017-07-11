@@ -321,9 +321,14 @@ page-profile {
 
             .map-btn {
                 padding: 0 13px;
+                background-color: #eee;
+                background-image: url('../assets/img/gmaps.png');
+                background-size: 50px 50px;
+                //background-position: right;
+                background-repeat: no-repeat;
                 button {
                     height: 32px;
-                    background-color: #ebebeb !important;
+                    //background-color: #ebebeb !important;
                     color: #666
                 }
             }

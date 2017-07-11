@@ -39,7 +39,7 @@
   <ion-list padding no-lines>
     <ion-item 
     *ngFor="let store of allStores"
-      (click)="navigateToPage('VprofilePage', store)"
+      (click)="navigateToPage('VprofilePage', store.id)"
      no-padding margin-bottom="4px" text-start>
       <div class="item-avatar" item-left>
         <img src="assets/img/store_col.png" alt="">
@@ -49,7 +49,7 @@
 
       </h2>
       <div class="exporter-info">
-        <p><span class="kilos">1500</span> ك.م</p>
+        <p><span class="kilos">{{twoDigitsFloats(store.distance)}}</span> ك.م</p>
 
       </div>
     </ion-item>
