@@ -229,10 +229,15 @@ export class VprofilePage {
 
                 if (followOrNot) {
                   this.userData.followers += 1;
-                  console.log('numbers of followers', this.userData.followers);
+                  console.log('numbers of followers', this.userData.followers, this.userData.followings, this.userLocal);
+                  this.userLocal.followings++
+                  localStorage.setItem('userLocalData',JSON.stringify(this.userLocal));
+                  
                 } else {
                   this.userData.followers -= 1;
                   console.log('numbers of followers', this.userData.followers);
+                  this.userLocal.followings--;
+                  localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
                 }
 
                 console.log(res, this.isFollowed, 'isFollowed');

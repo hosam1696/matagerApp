@@ -56,6 +56,10 @@ import 'rxjs/operator/filter';
         <ion-icon name="mark"></ion-icon>
       </p>
 
+      <p text-center class="small" *ngIf="noFilter">
+        لا يوجد اماكن تطابق هذا البحث
+      </p>
+
       <p *ngIf="errorAccessDB" text-center wordcolor="blue" class="small">
         <br>
         <ion-icon name="warning-outline" ></ion-icon>
@@ -141,6 +145,7 @@ export class PlacesModal {
   choosenParent: number = 0;
   moreData: boolean = true;
   noRefresh: boolean = true;
+  noFilter: boolean = false;
   constructor(params: NavParams,
               public viewCtrl: ViewController,
               public areasProviders: AreaProvider, private events: Events) {
@@ -168,10 +173,13 @@ export class PlacesModal {
   refreshPlaces(event) {
     this.noRefresh = false;
     console.log(event);
-    this.fetchAreas(() => true, this.initLimit, this.initStart);
-    setTimeout(() => {
-      event.complete();
-    }, 1500)
+    this.fetchAreas((d, s) => {
+      console.log('boolean event', s);
+      if (d == 'completed' && s)
+        event.complete();
+    }, this.initLimit, this.initStart);
+    
+    
   }
 
   fetchMoreData(event) {
@@ -243,14 +251,22 @@ export class PlacesModal {
 
 
   filterItems(event, target = this.places) {
+    
     let value = event.target.value;
+    
+    [this.noPlaces, this.moreData, this.noFilter] = [false, true, false];
 
     if (value && value.trim() != '') {
 
       let filtered = this.places.filter( item => {
         return item.name.includes( value )
       } );
-      this.places = filtered;
+      if (filtered.length > 0) {
+        this.places = filtered;
+      } else {
+        this.places = [];
+        this.noFilter = true;
+      }
 
     } else {
       switch (this.modalNum) {
@@ -281,8 +297,8 @@ export class PlacesModal {
     }
     
   }
-  fetchAreas(callback = (data)=>{} , limit:number= this.initLimit, start:number= this.initStart):void {
-
+  fetchAreas(callback: (data, event?: boolean) => void = (d) => { }, limit:number= this.initLimit, start:number= this.initStart):void {
+    this.noPlaces = false;
     //TODO: check the network connection after opening the modal [production Mode only]
     //if (this.events.publish('networkStatus') == [undefined] || [null]) {
     /* if(this.showLoader == this.isOffline){
@@ -304,13 +320,14 @@ export class PlacesModal {
       },
       () => {
         this.showLoader = false;
-        callback( 'completed' );
+        callback('completed', true);
       }
     )
   }
 
   fetchAreaCallback( keepModalNumber: boolean = false):void {
     this.showLoader = true;
+    this.noPlaces = false;
     this.fetchAreas((fetched) => {
       if (fetched != 'err' && fetched == 'completed') {
 

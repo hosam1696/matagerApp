@@ -51,17 +51,11 @@
 
     <ion-item no-lines id="hero">
       <ion-avatar item-left>
-        <!--
-        <img *ngIf="userGender == 'female'" src="assets/img/female-alt.png">
-        <img *ngIf="userGender == 'male'" src="assets/img/male-alt.png"> -->
-
         <img *ngIf = "userLocalData.avatar != '' ;else altImages" [src]="userLocalData.avatar" alt="profile image">
         <ng-template #altImages>
           <img class="alt" *ngIf="userLocalData.gender == 'female'" src="assets/img/female-alt.png" >
           <img class="alt" *ngIf="userLocalData.gender == 'male'" src="assets/img/male-alt.png" >
         </ng-template>
-        <!--<ion-icon name="person" color="primaryDark"></ion-icon>-->
-
       </ion-avatar>
       <h3>{{ userLocalData.name }}</h3>
       <p>{{ userLocalData.username}}</p>

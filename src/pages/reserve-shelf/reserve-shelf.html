@@ -15,9 +15,87 @@
 
 <ion-content >
 
-  <h1 text-center>
-     ReserveShelfPage
-     <br>
-     {{shelfData| json}}
-  </h1>
+<ion-list >
+
+  <ion-item no-lines id="hero">
+    <ion-avatar item-left>
+      <img *ngIf="pageData.avatar != '' ;else altImages" [src]="pageData.avatar" alt="profile image">
+      <ng-template #altImages>
+        <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
+        <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
+      </ng-template>
+    </ion-avatar>
+    <h3>
+      <span>{{ pageData.name }}</span>
+      <span class="since-time">منذ
+        {{pageData.date_added | date}}
+      </span>
+    </h3>
+    <p>{{ pageData.notifiy_message}}</p>
+  </ion-item>
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
+  <ion-item-group *ngIf="showShelfList">
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+
+        <ion-col col-4>
+        رقم الرف
+        </ion-col>
+        <ion-col col-8>
+          {{shelfData.name}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+ 
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+
+        <ion-col col-4>
+          مساحة الرف
+        </ion-col>
+        <ion-col col-8>
+          {{shelfData.area}}
+          متر
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+
+        <ion-col col-4>
+          سعر الرف
+        </ion-col>
+        <ion-col col-8>
+          {{shelfData.cost}} ريال
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  </ion-item-group>
+</ion-list>
+
+<ion-card id="sales-percentage">
+  <h2 text-center >طلب نسبة على البيع</h2>
+  <!--<input type="text" placeholder="نسبة البيع"> -->
+  <ion-range min="0" max="100" step=".5" pin="true" [(ngModel)]="salesPercentage"></ion-range>
+  <p text-center>
+    <button ion-button small>
+      ارسال للحصول على الموافقة
+    </button>
+  </p>
+</ion-card>
+
+  <section id="float-btn">
+    <button color="primary">موافقة</button>
+    <button color="danger">رفض</button>
+  </section>
+
 </ion-content>

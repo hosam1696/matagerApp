@@ -74,16 +74,16 @@
       </ion-grid>
 
         <div id="profile-follow">
-          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
+          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
             <ion-icon name="people"></ion-icon>
             المتابِعون
 
-            <span class="following">{{""||numbersOfFollowers |async}}</span>
+            <span class="following">{{userLocal.followers}}</span>
           </a>
 
-          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
+          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
             <ion-icon name="people"></ion-icon>
-            المتابَعون <span class="followers">{{""||numbersOfFollowings |async }}</span>
+            المتابَعون <span class="followers">{{userLocal.followings}}</span>
 
           </a>
         </div>
@@ -286,7 +286,7 @@
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
 
-    <p text-center class="small">انت غير مسجل لدينا </p>
+    <p text-center class="small"><br>انت غير مسجل لدينا </p>
     <button ion-button  round (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
 
     <button ion-button round (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {IlevelId, Iplace} from "../../app/service/InewUserData";
@@ -24,7 +24,9 @@ let ArSignForm;
   selector: 'page-signup',
   templateUrl: 'signup.html',
 })
-export class Signup {
+export class Signup implements AfterViewInit{
+  @ViewChild('ccMobile') ccMobileCode;
+
   gender:string = 'male';
   personType: string = 'customer';
   lastPage: string ;
@@ -38,7 +40,6 @@ export class Signup {
   Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
   PageFormcontrols: object;
 
-
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -49,7 +50,7 @@ export class Signup {
     private geolocation: Geolocation
   ) {
 
-    console.log(this.Name);
+    
     //console.log(this.signGender);
     this.constructSignForm();
     this.PageFormcontrols = {
@@ -58,11 +59,11 @@ export class Signup {
 
         ['كلمة المرور',this.SignUpFrom.get('password')],
         ['تأكيد كلمة المرور',this.SignUpFrom.get('InsurePassword')],
-        ['الاسم',this.SignUpFrom.get('name')],
+        ['الاسم بالكامل',this.SignUpFrom.get('name')],
 
         ['البريد الالكترونى',this.SignUpFrom.get('email')],
 
-        ['رقم الهاتف',this.SignUpFrom.get('mobile')],
+        ['رقم الجوال',this.SignUpFrom.get('mobile')],
 
         ['الجنس',this.SignUpFrom.get('gender')],
       ],
@@ -82,11 +83,11 @@ export class Signup {
 
     };
 
-    console.log(this.SignUpFrom);
-
   }
 
-
+  ngAfterViewInit() {
+    console.log(this.Name, this.ccMobileCode.value);
+  }
   constructSignForm() {
     this.SignUpFrom = this.fb.group({
       username: new FormControl('', [Validators.required, Validators.minLength(5)]),
@@ -94,7 +95,7 @@ export class Signup {
       InsurePassword: new FormControl('', [Validators.required, this.insurePass]),
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       email: new FormControl('', Validators.required),
-      mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
+      mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
       gender: new FormControl('male', Validators.required),
       latitude: new FormControl(''),
       longitude: new FormControl(''),
@@ -169,7 +170,7 @@ export class Signup {
           InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
           name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-          mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
+          mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
           gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
           latitude: new FormControl(''),
           longitude: new FormControl(''),
@@ -192,7 +193,7 @@ export class Signup {
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
+        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
         latitude: new FormControl(''),
         longitude: new FormControl(''),
@@ -215,7 +216,7 @@ export class Signup {
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]*"), Validators.minLength(7)]),
+        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
         latitude: new FormControl(''),
         longitude: new FormControl(''),
@@ -254,7 +255,7 @@ export class Signup {
     console.log('not checked yet',this.SignUpFrom.value);
 
     if (this.SignUpFrom.valid) {
-
+      //this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + this.SignUpFrom.value.password);
       console.log(this.SignUpFrom.value, this.SignUpFrom.status);
 
         this.geolocation.getCurrentPosition()
@@ -264,7 +265,8 @@ export class Signup {
             this.SignUpFrom.get('latitude').setValue(response.coords.latitude);
             this.SignUpFrom.get('longitude').setValue(response.coords.longitude);
             console.log(this.SignUpFrom.value);
-
+            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + this.SignUpFrom.value.mobile);
+            delete this.SignUpFrom.value.InsurePassword;
             return Promise.resolve(this.SignUpFrom.value);
           })
           .then((formValue)=> {
@@ -323,8 +325,7 @@ export class Signup {
   }
 
   addUserProvider(formValue) {
-
-    delete this.SignUpFrom.value.InsurePassword;
+    
 
     this.userProvider.addUser(formValue)
       .subscribe(({ status, data, errors }) => {

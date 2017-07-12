@@ -41,8 +41,8 @@ export class UserProvider {
     return this.http.post(this.API_URL + 'users.php', JSON.stringify(body));
   }
 
-  getUserById(id: number, visited_id:number) {
-    return this.http.post(this.API_URL+'users.php', JSON.stringify({"action": "getUser", id, visited_id})).map(res=>res.json());
+  getUserById(id: number, login_user_id:number) {
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id})).map(res=>res.json());
   }
 
   getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {

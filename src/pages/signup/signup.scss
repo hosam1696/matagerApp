@@ -197,6 +197,22 @@ page-signup {
           }
         }
         padding: 2px 0;
+        &.phone {
+          position: relative;
+
+          ion-select {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            color: #fff;
+            text-align: left;
+            border-right: 1px solid rgb(4, 141, 255);
+            min-width: 60px;
+            .select-icon {
+              display: none;
+            }
+          }
+        }
         .form-control {
           font-size: 14px;
           width: 100%;

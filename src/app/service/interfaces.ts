@@ -28,6 +28,6 @@ export interface INotification {
   date_added:  any,
   avatar: string, 
   gender: string,
-  name: string
-
+  name: string,
+  send_user_id: number
 }

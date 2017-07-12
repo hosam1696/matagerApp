@@ -67,10 +67,7 @@ export class StoresPage {
               selfIndex > 0 && data.splice(selfIndex, 1);
             }*/
             this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
-
           }
-
-
         },
         (err) => {
           console.warn('error', err) // catch net error acceccsing database

@@ -49,6 +49,13 @@ export class ShelfsProvider {
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
 
+    getShelfById(shelfId:number, user_id:number) {
+        const action = 'getShelf';
+
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({ action, id: shelfId, user_id })).map(res => res.json());
+    }
+
+
     reserveShelf(reservedShelfData) {
         const action = 'reserveShelf';
 

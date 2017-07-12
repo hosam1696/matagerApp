@@ -15,13 +15,14 @@ let ArTimeId;
   ArTimeId["minute"] = "\u062F\u0642\u064A\u0642\u0629";
   ArTimeId["second"] = "\u062B\u0627\u0646\u064A\u0629";
 })(ArTimeId || (ArTimeId = {}));
+
 let ArDTimeId;
 (function (ArDTimeId) {
-  ArDTimeId["month"] = "\u0634\u0647\u0631\u0627\u0646";
-  ArDTimeId["day"] = "\u064A\u0648\u0645\u0627\u0646";
-  ArDTimeId["hour"] = "\u0633\u0627\u0639\u062A\u0627\u0646";
-  ArDTimeId["minute"] = "\u062F\u0642\u064A\u0642\u062A\u0627\u0646";
-  ArDTimeId["second"] = "\u062B\u0627\u0646\u064A\u062A\u0627\u0646";
+  ArDTimeId[ArDTimeId["month"] = "شهرين"] = "month";
+  ArDTimeId[ArDTimeId["day"] = 'يومين'] = "day";
+  ArDTimeId[ArDTimeId["hour"] = 'ساعتين'] = "hour";
+  ArDTimeId[ArDTimeId["minute"] = 'دقيقتين'] = "minute";
+  ArDTimeId[ArDTimeId["second"] = 'ثانيتين'] = "second";
 })(ArDTimeId || (ArDTimeId = {}));
 
 let ArLttTimeId;
@@ -47,6 +48,7 @@ export class NotificationsPage {
   showLoader: boolean = true;
   netErr: boolean = false;
   noData: boolean = false;
+  noUser: boolean = false;
   AllNotifications: INotification[];
   constructor(
     public navCtrl: NavController,
@@ -56,15 +58,19 @@ export class NotificationsPage {
   ) {
   }
 
+  ionViewWillEnter() {
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
+    if (this.userLocal) {
+      this.getNotifications();
+    } else {
+      [this.noUser, this.showLoader] = [true, false];
+    }
+  }
   
   ionViewDidLoad() {
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));   
     
-
-
-    this.getNotifications();
-
-
+    this.ionViewWillEnter();
 
     //console.log('ionViewDidLoad Messages');
     /*
@@ -79,10 +85,9 @@ export class NotificationsPage {
     */ 
   }
 
-
-  refreshData() {
+  refreshData(event) {
     this.initStart = 0;
-    this.getNotifications();
+    this.getNotifications(event);
   }
 
   getMoreData(event) {
@@ -129,7 +134,7 @@ export class NotificationsPage {
           
           this.AllNotifications = data;
 
-          console.log(this.AllNotifications);
+          console.log('All notifications',this.AllNotifications);
         } else {
 
           this.noData = true;
@@ -142,6 +147,7 @@ export class NotificationsPage {
       },
       () => {
         this.showLoader = false;
+        event && event.complete();
       }
     )
   }
@@ -186,11 +192,25 @@ export class NotificationsPage {
         }
       }
       //console.log(timeUnits.unitsId[i])
-    }
+  }
   
+  navigateToPage(pageData: INotification | string):void {
+    if (typeof pageData == 'string') {
+      this.navCtrl.push(pageData);
+    } else {
+      if (pageData.type == 'reserveShlef')
+        this.navCtrl.push('ReserveShelfPage', { pageData });
+    }
+    
 
-  navigateToPage(pageData) {
-    this.navCtrl.push('ReserveShelfPage', { pageData });
+  }
+
+  limitNOtification(notificationMsg:string): string {
+    return (notificationMsg.length > 44) ? notificationMsg.substr(0, 44): notificationMsg
+  }
+
+  isRead(status) {
+    return (status == 1) ? 'highlight' : '';
   }
 
 }

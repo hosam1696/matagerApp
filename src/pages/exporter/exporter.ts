@@ -101,6 +101,7 @@ export class Exporter {
   }
 
   refreshExporter(event) {
+    this.initStart = 0;
     this.getExporters()
       .subscribe(
       ({ status, data }) => {
