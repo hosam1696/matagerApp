@@ -5,7 +5,14 @@ import { NotificationsProvider } from '../../providers/notifications';
 import { IlocalUser } from '../../app/service/InewUserData';
 import { INotification } from '../../app/service/interfaces';
 
-
+enum TIME {
+  year = 'سنة',
+  month = 'شهر',
+  day = 'يوم',
+  hour = 'ساعة',
+  minute = 'دقيقة',
+  second = 'ثانية'
+}
 
 let ArTimeId;
 (function (ArTimeId) {

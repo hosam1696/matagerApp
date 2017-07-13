@@ -11,7 +11,7 @@ import { ImodalData } from "../../app/service/InewUserData";
 export class StoresPage {
   userLocal;
   locationError:any = null;
-  dataFromModal: ImodalData;
+  dataFromModal: ImodalData| any;
   initLimit: number = 10;
   initStart: number = 0;
   showLoader: boolean = true;
