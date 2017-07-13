@@ -18,6 +18,11 @@ export enum ERead{
   unread,
   read
 }
+export enum Eclose {
+  pending,
+  accepted,
+  refused  
+}
 export interface INotification {
   id: number,
   user_id: number,
@@ -29,5 +34,44 @@ export interface INotification {
   avatar: string, 
   gender: string,
   name: string,
-  send_user_id: number
+  send_user_id: number,
+  close?: Eclose
+}
+
+export interface Ishelf {
+  area: number,
+  close: number,
+  cost: number,
+  id: number,
+  name: string,
+  user_id: number,
+  data_added?: Date,
+  data_modified?: Date
+}
+
+
+export enum ArDTimeId {
+  year = 'سنتين',
+  month = 'شهرين',
+  day = 'يومين',
+  hour = 'ساعتين',
+  minute = 'دقيقتين',
+  second = 'ثانيتين'
+}
+export enum ArTimeId {
+  year = 'سنة',
+  month = 'شهر',
+  day = 'يوم',
+  hour = 'ساعة',
+  minute = 'دقيقة',
+  second = 'ثانية'
+}
+
+export enum ArLttTimeId {
+  year = 'سنوات',
+  month = 'شهور',
+  day = 'أيام',
+  hour = 'ساعات',
+  minute = 'دقائق',
+  second = 'ثوان'
 }

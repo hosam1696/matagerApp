@@ -66,4 +66,43 @@ export class ShelfsProvider {
         return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
     }
 
+    addShelfPercentage(percentageData) {
+        /*{ "action": "addSalesPercentage", "recive_user_id": "36", "user_id": "5", "url": "15", "name":"46799", "sale_percentage":"7" } */
+
+        const action = 'addSalesPercentage';
+
+        let body = Object.assign({ action }, percentageData);
+
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+
+        
+    }
+
+    acceptRequest(requestData) {
+        /*
+            {"action": "acceptRequest", "receive_user_id": "36", "user_id": "5", "url": "15", "name":"46799"}';
+        */
+        const action = 'acceptRequest';
+
+        let body = Object.assign({ action }, requestData );
+
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+
+    }
+
+    refuseRequest(requestData) {
+        /*
+
+        '{"action": "refuseRequest", "receive_user_id": "36", "user_id": "5", "url": "15", "name":"46799"}';
+
+        */
+        const action = 'refuseRequest';
+
+        let body = Object.assign({ action }, requestData );
+
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+
+
+    }
+
 }

@@ -5,15 +5,8 @@ import { NotificationsProvider } from '../../providers/notifications';
 import { IlocalUser } from '../../app/service/InewUserData';
 import { INotification } from '../../app/service/interfaces';
 
-enum TIME {
-  year = 'سنة',
-  month = 'شهر',
-  day = 'يوم',
-  hour = 'ساعة',
-  minute = 'دقيقة',
-  second = 'ثانية'
-}
 
+/*
 let ArTimeId;
 (function (ArTimeId) {
   ArTimeId["month"] = "\u0634\u0647\u0631";
@@ -22,7 +15,34 @@ let ArTimeId;
   ArTimeId["minute"] = "\u062F\u0642\u064A\u0642\u0629";
   ArTimeId["second"] = "\u062B\u0627\u0646\u064A\u0629";
 })(ArTimeId || (ArTimeId = {}));
+*/
+export enum ArDTimeId{
+  year = 'سنتين',
+  month = 'شهرين',
+  day = 'يومين',
+  hour = 'ساعتين',
+  minute = 'دقيقتين',
+  second = 'ثانيتين'
+}
+export enum ArTimeId {
+  year = 'سنة',
+  month = 'شهر',
+  day = 'يوم',
+  hour = 'ساعة',
+  minute = 'دقيقة',
+  second = 'ثانية'
+}
 
+export enum ArLttTimeId {
+  year = 'سنوات',
+  month = 'شهور',
+  day = 'أيام',
+  hour = 'ساعات',
+  minute = 'دقائق',
+  second = 'ثوان'
+}
+
+/*
 let ArDTimeId;
 (function (ArDTimeId) {
   ArDTimeId[ArDTimeId["month"] = "شهرين"] = "month";
@@ -31,7 +51,8 @@ let ArDTimeId;
   ArDTimeId[ArDTimeId["minute"] = 'دقيقتين'] = "minute";
   ArDTimeId[ArDTimeId["second"] = 'ثانيتين'] = "second";
 })(ArDTimeId || (ArDTimeId = {}));
-
+*/
+/*
 let ArLttTimeId;
 (function (ArLttTimeId) {
   ArLttTimeId["month"] = "\u0634\u0647\u0648\u0631";
@@ -40,7 +61,7 @@ let ArLttTimeId;
   ArLttTimeId["minute"] = "\u062F\u0642\u0627\u0626\u0642";
   ArLttTimeId["second"] = "\u062B\u0648\u0627\u0646";
 })(ArLttTimeId || (ArLttTimeId = {}));
-
+*/
 @IonicPage()
 @Component({
   selector: 'page-notifications',
@@ -69,6 +90,7 @@ export class NotificationsPage {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
     if (this.userLocal) {
+      [this.noUser, this.showLoader,this.noData, this.netErr] = [false, true, false, false];
       this.getNotifications();
     } else {
       [this.noUser, this.showLoader] = [true, false];
@@ -112,7 +134,8 @@ export class NotificationsPage {
           
           } else {
 
-
+            event.complete();
+            this.moreData = false;
 
           }
         },
@@ -131,7 +154,9 @@ export class NotificationsPage {
   }
 
   getNotifications(event = null) {
-    
+    this.initStart = 0;
+    if (!event)
+      this.showLoader = true;
     let notifications = this.notificationProvider.getNotifications(this.userLocal.id, this.initLimit, this.initStart);
 
 
@@ -153,7 +178,7 @@ export class NotificationsPage {
         this.netErr = true;
       },
       () => {
-        this.showLoader = false;
+        [this.moreData, this.showLoader] = [true,false];
         event && event.complete();
       }
     )
@@ -172,7 +197,7 @@ export class NotificationsPage {
 
   getDateSince(date) {
     let timeUnits = {
-      timeId: ["month", "day", "hour", "minute", "second"],
+      timeId: ['year', 'month', 'day', 'hour', 'minute', 'second'],
       unitsId: [(60 * 60 * 24 * 30), (60 * 60 * 24), (60 * 60), 60, 1]
     };
     let dNow = Date.now();
@@ -205,8 +230,18 @@ export class NotificationsPage {
     if (typeof pageData == 'string') {
       this.navCtrl.push(pageData);
     } else {
-      if (pageData.type == 'reserveShlef')
+      if (pageData.type == 'reserveShlef') {
+        /*
+        update read notification status before navigating
+        this.notificationProvider.updatereadNotify(pageData.id)
+          .subscribe(res => {
+            this.navCtrl.push('ReserveShelfPage', { pageData });
+          });*/
+
         this.navCtrl.push('ReserveShelfPage', { pageData });
+        
+      }
+        
     }
     
 
@@ -217,7 +252,7 @@ export class NotificationsPage {
   }
 
   isRead(status) {
-    return (status == 1) ? 'highlight' : '';
+    return (status == 0) ? 'highlight' : '';
   }
 
 }

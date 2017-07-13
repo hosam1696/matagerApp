@@ -17,6 +17,11 @@ page-reserve-shelf {
             text-shadow: 1px 1px #fff;
             color: color($colors, primary)
           }
+          h4 {
+            font-weight: bold;
+            text-shadow: 1px 1px #fff;
+            color: color($colors, primary)
+          }
         }
         ion-item-group {
           margin-top: 6px;

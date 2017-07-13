@@ -1,0 +1,46 @@
+$bgColor: color($colors, bgColor);
+$primary : color($colors, primary);
+page-reservedshelfs {
+
+    ion-content {
+        &.content {
+            background-color:$bgColor 
+        }
+
+        p {
+            &.small {
+                color: #666 !important
+            }
+        }
+        * {
+            .prim {
+                                    color: $primary
+            
+                                }
+        }
+        ion-list {
+            ion-item {
+                ion-label {
+                    display: flex;
+                    justify-content: space-between;
+                    flex-direction: column;
+                    p {
+                        color: color($colors, primary) !important;
+                        &:last-child {
+                            display: flex;
+                            justify-content: space-between;
+
+                        }
+                        span {
+                                color: #666
+                            }
+                    
+                    }
+                }
+
+            }
+        }
+    }
+
+        
+}

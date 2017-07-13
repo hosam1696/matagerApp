@@ -36,7 +36,9 @@
         </ion-item>
     </ion-list>
 
-    <button *ngIf="modalInfo.close == 0" ion-button full (click)="requestBooking()" class="float-btn">طلب حجز الرف</button>
+    <button *ngIf="modalInfo.close == 0" ion-button full (click)="requestBooking()" class="float-btn">
+        <hsa-loader *ngIf="showLoader"></hsa-loader>
+        طلب حجز الرف</button>
     <!-- <section >
             <div class="shelf-id">
 

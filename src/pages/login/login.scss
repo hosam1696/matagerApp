@@ -29,6 +29,8 @@ page-login {
     }
     #page-content {
      //background-color: red;
+     max-width: 450px;
+    margin: 0 auto;
       transform: translateY( -50px);
       width: 100%;
       height: 100%;
@@ -65,7 +67,7 @@ page-login {
 
       margin-top: -15px;
       img {
-        width: 40%;
+        width: 140px;
 
       }
     }
@@ -73,6 +75,7 @@ page-login {
 
       ion-list {
         #login-button {
+          
           display: flex;
           align-items: center;
           width: 100%;

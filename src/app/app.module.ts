@@ -12,6 +12,7 @@ import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 
 import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
+import { SinceDatePipeModule } from './service/since-date/since-date.module';
 
 import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
@@ -35,6 +36,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
 import {changePropDirectiveModule} from "./service/changeprop.directive.module";
 import {MapsModal} from "../pages/mapsmodal";
 
+
 //import { GenderPipe } from '../pipes/gender/gender';
 
 
@@ -46,6 +48,7 @@ import {MapsModal} from "../pages/mapsmodal";
     ShelfModal,
     MapsModal,
     PopSettings
+    
   ],
   imports: [
     BrowserModule,
@@ -60,8 +63,8 @@ import {MapsModal} from "../pages/mapsmodal";
       activator : 'ripple'
     }),
     HsaloaderComponentModule,
-    changePropDirectiveModule
-  ],
+    changePropDirectiveModule,
+    SinceDatePipeModule  ],
 
   bootstrap: [IonicApp],
   entryComponents: [

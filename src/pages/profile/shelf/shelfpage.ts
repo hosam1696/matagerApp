@@ -11,7 +11,7 @@ import { ShelfsProvider } from '../../../providers/shelfs';
 export class ShelfModal {
     modalInfo: any;
     localUser = JSON.parse(localStorage.getItem('userLocalData'));
-
+    showLoader: boolean = false;
     constructor(params: NavParams,
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
@@ -32,6 +32,7 @@ export class ShelfModal {
     }
 
     requestBooking() {
+        this.showLoader = true;
         let reserveShelfData = {
             shelf_id: this.modalInfo.id,
             user_id : this.localUser.id,
@@ -41,7 +42,7 @@ export class ShelfModal {
 
         this.shelfsProvider.reserveShelf(reserveShelfData)
           .subscribe(({status, data})=>{
-            if(status === 'success' && data === true) {
+            if(status === 'success' && data == true) {
               this.showToast(`لقد تم ارسال طلب حجزك الى ${this.modalInfo.username}`)
             }
           })

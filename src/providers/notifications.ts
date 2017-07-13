@@ -15,7 +15,9 @@ export class NotificationsProvider {
         return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action, user_id, limit, start })).map(res => res.json());
     }
 
-
+    updatereadNotify(notification_id: number) {
+        return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action: 'readNotify', id: notification_id })).map(res => res.json());
+    }
     
 
 }

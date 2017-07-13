@@ -63,10 +63,10 @@ export class ProfilePage {
   ionViewWillEnter(): void {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     if (this.userLocal) {
-      this.numbersOfFollowers = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
+      /*this.numbersOfFollowers = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
 
       this.numbersOfFollowings = this.userProvider.getNumbersOfFollowers(this.userLocal.id);
-
+      */
       if (this.userLocal.level_id == 2) {
 
         this.showContent = 'shelfs';

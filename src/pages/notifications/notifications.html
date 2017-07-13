@@ -17,18 +17,21 @@
   <button ion-button round (click)="navigateToPage('Signup')" color="light">تسجيل حساب جديد</button>
 </section>
 <ng-template #signedUser>
+
+
   <ion-refresher (ionRefresh)="refreshData($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
   </ion-refresher>
+
+
   <p class="small" text-center *ngIf="netErr">
-    تفقد الاتصال وحاول مجددا
+    <br>تفقد الاتصال وحاول مجددا
   </p>
   <p class="small" text-center *ngIf="noData">
+    <br>
     لا يوجد اشعارات حتى الان
   </p>
-  <p text-center *ngIf="showLoader">
-    <hsa-loader></hsa-loader>
-  </p>
+ 
   <ion-list>
     <ion-item *ngFor="let notification of AllNotifications" (click)="navigateToPage(notification)" [color]="isRead(notification.status)">
       <ion-avatar item-left>
@@ -39,14 +42,15 @@
           <img *ngIf="notification.gender == 'male'" src="assets/img/male-alt.png">
 
         </ng-template>
+        
 
       </ion-avatar>
       <div class="message-sender">
         <h4>{{ notification.name || 'محمد النبوى' }}</h4>
-        <div class="message-et" [ngClass]="{'unread': notification.status == 1}">
+        <div class="message-et" [ngClass]="{'unread': notification.status == 0}">
           <ion-icon name="timer-outline"></ion-icon>
           منذ
-          <span>{{getDateSince(notification.date_added)}}</span>
+          <span>{{notification.date_added | sincedate}}</span>
         </div>
       </div>
       <p>{{ notification['notifiy_message'] }}</p>
@@ -56,7 +60,11 @@
   <!--    <p *ngIf="moreData"  text-center class="small">
       لا يوجد مزيد من الاشعارات
     </p> -->
-  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getNotifications($event)">
+
+    <p text-center *ngIf="showLoader" class="small">
+      <hsa-loader></hsa-loader>
+    </p>
+  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getMoreData($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>
   </ion-infinite-scroll>

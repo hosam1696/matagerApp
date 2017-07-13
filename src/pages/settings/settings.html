@@ -109,6 +109,14 @@
 
           <ion-icon name="arrow-back" item-right></ion-icon>
         </ion-item>
+
+        <ion-item padding-left *ngIf="userLocalData['level_id'] == 3" ion-item (click)="navigateToPage('ReservedshelfsPage')">
+          <ion-icon name="ios-albums-outline" color="primary"></ion-icon>
+            الرفوف المحجوزة
+          <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
+
+
     </ion-item-group>
 
     <ion-item-group no-lines>
