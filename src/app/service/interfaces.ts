@@ -103,3 +103,12 @@ export enum ArLttTimeId {
   minute = 'دقائق',
   second = 'ثوان'
 }
+export interface Imsg {
+  message: string
+}
+export interface IPost {
+  status: string | Imsg,
+  data: any[] | any,
+  errors: any[],
+  message?:string
+}

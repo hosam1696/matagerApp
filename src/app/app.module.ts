@@ -1,7 +1,7 @@
 ///<reference path="../../node_modules/@ionic-native/native-geocoder/index.d.ts"/>
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
@@ -54,7 +54,7 @@ import {MapsModal} from "../pages/mapsmodal";
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     MomentModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {

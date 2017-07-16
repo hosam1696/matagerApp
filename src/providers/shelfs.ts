@@ -1,19 +1,20 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 
+import { IPost } from '../app/service/interfaces';
 
 
 @Injectable()
 
 export class ShelfsProvider {
 
-    constructor(@Inject('API_URL') private API_URL, public http: Http) {
+    constructor(@Inject('API_URL') private API_URL, public http: HttpClient) {
 
     }
 
     getShelfs(userId: number) {
         let body = {"action": "all","user_id": userId};
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
     }
 
     addShelf(shelfData) {
@@ -23,7 +24,7 @@ export class ShelfsProvider {
 
         console.info('data to the server', body);
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
     }
 
@@ -35,7 +36,7 @@ export class ShelfsProvider {
 
         console.info('data to the server', body);
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
     }
 
@@ -46,13 +47,13 @@ export class ShelfsProvider {
         let body = Object.assign({}, { action }, editedShelfData);
 
         console.log('data to the server', body);
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
     }
 
     getShelfById(shelfId:number, user_id:number) {
         const action = 'getShelf';
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({ action, id: shelfId, user_id })).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({ action, id: shelfId, user_id }));
     }
 
 
@@ -63,7 +64,7 @@ export class ShelfsProvider {
 
         console.log('Data will be sent to the server\n', body);
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
     }
 
     addShelfPercentage(percentageData) {
@@ -73,7 +74,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, percentageData);
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
         
     }
@@ -86,7 +87,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
     }
 
@@ -100,7 +101,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res => res.json());
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
 
     }
@@ -110,7 +111,7 @@ export class ShelfsProvider {
         const action = accepted ? 'acceptPercenatge' :'refusePercenatge';
         let body = JSON.stringify(Object.assign({ action }, percentageData));
 
-        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
+        return this.http.post(this.API_URL + 'shelfs.php', body);
     }
 
 

@@ -165,7 +165,7 @@ export class VprofilePage {
   getShelfs() {
     this.showLoader = true;
     this.shelfProvider.getShelfs(this.userData.id)
-      .subscribe(({ status, data }: { status: string, data: Ishelf[] }) => {
+      .subscribe(({ status, data }) => {
         if (status == 'success') {
 
           this.allShelfs = data.reverse();

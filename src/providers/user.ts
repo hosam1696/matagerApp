@@ -1,12 +1,13 @@
 import { Injectable, Inject } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/RX';
+import { IPost } from '../app/service/interfaces';
 
 @Injectable()
 export class UserProvider {
 
-  constructor( @Inject('API_URL') private API_URL, public http: Http) {
+  constructor( @Inject('API_URL') private API_URL, public http: HttpClient) {
   }
 
   LoginUser(userData){
@@ -15,7 +16,7 @@ export class UserProvider {
     let data = JSON.stringify(Object.assign({}, { action}, userData));
     console.log('Data entered', data, typeof data);
 
-    return this.http.post(this.API_URL +'users.php', data).map(res=> res.json());
+    return this.http.post<IPost>(this.API_URL +'users.php', data);
   }
 
   addUser(newUserData) {
@@ -23,13 +24,13 @@ export class UserProvider {
     let action = 'newUser';
     let data = JSON.stringify(Object.assign({}, { action}, newUserData));
     console.log('Data entered', data);
-    return this.http.post(this.API_URL+'users.php', data).map(res=>res.json());
+    return this.http.post<IPost>(this.API_URL+'users.php', data);
 
   }
 
   forgetPassword(email) {
     const action = 'forgetPassword';
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, email })).map(res => res.json());
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, email }));
   }
 
   editUser(userData) {
@@ -38,11 +39,11 @@ export class UserProvider {
 
     console.log('Data will be sent to the server\n', body);
 
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify(body));
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify(body));
   }
 
   getUserById(id: number, login_user_id:number) {
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id})).map(res=>res.json());
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id}));
   }
 
   getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {
@@ -52,21 +53,21 @@ export class UserProvider {
      [latitude, longitude] = map.split(',');
     }
     
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude })).map(res => res.json());    
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude }));    
   }
 
   follow(followerData, newFollow:boolean) {
     const action = newFollow?'follow':'unfollow';
     let body = Object.assign({}, {action}, followerData);
 
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify(body)).map(res => res.json());
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify(body));
   }
 
   getUserFollowers(user_id: number,limit:number, start:number, membersType: boolean = true) {
 
     const action = membersType ? 'getFollowers' : 'getFollowings';
 
-    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, limit, start ,user_id })).map(res => res.json());
+    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, limit, start ,user_id }));
 
   }
 

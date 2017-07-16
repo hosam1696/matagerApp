@@ -58,11 +58,11 @@ export class Login {
         if (this.LoginForm.valid) {
         this.showLoader = true;
         this.userLogin.LoginUser(this.LoginForm.value)
-          .subscribe(resBody => {
-            console.log(resBody);
+          .subscribe(({status, message, data}) => {
+            console.log(status, message);
             //TODO: if data is correct navigate to the home page
-            if (resBody.status == 'success') {
-              let userLocalData = resBody.data;
+            if (status == 'success') {
+              let userLocalData = data;
               this.showLoader = false;
               localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
 
@@ -74,7 +74,7 @@ export class Login {
 
             } else {
               this.showLoader = false;
-              this.showToast(`${resBody.message}`)
+              this.showToast(`${message}`)
             }
           },
           err => {

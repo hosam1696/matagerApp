@@ -1,21 +1,20 @@
 import { Injectable, Inject} from '@angular/core';
-import { Http } from '@angular/http';
-
-
+import { HttpClient } from '@angular/common/http';
+import { IPost } from '../app/service/interfaces';
 
 @Injectable()
 
 export class AreaProvider {
 
-    constructor ( @Inject('API_URL') private API_URL,public http: Http) {}
+    constructor ( @Inject('API_URL') private API_URL,public http: HttpClient) {}
 
 
     filterPlacesByParent(parent:number, limit?: number, start?: number) {
         console.log('parent', parent, typeof parent);
-      return this.http.post(
+      return this.http.post<IPost>(
           this.API_URL + 'places.php',
           JSON.stringify({ "action": "getData", parent, limit, start })
-      ).map(res => res.json());
+      );
 
     }
 /*
@@ -33,7 +32,7 @@ export class AreaProvider {
 
 
     getAreaById(placeId: number) {
-      return this.http.post(this.API_URL+'places.php', JSON.stringify({"action": "getDataById", "id":placeId})).map(res=>res.json());
+      return this.http.post<IPost>(this.API_URL+'places.php', JSON.stringify({"action": "getDataById", "id":placeId}));
     }
 
 /* Old Get Data By Id

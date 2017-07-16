@@ -178,17 +178,17 @@ export class AddproductPage {
         console.log('trying to edit this product');
 
         this.productProvider.editProduct(ProductForm)
-          .subscribe(response => {
-            console.log(response);
-            if (response.status.message == 'success') {
+          .subscribe(({ status, data,errors}) => {
+            console.log(status, data);
+            if (status.message == 'success') {
 
               this.addProductForm.reset();
               this.navCtrl.pop();
 
             } else {
               // get the first error from database
-              let keys = Object.keys(response.errors);
-              const errMsg: string = response.errors[keys[0]][0];
+              let keys = Object.keys(errors);
+              const errMsg: string = errors[keys[0]][0];
               this.showToast(errMsg);
 
             }

@@ -1,11 +1,11 @@
 import {Inject, Injectable} from '@angular/core';
-import { Http} from '@angular/http';
-
+import { HttpClient } from '@angular/common/http';
+import { IPost } from '../app/service/interfaces';
 @Injectable()
 
 export class ItemProvider {
 
-  constructor(@Inject('API_URL') public API_URL, public http:Http) {
+  constructor(@Inject('API_URL') public API_URL, public http:HttpClient) {
 
   }
 
@@ -15,7 +15,7 @@ export class ItemProvider {
 
     const body = Object.assign({}, { action },itemData );
 
-    return this.http.post(this.API_URL+'items.php', JSON.stringify(body)).map(res=>res.json());
+    return this.http.post<IPost>(this.API_URL+'items.php', JSON.stringify(body));
   }
 
   editProduct(itemData) {
@@ -26,7 +26,7 @@ export class ItemProvider {
 
     console.log('data will be sent to the database', body);
     
-    return this.http.post(this.API_URL + 'items.php', JSON.stringify(body)).map(res => res.json());
+    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
 
   }
 
@@ -36,7 +36,7 @@ export class ItemProvider {
 
     const body = Object.assign({}, { action }, itemData);
 
-    return this.http.post(this.API_URL + 'items.php', JSON.stringify(body)).map(res => res.json());
+    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
   }
 
   getProductByUserId(user_id:number) {
@@ -45,7 +45,7 @@ export class ItemProvider {
 
     const body = Object.assign({action}, {user_id});
 
-    return this.http.post(this.API_URL+'items.php',  JSON.stringify(body)).map(res=>res.json());
+    return this.http.post<IPost>(this.API_URL+'items.php',  JSON.stringify(body));
   }
 
 
