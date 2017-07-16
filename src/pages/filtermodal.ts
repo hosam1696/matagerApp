@@ -13,20 +13,23 @@ import 'rxjs/operator/filter';
         <ion-title>{{modalData}}</ion-title>
         <ion-buttons end>
           <button ion-button class="close-btn" (click)="closeModal()">
-            <ion-icon name="close-outline" color="light">
+            <ion-icon name="md-close-circle" color="light">
             </ion-icon>
           </button>
         </ion-buttons>
+        
       </ion-navbar>
-
-    </ion-header>
-    <ion-content>
-      
-      <ion-searchbar #searchbar 
+<ion-toolbar color="bgColor">
+          <ion-searchbar #searchbar 
                      (ionInput)="filterItems($event, this.places)"
                      placeholder="ابحث عن .."
                      (ionCancel)="onCancel($event)">
       </ion-searchbar>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      
+      
 
     
     <ion-content>
@@ -98,9 +101,7 @@ import 'rxjs/operator/filter';
       ion-content.content {
         background-color: #eee;
       }
-      ion-buttons .close-btn {
-        font-size: 25px;
-      }
+      
       
       ion-item {
         border-bottom: 1px solid #eee !important;

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController, IonicPage } from 'ionic-angular';
+import { NavController, ToastController, IonicPage, Config } from 'ionic-angular';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
@@ -21,12 +21,18 @@ export class HomePage {
      public network: Network,
      public toastCont: ToastController,
      public userProvider: UserProvider,
-     public push: Push
+     public push: Push,
+     public config: Config
   ) {
    
   }
 
   ionViewDidLoad() {
+
+    
+
+    this.config.get('')
+
 
    /* Get the current location if user activates the location */
     this.geolocation.getCurrentPosition()

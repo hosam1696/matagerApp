@@ -16,6 +16,7 @@ export class ReserveShelfPage {
   showLoader: boolean = false;
   salesPercentage: any;
   noShelf: boolean = false;
+  userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,19 +27,22 @@ export class ReserveShelfPage {
   
     this.pageData = this.navParams.get('pageData');
   }
-
+  ionViewWillLoad() {
+    if (!this.userLocal)
+      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReserveShelfPage');
     console.log(this.pageData);
 
-    if (this.pageData.close == 0) {
+    //if (this.pageData.close == 0) {
       this.showLoader = true;
       console.log('%c%s', 'font-size:20px', 'shelf status is pending');
       this.getShelf(this.pageData.url, this.pageData.user_id);
-    }
+    //}
     console.log(this.salesPercentage);
     if (this.pageData.status == 0) {
-      this.notificationsProviders.updatereadNotify(this.pageData.id)
+      this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
 
         .subscribe(res => {
           console.log(res);
@@ -86,7 +90,7 @@ export class ReserveShelfPage {
     console.log(this.salesPercentage);
     
     this.shelfProvider.addShelfPercentage(percentageData)
-      .subscribe(({ status, data, errors}) => {
+      .subscribe(({ status, errors}) => {
         if (status == 'success') {
           
           this.showToast(`لقد تم ارسال طلب التعديل على نسبة المبيعات الى ${this.pageData.name}`)
@@ -108,27 +112,53 @@ export class ReserveShelfPage {
 
   sendReplyRequest(accept: boolean = true):void {
 
+    if (this.userLocal.level_id == 2) {
+      
     
-    if (this.shelfData) {
+    
+      if (this.shelfData) {
+        let requestData = {
+          'receive_user_id': this.pageData.send_user_id,
+          'user_id': this.pageData.user_id,
+          'url': this.pageData.url,
+          'name': this.shelfData.name
+        }
+        let toServer = (accept) ? this.shelfProvider.acceptRequest(requestData) : this.shelfProvider.refuseRequest(requestData);
+        toServer.subscribe(({ status }) => {
+          let acceptStatus = (accept) ? 'الموافقة' : 'الرفض'
+          if (status == 'success') {
+            this.showToast(`لقد تم ارسال طلب ${acceptStatus} الى ${this.pageData.name}`)
+          }
+        })
+
+      } else {
+        console.log('%c%s', 'font-size: 22px;color: cyan', 'لا يوجد رفوف من قاعدة البيانات خاصة بهذا العضو')
+      }
+ 
+
+    } else {
       let requestData = {
         'receive_user_id': this.pageData.send_user_id,
         'user_id': this.pageData.user_id,
         'url': this.pageData.url,
         'name': this.shelfData.name
-      }
-      let toServer = (accept) ? this.shelfProvider.acceptRequest(requestData) : this.shelfProvider.refuseRequest(requestData);
-      toServer.subscribe(res => {
-        console.log(res);
-      })
+      };
+      this.shelfProvider.acceptPercenatge(requestData, accept)
+        .subscribe(({ status, data }) => {
+          let acceptMsg = accept ? 'موافقة' : 'رفض';
+          console.log(status, data);
+          if (status == 'success') {
+            this.showToast(`لقد تم ارسال ردك بال${acceptMsg} الى ${this.pageData.name}`);
+          } else {
+            this.showToast('حاول مرة اخرى')
+          }
+          
+        })
 
-    } else {
-      console.log('%c%s', 'font-size: 22px;color: cyan', 'لا يوجد رفوف من قاعدة البيانات خاصة بهذا العضو')
     }
- 
-
-    
 
   }
+
 
   showToast(msg) {
     let toast = this.toastCtrl.create({
@@ -137,6 +167,11 @@ export class ReserveShelfPage {
       position: 'top'
     });
     toast.present();
+  }
+
+  navigateToPage(page, user_id) {
+    let id = this.pageData.user_id;
+    this.navCtrl.push(page, {userData:[user_id, id]})
   }
 
 }

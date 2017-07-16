@@ -287,8 +287,8 @@
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
 
     <p text-center class="small"><br>انت غير مسجل لدينا </p>
-    <button ion-button  round (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
+    <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
 
-    <button ion-button round (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>
+    <button class="log-btn" (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>
   </ion-card>
 </ion-content>

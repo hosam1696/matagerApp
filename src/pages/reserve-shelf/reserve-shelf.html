@@ -2,7 +2,7 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>حجز رف</ion-title>
+    <ion-title>طلب حجز رف</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -20,7 +20,7 @@
         <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
       </ng-template>
     </ion-avatar>
-    <h3>
+    <h3 (click)="navigateToPage('VprofilePage', pageData.send_user_id)">
       <span>{{ pageData.name }}</span>
       <span class="since-time">منذ
         {{pageData.date_added | sincedate}}
@@ -34,8 +34,7 @@
   <p class="small" text-center *ngIf="noShelf">
     لا يوجد رف
   </p>
-  <ng-template *ngIf="pageData.close == 0">
-
+  <section >
   
   <ion-item-group *ngIf="showShelfList">
   <ion-item padding-left ion-item>
@@ -85,21 +84,18 @@
   
 
 
-<ion-card id="sales-percentage">
-  <h2 text-center >طلب نسبة على البيع</h2>
-  <!--<input type="text" placeholder="نسبة البيع"> -->
-  <ion-range min="0" max="100" step=".5" pin="true" value="0" [(ngModel)]="salesPercentage"></ion-range>
-  <p text-center>
-    <button ion-button small (click)="sendPercentage()">
-      ارسال للحصول على الموافقة
-    </button>
-  </p>
-</ion-card>
+  <ion-card id="sales-percentage" *ngIf="pageData.close == 0&&userLocal.level_id == 2">
+    <h2 text-center >طلب نسبة على البيع</h2>
+    <!--<input type="text" placeholder="نسبة البيع"> -->
+    <ion-range min="0" max="100" step=".5" pin="true" value="0" [(ngModel)]="salesPercentage"></ion-range>
+    <p text-center>
+      <button ion-button small (click)="sendPercentage()">
+        ارسال للحصول على الموافقة
+      </button>
+    </p>
+  </ion-card>
 
-  
-</ng-template>
-
-  <section *ngIf="pageData.close == 1" id="sales-percentage"> 
+  <section *ngIf="pageData.close == 1" id="sales-percentage">
     <h4 text-center>
       لقد تمت الموافقة على طلب الحجز
     </h4>
@@ -109,8 +105,13 @@
       لقد تم رفض طلب حجز هذا الرف
     </h4>
   </section>
+
+  
+</section>
+
+  
 </ion-list>
-<section id="float-btn" *ngIf="pageData.close == 0">
+<section id="float-btn" *ngIf="pageData.close == 0&& userLocal.level_id==3">
   <button color="primary" (click)="sendReplyRequest()">موافقة</button>
   <button color="danger" (click)="sendReplyRequest(false)">رفض</button>
 </section>

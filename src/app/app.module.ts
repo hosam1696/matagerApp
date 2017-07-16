@@ -5,6 +5,8 @@ import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
+import { MomentModule } from 'angular2-moment';
+
 import { MyApp } from './app.component';
 import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
@@ -53,6 +55,7 @@ import {MapsModal} from "../pages/mapsmodal";
   imports: [
     BrowserModule,
     HttpModule,
+    MomentModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
@@ -60,7 +63,7 @@ import {MapsModal} from "../pages/mapsmodal";
       iconMode: 'ios',
       mode: 'ios',
       tabsHideOnSubPages: true,
-      activator : 'ripple'
+      activator: 'ripple'
     }),
     HsaloaderComponentModule,
     changePropDirectiveModule,

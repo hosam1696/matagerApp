@@ -4,16 +4,8 @@
   <ion-navbar color="primary">
     <ion-title>المتاجر</ion-title>
   </ion-navbar>
-
-</ion-header>
-
-
-<ion-content>
-
-
-<button type="button" id="modal-button"
-        color="light"
-        (click)="openFilterModal()" >
+  <ion-toolbar>
+<button type="button" id="modal-button" color="light" (click)="openFilterModal()">
 
   <div class="btn-icon">
     <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
@@ -28,7 +20,12 @@
         </div>
     </div>
   </button>
-  <ion-content>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
 
     <p text-center *ngIf="locationError" class="small">
         {{locationError}}
@@ -69,5 +66,5 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  </ion-content>
+
 </ion-content>

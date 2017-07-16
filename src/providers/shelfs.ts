@@ -105,4 +105,13 @@ export class ShelfsProvider {
 
     }
 
+
+    acceptPercenatge(percentageData, accepted:boolean = true) {
+        const action = accepted ? 'acceptPercenatge' :'refusePercenatge';
+        let body = JSON.stringify(Object.assign({ action }, percentageData));
+
+        return this.http.post(this.API_URL + 'shelfs.php', body).map(res => res.json());
+    }
+
+
 }

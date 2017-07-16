@@ -14,6 +14,29 @@ page-notifications {
       background-color: #eee;
       border-top: none !important;
     }
+    .log-btn {
+      display: inline-block;
+      text-overflow: ellipsis;
+      text-transform: none;
+      white-space: nowrap;
+      padding: 0 2.6rem;
+      padding-top: 0px;
+      padding-right: 2.6rem;
+      padding-bottom: 0px;
+      padding-left: 2.6rem;
+      border-radius: 64px;
+      margin: 0.4rem 0.2rem;
+      /* padding: 0 1em; */
+      height: 2.8em;
+      &:first-of-type  {
+        color: color($colors, light);
+        background-color: color($colors, primary);
+      }
+      
+      &:last-of-type  {
+        background-color: color($colors, light);
+      }
+    }
     ion-refresher {
         ion-refresher-content {
           font-size: 12px !important;

@@ -4,38 +4,28 @@
   <ion-navbar color="primary">
     <ion-title>صفحة الموردين</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <button type="button" id="modal-button" color="light" (click)="openFilterModal()">
 
+  <div class="btn-icon">
+    <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
+  </div>
+  <div id="search-result" >
+      <div *ngIf="dataFromModal" class="found-data">
+        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
+        </div>
+        <div *ngIf="!dataFromModal" class="no-data">
+          <span color="primary">المدينة</span>
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+    </div>
+  </button>
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content >
 
-
-  <button type="button" id="modal-button"
-          color="light"
-          (click)="openFilterModal()">
-
-    <div class="btn-icon">
-      <ion-icon item-right id="search-icon" name="funnel-outline"></ion-icon>
-    </div>
-
-    <div id="search-result">
-      <div *ngIf="dataFromModal; else initFiilter" class="found-data">
-        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
-      </div>
-    </div>
-
-    <ng-template #initFiilter>
-      <div class="no-data">
-        <span color="primary">المدينة</span>
-        <ion-icon name="arrow-back"></ion-icon>
-      </div>
-    </ng-template>
-
-  </button>
-  <!-- List of the neerer exporters -->
-
-  <ion-content>
 
     <p text-center *ngIf="locationError" class="small">
       {{locationError}}
@@ -84,5 +74,5 @@
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
       ></ion-infinite-scroll-content>
   </ion-infinite-scroll>
-  </ion-content>
+
 </ion-content>

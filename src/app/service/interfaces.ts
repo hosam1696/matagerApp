@@ -38,6 +38,7 @@ export interface INotification {
   close?: Eclose
 }
 
+
 export interface Ishelf {
   area: number,
   close: number,
@@ -49,6 +50,33 @@ export interface Ishelf {
   data_modified?: Date
 }
 
+export interface IlocalUser {
+  username: string,
+  name: string,
+  id: number,
+  level_id: number,
+  active: number,
+  address: string,
+  area: number,
+  areaName?: string,
+  city: number,
+  cityName?: string,
+  dist: number,
+  distName?: string,
+  email: string,
+  gender: string,
+  mobile: string,
+  avatar: string,
+  latitude: string,
+  longitude: string,
+  cover?: string,
+  owner_name?: string,
+  cr_num?: number,
+  map: string,
+  followers?: number,
+  followings?: number,
+  follow?: boolean | any
+}
 
 export enum ArDTimeId {
   year = 'سنتين',

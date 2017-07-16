@@ -3,7 +3,7 @@
         <ion-title>عرض الرف</ion-title>
         <ion-buttons end>
             <button ion-button (click)="closeModal()" class="close-btn">
-                <ion-icon name="close" ></ion-icon>
+                <ion-icon name="md-close-circle" ></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -35,8 +35,50 @@
             </p>
         </ion-item>
     </ion-list>
+    <form [formGroup]="reserveShelfForm" novalidate (ngSubmit)="submitForm(reserveShelfForm)">
+        
+        <ion-list *ngIf="modalInfo.close == 0&&userLocal.level_id == 3">
 
-    <button *ngIf="modalInfo.close == 0" ion-button full (click)="requestBooking()" class="float-btn">
+        <ion-item>
+            <ion-label>بداية الحجز</ion-label>
+            <input hidden type="text" placeholder="تاريخ البداية" formControlName="start_date" class="form-control">
+            <ion-datetime text-center class="form-control" displayFormat="YYYY / MMMM / DD" pickerFormat="YYYY MMMM DD" monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر" placeholder="تاريخ البدء" formControlName="start_date">
+            </ion-datetime>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>نهاية الحجز</ion-label>
+            <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
+            <ion-datetime text-center class="form-control" displayFormat="YYYY / MMMM / DD" pickerFormat="YYYY MMMM DD" monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر" placeholder="تاريخ الانتهاء" formControlName="end_date">
+            </ion-datetime>
+        </ion-item>
+
+        </ion-list>
+        
+    </form>
+    <button *ngIf="modalInfo.close == 0&&userLocal.level_id == 3" ion-button full (click)="requestBooking()" class="float-btn">
         <hsa-loader *ngIf="showLoader"></hsa-loader>
         طلب حجز الرف</button>
     <!-- <section >

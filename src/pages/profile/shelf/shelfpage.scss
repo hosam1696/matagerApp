@@ -17,6 +17,9 @@ shelf-modal{
         ion-list {
         ion-item {
           border-bottom: 1px solid #eee !important;
+          &:first-child {
+              border-top: none !important;
+          }
           .item-inner {
             border-bottom: none !important;
           }

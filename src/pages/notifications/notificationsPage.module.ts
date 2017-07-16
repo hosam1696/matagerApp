@@ -3,6 +3,8 @@ import { IonicPageModule } from 'ionic-angular';
 import { NotificationsPage } from './notificationsPage';
 import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
 import { SinceDatePipeModule } from '../../app/service/since-date/since-date.module';
+
+import { MomentModule } from 'angular2-moment';
 @NgModule({
   declarations: [
     NotificationsPage
@@ -10,7 +12,8 @@ import { SinceDatePipeModule } from '../../app/service/since-date/since-date.mod
   imports: [
     IonicPageModule.forChild(NotificationsPage),
     HsaloaderComponentModule,
-    SinceDatePipeModule
+    SinceDatePipeModule,
+    MomentModule
   ],
   exports: [
     NotificationsPage
