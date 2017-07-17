@@ -78,13 +78,29 @@
         >
       </div>
         <div class = "form-group animate-input phone">
-        <input type="text" class="form-control" formControlName="mobile"
-          placeholder="رقم الجوال"        >
+        <input  type="text" class="form-control" formControlName="mobile"
+          placeholder="رقم الجوال" (focus)="  triggerPhoneMsg()" (blur)="triggerPhoneMsg()" >
+          <div class="phone-digits" hidden>
+            <input type="text">
+            <input type="text">
+            <input type="text">
+          </div>
         <ion-select #ccMobile>
           <ion-option value="+966" selected>966+</ion-option>
           <ion-option value="+20">20+</ion-option>
           <ion-option value="+55">55+</ion-option>
         </ion-select>
+        <span *ngIf="phoneErr;else phone" class="form-err">
+        
+ *         لا داعى لادخال الصفر فى بداية رقم الجوال
+        
+          </span>
+<ng-template #phone>
+  <span class="form-err">
+    &nbsp;
+  </span>
+</ng-template>
+
       </div>
 
       <div id="radio-group" class="form-group group-bg">
@@ -148,7 +164,7 @@
       <div class="select-group">
           <div (click)="openModal('Area', 0)">
 
-            <span> {{AreaName || 'المنطة'}} <input type="text" formControlName="area"> </span>
+            <span> {{AreaName || 'المنطقة'}} <input type="text" formControlName="area"> </span>
             <ion-icon name="arrow-down" ></ion-icon>
 
             </div>

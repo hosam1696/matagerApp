@@ -87,7 +87,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
     }
 
@@ -101,7 +101,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
 
 
     }
@@ -111,7 +111,7 @@ export class ShelfsProvider {
         const action = accepted ? 'acceptPercenatge' :'refusePercenatge';
         let body = JSON.stringify(Object.assign({ action }, percentageData));
 
-        return this.http.post(this.API_URL + 'shelfs.php', body);
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', body);
     }
 
 

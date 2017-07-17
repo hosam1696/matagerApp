@@ -230,17 +230,22 @@ export class NotificationsPage {
     if (typeof pageData == 'string') {
       this.navCtrl.push(pageData);
     } else {
-      if (pageData.type == 'reserveShlef') {
-        /*
+      this.navCtrl.push('ReserveShelfPage', { pageData })
+      /*if (pageData.type == 'reserveShlef') {
+        
         update read notification status before navigating
         this.notificationProvider.updatereadNotify(pageData.id)
           .subscribe(res => {
             this.navCtrl.push('ReserveShelfPage', { pageData });
-          });*/
+          });
 
         this.navCtrl.push('ReserveShelfPage', { pageData });
         
-      }
+      } else if (pageData.type == 'shelfPercenatge') {
+        this.navCtrl.push('ReserveShelfPage', { pageData })
+
+
+      }*/
         
     }
     

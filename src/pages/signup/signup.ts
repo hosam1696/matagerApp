@@ -39,6 +39,7 @@ export class Signup implements AfterViewInit{
   showLoader:boolean = false;
   Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
   PageFormcontrols: object;
+  phoneErr: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -95,7 +96,7 @@ export class Signup implements AfterViewInit{
       InsurePassword: new FormControl('', [Validators.required, this.insurePass]),
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       email: new FormControl('', Validators.required),
-      mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
+      mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
       gender: new FormControl('male', Validators.required),
       latitude: new FormControl(''),
       longitude: new FormControl(''),
@@ -133,30 +134,43 @@ export class Signup implements AfterViewInit{
   }
 
   checkValidator() {
-    let validcontrols=this.PageFormcontrols[this.csPage].filter(controler=> controler[1].valid != true);
-    console.log(validcontrols);
-    return validcontrols.length == 0 ? true : validcontrols;
+    let validcontrols = [];
+    for (let controller of this.PageFormcontrols[this.csPage]) {
+      if (controller[1].valid != true) {
+        //console.log(controller[1]);
+        validcontrols = [controller[0], controller[1]]; //arabic name, form controller
+        break;
+      }
+    }
+   // [this.csPage].filter(controler => controler[1].valid != true);
+    return validcontrols.length <= 0 ? true : validcontrols;
   }
 
   detectErrors(control):void {
     console.log(this.checkValidator());
-      if (control[0][1].value == '') {
+    if (control[1].value == '') {
 
-        this.showToast(`يرجى ادخال  ${control[0][0]}`)
-      }
-      else if (control[0][1].errors['minlength']) {
+      this.showToast(`يرجى ادخال  ${control[0]}`)
+    }
+    else if (control[1].errors['minlength']) {
 
-        this.showToast(`${control[0][0]} يجب ان يكون ${control[0][1].errors.minlength.requiredLength} حروف على الاقل`);
-      } else if (control[0][0] == 'تأكيد كلمة المرور'){
+      this.showToast(`${control[0]} يجب ان يكون ${control[1].errors.minlength.requiredLength} حروف على الاقل`);
+    }
+    else if (control[1].errors['maxlength']) {
+
+      this.showToast(`${control[0]} يجب ان يكون ${control[1].errors.maxlength.requiredLength} ارقام`);
+    }
+      else if (control[0] == 'تأكيد كلمة المرور'){
         this.showToast('كلمات المرور غير متطابقة')
       }else {
-        this.showToast(`${control[0][0]} غير صحيح`)
+        this.showToast(`${control[0]} غير صحيح`)
       }
   }
 
   increasePageNum():number {
 
-    let num = Math.max(Math.min(3,this.csPage+1), 1);
+    let num = Math.max(Math.min(3, this.csPage + 1), 1);
+    
     if (num >= 3) {
     this.lastPage = 'أضف حساب جديد';
 
@@ -170,7 +184,7 @@ export class Signup implements AfterViewInit{
           InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
           name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-          mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
+          mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
           gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
           latitude: new FormControl(''),
           longitude: new FormControl(''),
@@ -193,7 +207,7 @@ export class Signup implements AfterViewInit{
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
+        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
         latitude: new FormControl(''),
         longitude: new FormControl(''),
@@ -216,7 +230,7 @@ export class Signup implements AfterViewInit{
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9)]),
+        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
         latitude: new FormControl(''),
         longitude: new FormControl(''),
@@ -234,6 +248,8 @@ export class Signup implements AfterViewInit{
     }
 
     this.csPage = num;
+    console.log('current page', this.csPage, 'num', num);
+    console.log(this.PageFormcontrols[this.csPage]);
     return this.csPage;
   }
 
@@ -245,6 +261,9 @@ export class Signup implements AfterViewInit{
       this.lastPage = null;
 
     this.csPage = num;
+    console.log('current page', this.csPage, 'num', num);
+
+    console.log(this.PageFormcontrols[this.csPage]);
     return this.csPage;
 
   }
@@ -265,7 +284,7 @@ export class Signup implements AfterViewInit{
             this.SignUpFrom.get('latitude').setValue(response.coords.latitude);
             this.SignUpFrom.get('longitude').setValue(response.coords.longitude);
             console.log(this.SignUpFrom.value);
-            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + this.SignUpFrom.value.mobile);
+            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] +'0'+ this.SignUpFrom.value.mobile);
             delete this.SignUpFrom.value.InsurePassword;
             return Promise.resolve(this.SignUpFrom.value);
           })
@@ -276,9 +295,12 @@ export class Signup implements AfterViewInit{
           })
           .catch((err) => {
             console.log('can\'t access geolocation plugin');
-            this.showLoader = false;
+            this.showLoader = true;
             console.warn(err);
-            this.showToast('يرجى تفعيل خدمة المواقع او GPS');
+            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + '0' + this.SignUpFrom.value.mobile);
+            delete this.SignUpFrom.value.InsurePassword;
+            this.addUserProvider(this.SignUpFrom.value);
+            //this.showToast('يرجى تفعيل خدمة المواقع او GPS');
             //this.addUserProvider(this.SignUpFrom.value);
 
           });
@@ -312,6 +334,8 @@ export class Signup implements AfterViewInit{
             break;
           } else if (this.SignUpFrom.get(value).getError('minlength')) {
             this.showToast(`${ArSignForm[value]} يجب ان يكون ${this.SignUpFrom.get(value).getError('minlength').requiredLength} حروف على الاقل`);
+          } else if (this.SignUpFrom.get(value).getError('maxlength')) {
+            this.showToast(`${ArSignForm[value]} يجب ان يكون ${this.SignUpFrom.get(value).getError('maxlength').requiredLength} ارقام`);
           } else if (this.SignUpFrom.get(value).getError('pattern')) {
             this.showToast(`${ArSignForm[value]} غير صحيح`)
           }
@@ -326,7 +350,7 @@ export class Signup implements AfterViewInit{
 
   addUserProvider(formValue) {
     
-
+    
     this.userProvider.addUser(formValue)
       .subscribe(({ status, data, errors }) => {
         console.log(status, data);
@@ -444,6 +468,10 @@ export class Signup implements AfterViewInit{
       });
 
       modal.present();
+  }
+  
+  triggerPhoneMsg() {
+    this.phoneErr = !this.phoneErr;
   }
 
 }

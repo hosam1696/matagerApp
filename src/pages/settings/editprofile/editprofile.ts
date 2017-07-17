@@ -38,7 +38,10 @@ export class Editprofile {
   DistName: string = this.localUser.distName || 'لم يحدد بعد';
   showLoader:boolean= false;
   hidepass:boolean = true;
-  password:FormControl = new FormControl('');
+  password: FormControl = new FormControl('');
+  mobilecc: any ;
+  mobilenum: any;
+
   constructor(public fb: FormBuilder,
               public navCtrl: NavController,
               public navParams: NavParams,
@@ -46,24 +49,30 @@ export class Editprofile {
               public areaProvider: AreaProvider,
               public modalCrtl: ModalController,
               public toastCont: ToastController, private userprovider: UserProvider) {
+    /*this.mobilecc = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[0] : this.localUser.mobile;
+    this.mobilenum = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[1] : this.localUser.mobile;
+    */
+
+    this.mobilecc = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[0] : this.localUser.mobile;
+    this.mobilenum = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[1] : this.localUser.mobile;
 
     this.EditUserForm =fb.group( {
-      name:  [ this.localUser.name],
-      username: [this.localUser.username, Validators.compose([Validators.minLength(5)])],
+      name:  [ this.localUser.name, Validators.compose([Validators.required])],
+      username: [this.localUser.username, Validators.compose([Validators.required,Validators.minLength(5)])],
       password: [''],
       InsurePassword: [],
 
-      email: [ this.localUser.email ],
-      mobile: [this.localUser.mobile, Validators.compose([Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )])] ,
-      gender: [ this.localUser.gender ],
+      email: [this.localUser.email, Validators.compose([Validators.required]) ],
+      mobile: [this.mobilenum, Validators.compose([Validators.minLength(9), Validators.required,Validators.maxLength(9)])] ,
+      gender: [this.localUser.gender, Validators.compose([Validators.required]) ],
       address:  [ this.localUser.address ],
       latitude: [this.localUser.latitude],
 
       longitude: [this.localUser.longitude],
-      area: [ this.localUser.area ],
-      city: [ this.localUser.city ],
+      area: [this.localUser.area, Validators.compose([Validators.required]) ],
+      city: [this.localUser.city, Validators.compose([Validators.required]) ],
       dist:[ this.localUser.dist ],
-      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]^"), Validators.minLength(1)] : null)],
+      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]+"), Validators.minLength(1)] : null)],
       owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ?[Validators.minLength(3)]:null )]
     } )
 
@@ -135,12 +144,13 @@ console.log(form, form.valid);
     if (form.valid) {
       if (form.dirty) {
 
-        delete form.value['InsurePassword'];
+         this.EditUserForm.removeControl('InsurePassword');
+        form.get('mobile').setValue(this.mobilecc+'0' + form.get('mobile').value);
         Object.assign(form.value, { id: this.localUser['id'] });
         console.log('edited form', form.value);
         console.log(Object.keys(form.controls));
 
-        this.userprovider.editUser(form.value).map(res => res.json()).subscribe(({ status, data, errors }) => {
+        this.userprovider.editUser(form.value).subscribe(({ status, data, errors }) => {
           console.log(status, data);
           if (status.message == "success") {
             localStorage.setItem('userLocalData', JSON.stringify(data));
@@ -148,9 +158,15 @@ console.log(form, form.valid);
             this.showToast('تم تعديل البيانات بنجاح', 3000, 'success-toast')
           } else {
             this.showLoader = false;
-            let keys = Object.keys(errors);
-            const errMsg: string = errors[keys[0]][0];
-            this.showToast(errMsg, 4000, 'danger-toast');
+            if (errors) {
+              let keys = Object.keys(errors);
+              const errMsg: string = errors[keys[0]][0];
+              this.showToast(errMsg, 4000, 'danger-toast');
+            } else {
+              console.warn('dasfsd');
+            }
+            
+            
           }
         });
 
@@ -178,6 +194,9 @@ console.log(form, form.valid);
         } else if (form.get(value).getError('minlength')) {
           this.showToast(`${ArEditForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
         }
+        else if (form.get(value).getError('maxlength')) {
+          this.showToast(`${ArEditForm[value]} يجب ان يكون ${form.get(value).getError('maxlength').requiredLength}  ارقام `);
+        }  
         else if (form.get(value).getError('pattern')) {
           this.showToast(`${ArEditForm[value]} غير صحيح`); 
           console.log(form.get(value).getError('pattern'));
@@ -244,7 +263,7 @@ console.log(form, form.valid);
         InsurePassword: [''],
 
         email: [this.EditUserForm.get('email').value],
-        mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.pattern("[0-9]*"), Validators.minLength(5)])],
+        mobile: [this.EditUserForm.get('mobile'), Validators.compose([Validators.minLength(9), Validators.maxLength(9)])], //Validators.pattern("(\+[0-9]*)?[0-9]*"), 
         gender: [this.EditUserForm.get('gender').value],
         address: [this.EditUserForm.get('address').value],
         map: [this.localUser.map],
@@ -264,7 +283,7 @@ console.log(form, form.valid);
       InsurePassword: ['', Validators.compose([this.insurePass, Validators.required])],
 
       email: [ this.EditUserForm.get('email').value],
-      mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.pattern( "[0-9]*" ), Validators.minLength( 5 )]) ],
+      mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.minLength(9), Validators.maxLength(9)]) ],
       gender: [this.EditUserForm.get('gender').value ],
       address: [this.EditUserForm.get('address').value ],
       map: [ this.localUser.map ],
@@ -291,7 +310,7 @@ console.log(form, form.valid);
     this.areaProvider
       .getAreaById( placeId )
       .subscribe(
-        (place: Iplace) => {
+        (place : Iplace) => {
           this.AreaName = place.name;
           console.log( result, place.name );
         },

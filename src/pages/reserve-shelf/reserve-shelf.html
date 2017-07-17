@@ -84,7 +84,7 @@
   
 
 
-  <ion-card id="sales-percentage" *ngIf="pageData.close == 0&&userLocal.level_id == 2">
+  <ion-card id="sales-percentage" *ngIf="pageData.close == 0&&userLocal.level_id == 2&&pageData.type=='addSalesPercentage'">
     <h2 text-center >طلب نسبة على البيع</h2>
     <!--<input type="text" placeholder="نسبة البيع"> -->
     <ion-range min="0" max="100" step=".5" pin="true" value="0" [(ngModel)]="salesPercentage"></ion-range>
@@ -106,6 +106,16 @@
     </h4>
   </section>
 
+  <section *ngIf="pageData.type=='addSalesPercentage'" id="sales-percentage">
+    <h4 text-center>
+      النسبة على البيع المطلوبة
+    </h4>
+
+    <h1 text-center>
+      {{pageData.sale_percentage}} %
+    </h1>
+
+  </section>
   
 </section>
 

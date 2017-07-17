@@ -19,7 +19,13 @@ page-reservedshelfs {
                                 }
         }
         ion-list {
-            ion-item {
+            
+            .item-inner {
+          border-bottom:0.5px solid color($colors, bgColor) !important
+          }
+        .item-block:first-child {
+    border-top: none !important;
+        }
                 ion-label {
                     display: flex;
                     justify-content: space-between;
@@ -38,7 +44,7 @@ page-reservedshelfs {
                     }
                 }
 
-            }
+            
         }
     }
 

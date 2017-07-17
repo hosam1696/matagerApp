@@ -34,6 +34,7 @@ export interface INotification {
   avatar: string, 
   gender: string,
   name: string,
+  sale_percentage: number,
   send_user_id: number,
   close?: Eclose
 }
@@ -107,8 +108,9 @@ export interface Imsg {
   message: string
 }
 export interface IPost {
-  status: string | Imsg,
+  status: string | any,
   data: any[] | any,
   errors: any[],
-  message?:string
+  message?: string,
+  success?:any
 }

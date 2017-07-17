@@ -31,6 +31,7 @@ page-signup {
       }
 
     }
+    
     #loader {
             position: relative;
             z-index: 5999;
@@ -191,7 +192,12 @@ page-signup {
         }
 
       .form-group {
-
+        //display: flex;
+.form-err {
+      font-size: 10px;
+      color: #fff;
+      min-height: 17px;
+    }
         &.animate-input {
           transform: translateY(20px) rotateX(-90deg);
           animation: animateInput 0.5s ease-out forwards ;
@@ -220,6 +226,7 @@ page-signup {
             top: 2px;
             left: 0;
             color: #fff;
+            //background-color: rgba(255,255,255,0.3);
             text-align: left;
             border-right: 1px solid rgb(4, 141, 255);
             min-width: 60px;
@@ -228,6 +235,7 @@ page-signup {
             }
           }
         }
+        
         .form-control {
           font-size: 14px;
           width: 100%;
@@ -247,6 +255,19 @@ page-signup {
             &.ng-dirty.ng-invalid {
                 border-bottom: 1px solid #ffe8bf;
             }
+        }
+          .phone-digits {
+          display: flex;
+          width: calc(100% - 60px) !important;
+          width: 100px;
+          background-color: rgba(255,255,255,0.3);
+          padding: 5px 0;
+          input {
+            width: 30%;
+            border: 1px solid transparent;
+            background: #666;
+            margin-left: 2px;
+          }
         }
 
       }

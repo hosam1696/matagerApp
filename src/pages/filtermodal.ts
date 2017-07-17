@@ -59,7 +59,7 @@ import 'rxjs/operator/filter';
         <ion-icon name="mark"></ion-icon>
       </p>
 
-      <p text-center class="small" *ngIf="noFilter">
+      <p text-center *ngIf="noFilter">
         لا يوجد اماكن تطابق هذا البحث
       </p>
 

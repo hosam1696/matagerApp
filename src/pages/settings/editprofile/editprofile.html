@@ -62,10 +62,10 @@
     <ion-grid>
       <ion-row>
         <ion-col col-4>
-          رقم الهاتف
+          رقم الجوال
         </ion-col>
         <ion-col>
-        <input type="text" #phoneInput formControlName="mobile" class="input-as-text" [value]="localUser.mobile">
+        <input type="text" #phoneInput formControlName="mobile" class="input-as-text" >
 
         <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
         </ion-col>
