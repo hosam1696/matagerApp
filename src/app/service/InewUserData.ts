@@ -10,12 +10,12 @@ export enum levelToAr {
 }
 
 export interface ImodalData {
-  AreaId?: number,
-  AreaName?: string,
-  CityId?: number,
-  CityName?:string,
-  DistId?: number,
-  DistName?: string
+  areaId?: number,
+  areaName?: string,
+  cityId?: number,
+  cityName?:string,
+  distId?: number,
+  distName?: string
 }
 export interface Iplace {
   id: number,

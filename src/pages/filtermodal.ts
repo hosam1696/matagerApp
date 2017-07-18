@@ -233,13 +233,13 @@ export class PlacesModal {
     console.log(this.choosenParent, choosenPlace);
     switch (this.modalNum) {
       case 1:
-        [this.finalResult.AreaId, this.finalResult.AreaName] = [choosenPlace.id, choosenPlace.name];
+        [this.finalResult.areaId, this.finalResult.areaName] = [choosenPlace.id, choosenPlace.name];
         break;
       case 2:
-        [this.finalResult.CityId, this.finalResult.CityName] = [choosenPlace.id, choosenPlace.name];
+        [this.finalResult.cityId, this.finalResult.cityName] = [choosenPlace.id, choosenPlace.name];
         break;
       case 3:
-        [this.finalResult.DistId, this.finalResult.DistName] = [choosenPlace.id, choosenPlace.name];
+        [this.finalResult.distId, this.finalResult.distName] = [choosenPlace.id, choosenPlace.name];
         break;
 
     }

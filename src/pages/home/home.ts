@@ -31,7 +31,7 @@ export class HomePage {
 
     
 
-    this.config.get('')
+    console.log('Config Object', this.config, this.config.get('iconMode'));
 
 
    /* Get the current location if user activates the location */

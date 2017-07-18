@@ -78,6 +78,12 @@ export class UserProvider {
   getNumbersOfFollowings(user_id: number) {
     return this.getUserFollowers(user_id,100,0, false).pluck('data').map((data: any[]) => data.length)
   }
+
+  filterUsersByPlaces(placesData, limit, start) {
+    const action = 'filterByPlaces';
+    let body = JSON.stringify(Object.assign({ action }, placesData, {limit, start}));
+    return this.http.post<IPost>(this.API_URL + 'users.php', body);
+  }
   
 
 }

@@ -37,7 +37,7 @@
         "@ionic-native/status-bar": "^4.0.1",
         "@ionic-native/transfer": "^3.14.0",
         "@ionic/storage": "^2.0.1",
-        "angular2-moment": "^1.5.0",
+        "angular2-moment": "^1.6.0",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",
         "cordova-ios": "^4.4.0",
@@ -64,7 +64,8 @@
         "ionicons": "3.0.0",
         "node-sass": "^4.5.3",
         "phonegap-plugin-barcodescanner": "^6.0.7",
-        "phonegap-plugin-push": "^2.0.0-rc5",
+        "phonegap-plugin-push": "1.10.5",
+        "promise-polyfill": "6.0.2",
         "rxjs": "^5.4.2",
         "sw-toolbox": "3.6.0",
         "zone.js": "^0.8.13"
@@ -114,6 +115,7 @@
             }
         },
         "platforms": [
+            "android",
             "browser",
             "ios"
         ]

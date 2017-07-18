@@ -230,33 +230,68 @@ export class ProfilePage {
   }
 
   getShelfs(userId: number): void {
-
+    
     [this.showLoader, this.noShelfs] = [true, null];
+    
+    if (this.userLocal.level_id == 2) {
+      
 
-    this.shelfsProvider.getShelfs(userId).subscribe(({ status, data }) => {
-      console.log(status, data);
-      //console.table( res);
-      if (status == 'success') {
-        [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
-        if (this.AllShelfs.length <= 0) {
+      this.shelfsProvider.getShelfs(userId).subscribe(({ status, data }) => {
+        console.log(status, data);
+        //console.table( res);
+        if (status == 'success') {
+          [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+          if (this.AllShelfs.length <= 0) {
+            this.noShelfs = 'empty';
+            this.showLoader = false
+          }
+        } else {
           this.noShelfs = 'empty';
           this.showLoader = false
         }
-      } else {
-        this.noShelfs = 'empty';
-        this.showLoader = false
-      }
 
 
-    },
-      err => {
-        console.warn(err);
-        [this.showLoader, this.noShelfs, this.AllShelfs] = [false,'netErr',[]];
       },
-      () => {
-        this.showLoader = false;
-      }
-    );
+        err => {
+          console.warn(err);
+          [this.showLoader, this.noShelfs, this.AllShelfs] = [false, 'netErr', []];
+        },
+        () => {
+          this.showLoader = false;
+        }
+      );
+    } else if (this.userLocal.level_id == 3) {
+
+      this.shelfsProvider.getAcceptedRequests(userId).subscribe(({ status, data }) => {
+        console.log(status, data);
+        //console.table( res);
+        if (status == 'success') {
+          [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+          if (this.AllShelfs.length <= 0) {
+            this.noShelfs = 'empty';
+            this.showLoader = false
+          }
+        } else {
+          this.noShelfs = 'empty';
+          this.showLoader = false
+        }
+
+
+      },
+        err => {
+          console.warn(err);
+          [this.showLoader, this.noShelfs, this.AllShelfs] = [false, 'netErr', []];
+        },
+        () => {
+          this.showLoader = false;
+        }
+      );
+
+
+
+    }
+
+    
   }
 
 
@@ -429,7 +464,7 @@ export class ProfilePage {
 
   navigateToPage(page, pageData="test", reciever=null):void {
 
-    this.navCtrl.push(page ,{reciever,pageData});
+    this.navCtrl.push(page ,{pageData, reciever});
 
   }
 

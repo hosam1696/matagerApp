@@ -34,9 +34,12 @@ export interface INotification {
   avatar: string, 
   gender: string,
   name: string,
+  start_date:  any,
+  end_date:  any
   sale_percentage: number,
   send_user_id: number,
-  close?: Eclose
+  percentage_status?:Eclose,
+  shelf_status?: Eclose,
 }
 
 
@@ -77,6 +80,20 @@ export interface IlocalUser {
   followers?: number,
   followings?: number,
   follow?: boolean | any
+}
+
+export interface IShelfRequest {
+  date_added: any,
+  start_date: any,
+  end_date: any,
+  shelf_id: number,
+  matger_id: number,
+  shelf_name: string,
+  matger_name: string,
+  percentage_status: number,
+  sale_percentage: number,
+  shelf_status: number
+
 }
 
 export enum ArDTimeId {

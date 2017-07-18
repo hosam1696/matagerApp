@@ -12,8 +12,8 @@ export class ShelfsProvider {
 
     }
 
-    getShelfs(userId: number) {
-        let body = {"action": "all","user_id": userId};
+    getShelfs(matger_id: number, user_id:number = matger_id) {
+        let body = {"action": "all", user_id, matger_id};
         return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
     }
 
@@ -112,6 +112,18 @@ export class ShelfsProvider {
         let body = JSON.stringify(Object.assign({ action }, percentageData));
 
         return this.http.post<IPost>(this.API_URL + 'shelfs.php', body);
+    }
+
+
+    getAllRequests(user_id: number) {
+        const action = 'getShelfRequests';
+
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({action, user_id}));
+    }
+    getAcceptedRequests(user_id: number) {
+        const action = 'getAcceptedRequests';
+
+        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({ action, user_id }));
     }
 
 

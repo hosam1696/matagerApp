@@ -72,6 +72,7 @@ export class SettingsPage {
           text: 'متأكد',
           handler: data=> {
             localStorage.removeItem('userLocalData');
+            localStorage.removeItem('currentLocation');
             this.navCtrl.push('Login');
           }
         }

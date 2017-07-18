@@ -58,7 +58,7 @@ export class VprofilePage {
     function type(data) {
       return Object.prototype.toString.call(data).match(/\s+[a-zA-Z]+/)[0].trim()
     }
-    const userData = this.navParams.get('userData'); // [user_id, localUserId]
+    const userData = this.navParams.get('userData') || this.navParams.get('pageData'); // [user_id, localUserId]
     console.log(type(userData), userData);
     if (type(userData) == 'Object') { //navigation parameter is not given by user id
       this.userData = userData;
@@ -164,7 +164,7 @@ export class VprofilePage {
 
   getShelfs() {
     this.showLoader = true;
-    this.shelfProvider.getShelfs(this.userData.id)
+    this.shelfProvider.getShelfs(this.userData.id, this.userLocal.id)
       .subscribe(({ status, data }) => {
         if (status == 'success') {
 

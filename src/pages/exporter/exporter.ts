@@ -12,7 +12,7 @@ import { ImodalData } from "../../app/service/InewUserData";
 })
 
 export class Exporter {
-  userLocal;
+  userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   dataFromModal;
   locationError: any = null;
   initLimit: number = 10;
@@ -128,15 +128,84 @@ export class Exporter {
       )
   }
 
-  searchData(modalData: ImodalData): void {
-    // GET the names of the  final places results
+  searchData(modalData: ImodalData) {
     if (Object.keys(modalData).length != 0) {
-      let filterPlaces = [modalData.AreaName || null, modalData.CityName || null, modalData.DistName || null];
-      this.dataFromModal = filterPlaces.filter(n => n); // remove null and undefined values from the array
+      let filterPlaces = [modalData.areaName || null, modalData.cityName || null, modalData.distName || null];
+      this.dataFromModal = filterPlaces.filter(n => n);
+
+
+      if (this.userLocal) {
+        let placesData = Object.assign(modalData,
+          {
+            user_id: this.userLocal.id,
+            level_id: 2,
+            latitude: this.userLocal.latitude,
+            longitude: this.userLocal.longitude
+          });
+        //console.log('Data from Modal', this.dataFromModal);
+
+        this.filterPlaces(placesData);
+
+      } else {
+        let currentLocation: string = localStorage.getItem('currentLocation');
+        if (currentLocation) {
+          let placesData = Object.assign(modalData,
+            {
+              user_id: 0,
+              level_id: 2,
+              latitude: currentLocation.split(',')[0],
+              longitude: currentLocation.split(',')[1]
+            });
+
+          this.filterPlaces(placesData);
+        } else {
+          let placesData = Object.assign(modalData,
+            {
+              user_id: 0,
+              level_id: 2,
+              latitude: null,
+              longitude: null
+            });
+          console.log('%c%s', 'font-size: 30px', 'No locations provided');
+          this.filterPlaces(placesData);
+        }
+
+      }
+
     }
 
-    console.log('Data From Modal', this.dataFromModal);
 
+  }
+
+  filterPlaces(placesData, limit = this.initLimit, start = 0) {
+    this.userProvider.filterUsersByPlaces(placesData, limit, start)
+      .subscribe(({ status, data, errors }) => {
+        if (status == 'success') {
+
+          console.log('Data', data);
+          /*if (this.userLocal) {
+            const selfIndex = data.findIndex(oneItem => {
+              return oneItem.id == this.userLocal.id;
+            }); // remove user himself from being listed
+            selfIndex > 0 && data.splice(selfIndex, 1);
+          } */
+
+          this.allExporters = data;
+          console.log(this.allExporters)
+        } else {
+          this.locationError = errors;
+          console.log(errors);
+        }
+      },
+      err => {
+        //this.showLoader = false;
+        console.warn(err)
+      },
+      () => {
+        this.showLoader = false;
+
+      }
+      )
   }
 
   openFilterModal(): void {
@@ -169,5 +238,9 @@ export class Exporter {
   }
 
 }
+/*
+https://www.google.com/maps/place/28%C2%B058'20.7%22N+30%C2%B034'46.6%22E/@28.9778835,30.6104108,12.13z/data=!4m5!3m4!1s0x0:0x0!8m2!3d28.9724151!4d30.5796054?hl=ar
 
+https://www.google.com/maps/place/28%C2%B058'20.7%22N+30%C2%B034'46.6%22E/@28.9778835,30.6104108,19508m/data=!3m1!1e3!4m5!3m4!1s0x0:0x0!8m2!3d28.9724151!4d30.5796054?hl=ar
 
+*/

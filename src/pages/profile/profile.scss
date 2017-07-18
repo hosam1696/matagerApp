@@ -88,9 +88,7 @@ page-profile {
       @extend .shelfcard;
     }
     ion-card {
-      &:first-child {
-
-      }
+      
 
       margin: 0 !important;
       width: 100% !important;
@@ -112,7 +110,17 @@ page-profile {
               border-top: none !important;
             }
             border-bottom: 2px solid #eee !important;
-            height: 55px;
+            //height: 55px;
+            &.shelfRequest {
+              p {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                &:last-child {
+                  font-size: 12px !important;
+                }
+              }
+            }
             p {
               color: color($colors, primary)
             }
@@ -240,7 +248,12 @@ page-profile {
         }
       }
       #page-segments {
-
+          direction: ltr;
+          .segment-button {
+          &:first-of-type {
+                 border-left-width: 1px; 
+          }
+        }
       }
       ion-grid {
         ion-row {

@@ -126,7 +126,7 @@
 
           </ion-scroll> -->
 
-    <ion-list>
+    <ion-list *ngIf="userLocal.level_id==2">
 
         <p text-center *ngIf="noShelfs=='empty'">
           <br>
@@ -139,7 +139,7 @@
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
         </p>
 
-        <ion-item  *ngFor="let shelf of AllShelfs; let i = index" >
+        <ion-item   *ngFor="let shelf of AllShelfs; let i = index" >
             <div class="shelf-id" (click)="showShelf(shelf)">
               <p>رقم الرف <span>{{shelf.name}} </span></p>
             </div>
@@ -161,12 +161,71 @@
             </div>
         </ion-item>
 
+      
+
         <p text-center *ngIf="showLoader">
           <hsa-loader></hsa-loader>
         </p>
 
     </ion-list>
 
+
+    <ion-list *ngIf="userLocal.level_id==3">
+
+      <p text-center *ngIf="noShelfs=='empty'">
+        <br> لم يتم اضافة رفوف حتى الان
+      </p>
+      <p text-center *ngIf="noShelfs =='netErr'">
+        <br> التطبيق يتطلب اتصال بالانترنت
+        <br>
+        <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
+      </p>
+
+      <ion-item 
+        class="shelfRequest" 
+        *ngFor="let request of AllShelfs; let i = index"
+        (click)="navigateToPage('VprofilePage', [request.matger_id, userLocal.id])"
+        >
+        <p>
+          رقم الرف :
+          <span>
+
+          {{request.shelf_name}}
+        </span>
+          <span>
+          &nbsp; &gt; &nbsp; 
+          {{request.matger_name}}
+        </span>
+          <span>
+<ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
+  <span *ngIf="request.shelf_status == 1">مقبول</span>
+          <span *ngIf="request.shelf_status == 2">رفض</span>
+          <span *ngIf="request.shelf_status == 0">معلق</span>
+
+          </ion-badge>
+          </span>
+
+        </p>
+
+        <p>
+          <span>
+         <span class="prim">بداية الحجز :</span> {{request.start_date | date}}
+          </span>
+          <span>
+        <span class="prim">نهاية الحجز :</span> {{request.end_date | date}}
+          </span>
+        </p>
+      </ion-item>
+
+
+
+      <p text-center *ngIf="showLoader">
+        <hsa-loader></hsa-loader>
+      </p>
+
+    </ion-list>
+
+    <!--  shelfs for stores and exporter -->
 
 
   </ion-card>

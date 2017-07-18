@@ -20,7 +20,15 @@ page-vprofile {
       max-height: 100px;
     }
     #page-segments {
-      padding-top: 0 !important
+      padding-top: 0 !important;
+      direction: ltr;
+
+        .segment-button {
+          &:first-of-type {
+                 border-left-width: 1px; 
+          }
+        }
+      
     }
     .map-btn {
       display: inline-block;

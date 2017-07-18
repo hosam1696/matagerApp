@@ -29,7 +29,7 @@ export class ShelfModal {
     }
     initDate(end:boolean = false) {
         let timeNow = new Date(Date.now());
-        let month = (timeNow.getMonth().toString().length < 2) ? '0' + timeNow.getMonth().toString() : timeNow.getMonth().toString();
+        let month = (timeNow.getMonth().toString().length < 2) ? '0' + (timeNow.getMonth() + 1).toString() : (timeNow.getMonth() + 1).toString();
         let day = (timeNow.getDate().toString().length < 2) ? '0'+timeNow.getDate().toString():timeNow.getDate().toString();
         let year = timeNow.getFullYear();
         let monthEnd = end ? '0'+(parseInt(month) + 1).toString() : month;
@@ -74,7 +74,8 @@ export class ShelfModal {
         this.shelfsProvider.reserveShelf(reserveShelfData)
           .subscribe(({status, data})=>{
             if(status === 'success' && data == true) {
-              this.showToast(`لقد تم ارسال طلب حجزك الى ${this.modalInfo.username}`)
+                this.showToast(`لقد تم ارسال طلب حجزك الى ${this.modalInfo.username}`);
+                this.viewCtrl.dismiss();
             }
           })
 

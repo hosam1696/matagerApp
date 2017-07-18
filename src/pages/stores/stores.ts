@@ -9,7 +9,7 @@ import { ImodalData } from "../../app/service/InewUserData";
   templateUrl: 'stores.html',
 })
 export class StoresPage {
-  userLocal;
+  userLocal = JSON.parse(localStorage.getItem('userLocalData')) ;
   locationError:any = null;
   dataFromModal: ImodalData| any;
   initLimit: number = 10;
@@ -36,7 +36,9 @@ export class StoresPage {
 
     let modal = this.modalCrtl.create(PlacesModal, { pageName: 'اختر نوع البحث', User: 'Hosam' });
     modal.onDidDismiss(data => {
-      //console.log('Data from Modal',data);
+      console.log('Data from Modal',data);
+
+
       this.searchData(data);
 
     });
@@ -46,10 +48,85 @@ export class StoresPage {
 
   searchData(modalData: ImodalData) {
     if (Object.keys(modalData).length != 0) {
-      let filterPlaces = [modalData.AreaName || null, modalData.CityName || null, modalData.DistName || null];
+      let filterPlaces = [modalData.areaName || null, modalData.cityName || null, modalData.distName || null];
       this.dataFromModal = filterPlaces.filter(n => n);
+
+
+      if (this.userLocal) {
+        let placesData = Object.assign(modalData,
+          {
+            user_id: this.userLocal.id,
+            level_id: 2,
+            latitude: this.userLocal.latitude,
+            longitude: this.userLocal.longitude
+          });
+        //console.log('Data from Modal', this.dataFromModal);
+
+        this.filterPlaces(placesData);
+
+      } else {
+        let currentLocation: string = localStorage.getItem('currentLocation');
+        if (currentLocation) {
+          let placesData = Object.assign(modalData,
+            {
+              user_id: 0,
+              level_id: 2,
+              latitude: currentLocation.split(',')[0],
+              longitude: currentLocation.split(',')[1]
+            });
+
+          this.filterPlaces(placesData);
+        } else {
+          let placesData = Object.assign(modalData,
+            {
+              user_id: 0,
+              level_id: 2,
+              latitude: null,
+              longitude: null
+            });
+          console.log('%c%s', 'font-size: 30px', 'No locations provided');
+          this.filterPlaces(placesData);
+        }
+        
+      }
+      
     }
 
+   
+    
+
+  }
+
+
+  filterPlaces(placesData, limit = this.initLimit, start = 0) {
+    this.userProvider.filterUsersByPlaces(placesData, limit, start)
+      .subscribe(({ status, data, errors }) => {
+        if (status == 'success') {
+
+          console.log('Data', data);
+          /*if (this.userLocal) {
+            const selfIndex = data.findIndex(oneItem => {
+              return oneItem.id == this.userLocal.id;
+            }); // remove user himself from being listed
+            selfIndex > 0 && data.splice(selfIndex, 1);
+          } */
+
+          this.allStores = data;
+          console.log(this.allStores)
+        } else {
+          this.locationError = errors;
+          console.log(errors);
+        }
+      },
+      err => {
+        //this.showLoader = false;
+        console.warn(err)
+      },
+      () => {
+        this.showLoader = false;
+
+      }
+      )
   }
 
   fetchMoreData(event) {

@@ -24,7 +24,8 @@ page-reservedshelfs {
           border-bottom:0.5px solid color($colors, bgColor) !important
           }
         .item-block:first-child {
-    border-top: none !important;
+             border-top: none !important;
+
         }
                 ion-label {
                     display: flex;
@@ -32,6 +33,16 @@ page-reservedshelfs {
                     flex-direction: column;
                     p {
                         color: color($colors, primary) !important;
+                        &:first-child {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            span {
+                                &:last-child {
+                                    color: inherit !important
+                                }
+                            }
+                        }
                         &:last-child {
                             display: flex;
                             justify-content: space-between;

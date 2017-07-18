@@ -18,146 +18,161 @@
     كل الطلبات 
   </p>
   <ion-list>
-    <ion-item>
+    <ion-item *ngFor="let request of AllRequests">
       <p>
          رقم الرف :
         <span>
 
-          52154
+          {{request.shelf_name}}
         </span>
         <span >
           &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
+          {{request.matger_name}}
         </span>
+        <span>
+<ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
+  <span *ngIf="request.shelf_status == 1">قبول</span>
+  <span *ngIf="request.shelf_status == 2">رفض</span>
+  <span *ngIf="request.shelf_status == 0">معلق</span>
+
+</ion-badge>
+        </span>
+        
       </p>
+      
       <p>
         <span>
-         <span class="prim">المساحة :</span>
+         <span class="prim">بداية الحجز :</span>
 
-          100 متر
+          {{request.start_date | date}}
         </span>
         <span>
-        <span class="prim">السعر :</span>
+        <span class="prim">نهاية الحجز :</span>
 
-          200
-          ريال
+           {{request.end_date | date}}
         </span>
       </p>
       
     </ion-item>
-<ion-item>
-  <p>
-    رقم الرف :
-    <span>
 
-          52154
-        </span>
-    <span>
-          &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
-        </span>
-  </p>
-  <p>
-    <span>
-         <span class="prim">المساحة :</span> 100 متر
-    </span>
-    <span>
-        <span class="prim">السعر :</span> 200 ريال
-    </span>
-  </p>
-
-</ion-item>
-
-<ion-item>
-  <p>
-    رقم الرف :
-    <span>
-
-          52154
-        </span>
-    <span>
-          &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
-        </span>
-  </p>
-  <p>
-    <span>
-         <span class="prim">المساحة :</span> 100 متر
-    </span>
-    <span>
-        <span class="prim">السعر :</span> 200 ريال
-    </span>
-  </p>
-
-</ion-item>
-
-<ion-item>
-  <p>
-    رقم الرف :
-    <span>
-
-          52154
-        </span>
-    <span>
-          &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
-        </span>
-  </p>
-  <p>
-    <span>
-         <span class="prim">المساحة :</span> 100 متر
-    </span>
-    <span>
-        <span class="prim">السعر :</span> 200 ريال
-    </span>
-  </p>
-
-</ion-item>
-
-<ion-item>
-  <p>
-    رقم الرف :
-    <span>
-
-          52154
-        </span>
-    <span>
-          &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
-        </span>
-  </p>
-  <p>
-    <span>
-         <span class="prim">المساحة :</span> 100 متر
-    </span>
-    <span>
-        <span class="prim">السعر :</span> 200 ريال
-    </span>
-  </p>
-
-</ion-item>
-
-<ion-item>
-  <p>
-    رقم الرف :
-    <span>
-
-          52154
-        </span>
-    <span>
-          &nbsp; &gt; &nbsp; 
-          متاجر كيوبا
-        </span>
-  </p>
-  <p>
-    <span>
-         <span class="prim">المساحة :</span> 100 متر
-    </span>
-    <span>
-        <span class="prim">السعر :</span> 200 ريال
-    </span>
-  </p>
-
-</ion-item>
   </ion-list>
 </ion-content>
+
+
+<!--
+<ion-item>
+  <p>
+    رقم الرف :
+    <span>
+
+          52154
+        </span>
+    <span>
+          &nbsp; &gt; &nbsp; 
+          متاجر كيوبا
+        </span>
+  </p>
+  <p>
+    <span>
+         <span class="prim">المساحة :</span> 100 متر
+    </span>
+    <span>
+        <span class="prim">السعر :</span> 200 ريال
+    </span>
+  </p>
+
+</ion-item>
+
+<ion-item>
+  <p>
+    رقم الرف :
+    <span>
+
+          52154
+        </span>
+    <span>
+          &nbsp; &gt; &nbsp; 
+          متاجر كيوبا
+        </span>
+  </p>
+  <p>
+    <span>
+         <span class="prim">المساحة :</span> 100 متر
+    </span>
+    <span>
+        <span class="prim">السعر :</span> 200 ريال
+    </span>
+  </p>
+
+</ion-item>
+
+<ion-item>
+  <p>
+    رقم الرف :
+    <span>
+
+          52154
+        </span>
+    <span>
+          &nbsp; &gt; &nbsp; 
+          متاجر كيوبا
+        </span>
+  </p>
+  <p>
+    <span>
+         <span class="prim">المساحة :</span> 100 متر
+    </span>
+    <span>
+        <span class="prim">السعر :</span> 200 ريال
+    </span>
+  </p>
+
+</ion-item>
+
+<ion-item>
+  <p>
+    رقم الرف :
+    <span>
+
+          52154
+        </span>
+    <span>
+          &nbsp; &gt; &nbsp; 
+          متاجر كيوبا
+        </span>
+  </p>
+  <p>
+    <span>
+         <span class="prim">المساحة :</span> 100 متر
+    </span>
+    <span>
+        <span class="prim">السعر :</span> 200 ريال
+    </span>
+  </p>
+
+</ion-item>
+
+<ion-item>
+  <p>
+    رقم الرف :
+    <span>
+
+          52154
+        </span>
+    <span>
+          &nbsp; &gt; &nbsp; 
+          متاجر كيوبا
+        </span>
+  </p>
+  <p>
+    <span>
+         <span class="prim">المساحة :</span> 100 متر
+    </span>
+    <span>
+        <span class="prim">السعر :</span> 200 ريال
+    </span>
+  </p>
+
+</ion-item>
+
+  -->

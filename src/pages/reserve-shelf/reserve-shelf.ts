@@ -30,10 +30,11 @@ export class ReserveShelfPage {
   ionViewWillLoad() {
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReserveShelfPage');
-    console.log(this.pageData);
+    console.log('startDate',this.pageData.start_date, '\nendDate', this.pageData.end_date);
 
     //if (this.pageData.close == 0) {
       this.showLoader = true;
@@ -127,7 +128,8 @@ export class ReserveShelfPage {
         toServer.subscribe(({ status }) => {
           let acceptStatus = (accept) ? 'الموافقة' : 'الرفض'
           if (status == 'success') {
-            this.showToast(`لقد تم ارسال طلب ${acceptStatus} الى ${this.pageData.name}`)
+            this.showToast(`لقد تم ارسال طلب ${acceptStatus} الى ${this.pageData.name}`);
+            this.navCtrl.pop();
           }
         })
 
