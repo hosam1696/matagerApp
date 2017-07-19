@@ -277,6 +277,10 @@ export class Signup implements AfterViewInit{
       //this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + this.SignUpFrom.value.password);
       console.log(this.SignUpFrom.value, this.SignUpFrom.status);
 
+      this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + '0' + this.SignUpFrom.value.mobile);
+      delete this.SignUpFrom.value.InsurePassword;
+      this.addUserProvider(this.SignUpFrom.value);
+        /*
         this.geolocation.getCurrentPosition()
           .then((response)=> {
             console.log('get an access to geolocation plugin',response);
@@ -305,13 +309,13 @@ export class Signup implements AfterViewInit{
 
           });
 
-
+          */
 
     } else {
 
       this.showLoader = false;
       console.log(this.SignUpFrom.value);
-
+      this.SignUpFrom.get('mobile').setValue((this.SignUpFrom.value.mobile.indexOf('+') != -1) ? this.SignUpFrom.value.mobile.split('0')[1] : this.SignUpFrom.value.mobile);
 
       /*
       if (this.SignUpFrom.get('area').getError('required')) {
@@ -372,6 +376,7 @@ export class Signup implements AfterViewInit{
           this.showLoader = false; // stop the loader
         } else {
           this.showLoader = false;
+          this.SignUpFrom.get('mobile').setValue((this.SignUpFrom.value.mobile.indexOf('+') != -1) ? this.SignUpFrom.value.mobile.split('0')[1] : this.SignUpFrom.value.mobile);
           let keys = Object.keys(errors);
           let errMsg: string = '';
           for (let key of keys) {
