@@ -21,6 +21,8 @@ import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
 import { ItemProvider } from '../providers/item';
 import { NotificationsProvider } from '../providers/notifications';
+import { DeliveryProvider } from '../providers/delivery';
+import { DeliveryRequestInfo } from '../pages/deliveryrequestmodal';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -48,6 +50,7 @@ import {MapsModal} from "../pages/mapsmodal";
     PlacesModal,
     ChooseArea,
     ShelfModal,
+    DeliveryRequestInfo,
     MapsModal,
     PopSettings
     
@@ -76,6 +79,7 @@ import {MapsModal} from "../pages/mapsmodal";
     ChooseArea,
     ShelfModal,
     MapsModal,
+    DeliveryRequestInfo,
     PopSettings
   ],
   providers: [
@@ -88,6 +92,7 @@ import {MapsModal} from "../pages/mapsmodal";
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,
+    DeliveryProvider,
     NotificationsProvider,
     ImagePicker,
     GoogleMaps,

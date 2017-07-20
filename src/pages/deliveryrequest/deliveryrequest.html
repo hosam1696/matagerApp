@@ -1,0 +1,52 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>طلب تسليم منتج</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item id="shelf-id">
+
+    <ion-label>رقم الرف</ion-label>
+    <ion-select [(ngModel)]="shelfNumbers">
+      <ion-option value="" selected>{{(noAcceptedRequests?'لا يوجد رفوف محجوزة':'قم بتحديد رف')}}</ion-option>
+      <ion-option text-center *ngFor="let shelf of Shelfs" [value]="shelf.matger_id+','+ shelf.shelf_id+','+shelf.shelf_name">{{shelf.shelf_name}} &gt; {{shelf.matger_name}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
+
+  <ion-grid padding-vertical>
+    <ion-row *ngFor="let products of AllProducts">
+      <ion-col col-6 *ngFor="let product of products;let i = index">
+        <div class="col-content" [ngClass]="{'border-primary': product.isChecked}">
+          <div class="checked" (click)="triggerChecked(product)" [ngClass]="{'green': product.isChecked, 'lightDark': !product.isChecked}">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+          <img [src]="(!product.item_image)?'assets/img/product-iphone.png':product.item_image" alt="product">
+
+          <p class="prod-desc">
+            {{limitString(product.item_desc)}} </p>
+          <div class="quantity-controls">
+            <button class="decreaseQuantity" ion-button small (click)="decreaseQuantity(product)">&lt;</button>
+            <!-- <ion-datetime class="quantity-value" displayFormat="s" pickerFormat="s" [(ngModel)]="timeStarts"></ion-datetime> -->
+            <input [value]="product.item_quantity" type="number" class="quantity-value">
+            <button class="increaseQuantity" ion-button small (click)="increaseQuantity(product)">&gt;</button>
+          </div>
+          <!--<a href="">ابلاغ عن مخالفة</a>-->
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <button full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
+    ارسال طلب التسليم
+  </button>
+</ion-content>

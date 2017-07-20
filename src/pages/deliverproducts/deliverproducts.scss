@@ -1,26 +1,25 @@
-$bgColor: color($colors, bgColor);
-$primary : color($colors, primary);
-page-reservedshelfs {
+
+$primaryDark: color($colors, primaryDark);
+$primary: color($colors, primary);
+page-deliverproducts {
+    .small {
+            font-size: 12px !important;
+    }
 
     ion-content {
         &.content {
-            background-color:$bgColor 
-        }
-
-        p {
-            &.small {
-                color: #666 !important
+                background-color: color($colors, bgColor);
+            //padding-top: 0 !important;
+        }  
+        ion-list-header {
+            ion-label {
+                text-align: right !important
             }
         }
-        * {
-            .prim {
-                                    color: $primary
-            
-                                }
-        }
         ion-list {
-            
+            border-top: none !important;
            ion-item {
+               font-size: 14px !important;
                border-bottom:0.5px solid color($colors, bgColor) !important;
            }
         .item-block:first-child {
@@ -48,16 +47,26 @@ page-reservedshelfs {
                             justify-content: space-between;
 
                         }
-                        span {
+                        /*span {
                                 color: #666
                             }
-                    
+                    */
                     }
                 }
+                /*ion-label {
+            flex: initial;
+            display: block;
+            &:first-child {
+              width: 30%;
+            }
+            &:last-child {
+              width: 70%;
+              text-align: center
+            }
+          }*/
 
             
         }
+     
     }
-
-        
-}
+}   

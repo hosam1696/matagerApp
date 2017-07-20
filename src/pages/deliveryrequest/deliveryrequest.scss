@@ -1,0 +1,158 @@
+
+$primaryDark: color($colors, primaryDark);
+$primary: color($colors, primary);
+page-deliveryrequest {
+.small {
+            font-size: 12px !important;
+        }
+    ion-content {
+        &.content {
+             background-color: color($colors, bgColor);
+            //padding-top: 0 !important;
+             
+        }
+        .scroll-content {
+               max-width: 600px;
+    margin: auto;
+        }
+        
+        #shelf-id {
+            display: flex;
+            background-color: #fff;
+            align-items: center;
+            ion-label {
+                color: $primary;
+                width: 30%;
+                &.label-ios {
+                    margin:0 !important
+                }
+            }
+            ion-select {
+                flex: 1;
+                .select-text {
+                    text-align: center;
+                    color: $primaryDark;
+                    font-size: 12px;
+                }
+                .alert-ios{
+                .alert-radio-label {
+                        text-align: center;
+                    }
+                    
+                }
+                
+                .select-icon {
+                    left: -10px;
+                    .select-icon-inner {
+
+                    color: $primary
+                    }
+                }
+            }
+        }
+
+        ion-grid {
+            margin-bottom: 60px;
+            &.grid {
+                padding: 0 !important;
+
+            }
+            ion-row {
+                &:first-child {
+                 padding-top: 5px
+                    
+                }
+            }
+            ion-col {
+                &:last-of-type {
+                    padding: 5px  0 ;
+                }
+                &:first-of-type {
+                    padding: 5px 0 5px 5px;
+                }
+                
+                .col-content {
+                    position: relative;
+                        height: 240px;
+                    background-color: #fff;
+                    background-origin: content-box;
+                    overflow: hidden;
+                    border: 1px solid transparent;
+                    &.border-primary {
+                        transition: border 0.2s ease;
+                        border: 1px solid $primary;
+                    }
+                    img {
+                        width: 100%;
+                            max-height: 125px;
+                    }
+                    .checked {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        color: #fff;
+                        padding: 17px 40px 0;
+                        transition: background-color 0.2s ease;
+                        transform: translate(32px, -12px) rotate(45deg);
+                        &.green {
+                            background-color: $primary;
+
+                        }
+                        &.lightDark {
+                            background-color: color($colors, lightDark);
+                        }
+                        ion-icon {
+                            transform: rotate(-45deg);
+                            font-weight: bold;
+                            font-size: 30px;
+                        }
+                    }
+                    .prod-desc {
+                        color: $primary;
+                        margin-bottom: 0 !important;
+                        margin-top: 0 !important;
+                        padding: 0 5px;
+                    }
+                    .price {
+                        margin: 0 !important;
+                        font-size: 18px;
+                        color: $primaryDark
+                    }
+                    .quantity-controls {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        button {
+                            &:first-child {
+                                border-radius: 1px 5px 5px 1px;
+                            }
+
+                            &:last-child {
+                                border-radius: 5px 1px 1px 5px;
+                            }
+                            
+                        }
+                        .quantity-value {
+                            width: 30px;
+                            font-weight: bold;
+                            text-align: center;
+                            border: none;
+                            //display: block !important
+                        }
+                        ion-input {
+                            
+                        }
+                    }
+                }
+            }
+        }
+        .float-btn {
+           position: fixed;
+           bottom: 0;
+           left: 0;
+           height: 40px;
+           font-size: 14px;
+           margin: 0;
+         }
+    }
+}

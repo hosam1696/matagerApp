@@ -87,11 +87,12 @@ export class NotificationsPage {
   }
 
   ionViewWillEnter() {
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+    if (!this.userLocal)
+      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
     if (this.userLocal) {
       [this.noUser, this.showLoader,this.noData, this.netErr] = [false, true, false, false];
-      this.getNotifications();
+      
     } else {
       [this.noUser, this.showLoader] = [true, false];
     }
@@ -100,7 +101,8 @@ export class NotificationsPage {
   ionViewDidLoad() {
     
     this.ionViewWillEnter();
-
+    if (this.userLocal)
+      this.getNotifications();
     //console.log('ionViewDidLoad Messages');
     /*
     this.network.onConnect().subscribe(data=>{
@@ -229,6 +231,8 @@ export class NotificationsPage {
   navigateToPage(pageData: INotification | string):void {
     if (typeof pageData == 'string') {
       this.navCtrl.push(pageData);
+    } else if (pageData.type == 'requestDelivery'){
+      this.navCtrl.push('NotificationDeleveryReqPage', {pageData})
     } else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
       /*if (pageData.type == 'reserveShlef') {

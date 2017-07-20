@@ -1,0 +1,127 @@
+page-notification-delevery-req {
+    
+    ion-content {
+
+        &.content {
+            background-color: color($colors, bgColor)
+        }
+
+        #float-btn {
+          display: flex;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          button {
+            width: 50%;
+            flex:1;
+            color: #fff;
+            padding: 15px;
+            background-color: color($colors, danger);
+            &:first-child {
+              background-color: color($colors, primary);
+            }
+          }
+        }
+
+        ion-item#hero {
+      background: color($colors, light);
+      height: auto;
+      width: 100%;
+      position: relative;
+
+        h3 {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          //font-weight: bold;
+          font-size: 16px;
+          margin-bottom: 0;
+          color: color($colors, primary);
+
+          .since-time {
+            color: #666;
+            font-size: 12px;
+          }
+        }
+        p {
+          margin-top: 0;
+          font-size: 12px !important;
+          white-space: normal;
+        }
+        ion-avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);
+          overflow: hidden;
+          border: 2px solid color($colors, primaryDark) ;
+          img {
+            width: 100% !important;
+            height: 100% !important;
+            //height: auto;
+            &.alt {
+              width: 45px !important;
+            }
+          }
+
+        }
+
+    }
+      
+      .msg-small {
+            margin-top: 0;
+    font-size: 14px !important;
+    white-space: normal;
+      }
+      #refuse-msg {
+        border: none !important;
+        box-shadow: none !important;
+        background-color: transparent !important;
+        p {
+          text-align: center;
+          text-shadow: 1px 1px #fff;
+        }
+        textarea {
+          resize: none;
+          background: #fff;
+          padding: 5px;
+          border-radius: 3px;
+        }
+      }
+      ion-list {
+        ion-item-divider {
+          padding-right: 6px;
+         * {
+           margin: 0 !important;
+           color: color($colors, primaryDark);
+         } 
+        }
+        ion-item {
+.item-inner {
+          border-bottom:0.5px solid color($colors, bgColor) !important
+          }
+        &.dstatus {
+          
+          ion-label {
+            flex: initial;
+            display: block;
+            &:first-child {
+              width: 30%;
+            }
+            &:last-child {
+              width: 70%;
+            }
+          }
+        }
+
+          h2 {
+            color: color($colors, primary)
+          }
+        }
+      }
+    }
+}

@@ -173,7 +173,7 @@ export class AddproductPage {
           )
       } else {
 
-        let ProductForm = Object.assign({ 'updated_user_id': this.userLocal.id, 'id': this.InitData.id }, this.addProductForm.value);
+        let ProductForm = Object.assign({ 'user_id': this.userLocal.id, 'id': this.InitData.id }, this.addProductForm.value);
 
         console.log('trying to edit this product');
 

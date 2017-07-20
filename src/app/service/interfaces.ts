@@ -1,3 +1,4 @@
+import { ItemInfo } from './interfaces';
 export interface IProduct {
     id: number,
     item_name: string,
@@ -29,19 +30,21 @@ export interface INotification {
   notifiy_message: string | any,
   type: string,
   url: number,
+  name: string,
   status: ERead,
   date_added:  any,
   avatar: string, 
   gender: string,
-  name: string,
-  start_date:  any,
-  end_date:  any
-  sale_percentage: number,
   send_user_id: number,
-  percentage_status?:Eclose,
-  shelf_status?: Eclose,
 }
 
+
+
+export interface IShlefStatus {
+  sale_percentage: number,
+  percentage_status: number,
+  shelf_status: number
+}
 
 export interface Ishelf {
   area: number,
@@ -52,6 +55,31 @@ export interface Ishelf {
   user_id: number,
   data_added?: Date,
   data_modified?: Date
+}
+
+export interface shelfRequestInfo {
+  sale_percentage: number,
+  percentage_status: number,
+  shelf_status: number,
+  area: number,
+  close: number,
+  cost: number,
+  name: string,
+  start_date: any,
+  end_date: any
+  date_added?: Date
+}
+export interface ItemInfo {
+  item_id: number,
+  item_name: string,
+  item_quantity: number,
+  item_image?:string
+}
+export interface IDeliveryNotifyInfo {
+  name: number | string,
+  items: ItemInfo[] | any,
+  delivery_status: Eclose,
+  delivery_message: string
 }
 
 export interface IlocalUser {

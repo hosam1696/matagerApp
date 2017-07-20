@@ -14,10 +14,13 @@
 
 
 <ion-content >
-  <p text-right padding-horizontal class="small">
-    كل الطلبات 
+  
+
+  <p text-center>
+    <hsa-loader *ngIf="showLoader"></hsa-loader>
   </p>
-  <ion-list>
+  <ion-list *ngIf="AllRequests">
+    <ion-list-header> كل الطلبات</ion-list-header>
     <ion-item *ngFor="let request of AllRequests">
       <p>
          رقم الرف :

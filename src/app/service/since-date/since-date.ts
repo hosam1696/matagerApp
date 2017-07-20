@@ -20,9 +20,9 @@ export class SinceDatePipe implements PipeTransform {
   }
 
   getDateSince(date, dNow = Date.now()) {
-    if (!this.isDate) 
+    /*if (!this.isDate) 
       return null
-
+    */
     let timeUnits = {
       timeId: ['year', 'month', 'day', 'hour', 'minute', 'second'],
       unitsId: [(60 * 60 * 24 * 30*12),(60 * 60 * 24 * 30), (60 * 60 * 24), (60 * 60), 60, 1]

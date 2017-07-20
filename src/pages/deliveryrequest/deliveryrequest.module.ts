@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ReservedshelfsPage } from './reservedshelfs';
+import { DeliveryrequestPage } from './deliveryrequest';
 import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
 @NgModule({
   declarations: [
-    ReservedshelfsPage,
+    DeliveryrequestPage,
   ],
   imports: [
-    IonicPageModule.forChild(ReservedshelfsPage),
+    IonicPageModule.forChild(DeliveryrequestPage),
     HsaloaderComponentModule
   ],
   exports: [
-    ReservedshelfsPage
+    DeliveryrequestPage
   ]
 })
-export class ReservedshelfsPageModule {}
+export class DeliveryrequestPageModule {}

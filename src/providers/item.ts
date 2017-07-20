@@ -48,6 +48,12 @@ export class ItemProvider {
     return this.http.post<IPost>(this.API_URL+'items.php',  JSON.stringify(body));
   }
 
+  getProductById(product_id) {
+    const action = "getItemById";
 
+    const body = Object.assign({ action }, { product_id });
+
+    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
+  }
 
 }

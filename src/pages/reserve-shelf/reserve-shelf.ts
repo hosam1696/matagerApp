@@ -1,9 +1,10 @@
+
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angular';
 
 import { ShelfsProvider } from '../../providers/shelfs';
 import { NotificationsProvider} from '../../providers/notifications';
-import { INotification, Ishelf } from '../../app/service/interfaces';
+import { INotification, shelfRequestInfo } from '../../app/service/interfaces';
 @IonicPage()
 @Component({
   selector: 'page-reserve-shelf',
@@ -11,7 +12,7 @@ import { INotification, Ishelf } from '../../app/service/interfaces';
 })
 export class ReserveShelfPage {
   pageData: INotification;
-  shelfData: Ishelf;
+  shelfData: shelfRequestInfo;
   showShelfList: boolean = false;
   showLoader: boolean = false;
   salesPercentage: any;
@@ -34,7 +35,6 @@ export class ReserveShelfPage {
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReserveShelfPage');
-    console.log('startDate',this.pageData.start_date, '\nendDate', this.pageData.end_date);
 
     //if (this.pageData.close == 0) {
       this.showLoader = true;
@@ -54,15 +54,17 @@ export class ReserveShelfPage {
     
   }
 
-  getShelf(shelfId, user_id) {
+  getShelf(shelfRequestId, user_id) {
     
-    this.shelfProvider.getShelfById(shelfId, user_id)
+    this.shelfProvider.getShelfRequestInfo(shelfRequestId, user_id)
       .subscribe(
       ({status, data}) => {
 
         if (status == 'success') {
           this.showShelfList = true;
           this.shelfData = data;
+
+          console.log(this.shelfData, this.pageData);
         } else {
           this.showLoader = false;
           this.noShelf = true;
@@ -94,7 +96,7 @@ export class ReserveShelfPage {
       .subscribe(({ status, errors}) => {
         if (status == 'success') {
           
-          this.showToast(`لقد تم ارسال طلب التعديل على نسبة المبيعات الى ${this.pageData.name}`)
+          this.showToast(`لقد تم ارسال طلب  نسبة المبيعات الى ${this.pageData.name}`)
         } else {
           this.showToast('لم يتم ارسال طلبك');
           console.log(errors)
