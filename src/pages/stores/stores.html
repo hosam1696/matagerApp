@@ -33,7 +33,12 @@
   <ion-refresher (ionRefresh)="refreshStores($event)">
   <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
   </ion-refresher>
-  <p text-center *ngIf="showLoader == true">
+
+  <p text-center *ngIf="netError" class="err-small">
+    التطبيق يتطلب اتصال بالانترنت.<br> تفقد الاتصال وحاول مجددا
+  </p>
+
+  <p text-center *ngIf="showLoader">
     <hsa-loader></hsa-loader>
   </p>
 

@@ -3,7 +3,11 @@
 
 }
 page-exporter {
-
+ion-toolbar {
+    .toolbar-background-ios {
+    background-color: #fff !important;
+    }
+}
   #modal-button{
             background-color: color($colors, light);
             width: 100%;
@@ -100,6 +104,14 @@ page-exporter {
         font-size: 12px;
         color: #666;
         margin-top: -30px !important
+      }
+      .err-small {
+            font-size: 1.7rem;
+        color: #666;
+        text-shadow: 1px 1px #fff;
+        position: absolute;
+        top: 40%;
+        width: 100%;
       }
     #modal-button{
       background-color: #fff;

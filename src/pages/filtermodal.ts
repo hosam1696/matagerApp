@@ -123,7 +123,7 @@ import 'rxjs/operator/filter';
       }
       .small {
         margin-top: 0 !important;
-        font-size: 10px;
+        font-size: 12px;
         color: #666;
         background-color: #eee 
       }
@@ -176,7 +176,7 @@ export class PlacesModal {
     console.log(event);
     this.fetchAreas((d, s) => {
       console.log('boolean event', s);
-      if (d == 'completed' && s)
+      if (d == 'completed' || d == 'err' && s)
         event.complete();
     }, this.initLimit, this.initStart);
     
@@ -317,7 +317,7 @@ export class PlacesModal {
 
         [this.showLoader, this.errorAccessDB] = [false, true];
         console.warn( err );
-        callback( 'err' );
+        callback( 'err',true );
       },
       () => {
         this.showLoader = false;

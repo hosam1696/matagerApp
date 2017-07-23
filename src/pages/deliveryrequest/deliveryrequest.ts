@@ -1,7 +1,7 @@
 import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { NavController, NavParams, IonicPage, ToastController } from 'ionic-angular';
 import { ItemProvider } from '../../providers/item';
-import { IProduct, IlocalUser, Ishelf, IShelfRequest } from '../../app/service/interfaces';
+import { IProduct, IlocalUser, IShelfRequest } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { DeliveryProvider } from '../../providers/delivery';
 @IonicPage()
@@ -163,6 +163,7 @@ export class DeliveryrequestPage {
               this.navCtrl.pop();
             }, 2000);
           } else {
+            console.warn(errors);
             this.showToast('حاول مجددا')
           }
         })
