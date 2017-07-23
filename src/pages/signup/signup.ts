@@ -1,22 +1,11 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
-import {IlevelId, Iplace} from "../../app/service/InewUserData";
+import {IlevelId, Iplace, ArSignForm} from "../../app/service/interfaces";
 import {UserProvider} from "../../providers/user";
 import { Geolocation } from '@ionic-native/geolocation';
 import {ChooseArea } from '../chooselocmodal';
 import {MapsModal} from "../mapsmodal";
-
-let ArSignForm;
-(function (ArArea) {
-  ArArea[ArArea["area"] = "المنطقة"] = "area";
-  ArArea[ArArea["city"] = "المدينة"] = "city";
-  ArArea[ArArea["dist"] = "الحى"] = "dist";
-  ArArea[ArArea["address"] = 'العنوان'] = "address";
-  ArArea[ArArea["cr_num"] = 'رقم السجل التجارى'] = "cr_num";
-  ArArea[ArArea["owner_name"] = 'اسم مدير المتجر'] = "owner_name";
-})(ArSignForm || (ArSignForm = {}));
-
 
 
 @IonicPage()

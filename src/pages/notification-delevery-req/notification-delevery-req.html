@@ -48,7 +48,10 @@
       </ion-label>
     </ion-item>
     <ion-item-divider color="bgColor">المنتجات</ion-item-divider>
-    <ion-item *ngFor="let product of DeliverData.items; index as i; first as isFirst">
+    <ion-item
+       *ngFor="let product of DeliverData.items; index as i; first as isFirst"
+       (click)="openProduct(product.item_id)"
+       >
         <ion-thumbnail item-start>
           <img [src]="(product.item_image)?'templates/default/uploads/items/thumbs/'+product.item_image:'assets/img/product-camera.png'" alt="product alternative image">
         </ion-thumbnail>

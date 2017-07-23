@@ -12,6 +12,8 @@ import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
+import {ProductModal } from '../pages/productmodal.ts';
+
 
 import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
 import { SinceDatePipeModule } from './service/since-date/since-date.module';
@@ -48,6 +50,7 @@ import {MapsModal} from "../pages/mapsmodal";
   declarations: [
     MyApp,
     PlacesModal,
+    ProductModal,
     ChooseArea,
     ShelfModal,
     DeliveryRequestInfo,
@@ -77,6 +80,7 @@ import {MapsModal} from "../pages/mapsmodal";
     MyApp,
     PlacesModal,
     ChooseArea,
+    ProductModal,
     ShelfModal,
     MapsModal,
     DeliveryRequestInfo,

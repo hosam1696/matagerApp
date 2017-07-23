@@ -20,6 +20,7 @@ export class Exporter {
   showLoader: boolean = true;
   allExporters: any[] = [];
   moreData: boolean = true;
+  netError:boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -56,7 +57,7 @@ export class Exporter {
         }
       },
       err => {
-        //this.showLoader = false;
+         [this.showLoader, this.netError] = [false, true];
         console.warn(err)
       },
       () => {
@@ -85,6 +86,7 @@ export class Exporter {
 
         },
         (err) => {
+          event.complete();
           console.warn('error', err) // catch accessing database errors
         },
         () => {
@@ -101,7 +103,7 @@ export class Exporter {
   }
 
   refreshExporter(event) {
-    this.initStart = 0;
+    [this.initStart,this.netError] = [0, false];
     this.getExporters()
       .subscribe(
       ({ status, data }) => {
@@ -118,6 +120,8 @@ export class Exporter {
         }
       },
       err => {
+        this.netError = true;
+        event.complete();
         //this.showLoader = false;
         console.warn(err)
       },
@@ -178,6 +182,7 @@ export class Exporter {
   }
 
   filterPlaces(placesData, limit = this.initLimit, start = 0) {
+    this.showLoader =true;
     this.userProvider.filterUsersByPlaces(placesData, limit, start)
       .subscribe(({ status, data, errors }) => {
         if (status == 'success') {

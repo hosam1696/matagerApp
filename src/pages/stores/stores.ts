@@ -99,6 +99,7 @@ export class StoresPage {
 
 
   filterPlaces(placesData, limit = this.initLimit, start = 0) {
+    this.showLoader =true;
     this.userProvider.filterUsersByPlaces(placesData, limit, start)
       .subscribe(({ status, data, errors }) => {
         if (status == 'success') {
@@ -147,6 +148,7 @@ export class StoresPage {
           }
         },
         (err) => {
+          event.complete();
           console.warn('error', err) // catch net error acceccsing database
         },
         () => {
@@ -163,7 +165,7 @@ export class StoresPage {
   }
 
   refreshStores(event) {
-    this.initStart = 0;
+    [this.initStart,this.netError] = [0, false];
     this.getStores()
       .subscribe(
       ({ status, data }) => {
@@ -182,6 +184,8 @@ export class StoresPage {
         }
       },
       err => {
+        this.netError = true;
+        event.complete();
         //this.showLoader = false;
         console.warn(err) // catch fetching from the server
       },
@@ -225,7 +229,7 @@ export class StoresPage {
         }
       },
       err => {
-        //this.showLoader = false;
+        [this.showLoader, this.netError] = [false, true];
         console.warn(err)
       },
       () => {

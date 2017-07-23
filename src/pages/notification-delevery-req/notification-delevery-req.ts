@@ -1,6 +1,7 @@
+import { ProductModal } from './../productmodal';
 import { NotificationsProvider } from './../../providers/notifications';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ToastController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, ModalController } from 'ionic-angular';
 
 '../../providers/notifications';
 import { INotification, IDeliveryNotifyInfo } from '../../app/service/interfaces';
@@ -23,6 +24,7 @@ export class NotificationDeleveryReqPage {
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public navParams: NavParams,
+    public modalCtrl: ModalController,
     public deliveryProvider: DeliveryProvider,
     public notificationProvider:NotificationsProvider
   ) {
@@ -63,6 +65,7 @@ export class NotificationDeleveryReqPage {
       },
       err => {
         [this.noDeliveryData] = [true];
+        this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
       },
       () => {
         this.showLoader = false
@@ -111,7 +114,7 @@ export class NotificationDeleveryReqPage {
             }
           },
           err => {
-            this.showToast('تفقد الاتصال وحاول مجداا')
+            this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
           }
         )
       } else {
@@ -151,5 +154,11 @@ export class NotificationDeleveryReqPage {
     } else {
 
     }
+  }
+
+  openProduct(pageData) {
+    let modal = this.modalCtrl.create(ProductModal, {pageData});
+
+    modal.present()
   }
 }

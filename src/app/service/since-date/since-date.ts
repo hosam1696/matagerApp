@@ -3,43 +3,29 @@ import { ArDTimeId, ArLttTimeId, ArTimeId} from '../interfaces';
 
 @Pipe({
   name: 'sincedate',
+  pure:false
 })
 export class SinceDatePipe implements PipeTransform {
   transformed: string;
-  /**
-   * Takes a value and makes it lowercase.
-   */
+
   transform(value: string, ...args) {
     return this.getDateSince(value);
-    /*
-     setInterval(() => {
-      console.log( this.getDateSince(value));
-      this.transformed =  (this.getDateSince(value))
-     }, 1000);
-     return this.transformed;*/
   }
 
-  getDateSince(date, dNow = Date.now()) {
-    /*if (!this.isDate) 
-      return null
-    */
-    let timeUnits = {
-      timeId: ['year', 'month', 'day', 'hour', 'minute', 'second'],
-      unitsId: [(60 * 60 * 24 * 30*12),(60 * 60 * 24 * 30), (60 * 60 * 24), (60 * 60), 60, 1]
-    };
-    //let dNow = Date.now();
+  getDateSince(date, dNow?:any) {
 
-    let dTimeStamp = new Date(date).getTime();
-    let diff = (dNow - dTimeStamp) / 1000; // pareseInt()
+    let dTimeStamp = this.getTime(date);
+    dNow = Date.now();
+    let diff = (dNow - dTimeStamp) / 1000; // get time difference in seconds --pareseInt() 
 
-    for (let i in timeUnits.unitsId) {
-      let tDivider = timeUnits.unitsId[i];
-      let sinceTime = Math.floor(diff / tDivider);
+    console.log(date, dTimeStamp,dNow, diff);
+    for (let i in this.unitsId) {
+      let tDivider = this.unitsId[i],
+      sinceTime = Math.floor(diff / tDivider);
       if (sinceTime > 0) {
-        //console.log(i,sinceTime, timeUnits.timeId[i]);
-        let arTime = ArTimeId[timeUnits.timeId[i]];
-        let doubleArTime = ArDTimeId[timeUnits.timeId[i]];
-        let lessThanTenTime = ArLttTimeId[timeUnits.timeId[i]];
+        //console.log(i,sinceTime, this.timeId[i]);
+        let [arTime, doubleArTime, lessThanTenTime] = [ArTimeId[this.timeId[i]], ArDTimeId[this.timeId[i]], ArLttTimeId[this.timeId[i]]];
+        
         if (sinceTime == 1)
           return ' ' + arTime;
         else if (sinceTime == 2)
@@ -53,13 +39,24 @@ export class SinceDatePipe implements PipeTransform {
     //console.log(timeUnits.unitsId[i])
   }
 
-
-  type(obj: any): string {
-    return Object.prototype.toString.call(obj).match(/\S+[a-z]+/g)[1].toLowerCase();
+  private getTime(date) {
+    return (this.isDate(new Date(date)))?new Date(date).getTime(): Date.now();
   }
 
-  isDate(obj: any): boolean {
+  private type(obj: any): string {
+    return Object.prototype.toString.call(obj).match(/\S+\w+/g)[1].toLowerCase();
+  }
+
+  private isDate(obj: any): boolean {
     return (this.type(obj) == 'date') ? true : false;
+  }
+
+  private get timeId():string[] {
+    return ['year', 'month', 'day', 'hour', 'minute', 'second'];
+  }
+
+  private get unitsId():number[] {
+    return [(60 * 60 * 24 * 30*12),(60 * 60 * 24 * 30), (60 * 60 * 24), (60 * 60), 60, 1]
   }
 
 }

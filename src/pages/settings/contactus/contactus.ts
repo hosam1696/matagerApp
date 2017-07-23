@@ -36,4 +36,9 @@ export class Contactus {
   submitForm() {
 
   }
+
+  makeItNull() {
+    this.contactForm.controls.Name.clearValidators();
+    console.log(this.contactForm);  
+  }
 }

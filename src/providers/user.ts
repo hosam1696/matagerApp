@@ -47,11 +47,11 @@ export class UserProvider {
   }
 
   getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {
-    let [latitude, longitude] = Array(2).fill('');
     const action = 'getUserByLevel';
-    if (map) {
+    let [latitude, longitude] = Array(2).fill('');
+    if (map) 
      [latitude, longitude] = map.split(',');
-    }
+    
     
     return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude }));    
   }

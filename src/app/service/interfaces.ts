@@ -149,6 +149,22 @@ export enum ArLttTimeId {
   minute = 'دقائق',
   second = 'ثوان'
 }
+
+export enum ArSignForm {
+  area='المنطقة',
+  city='المدينة',
+  dist='الحى',
+  address='العنوان',
+  cr_num='رقم السجل التجارى',
+  owner_name='اسم مدير المتجر'
+}
+
+export enum IlevelId {
+  store = 2,
+  exporter,
+  client
+}
+
 export interface Imsg {
   message: string
 }
