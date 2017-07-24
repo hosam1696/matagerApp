@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform, NgZone } from '@angular/core';
 import { ArDTimeId, ArLttTimeId, ArTimeId} from '../interfaces';
 
 @Pipe({
@@ -7,15 +7,23 @@ import { ArDTimeId, ArLttTimeId, ArTimeId} from '../interfaces';
 })
 export class SinceDatePipe implements PipeTransform {
   transformed: string;
-
+  constructor(public ngZone: NgZone){}
   transform(value: string, ...args) {
-    return this.getDateSince(value);
+          return this.getDateSince(value);
+/*    
+    this.ngZone.runOutsideAngular(()=>{
+      setInterval(()=> {
+        console.log(value, this.getDateSince(value));
+
+        return this.ngZone.run(()=>{
+        });
+      }, 1000);
+    })*/
   }
 
-  getDateSince(date, dNow?:any) {
+  getDateSince(date, dNow= Date.now()) {
 
     let dTimeStamp = this.getTime(date);
-    dNow = Date.now();
     let diff = (dNow - dTimeStamp) / 1000; // get time difference in seconds --pareseInt() 
 
     console.log(date, dTimeStamp,dNow, diff);
