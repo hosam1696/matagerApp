@@ -21,6 +21,7 @@ export class DeliveryrequestPage {
   allProducts: any;
   showLoader: boolean = true;
   noAcceptedRequests: boolean = false;
+  noProducts: boolean = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public ele: ElementRef,
@@ -63,6 +64,7 @@ export class DeliveryrequestPage {
           this.AllProducts = this.chunk(data, 2); // to be used in HTML projection
           console.log(this.AllProducts);
         } else {
+          this.noProducts = true;
           console.warn(errors);
         }
       },
@@ -96,6 +98,7 @@ export class DeliveryrequestPage {
           this.matgar_id = this.Shelfs[0].matger_id;
 
         } else {
+          this.noAcceptedRequests = true;
           console.warn(errors)
         }
       },

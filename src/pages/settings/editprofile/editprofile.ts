@@ -41,7 +41,7 @@ export class Editprofile {
   password: FormControl = new FormControl('');
   mobilecc: any ;
   mobilenum: any;
-
+  loactionOnMap: string = 'Salah Salem Road, Tanamel Ash sharq alwahat, Cairo';
   constructor(public fb: FormBuilder,
               public navCtrl: NavController,
               public navParams: NavParams,
@@ -65,8 +65,8 @@ export class Editprofile {
       email: [this.localUser.email, Validators.compose([Validators.required]) ],
       mobile: [this.mobilenum, Validators.compose([Validators.minLength(9), Validators.required,Validators.maxLength(9)])] ,
       gender: [this.localUser.gender, Validators.compose([Validators.required]) ],
-      address:  [ this.localUser.address ],
-      latitude: [this.localUser.latitude],
+      address: [this.localUser.address, Validators.compose([Validators.required]) ],
+      latitude: [this.localUser.latitude, Validators.compose([Validators.required])],
 
       longitude: [this.localUser.longitude],
       area: [this.localUser.area, Validators.compose([Validators.required]) ],
@@ -142,7 +142,7 @@ console.log(form, form.valid);
     }*/
 
     if (form.valid) {
-      if (form.dirty) {
+
 
          this.EditUserForm.removeControl('InsurePassword');
         form.get('mobile').setValue(this.mobilecc+'0' + form.get('mobile').value);
@@ -155,7 +155,10 @@ console.log(form, form.valid);
           if (status.message == "success") {
             localStorage.setItem('userLocalData', JSON.stringify(data));
             this.showLoader = false;
-            this.showToast('تم تعديل البيانات بنجاح', 3000, 'success-toast')
+            this.showToast('تم تعديل البيانات بنجاح', 3000, 'success-toast');
+            setTimeout(() => {
+              this.navCtrl.pop();
+            }, 1500);
           } else {
             this.showLoader = false;
             if (errors) {
@@ -170,9 +173,7 @@ console.log(form, form.valid);
           }
         });
 
-      } else {
-        this.navCtrl.pop();
-      }
+      
     } else {
 
       console.warn(form);
@@ -242,8 +243,25 @@ console.log(form, form.valid);
   }
 
   openMaps(maps) {
-    const mapsModal = this.modalCrtl.create(MapsModal, {maps});
+    let pageData: any = null;
+    if (this.EditUserForm.get('latitude').value && this.EditUserForm.get('latitude').value) {
 
+      pageData = { latitude: this.EditUserForm.get('latitude').value, longitude: this.EditUserForm.get('longitude').value };
+    }
+    const mapsModal = this.modalCrtl.create(MapsModal, { pageData});
+
+    mapsModal.onDidDismiss((data) => {
+      if (data&&data.latitude && data.longitude) {
+        console.log('Data from Modal', data);
+        this.EditUserForm.get('latitude').setValue(data.latitude);
+        this.EditUserForm.get('longitude').setValue(data.longitude);
+        if(data.address)
+          this.EditUserForm.get('address').setValue(data.address);
+
+        //this.SignUpFrom.get('latitude').setValue(data.latitude);
+        this.loactionOnMap = data.address;
+      }
+    })
     mapsModal.present();
   }
 
@@ -372,6 +390,8 @@ console.log(form, form.valid);
       return false;
     }
   }
+
+
 
   showToast(msg, dur = 3000, toastClass="") {
     let toast = this.toastCont.create( {

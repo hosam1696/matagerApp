@@ -231,7 +231,7 @@ export class NotificationsPage {
   navigateToPage(pageData: INotification | string):void {
     if (typeof pageData == 'string') {
       this.navCtrl.push(pageData);
-    } else if (pageData.type == 'requestDelivery'){
+    } else if (pageData.type == 'deliveryRequest'){
       this.navCtrl.push('NotificationDeleveryReqPage', {pageData})
     } else {
       this.navCtrl.push('ReserveShelfPage', { pageData })

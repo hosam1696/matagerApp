@@ -126,6 +126,10 @@ page-editprofile {
                     &.location-place {
                         display: flex;
                         align-items: center;
+                        span {
+                                text-align: left;
+                            width: 85%;
+                        }
                         ion-icon {
                           margin-left: 0 !important;
                          margin-right: 10px !important;

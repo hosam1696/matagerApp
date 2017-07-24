@@ -15,6 +15,17 @@ page-contact {
       background-color: color($colors, bgColor);
       //padding-top: 0 !important;
     }
+
+    button {
+      color: color($colors, primary);
+      
+      &.powered {
+      font-size: 13px !important;
+        span {
+          font-weight: bold
+        }
+      }
+    }
     ion-item#hero {
       background: color($colors, light);
       height: auto;

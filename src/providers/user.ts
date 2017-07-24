@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/RX';
-import { IPost } from '../app/service/interfaces';
+import { IPost, ipUserInfo } from '../app/service/interfaces';
 
 @Injectable()
 export class UserProvider {
@@ -44,6 +44,14 @@ export class UserProvider {
 
   getUserById(id: number, login_user_id:number) {
     return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id}));
+  }
+
+  getUserIP() {
+    return this.http.get('http://ipv4.myexternalip.com/json');
+  }
+
+  getUserLocayionInfoByIp(ip) {
+    return (ip) ? this.http.get<ipUserInfo>('http://ipinfo.io/' + ip) : null;
   }
 
   getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {

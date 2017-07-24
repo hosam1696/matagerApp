@@ -175,3 +175,14 @@ export interface IPost {
   message?: string,
   success?:any
 }
+
+export interface ipUserInfo {
+  city: string,
+  country: string,
+  hostname: string,
+  ip: string,
+  org: string,
+  region: string,
+  loc: string
+
+}

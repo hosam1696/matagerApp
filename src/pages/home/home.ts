@@ -1,5 +1,6 @@
+import { MapsModal } from './../mapsmodal';
 import { Component } from '@angular/core';
-import { NavController, ToastController, IonicPage, Config } from 'ionic-angular';
+import { NavController, ToastController, IonicPage, Config, ModalController } from 'ionic-angular';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
@@ -22,7 +23,8 @@ export class HomePage {
      public toastCont: ToastController,
      public userProvider: UserProvider,
      public push: Push,
-     public config: Config
+     public config: Config,
+     public modalCtrl: ModalController
   ) {
    
   }
@@ -122,4 +124,14 @@ export class HomePage {
     // navigate to the advertise link or the advertise owner
     console.log('You have to go to ' + addsLink)
   }
+
+  openMaps() {
+    let modal = this.modalCtrl.create(MapsModal);
+    modal.onDidDismiss((d) => {
+      console.log('Data from Modal', d);
+    })
+    modal.present();
+  }
+
+
 }

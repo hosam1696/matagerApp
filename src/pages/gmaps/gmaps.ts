@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import { IonicPage,Events } from 'ionic-angular';
+import { IonicPage, Events, NavParams } from 'ionic-angular';
 import {
   GoogleMaps,
   GoogleMap,
@@ -18,15 +18,20 @@ import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult
   templateUrl: 'gmaps.html',
 })
 export class GmapsPage  {
+  initData: any;
   user: string = JSON.parse(localStorage.getItem('userLocalData'))['username'];
   userMap: string = JSON.parse(localStorage.getItem('userLocalData'))['map'];
   constructor(
     private googleMaps: GoogleMaps,
     public geolocation: Geolocation,
     public geocoderNative: NativeGeocoder,
-    public events: Events
+    public events: Events,
+    public navParams: NavParams
 
   ) {
+
+    this.initData = this.navParams.get('pageData');
+
   }
 
  ionViewWillEnter(): void {

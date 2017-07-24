@@ -1,3 +1,4 @@
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController, Events, IonicPage } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
@@ -17,7 +18,8 @@ export class SettingsPage {
   constructor(
     public navCtrl: NavController,
      public alertCtrl:AlertController,
-    public events: Events,public network: Network
+     public events: Events, public network: Network,
+     public itb: InAppBrowser
      ) {
     this.checkUserLogin();
 
@@ -85,5 +87,8 @@ export class SettingsPage {
   }
   navigateToPage(page) {
     this.navCtrl.push(page)
+  }
+  openTabBrowser(url) {
+    this.itb.create(url).show();
   }
 }

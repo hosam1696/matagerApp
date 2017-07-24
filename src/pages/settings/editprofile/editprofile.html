@@ -153,10 +153,10 @@
             <ion-col col-4 class="location-title">
 الموقع على الخريطة
             </ion-col>
-            <ion-col col-8 class="location-place" (click)="navigateToPage('GmapsPage')">
+            <ion-col col-8 class="location-place" (click)="openMaps()">
 
               <span>
-                 Salah Salem Road, Tanamel Ash sharq alwahat, Cairo
+                 {{loactionOnMap}}
               </span>
               <ion-icon name="pin-outline" color="primary"></ion-icon>
             </ion-col>

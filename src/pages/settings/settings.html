@@ -81,6 +81,7 @@
       </ion-item>
 
       <ion-item padding-left ion-item
+       *ngIf="userLocalData['level_id'] != 4"
        (click)="navigateToPage('SalesPage')">
         <ion-icon name="stats-outline" color="primary"></ion-icon>
         المبيعات
@@ -149,8 +150,18 @@
 
 
   </ion-list>
+  <p text-center no-margin>
 
-  <h4 text-center>Powered By <a href="http://it-plus.co/ar" target="_blank">ITPLUS</a></h4>
+  <button ion-button clear class="powered" (click)="openTabBrowser('http://it-plus.co/ar')" >
+    
+    <span>&nbsp;ITPLUS&nbsp;</span>
+    Powered By 
+    
+    
+
+  </button>
+
+  </p>
 
   <!-- TODO: view App version
   <p text-center>v1.0.0</p>-->

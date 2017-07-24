@@ -19,7 +19,7 @@ import { Component } from '@angular/core';
     </ion-header>
 
     <ion-content>
-        <section id="hero">
+        <section id="hero" *ngIf="productData">
     <!--<img src="/../../assets/img/adds_01.png" width="100%" height="100%"> -->
     <ion-slides pager="true">
       <ion-slide>
@@ -32,8 +32,8 @@ import { Component } from '@angular/core';
         <img src="assets/img/adds_02.png" width="100%" height="100%">
       </ion-slide>
     </ion-slides>
-  </section>
-  <section id="product">
+  </section >
+  <section id="product" *ngIf="productData">
     <h4> {{ productData['item_name'] }}</h4>
     <p class="price"><span>{{ productData['item_price'] }}</span> ريال</p>
     <p class="description">
@@ -41,16 +41,76 @@ import { Component } from '@angular/core';
       
       <!--مجموعة متنوعة من الهواتف الذكية لماركة سامسونج وبأسعار وتخفيضات هائلة وعروض مميزة بادر بالحجز وتواصل معنا للحصول على الهاتف-->
     </p>
-    <div class="product-date">
-      <p >انتاج: <span class="production-date">{{productData['item_production_date'] }}</span></p>
-      <p >انتهاء: <span class="expire-date">{{productData['item_expiry_date']}}</span></p>
+    <div class="product-date" *ngIf="productData['item_production_date']||productData['item_expiry_date'] ">
+      <p *ngIf="productData['item_production_date']">انتاج: <span class="production-date">{{productData['item_production_date'] }}</span></p>
+      <p *ngIf="productData['item_expiry_date']">انتهاء: <span class="expire-date">{{productData['item_expiry_date']}}</span></p>
     </div>
 
   </section>
 
     </ion-content>
     
-    `
+    `,
+    styles: [`
+      ion-content.content {
+        background-color: #eee;
+      }
+      ion-slides {
+      direction: ltr;
+    }
+    ion-slides img {
+      width: 100%;
+    }
+    .margin-div {
+      width:100%;
+      height: 50px;
+    }
+
+     #hero {
+      height: 150px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    #product {
+      background-color: #fff);
+      padding: 10px 14px;}
+      #product h4 {
+        font-size: 16px;
+        margin-top: 0;
+        font-weight: bold;
+          color: #666;
+      }
+      #product p {
+        margin-top: 0;
+        text-align: right;
+        line-height: 1.4;
+        }#product p.price {
+          color: #2e8bc9;
+          margin-bottom: 2px;
+          margin-top: -5px;
+        }
+        #product p.description {
+          min-height: 50px;
+          color: #666;
+          font-size: 15px;
+        }
+      
+      .product-date {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: #999;
+        align-items: center;
+        height: 20px;}
+         .product-date p {
+          margin-top: 2px;
+        }
+      
+
+    }
+      `]
 })
 export class ProductModal {
     product_id: any;
@@ -66,7 +126,8 @@ export class ProductModal {
         this.productProvider.getProductById(product_id)
             .subscribe(({status, data})=>{
                 if(status == 'success') {
-                    this.productData = data;
+                  this.productData = data;
+                  console.log(this.productData);
                 } else {
                     this.showErr = true;
                 }

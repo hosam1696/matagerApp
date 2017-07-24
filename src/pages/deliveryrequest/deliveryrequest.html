@@ -21,7 +21,9 @@
   <p text-center *ngIf="showLoader">
     <hsa-loader></hsa-loader>
   </p>
-
+  <p text-center *ngIf="noProducts">
+    لم تتم اضافة اى منتجات حتى الان
+  </p>
   <ion-grid padding-vertical>
     <ion-row *ngFor="let products of AllProducts">
       <ion-col col-6 *ngFor="let product of products;let i = index">

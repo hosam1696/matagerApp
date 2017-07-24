@@ -1,3 +1,4 @@
+import { ipUserInfo } from './../../app/service/interfaces';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
@@ -29,7 +30,7 @@ export class Signup implements AfterViewInit{
   Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
   PageFormcontrols: object;
   phoneErr: boolean = false;
-
+  loactionOnMap: string = 'الموقع على الخريطة';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -87,8 +88,8 @@ export class Signup implements AfterViewInit{
       email: new FormControl('', Validators.required),
       mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
       gender: new FormControl('male', Validators.required),
-      latitude: new FormControl(''),
-      longitude: new FormControl(''),
+      latitude: new FormControl('', Validators.required),
+      longitude: new FormControl('', Validators.required),
       area: new FormControl('',[Validators.required]),
       city: new FormControl('', [Validators.required]),
       dist: new FormControl('', this.insureStoreUser),
@@ -175,8 +176,8 @@ export class Signup implements AfterViewInit{
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
           mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
           gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-          latitude: new FormControl(''),
-          longitude: new FormControl(''),
+          latitude: new FormControl('', Validators.required),
+          longitude: new FormControl('', Validators.required),
           area: new FormControl('' ,[Validators.required]),
           city: new FormControl('', [Validators.required]),
           dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
@@ -198,8 +199,8 @@ export class Signup implements AfterViewInit{
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        latitude: new FormControl(''),
-        longitude: new FormControl(''),
+        latitude: new FormControl('', Validators.required),
+        longitude: new FormControl('', Validators.required),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('', [Validators.required]),
         dist: new FormControl('' ),
@@ -221,8 +222,8 @@ export class Signup implements AfterViewInit{
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
         mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
         gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        latitude: new FormControl(''),
-        longitude: new FormControl(''),
+        latitude: new FormControl('', Validators.required),
+        longitude: new FormControl('', Validators.required),
         area: new FormControl('' , [Validators.required]),
         city: new FormControl('' , [Validators.required]),
         dist: new FormControl('' ),
@@ -269,36 +270,7 @@ export class Signup implements AfterViewInit{
       this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + '0' + this.SignUpFrom.value.mobile);
       delete this.SignUpFrom.value.InsurePassword;
       this.addUserProvider(this.SignUpFrom.value);
-        /*
-        this.geolocation.getCurrentPosition()
-          .then((response)=> {
-            console.log('get an access to geolocation plugin',response);
 
-            this.SignUpFrom.get('latitude').setValue(response.coords.latitude);
-            this.SignUpFrom.get('longitude').setValue(response.coords.longitude);
-            console.log(this.SignUpFrom.value);
-            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] +'0'+ this.SignUpFrom.value.mobile);
-            delete this.SignUpFrom.value.InsurePassword;
-            return Promise.resolve(this.SignUpFrom.value);
-          })
-          .then((formValue)=> {
-
-            this.addUserProvider(formValue);
-
-          })
-          .catch((err) => {
-            console.log('can\'t access geolocation plugin');
-            this.showLoader = true;
-            console.warn(err);
-            this.SignUpFrom.get('mobile').setValue(this.ccMobileCode.value[0] + '0' + this.SignUpFrom.value.mobile);
-            delete this.SignUpFrom.value.InsurePassword;
-            this.addUserProvider(this.SignUpFrom.value);
-            //this.showToast('يرجى تفعيل خدمة المواقع او GPS');
-            //this.addUserProvider(this.SignUpFrom.value);
-
-          });
-
-          */
 
     } else {
 
@@ -306,24 +278,16 @@ export class Signup implements AfterViewInit{
       console.log(this.SignUpFrom.value);
       this.SignUpFrom.get('mobile').setValue((this.SignUpFrom.value.mobile.indexOf('+') != -1) ? this.SignUpFrom.value.mobile.split('0')[1] : this.SignUpFrom.value.mobile);
 
-      /*
-      if (this.SignUpFrom.get('area').getError('required')) {
-        this.showToast('يرجى ادخال المنطقة')
-      } else if (this.SignUpFrom.get('city').getError('required')) {
-        this.showToast('يرجى ادخال المدينة')
-      } else if (this.SignUpFrom.get('dist').getError('required')) {
-        this.showToast('يرجى ادخال الحى')
-      } else if (this.SignUpFrom.get('address').getError('required')) {
-        this.showToast('يرجى ادخال العنوان')
-      } else {
-
-        */
         let formKeys = Object.keys(this.SignUpFrom.value);
         this.showLoader = false;
         for (let value of formKeys) {
           if (this.SignUpFrom.get(value).getError('required')) {
             //value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
-            this.showToast(`يرجى ادخال ${ArSignForm[value]}`);
+            if (value == 'latitude' || value == 'longitude') {
+              this.showToast('يرجى تحديد موقعك على الخريطة');
+            } else {
+              this.showToast(`يرجى ادخال ${ArSignForm[value]}`);
+            }
             break;
           } else if (this.SignUpFrom.get(value).getError('minlength')) {
             this.showToast(`${ArSignForm[value]} يجب ان يكون ${this.SignUpFrom.get(value).getError('minlength').requiredLength} حروف على الاقل`);
@@ -409,9 +373,25 @@ export class Signup implements AfterViewInit{
   }
 
   openMaps() {
-    let modal = this.modalCrtl.create(MapsModal);
-    modal.onDidDismiss((data)=>{
-      console.log(data);
+    let pageData:any = null;
+    if (this.SignUpFrom.get('latitude').value && this.SignUpFrom.get('latitude').value) {
+
+      pageData = { latitude: this.SignUpFrom.get('latitude').value, longitude: this.SignUpFrom.get('longitude').value };
+    }
+    let modal = this.modalCrtl.create(MapsModal, {pageData});
+    modal.onDidDismiss((data) => {
+      
+      if (data&&data.latitude && data.longitude) {
+        console.log(data);
+        this.SignUpFrom.get('latitude').setValue(data.latitude);
+        this.SignUpFrom.get('longitude').setValue(data.longitude);
+        if (data.address)
+          this.SignUpFrom.get('address').setValue(data.address);
+
+      //this.SignUpFrom.get('latitude').setValue(data.latitude);
+        this.loactionOnMap = 'تم تحديد الموقع'
+      }
+      
     });
     modal.present();
   }

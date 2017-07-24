@@ -94,7 +94,7 @@
           المكان على الخريطة
           </button>
         </div>
-        <div id="page-segments" padding>
+        <div id="page-segments" padding *ngIf="userLocal&&userLocal.level_id != 4">
           <ion-segment [(ngModel)]="showContent">
 
             <ion-segment-button value="products" (click)="getProducts(userLocal.id)">
