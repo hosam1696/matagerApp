@@ -3,28 +3,10 @@ import {IonicPage, NavController, NavParams, Events, ModalController, ToastContr
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 
 import {AreaProvider} from '../../../providers/area';
-import {IlocalUser, Iplace} from '../../../app/service/InewUserData';
 import {ChooseArea} from '../../chooselocmodal';
 import { UserProvider } from '../../../providers/user';
 import {MapsModal} from "../../mapsmodal";
-
-
-var ArEditForm;
-(function (ArEditForm) {
-  ArEditForm[ArEditForm["username"] = 'اسم المستخدم'] = "username";
-  ArEditForm[ArEditForm["name"] = 'الاسم التجارى بالكامل'] = "name";
-  ArEditForm[ArEditForm["mobile"] = 'رقم الهاتف'] = "mobile";
-  ArEditForm[ArEditForm["password"] = 'كلمة المرور'] = "password";
-  ArEditForm[ArEditForm["email"] = 'البريد الالكترونى'] = "email";
-  ArEditForm[ArEditForm["gender"] = 'الجنس'] = "gender";
-  ArEditForm[ArEditForm["address"] = 'العنوان'] = "address";
-  ArEditForm[ArEditForm["area"] = "المنطقة"] = "area";
-  ArEditForm[ArEditForm["city"] = "المدينة"] = "city";
-  ArEditForm[ArEditForm["dist"] = "الحى"] = "dist";
-  ArEditForm[ArEditForm["cr_num"] = 'رقم السجل التجارى'] = "cr_num";
-  ArEditForm[ArEditForm["owner_name"] = 'اسم مدير المتجر'] = "owner_name";
-})(ArEditForm || (ArEditForm = {}));
-
+import {ArEditForm, Iplace,IlocalUser} from "../../../app/service/interfaces";
 @IonicPage()
 @Component( {
   selector: 'page-editprofile',
@@ -32,10 +14,10 @@ var ArEditForm;
 } )
 export class Editprofile {
   localUser: IlocalUser = JSON.parse( localStorage.getItem( 'userLocalData' ) );
-  EditUserForm: FormGroup;
   AreaName: string = this.localUser.areaName || 'لم يحدد بعد';
   CityName: string = this.localUser.cityName || 'لم يحدد بعد';
   DistName: string = this.localUser.distName || 'لم يحدد بعد';
+  EditUserForm: FormGroup;
   showLoader:boolean= false;
   hidepass:boolean = true;
   password: FormControl = new FormControl('');
@@ -83,7 +65,7 @@ export class Editprofile {
 
     this.events.subscribe('GoogleAddress', (address)=> {
       console.log(address);
-    })
+    });
 
     console.log(this.EditUserForm);
     console.log(this.EditUserForm.get('name'));
@@ -116,8 +98,8 @@ export class Editprofile {
 
     let form = this.EditUserForm;
     this.showLoader = true;
-    
-   
+
+
     /*
     if(this.EditUserForm.get('Password').value != '') {
       console.log('password');
@@ -125,26 +107,26 @@ export class Editprofile {
       this.EditUserForm.get('Password').setValidators(Validators.compose([Validators.required, Validators.minLength(8)]));
       this.EditUserForm.get('InsurePassword').setValidators([Validators.required, this.insurePass]);
     }
-    
+
     setTimeout(function() {
 console.log(form, form.valid);
     }, 500)
     if(!form.valid) {
 
-      
+
       console.log(form.get('Password').getError('minlength'))
-  
+
       console.log(form.get('Password').getError('required'));
       console.log(form.get('InsurePassword').getError('required'));
 
       console.log(form.get('InsurePassword').getError('uninsured'))
-      
+
     }*/
 
     if (form.valid) {
 
 
-         this.EditUserForm.removeControl('InsurePassword');
+        this.EditUserForm.removeControl('InsurePassword');
         form.get('mobile').setValue(this.mobilecc+'0' + form.get('mobile').value);
         Object.assign(form.value, { id: this.localUser['id'] });
         console.log('edited form', form.value);
@@ -168,12 +150,12 @@ console.log(form, form.valid);
             } else {
               console.warn('dasfsd');
             }
-            
-            
+
+
           }
         });
 
-      
+
     } else {
 
       console.warn(form);
@@ -188,24 +170,22 @@ console.log(form, form.valid);
           if (value != "InsurePassword") {
             this.showToast(`يرجى ادخال ${ArEditForm[value]}`);
             break;
-          } else {
-            continue;
           }
-            
+
         } else if (form.get(value).getError('minlength')) {
           this.showToast(`${ArEditForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
         }
         else if (form.get(value).getError('maxlength')) {
           this.showToast(`${ArEditForm[value]} يجب ان يكون ${form.get(value).getError('maxlength').requiredLength}  ارقام `);
-        }  
+        }
         else if (form.get(value).getError('pattern')) {
-          this.showToast(`${ArEditForm[value]} غير صحيح`); 
+          this.showToast(`${ArEditForm[value]} غير صحيح`);
           console.log(form.get(value).getError('pattern'));
         }
         else if (form.get('InsurePassword').getError('uninsured')) {
             this.showToast(`كلمات المرور غير متطابقة`);
             break;
-          } 
+          }
         }
         //this.showToast('تأكد من ملىء جميع الحقول')
 
@@ -214,7 +194,7 @@ console.log(form, form.valid);
       /*
          console.log(form.get('Password').getError('minlength'));
          console.log(form.get('Username').getError('minlength'))
-  
+
       console.log(form.get('Password').getError('required'));
       console.log(form.get('InsurePassword').getError('required'));
 
@@ -227,14 +207,14 @@ console.log(form, form.valid);
         } else if(form.get('InsurePassword').getError('required')) {
           this.showToast('يرجى ادخال تأكيد كلمة المرور')
         }
-        
+
         else if(form.get('InsurePassword').getError('uninsured')) {
           this.showToast('كلمات المرور غير متطابقة')
         } else {
 
           this.showToast('تأكد من ادخال البيانات صحيحة')
         }
-      
+
 
 
 */
@@ -242,7 +222,7 @@ console.log(form, form.valid);
     }
   }
 
-  openMaps(maps) {
+  openMaps() {
     let pageData: any = null;
     if (this.EditUserForm.get('latitude').value && this.EditUserForm.get('latitude').value) {
 
@@ -261,13 +241,12 @@ console.log(form, form.valid);
         //this.SignUpFrom.get('latitude').setValue(data.latitude);
         this.loactionOnMap = data.address;
       }
-    })
+    });
     mapsModal.present();
   }
 
   passFocus() {
     this.hidepass = false;
-    
 
   }
 
@@ -281,7 +260,7 @@ console.log(form, form.valid);
         InsurePassword: [''],
 
         email: [this.EditUserForm.get('email').value],
-        mobile: [this.EditUserForm.get('mobile'), Validators.compose([Validators.minLength(9), Validators.maxLength(9)])], //Validators.pattern("(\+[0-9]*)?[0-9]*"), 
+        mobile: [this.EditUserForm.get('mobile'), Validators.compose([Validators.minLength(9), Validators.maxLength(9)])], //Validators.pattern("(\+[0-9]*)?[0-9]*"),
         gender: [this.EditUserForm.get('gender').value],
         address: [this.EditUserForm.get('address').value],
         map: [this.localUser.map],
@@ -293,7 +272,7 @@ console.log(form, form.valid);
       })
     } else {
 
-      
+
       this.EditUserForm = this.fb.group( {
       name: [this.EditUserForm.get('name').value],
       username: [ this.EditUserForm.get('username').value, Validators.minLength( 5 ) ],
@@ -311,7 +290,7 @@ console.log(form, form.valid);
       cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]^"), Validators.minLength(1)] : null)],
       owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.minLength(3)] : null)]
       })
-     
+
     }
     //
   }
@@ -323,7 +302,7 @@ console.log(form, form.valid);
     this.navCtrl.push( page );
   }
 
-  getPlaceName(placeId: number) {
+  /*getPlaceName(placeId: number) {
     let result: string = "";
     this.areaProvider
       .getAreaById( placeId )
@@ -333,14 +312,15 @@ console.log(form, form.valid);
           console.log( result, place.name );
         },
         err => {
-          result = "لم يحدد بعد"
+          result = "لم يحدد بعد";
+          console.warn(err);
         },
         () => {
           return (result != "") ? result : 'لم يحدد بعد'
         }
       ).unsubscribe();
 
-  }
+  }*/
 
   initModal(name, searchId) {
     let modal = this.modalCrtl.create( ChooseArea, {name, defineSearch: searchId} );

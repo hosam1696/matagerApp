@@ -1,4 +1,3 @@
-///<reference path="../../node_modules/@ionic-native/native-geocoder/index.d.ts"/>
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
@@ -30,7 +29,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
-import { GoogleMaps } from '@ionic-native/google-maps';
 import { NativeGeocoder } from "@ionic-native/native-geocoder";
 import { Push } from '@ionic-native/push';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -56,7 +54,7 @@ import {MapsModal} from "../pages/mapsmodal";
     DeliveryRequestInfo,
     MapsModal,
     PopSettings
-    
+
   ],
   imports: [
     BrowserModule,
@@ -99,7 +97,6 @@ import {MapsModal} from "../pages/mapsmodal";
     DeliveryProvider,
     NotificationsProvider,
     ImagePicker,
-    GoogleMaps,
     NativeGeocoder,
     InAppBrowser,
     ActionSheet, Camera,

@@ -7,7 +7,7 @@ export interface IProduct {
     item_image: string,
     item_price: string,
     item_production_date: string
-} 
+}
 
 export interface Iplace {
   id: number,
@@ -22,7 +22,7 @@ export enum ERead{
 export enum Eclose {
   pending,
   accepted,
-  refused  
+  refused
 }
 export interface INotification {
   id: number,
@@ -33,7 +33,7 @@ export interface INotification {
   name: string,
   status: ERead,
   date_added:  any,
-  avatar: string, 
+  avatar: string,
   gender: string,
   send_user_id: number,
 }
@@ -185,4 +185,34 @@ export interface ipUserInfo {
   region: string,
   loc: string
 
+}
+/*
+(function (ArEditForm) {
+  ArEditForm[ArEditForm["username"] = 'اسم المستخدم'] = "username";
+  ArEditForm[ArEditForm["name"] = 'الاسم التجارى بالكامل'] = "name";
+  ArEditForm[ArEditForm["mobile"] = 'رقم الهاتف'] = "mobile";
+  ArEditForm[ArEditForm["password"] = 'كلمة المرور'] = "password";
+  ArEditForm[ArEditForm["email"] = 'البريد الالكترونى'] = "email";
+  ArEditForm[ArEditForm["gender"] = 'الجنس'] = "gender";
+  ArEditForm[ArEditForm["address"] = 'العنوان'] = "address";
+  ArEditForm[ArEditForm["area"] = "المنطقة"] = "area";
+  ArEditForm[ArEditForm["city"] = "المدينة"] = "city";
+  ArEditForm[ArEditForm["dist"] = "الحى"] = "dist";
+  ArEditForm[ArEditForm["cr_num"] = 'رقم السجل التجارى'] = "cr_num";
+  ArEditForm[ArEditForm["owner_name"] = 'اسم مدير المتجر'] = "owner_name";
+})(ArEditForm || (ArEditForm = {}));
+*/
+export enum ArEditForm {
+  username= 'اسم المستخدم',
+  name = 'الاسم بالكامل',
+  mobile = 'رقم الجوار',
+  password = 'كلمة المرور',
+  email = 'البريد الالكترونى',
+  gender = 'الجنس',
+  address = 'العنوان',
+  area = 'المنطقة',
+  city = 'المدينة',
+  dist = 'الحى',
+  cr_num = 'رقم السجل التجارى',
+  owner_name = 'اسم مدير المتجر'
 }

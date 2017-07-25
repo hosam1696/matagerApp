@@ -32,8 +32,8 @@
         <p>أضف صورة</p>
       </div>
 
-      
-      
+
+
     </div>
 
 
@@ -59,10 +59,10 @@
              formControlName="item_production_date"
              class="form-control">
 
-            <ion-datetime 
-              text-center 
-              class="form-control" 
-              displayFormat="YYYY / MMMM / DD" 
+            <ion-datetime
+              text-center
+              class="form-control"
+              displayFormat="YYYY / MMMM / DD"
               pickerFormat="YYYY MMMM DD"
               monthNames="يناير,
                 فبراير,
@@ -83,18 +83,18 @@
 
 
     <div class="form-group">
-      <input 
-        hidden 
-        type="text" 
+      <input
+        hidden
+        type="text"
         placeholder="تاريخ الانتهاء"
         formControlName="item_expiry_date"
         class="form-control">
 
-        <ion-datetime 
+        <ion-datetime
           text-center
-          class="form-control" 
-          displayFormat="YYYY / MMMM / DD" 
-          pickerFormat="YYYY MMMM DD" 
+          class="form-control"
+          displayFormat="YYYY / MMMM / DD"
+          pickerFormat="YYYY MMMM DD"
           monthNames="يناير,
             فبراير,
             مارس,
@@ -124,9 +124,8 @@
     </div>
 
 
-    <button id="form-button" ion-button full> 
-       {{actionBtnTxt || 'اضف 
-       منتج'}}
+    <button id="form-button" ion-button full>
+       {{actionBtnTxt || 'اضف منتج'}}
 
        &nbsp;<hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
       </button>

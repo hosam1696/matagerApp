@@ -1,17 +1,17 @@
 <ion-header>
- 
+
 <ion-buttons start>
   <button ion-button clear color="light" (click)="backStep()">
       <ion-icon name="arrow-forward"></ion-icon>
     </button>
 </ion-buttons>
 
-    
-  
+
+
 </ion-header>
 
 <ion-content padding>
-  
+
 
   <section id="page-content">
 
@@ -95,9 +95,9 @@
           <ion-option value="+55">55+</ion-option>
         </ion-select>
         <span *ngIf="phoneErr;else phone" class="form-err">
-        
+
  *         لا داعى لادخال الصفر فى بداية رقم الجوال
-        
+
           </span>
 <ng-template #phone>
   <span class="form-err">
@@ -192,7 +192,7 @@
       <div class="form-group animate-input">
         <input type="text" class="form-control"
                (focus)="openMaps()"
-               [placeholder]="loactionOnMap"    >
+               [placeholder]="locationOnMap"    >
       </div>
 
       <div class="form-group animate-input">

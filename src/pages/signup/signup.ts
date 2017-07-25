@@ -1,10 +1,8 @@
-import { ipUserInfo } from './../../app/service/interfaces';
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
-import {IlevelId, Iplace, ArSignForm} from "../../app/service/interfaces";
+import { Iplace, ArSignForm} from "../../app/service/interfaces";
 import {UserProvider} from "../../providers/user";
-import { Geolocation } from '@ionic-native/geolocation';
 import {ChooseArea } from '../chooselocmodal';
 import {MapsModal} from "../mapsmodal";
 
@@ -18,7 +16,6 @@ export class Signup implements AfterViewInit{
   @ViewChild('ccMobile') ccMobileCode;
 
   gender:string = 'male';
-  personType: string = 'customer';
   lastPage: string ;
   csPage:number = 1;
   SignUpFrom: FormGroup;
@@ -30,18 +27,17 @@ export class Signup implements AfterViewInit{
   Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
   PageFormcontrols: object;
   phoneErr: boolean = false;
-  loactionOnMap: string = 'الموقع على الخريطة';
+  locationOnMap: string = 'الموقع على الخريطة';
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public userProvider: UserProvider,
     public toastCont:ToastController,
     public modalCrtl: ModalController,
-    public fb: FormBuilder,
-    private geolocation: Geolocation
+    public fb: FormBuilder
   ) {
 
-    
+
     //console.log(this.signGender);
     this.constructSignForm();
     this.PageFormcontrols = {
@@ -160,7 +156,7 @@ export class Signup implements AfterViewInit{
   increasePageNum():number {
 
     let num = Math.max(Math.min(3, this.csPage + 1), 1);
-    
+
     if (num >= 3) {
     this.lastPage = 'أضف حساب جديد';
 
@@ -306,8 +302,8 @@ export class Signup implements AfterViewInit{
   }
 
   addUserProvider(formValue) {
-    
-    
+
+
     this.userProvider.addUser(formValue)
       .subscribe(({ status, data, errors }) => {
         console.log(status, data);
@@ -331,7 +327,7 @@ export class Signup implements AfterViewInit{
           this.showLoader = false;
           this.SignUpFrom.get('mobile').setValue((this.SignUpFrom.value.mobile.indexOf('+') != -1) ? this.SignUpFrom.value.mobile.split('0')[1] : this.SignUpFrom.value.mobile);
           let keys = Object.keys(errors);
-          let errMsg: string = '';
+          let errMsg: string;
           for (let key of keys) {
 
               errMsg = errors[key][0];
@@ -341,11 +337,11 @@ export class Signup implements AfterViewInit{
         }
     });
   }
-
+/*
   levelId(level:string):number {
     return IlevelId[level]
   }
-
+*/
   showToast(msg, dur=3000) {
     let toast = this.toastCont.create({
       message: msg,
@@ -380,18 +376,18 @@ export class Signup implements AfterViewInit{
     }
     let modal = this.modalCrtl.create(MapsModal, {pageData});
     modal.onDidDismiss((data) => {
-      
+
       if (data&&data.latitude && data.longitude) {
         console.log(data);
         this.SignUpFrom.get('latitude').setValue(data.latitude);
         this.SignUpFrom.get('longitude').setValue(data.longitude);
         if (data.address)
-          this.SignUpFrom.get('address').setValue(data.address);
+          this.locationOnMap = data.address;
 
       //this.SignUpFrom.get('latitude').setValue(data.latitude);
-        this.loactionOnMap = 'تم تحديد الموقع'
+        //this.loactionOnMap = 'تم تحديد الموقع'
       }
-      
+
     });
     modal.present();
   }
@@ -443,7 +439,7 @@ export class Signup implements AfterViewInit{
 
       modal.present();
   }
-  
+
   triggerPhoneMsg() {
     this.phoneErr = !this.phoneErr;
   }

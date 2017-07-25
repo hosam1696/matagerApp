@@ -31,7 +31,7 @@ export class AreaProvider {
 */
 
 
-    getAreaById(placeId: number) {
+      getAreaById(placeId: number) {
       return this.http.post<any>(this.API_URL+'places.php', JSON.stringify({"action": "getDataById", "id":placeId}));
     }
 

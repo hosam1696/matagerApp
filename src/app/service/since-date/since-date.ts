@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform, NgZone } from '@angular/core';
+import { Pipe,ChangeDetectorRef, PipeTransform, NgZone } from '@angular/core';
 import { ArDTimeId, ArLttTimeId, ArTimeId} from '../interfaces';
 
 @Pipe({
@@ -7,18 +7,22 @@ import { ArDTimeId, ArLttTimeId, ArTimeId} from '../interfaces';
 })
 export class SinceDatePipe implements PipeTransform {
   transformed: string;
-  constructor(public ngZone: NgZone){}
+  constructor(public ngZone: NgZone,public chRef:ChangeDetectorRef){}
   transform(value: string, ...args) {
-          return this.getDateSince(value);
-/*    
+      this.transformed = this.getDateSince(value);
+          
+   
     this.ngZone.runOutsideAngular(()=>{
-      setInterval(()=> {
-        console.log(value, this.getDateSince(value));
-
-        return this.ngZone.run(()=>{
+      setTimeout(()=> {
+        this.transformed = this.getDateSince(value);
+        //console.log(value, this.transformed);
+        this.ngZone.run(()=>{
+          this.chRef.markForCheck()
         });
-      }, 1000);
-    })*/
+      }, 10000);
+    });
+
+    return this.transformed;
   }
 
   getDateSince(date, dNow= Date.now()) {
@@ -26,7 +30,7 @@ export class SinceDatePipe implements PipeTransform {
     let dTimeStamp = this.getTime(date);
     let diff = (dNow - dTimeStamp) / 1000; // get time difference in seconds --pareseInt() 
 
-    console.log(date, dTimeStamp,dNow, diff);
+  //  console.log(date, dTimeStamp,dNow, diff);
     for (let i in this.unitsId) {
       let tDivider = this.unitsId[i],
       sinceTime = Math.floor(diff / tDivider);
