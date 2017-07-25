@@ -186,26 +186,24 @@ export interface ipUserInfo {
   loc: string
 
 }
-/*
-(function (ArEditForm) {
-  ArEditForm[ArEditForm["username"] = 'اسم المستخدم'] = "username";
-  ArEditForm[ArEditForm["name"] = 'الاسم التجارى بالكامل'] = "name";
-  ArEditForm[ArEditForm["mobile"] = 'رقم الهاتف'] = "mobile";
-  ArEditForm[ArEditForm["password"] = 'كلمة المرور'] = "password";
-  ArEditForm[ArEditForm["email"] = 'البريد الالكترونى'] = "email";
-  ArEditForm[ArEditForm["gender"] = 'الجنس'] = "gender";
-  ArEditForm[ArEditForm["address"] = 'العنوان'] = "address";
-  ArEditForm[ArEditForm["area"] = "المنطقة"] = "area";
-  ArEditForm[ArEditForm["city"] = "المدينة"] = "city";
-  ArEditForm[ArEditForm["dist"] = "الحى"] = "dist";
-  ArEditForm[ArEditForm["cr_num"] = 'رقم السجل التجارى'] = "cr_num";
-  ArEditForm[ArEditForm["owner_name"] = 'اسم مدير المتجر'] = "owner_name";
-})(ArEditForm || (ArEditForm = {}));
-*/
+export enum ArMonths {
+  January = 'يناير',
+  Febrauary = 'فبراير',
+  March = 'مارس',
+  April = 'ابريل',
+  May = 'مايو',
+  June = 'يونيو',
+  July = 'يوليو',
+  August = 'اغسطس',
+  September = 'سبتمبر',
+  October = 'اكتوبر',
+  November = 'نوفمبر',
+  December = 'ديسمبر'
+}
 export enum ArEditForm {
   username= 'اسم المستخدم',
   name = 'الاسم بالكامل',
-  mobile = 'رقم الجوار',
+  mobile = 'رقم الجوال',
   password = 'كلمة المرور',
   email = 'البريد الالكترونى',
   gender = 'الجنس',

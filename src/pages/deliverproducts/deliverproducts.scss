@@ -11,6 +11,14 @@ page-deliverproducts {
                 background-color: color($colors, bgColor);
             //padding-top: 0 !important;
         }  
+        .err-small {
+            font-size: 1.7rem;
+        color: #666;
+        text-shadow: 1px 1px #fff;
+        position: absolute;
+        top: 40%;
+        width: 100%;
+      }
         ion-list-header {
             ion-label {
                 text-align: right !important

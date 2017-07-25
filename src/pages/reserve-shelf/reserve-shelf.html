@@ -106,17 +106,16 @@
           </p>
         </ion-card>
 
-        <section *ngIf="shelfData.shelf_status == 1" id="sales-percentage">
-          <h4 text-center><br> لقد تمت الموافقة على طلب الحجز
+        <section *ngIf="pageData.type!='addSalesPercentage'&&shelfData.shelf_status == 1" id="sales-percentage">
+          <h4 text-center><br> لقد تم  قبول طلب الحجز
           </h4>
           <h5 text-center *ngIf="shelfData.percentage_status == 1">
             على نسبة بيع {{shelfData.sale_percentage}} %
           </h5>
         </section>
-        <section *ngIf="shelfData.shelf_status == 2" id="sales-percentage"><br>
+        <section *ngIf="pageData.type!='addSalesPercentage'&&shelfData.shelf_status == 2" id="sales-percentage"><br>
           <h4 text-center>
-            لقد تم رفض طلب حجز هذا الرف
-          </h4>
+            لقد تم رفض طلب الحجز           </h4>
 
           <h5 text-center *ngIf="shelfData.percentage_status == 2">
             على نسبة بيع {{shelfData.sale_percentage}} %

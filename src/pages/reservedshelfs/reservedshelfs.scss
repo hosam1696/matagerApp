@@ -6,7 +6,14 @@ page-reservedshelfs {
         &.content {
             background-color:$bgColor 
         }
-
+        .err-small {
+            font-size: 1.7rem;
+        color: #666;
+        text-shadow: 1px 1px #fff;
+        position: absolute;
+        top: 40%;
+        width: 100%;
+      }
         p {
             &.small {
                 color: #666 !important

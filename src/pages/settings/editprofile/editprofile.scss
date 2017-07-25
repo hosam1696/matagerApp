@@ -127,8 +127,9 @@ page-editprofile {
                         display: flex;
                         align-items: center;
                         span {
-                                text-align: left;
+                            text-align: left;
                             width: 85%;
+                            white-space: normal;
                         }
                         ion-icon {
                           margin-left: 0 !important;

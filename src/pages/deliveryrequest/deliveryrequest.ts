@@ -185,7 +185,14 @@ export class DeliveryrequestPage {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
-
+  changeValue(event, product) {
+    let targetValue = event.target.value;
+    console.log(event, targetValue);
+    console.log(product.item_quantity);
+    product.item_quantity = targetValue;
+    console.log(product.item_quantity);
+    
+  }
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

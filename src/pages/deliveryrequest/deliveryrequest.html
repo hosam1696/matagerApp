@@ -36,10 +36,10 @@
           <p class="prod-desc">
             {{limitString(product.item_desc)}} </p>
           <div class="quantity-controls">
-            <button class="decreaseQuantity" ion-button small (click)="decreaseQuantity(product)">&lt;</button>
+            <button class="decreaseQuantity" ion-button small (click)="increaseQuantity(product)">&lt;</button>
             <!-- <ion-datetime class="quantity-value" displayFormat="s" pickerFormat="s" [(ngModel)]="timeStarts"></ion-datetime> -->
-            <input [value]="product.item_quantity" type="number" class="quantity-value">
-            <button class="increaseQuantity" ion-button small (click)="increaseQuantity(product)">&gt;</button>
+            <input (input)="changeValue($event, product)" [value]="product.item_quantity" type="number" class="quantity-value">
+            <button class="increaseQuantity" ion-button small (click)="decreaseQuantity(product)">&gt;</button>
           </div>
           <!--<a href="">ابلاغ عن مخالفة</a>-->
         </div>

@@ -1,3 +1,9 @@
-page-barcode {
+$bgColor: color($colors, bgColor);
 
+page-barcode {
+    ion-content {
+        &.content {
+            background-color: $bgColor;
+        }
+    }
 }

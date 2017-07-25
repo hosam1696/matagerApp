@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms'
 import {NavParams, ViewController, ToastController} from 'ionic-angular';
 import { ShelfsProvider } from '../../../providers/shelfs';
-
+import { ArMonths } from '../../../app/service/interfaces';
 @Component({
     selector: 'shelf-modal',
     templateUrl: './shelfpage.html',
@@ -14,18 +14,24 @@ export class ShelfModal {
     userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     showLoader: boolean = false;
     reserveShelfForm: FormGroup;
+    nowDateString: any;
     constructor(params: NavParams,
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
         public toastCtrl: ToastController,
                 public fb: FormBuilder
     ) {
+        this.nowDateString = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
         this.modalInfo = params.get('shelfInfo');
         this.reserveShelfForm = new FormGroup({
-            start_date: new FormControl(this.initDate(), Validators.required),
+            start_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.initDate(), Validators.required),
             end_date: new FormControl(this.initDate(true), Validators.required)
         });
         console.log(this.modalInfo);
+        function ArMonthsFunc(one, two, third, four) {
+            return third.concat(ArMonths[two]).concat(four) ;
+        }
+        console.log('August 25, 2017'.replace(/([A-z]*) +([0-9]*),+ ?([0-9]*)/g, ArMonthsFunc))
     }
     initDate(end:boolean = false) {
         let timeNow = new Date(Date.now());

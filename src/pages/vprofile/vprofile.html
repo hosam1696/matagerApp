@@ -119,16 +119,48 @@
   </ion-card>
 
   <ion-card class="show-card" *ngIf="showContent == 'products'">
+
+    <p text-center *ngIf="noAcceptedItems">
+      <br> لا يوجد منتجات 
+    </p>
+    <p text-center *ngIf="noProducts== 'empty'">
+      <br> لا يوجد منتجات 
+    </p>
+
+    <!-- list for stores delivered products-->
+    <ion-grid padding-horizontal>
+      <ion-row *ngFor="let products of ItemsDelivered">
+        <ion-col col-6 *ngFor="let product of products;let i = index">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
+
+            <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/product-iphone.png'" alt="product">
+
+            <p class="prod-desc" text-center>
+              {{product.item_name}}
+            </p>
+            <p class="price" text-center>
+              الكمية : &nbsp;
+              <span class="prod-price"><b>{{product.item_quantity}}</b></span>
+            </p>
+
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
     <p text-center *ngIf="netError" class="small">
       التطبيق يتطلب اتصال بالانترنت
     </p>
     <p text-center *ngIf="noProducts" class="small">
-      لا يوجد منتجات لعرضها حتى الان
+      لا يوجد منتجات 
     </p>
     <ion-grid padding-horizontal>
       <ion-row *ngFor="let products of allProducts">
         <ion-col col-6 *ngFor="let product of products;let i = index">
-          <div class="col-content" (click)="navigateToPage('ProductPage', product)">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
             <img src="assets/img/product-iphone.png" alt="product">
 
@@ -173,6 +205,10 @@
     </p>
 
   </ion-card>
+
+
+
+  
   <!-- products tab -->
 
 
@@ -193,8 +229,9 @@
         <hr>
         <div class="shelf-status">
           <div class="reserved">
-            <span *ngIf="shelf.close == 0">غير محجوز</span>
-            <ion-badge *ngIf="shelf.close == 1"> محجوز</ion-badge>
+            <span *ngIf="shelf.shelf_status == 0">غير محجوز</span>
+            <ion-badge *ngIf="shelf.shelf_status == 1">
+               محجوز حتى {{shelf.end_date | date:'longDate'}}</ion-badge>
           </div>
 
 

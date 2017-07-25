@@ -37,7 +37,7 @@ export class AddproductPage {
 
     this.addProductForm = new FormGroup({
       item_name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      item_price: new FormControl('', [Validators.required,Validators.pattern('[0-9]*\.?[0-9]*')]),
+      item_price: new FormControl('', [Validators.required, Validators.pattern('[1-9]+(\.[0-9]*)?|[0]+(\.[0-9]+)+')]),
       item_production_date: new FormControl(''),
       item_expiry_date: new FormControl(''),
       item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)]),
@@ -225,8 +225,10 @@ export class AddproductPage {
         this.showToast(`${ArProductForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
 
         return false;
-      }else {
-
+      } else if (form.get(value).getError('pattern')){
+        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArProductForm[value]}`)
+        return false;
+      } else {
         return true;
       }
 

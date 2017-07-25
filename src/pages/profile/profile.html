@@ -146,8 +146,11 @@
             <hr>
             <div class="shelf-status">
               <div class="reserved">
-                <span *ngIf="shelf.close == 0">غير محجوز</span>
-                <span *ngIf="shelf.close == 1"> محجوز</span>
+                <span *ngIf="shelf.shelf_status == 0 || shelf.shelf_status == 2">غير محجوز</span>
+                <span *ngIf="shelf.shelf_status == 1"> 
+                  محجوز حتى
+                  {{shelf.end_date | date:'longDate'}}
+                </span>
                 </div>
               <div class="shelf-controls">
                 <ion-icon name="open-outline"
@@ -271,15 +274,42 @@
       </ion-row>
     </ion-grid>
     -->
-
+    <p text-center *ngIf="noAcceptedItems">
+      <br>
+      لا يوجد منتجات تم قبول تسليمها حتى الان
+    </p>
     <p text-center *ngIf="noProducts== 'empty'">
       <br>
       لا يوجد منتجات حتى الان ليتم عرضها
     </p>
+
+    <!-- list for stores delivered products-->
+    <ion-grid padding-horizontal>
+      <ion-row *ngFor="let products of ItemsDelivered">
+        <ion-col col-6 *ngFor="let product of products;let i = index"> 
+          <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
+
+            <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/product-iphone.png'" alt="product">
+
+            <p class="prod-desc" text-center>
+              {{product.item_name}}
+            </p>
+            <p class="price" text-center>
+              الكمية : &nbsp;
+              <span class="prod-price"><b>{{product.item_quantity}}</b></span>
+            </p>
+
+            <!--<a href="">ابلاغ عن مخالفة</a>-->
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- list for exporter products -->
     <ion-grid padding-horizontal>
       <ion-row *ngFor="let products of AllProducts">
         <ion-col col-6 *ngFor="let product of products;let i = index">
-          <div class="col-content" (click)="navigateToPage('ProductPage', product)">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
             <img src="assets/img/product-iphone.png" alt="product">
 
@@ -345,7 +375,6 @@
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
 
-    <p text-center class="small"><br>انت غير مسجل لدينا </p>
     <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
 
     <button class="log-btn" (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>

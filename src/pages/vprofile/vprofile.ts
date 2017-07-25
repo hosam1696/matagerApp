@@ -2,6 +2,7 @@ import { Component, Renderer2 } from '@angular/core';
 import { IonicPage, AlertOptions,AlertController,ModalController, ToastController, NavController, NavParams } from 'ionic-angular';
 import { ItemProvider } from "../../providers/item";
 import { ShelfsProvider } from "../../providers/shelfs";
+import { DeliveryProvider } from '../../providers/delivery';
 import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
 import { IProduct } from '../../app/service/interfaces';
 import { ShelfModal } from '../profile/shelf/shelfpage';
@@ -27,6 +28,8 @@ export class VprofilePage {
   numbersOfFollowers: any;
   numbersOfFollowings: any;
   navigatedUserId: number;
+  noAcceptedItems: boolean = false;
+  ItemsDelivered: any[];
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,13 +40,9 @@ export class VprofilePage {
     public toastCtrl: ToastController,
     public userProvider: UserProvider,
     public iab: InAppBrowser,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public deliveryProvider: DeliveryProvider
   ) {
-
-
-
-
-
 
 
   }
@@ -52,7 +51,6 @@ export class VprofilePage {
   ionViewWillEnter() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
-
 
   ionViewDidLoad() {
     function type(data) {
@@ -88,7 +86,6 @@ export class VprofilePage {
 
 
   }
-
 
   openBrowserMap(maps = '30.0371616,31.0033728') {
     if (this.userData.latitude && this.userData.longitude) {
@@ -140,7 +137,10 @@ export class VprofilePage {
 
   getProducts() {
     this.showLoader = true;
-    this.itemProvider.getProductByUserId(this.userData.id)
+
+    if (this.userData.level_id == 3) {
+
+      this.itemProvider.getProductByUserId(this.userData.id)
       .subscribe(({ status, data }) => {
         if (status.message == 'success') {
           this.allProducts = this.chunk(data, 2);
@@ -160,6 +160,29 @@ export class VprofilePage {
         //this.getShelfs();
       }
       )
+
+    } else if (this.userData.level_id == 2) {
+
+        this.deliveryProvider.getAccDeliveryReqs(this.userData.id)
+          .subscribe(
+          ({ status, data, errors }) => {
+            if (status === 'success') {
+              this.ItemsDelivered = this.chunk(data, 2);
+              console.log('success', this.ItemsDelivered);
+            } else if (status === 'failed' && errors === null) {
+              this.noAcceptedItems = true;
+              console.log('failed', this.noAcceptedItems);
+            }
+          },
+          err => {
+            console.warn(err);
+          },
+          () => {
+            this.showLoader = false;
+          }
+          )
+      
+    } 
   }
 
   getShelfs() {
@@ -210,9 +233,6 @@ export class VprofilePage {
   }
 
   follow(user_id: number) {
-
-
-
 
     if (this.navigatedUserId != 0) {
       let followData = {

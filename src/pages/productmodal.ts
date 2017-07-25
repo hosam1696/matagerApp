@@ -74,7 +74,7 @@ import { Component } from '@angular/core';
       }
     }
     #product {
-      background-color: #fff);
+      background-color: #fff;
       padding: 10px 14px;}
       #product h4 {
         font-size: 16px;

@@ -34,7 +34,17 @@ export class DeliveryProvider {
         return this.http.post<IPost>(this.API_URL + 'delivery.php', body);
     }
 
+    getAccDeliveryReqs(matger_id) {
+    
+        const action = "getAcceptedDeliveryRequests"; 
+
+        return this.http.post<IPost>(this.API_URL + 'delivery.php', JSON.stringify({ action, matger_id}))
+    
+    }
+
+    
     acceptDeliveryRequest(requestData) {
+    
         const action = 'acceptDeliveryRequest';
 
         let body = JSON.stringify(Object.assign({ action }, requestData));

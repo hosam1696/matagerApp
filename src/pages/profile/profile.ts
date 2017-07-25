@@ -1,3 +1,4 @@
+import { DeliveryProvider } from './../../providers/delivery';
 import { Component,Inject,Renderer2 } from '@angular/core';
 import { NavController, IonicPage, AlertController, AlertOptions, PopoverController ,ActionSheetController, ToastController, ModalController } from 'ionic-angular';
 import {IlocalUser, levelToAr, Ishelf} from '../../app/service/InewUserData';
@@ -32,6 +33,8 @@ export class ProfilePage {
   cameraError: any;
   numbersOfFollowers: any = 0;
   numbersOfFollowings: any = 0;
+  ItemsDelivered: any;
+  noAcceptedItems: boolean = false;
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -46,7 +49,8 @@ export class ProfilePage {
     private transfer: Transfer,
     public rendrer: Renderer2,
     public userProvider: UserProvider,
-    public iab: InAppBrowser
+    public iab: InAppBrowser,
+    public deliveryProvider: DeliveryProvider
   ) {
 
   }
@@ -370,28 +374,52 @@ export class ProfilePage {
     }
     return chunked;
   }
-  getProducts(id:number) {
-    const prodService = this.productsProvider.getProductByUserId(id).retry(2);
-    [this.showLoader, this.noProducts] = [true, null];
-    prodService.subscribe(({status, data})=>{
-      if (status.message == 'success') {
-        if (data.length <= 0) {
+  getProducts(id: number) {
+    this.showLoader = true;
+    if (this.userLocal.level_id == 3) {
+      const prodService = this.productsProvider.getProductByUserId(id).retry(2);
+      [this.showLoader, this.noProducts] = [true, null];
+      prodService.subscribe(({ status, data }) => {
+        if (status.message == 'success') {
+          if (data.length <= 0) {
+            [this.showLoader, this.noProducts] = [false, 'empty'];
+            return false;
+          }
+          this.AllProducts = this.chunk(data, 2);
+          console.log(this.AllProducts);
+          [this.showLoader, this.noProducts] = [false, null];
+          console.table(data);
+        } else {
           [this.showLoader, this.noProducts] = [false, 'empty'];
-          return false;
         }
-        this.AllProducts = this.chunk(data, 2);
-        console.log(this.AllProducts);
-        [this.showLoader, this.noProducts] = [false, null];
-        console.table(data);
-      } else {
-        [this.showLoader, this.noProducts] = [false, 'empty'];
-      }
-    },
-    err => {
-      console.warn(err);
-      this.noProducts = 'empty';
+      },
+        err => {
+          console.warn(err);
+          this.noProducts = 'empty';
+        }
+      )
+    } else if (this.userLocal.level_id == 2) {
+
+      this.deliveryProvider.getAccDeliveryReqs(id)
+        .subscribe(
+        ({ status, data, errors}) => {
+          if (status === 'success') {
+            this.ItemsDelivered = this.chunk(data, 2);
+            console.log('success', this.ItemsDelivered);
+          } else if (status === 'failed' && errors === null) {
+            this.noAcceptedItems = true;
+            console.log('failed', this.noAcceptedItems);
+          }
+        },
+        err => {
+          console.warn(err);
+        },
+        () => {
+          this.showLoader = false;
+        }
+        )
     }
-    )
+    
   }
 
   deleteProduct(product: IProduct) {

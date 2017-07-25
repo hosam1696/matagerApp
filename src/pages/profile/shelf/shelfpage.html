@@ -30,19 +30,28 @@
         <ion-item>
             حالة الرف
             <p>
-                <span *ngIf="modalInfo.close == 0">غير محجوز</span>
-                <span *ngIf="modalInfo.close == 1"> محجوز</span>
+                <span *ngIf="modalInfo.shelf_status == 0 || modalInfo.shelf_status == 2">غير محجوز</span>
+                <span *ngIf="modalInfo.shelf_status == 1"> 
+                  محجوز حتى
+                  {{modalInfo.end_date | date:'longDate'}}
+                </span>
             </p>
         </ion-item>
     </ion-list>
     <form [formGroup]="reserveShelfForm" novalidate (ngSubmit)="submitForm(reserveShelfForm)">
         
-        <ion-list *ngIf="modalInfo.close == 0&&userLocal.level_id == 3">
+        <ion-list >
 
         <ion-item>
             <ion-label>بداية الحجز</ion-label>
             <input hidden type="text" placeholder="تاريخ البداية" formControlName="start_date" class="form-control">
-            <ion-datetime text-center class="form-control" displayFormat="YYYY / MMMM / DD" pickerFormat="YYYY MMMM DD" monthNames="يناير,
+                <!-- [min]="modalInfo.end_date || nowDateString"-->
+            <ion-datetime 
+                text-center 
+                class="form-control" 
+                displayFormat="YYYY / MMMM / DD" 
+                pickerFormat="YYYY MMMM DD" 
+                monthNames="يناير,
                 فبراير,
                 مارس,
                 ابريل,
@@ -53,14 +62,22 @@
                 سبتمبر,
                 اكتوبر,
                 نوفمبر,
-                ديسمبر" placeholder="تاريخ البدء" formControlName="start_date">
+                ديسمبر" 
+                placeholder="تاريخ البدء" 
+                formControlName="start_date">
             </ion-datetime>
         </ion-item>
 
         <ion-item>
             <ion-label>نهاية الحجز</ion-label>
             <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
-            <ion-datetime text-center class="form-control" displayFormat="YYYY / MMMM / DD" pickerFormat="YYYY MMMM DD" monthNames="يناير,
+            <ion-datetime 
+                
+                text-center 
+                class="form-control" 
+                displayFormat="YYYY / MMMM / DD" 
+                pickerFormat="YYYY MMMM DD" 
+                monthNames="يناير,
                 فبراير,
                 مارس,
                 ابريل,
@@ -78,7 +95,7 @@
         </ion-list>
         
     </form>
-    <button *ngIf="modalInfo.close == 0&&userLocal.level_id == 3" ion-button full (click)="requestBooking()" class="float-btn">
+    <button *ngIf="userLocal.level_id == 3" ion-button full (click)="requestBooking()" class="float-btn">
         <hsa-loader *ngIf="showLoader"></hsa-loader>
         طلب حجز الرف</button>
     <!-- <section >

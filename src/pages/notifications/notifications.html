@@ -11,7 +11,7 @@
 <ion-content *ngIf="isOnline; else offline" >
   
 <section id="notLggin" *ngIf="noUser; else signedUser">
-  <p text-center ><br>انت غير مسجل لدينا </p>
+
   <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
 
   <button  class="log-btn" (click)="navigateToPage('Signup')" color="light">تسجيل حساب جديد</button>
