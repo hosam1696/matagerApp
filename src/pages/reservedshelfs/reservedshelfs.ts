@@ -20,7 +20,7 @@ export class ReservedshelfsPage {
   moreData: boolean = true;
   initLimit: number = 10;
   initStart: number = 0;
-
+  noRequests: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public shelfsProvider: ShelfsProvider
   ) {
@@ -40,6 +40,7 @@ export class ReservedshelfsPage {
           this.AllRequests = data;
         } else {
           this.showLoader = false;
+          this.noRequests = true;
           console.warn('no data');
         }
           

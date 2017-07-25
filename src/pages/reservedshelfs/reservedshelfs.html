@@ -19,6 +19,11 @@
   <p text-center>
     <hsa-loader *ngIf="showLoader"></hsa-loader>
   </p>
+
+  <p text-center *ngIf="noRequests">
+    لم يتم اجراء اى طلبات للرفوف حتى الان
+  </p>
+
   <ion-list *ngIf="AllRequests">
     <ion-list-header> كل الطلبات</ion-list-header>
     <ion-item *ngFor="let request of AllRequests">
