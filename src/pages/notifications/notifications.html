@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar color="primary">
@@ -8,82 +7,87 @@
 </ion-header>
 
 
-<ion-content *ngIf="isOnline; else offline" >
-  
-<section id="notLggin" *ngIf="noUser; else signedUser">
+<ion-content *ngIf="isOnline; else offline">
 
-  <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
+  <section id="notLggin" *ngIf="noUser; else signedUser">
 
-  <button  class="log-btn" (click)="navigateToPage('Signup')" color="light">تسجيل حساب جديد</button>
-</section>
-<ng-template #signedUser>
-
-
-  <ion-refresher (ionRefresh)="refreshData($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
-  </ion-refresher>
-
-
-  <p class="small" text-center *ngIf="netErr">
-    <br>تفقد الاتصال وحاول مجددا
-  </p>
-  <p class="small" text-center *ngIf="noData">
+    <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button>
     <br>
-    لا يوجد اشعارات حتى الان
-  </p>
- 
-  <ion-list>
-    <ion-item *ngFor="let notification of AllNotifications" (click)="navigateToPage(notification)" [color]="isRead(notification.status)">
-      <ion-avatar item-left>
 
-        <img *ngIf="notification.avatar;else altImages" [src]="notification.avatar" alt="profile image">
-        <ng-template #altImages>
-          <img *ngIf="notification.gender == 'female'" src="assets/img/female-alt.png">
-          <img *ngIf="notification.gender == 'male'" src="assets/img/male-alt.png">
+    <button class="log-btn" (click)="navigateToPage('Signup')" color="light">تسجيل حساب جديد</button>
+  </section>
+  <ion-refresher (ionRefresh)="refreshData($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles"
+                           refreshingText="جلب المحتوى"></ion-refresher-content>
+  </ion-refresher>
+  <ng-template #signedUser>
 
-        </ng-template>
-        
 
-      </ion-avatar>
-      <div class="message-sender">
-        <h4>{{ notification.name || 'محمد النبوى' }}</h4>
-        <div class="message-et" [ngClass]="{'unread': notification.status == 0}">
-          <ion-icon name="timer-outline"></ion-icon>
-          منذ
-          <span>{{notification.date_added | sincedate}}</span>
+    <p class="err-small" text-center *ngIf="netErr">
+      <br>
+      التطبيق يتطلب اتصال بالانترنت
+    </p>
+    <p class="err-small" text-center *ngIf="noData">
+      <br>
+      لا يوجد اشعارات حتى الان
+    </p>
+
+    <ion-list>
+      <ion-item *ngFor="let notification of AllNotifications" (click)="navigateToPage(notification)"
+                [color]="isRead(notification.status)">
+        <ion-avatar item-left>
+
+          <img *ngIf="notification.avatar;else altImages" [src]="notification.avatar" alt="profile image">
+          <ng-template #altImages>
+            <img *ngIf="notification.gender == 'female'" src="assets/img/female-alt.png">
+            <img *ngIf="notification.gender == 'male'" src="assets/img/male-alt.png">
+
+          </ng-template>
+
+
+        </ion-avatar>
+        <div class="message-sender">
+          <h4>{{ notification.name || 'محمد النبوى' }}</h4>
+          <div class="message-et" [ngClass]="{'unread': notification.status == 0}">
+            <ion-icon name="timer-outline"></ion-icon>
+            منذ
+            <span>{{notification.date_added | sincedate}}</span>
+          </div>
         </div>
-      </div>
-      <p>{{ notification['notifiy_message'] }}</p>
-    </ion-item>
+        <p>{{ notification['notifiy_message'] }}</p>
+      </ion-item>
 
-  </ion-list>
-  <!--    <p *ngIf="moreData"  text-center class="small">
-      لا يوجد مزيد من الاشعارات
-    </p> -->
+    </ion-list>
+    <!--    <p *ngIf="moreData"  text-center class="small">
+        لا يوجد مزيد من الاشعارات
+      </p> -->
 
     <p text-center *ngIf="showLoader" class="small">
       <hsa-loader></hsa-loader>
     </p>
-  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getMoreData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
-      ></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getMoreData($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+        >
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 
-</ng-template>
+  </ng-template>
 
 
 </ion-content>
-  <ng-template #offline>
-    <ion-content id="offline">
-      <div>
+<ng-template #offline>
+  <ion-content id="offline">
+    <div>
 
 
-        <p>
-          <ion-icon name="wifi"></ion-icon>هذه الصفحة تتطلب وجود اتصال بالانترنت </p>
-      </div>
-    </ion-content>
-  </ng-template>
+      <p>
+        <ion-icon name="wifi"></ion-icon>
+        هذه الصفحة تتطلب وجود اتصال بالانترنت
+      </p>
+    </div>
+  </ion-content>
+</ng-template>
 
 <!--
 <ion-item>

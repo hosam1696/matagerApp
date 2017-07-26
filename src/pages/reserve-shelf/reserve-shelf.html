@@ -83,12 +83,12 @@
         <ion-item margin-top>
           <ion-label>طلب بداية الحجز</ion-label>
 
-          <ion-label> {{shelfData.start_date| date:'longDate' }} </ion-label>
+          <ion-label> {{shelfData.start_date| date:'longDate' | arabicdate }} </ion-label>
 
         </ion-item>
         <ion-item>
           <ion-label>طلب نهاية الحجز</ion-label>
-          <ion-label>{{shelfData.end_date | date:'longDate'}}</ion-label>
+          <ion-label>{{shelfData.end_date | date:'longDate' | arabicdate}}</ion-label>
         </ion-item>
         <section id="float-btn" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status == 0)||shelfData.shelf_status == 0&&userLocal.level_id==2">
           <button color="primary" (click)="sendReplyRequest()">موافقة</button>

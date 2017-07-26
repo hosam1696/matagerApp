@@ -92,14 +92,14 @@ export class NotificationsPage {
 
     if (this.userLocal) {
       [this.noUser, this.showLoader,this.noData, this.netErr] = [false, true, false, false];
-      
+
     } else {
       [this.noUser, this.showLoader] = [true, false];
     }
   }
-  
+
   ionViewDidLoad() {
-    
+
     this.ionViewWillEnter();
     if (this.userLocal)
       this.getNotifications();
@@ -113,7 +113,7 @@ export class NotificationsPage {
       this.isOnline = false;
     });
 
-    */ 
+    */
   }
 
   refreshData(event) {
@@ -128,12 +128,12 @@ export class NotificationsPage {
         .subscribe(
         ({status, data}) => {
           if  (status == 'success') {
-            
+
 
             this.AllNotifications = [...this.AllNotifications, ...data];
             if (data.length < this.initLimit)
-              this.moreData = false;  
-          
+              this.moreData = false;
+
           } else {
 
             event.complete();
@@ -157,15 +157,15 @@ export class NotificationsPage {
 
   getNotifications(event = null) {
     this.initStart = 0;
-    if (!event)
-      this.showLoader = true;
+    /*if (!event)
+      this.showLoader = true;*/
     let notifications = this.notificationProvider.getNotifications(this.userLocal.id, this.initLimit, this.initStart);
 
 
-    notifications.subscribe(
+    notifications.retry(3).subscribe(
       ({ status, data }) => {
         if (status == 'success') {
-          
+
           this.AllNotifications = data;
 
           console.log('All notifications',this.AllNotifications);
@@ -176,8 +176,10 @@ export class NotificationsPage {
         }
       },
       (err) => {
+        this.showLoader = false;
         console.warn(err);
         this.netErr = true;
+        event && event.complete();
       },
       () => {
         [this.moreData, this.showLoader] = [true,false];
@@ -187,7 +189,7 @@ export class NotificationsPage {
   }
 
   ionViewDidEnter() {
-    
+
     /*
     if (this.network.type == 'none' || this.network.type == null) {
       this.isOnline = false;
@@ -221,13 +223,13 @@ export class NotificationsPage {
             return ' ' + doubleArTime;
         else if (sinceTime > 2 && sinceTime < 10)
           return sinceTime + ' ' + lessThanTenTime
-        else 
-          return sinceTime + ' ' + arTime 
+        else
+          return sinceTime + ' ' + arTime
         }
       }
       //console.log(timeUnits.unitsId[i])
   }
-  
+
   navigateToPage(pageData: INotification | string):void {
     if (typeof pageData == 'string') {
       this.navCtrl.push(pageData);
@@ -236,7 +238,7 @@ export class NotificationsPage {
     } else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
       /*if (pageData.type == 'reserveShlef') {
-        
+
         update read notification status before navigating
         this.notificationProvider.updatereadNotify(pageData.id)
           .subscribe(res => {
@@ -244,15 +246,15 @@ export class NotificationsPage {
           });
 
         this.navCtrl.push('ReserveShelfPage', { pageData });
-        
+
       } else if (pageData.type == 'shelfPercenatge') {
         this.navCtrl.push('ReserveShelfPage', { pageData })
 
 
       }*/
-        
+
     }
-    
+
 
   }
 

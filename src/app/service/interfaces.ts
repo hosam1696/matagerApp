@@ -168,6 +168,23 @@ export enum IlevelId {
 export interface Imsg {
   message: string
 }
+
+export enum ArProductForm {
+  item_name = 'اسم المنتج',
+  item_price = 'سعر المنتج',
+  item_expiry_date= 'تاريخ انتهاء المنتج',
+  item_production_date = 'تاريخ انتاج المنتج',
+  item_desc = 'وصف المنتج'
+
+}
+
+export enum ArShelfForm {
+  name= 'رقم الرف',
+  area='مساحة الرف',
+  cost='سعر الرف'
+}
+
+
 export interface IPost {
   status: string | any,
   data: any[] | any,

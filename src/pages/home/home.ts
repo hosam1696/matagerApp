@@ -1,4 +1,3 @@
-import { MapsModal } from './../mapsmodal';
 import { Component } from '@angular/core';
 import { NavController, ToastController, IonicPage, Config, ModalController } from 'ionic-angular';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
@@ -21,17 +20,15 @@ export class HomePage {
     public geolocation: Geolocation,
      public network: Network,
      public toastCont: ToastController,
-     public userProvider: UserProvider,
      public push: Push,
      public config: Config,
-     public modalCtrl: ModalController
   ) {
-   
+
   }
 
   ionViewDidLoad() {
 
-    
+
 
     console.log('Config Object', this.config, this.config.get('iconMode'));
 
@@ -50,12 +47,12 @@ export class HomePage {
       } else {
         console.warn('No user had signed in or the user didn\'t allow geolocation ')
       }
-      */ 
+      */
     }).catch(err=> {
       console.warn(err);
     });
 
-    
+
     let pushOptios: PushOptions = {
       android: {
         senderID: '12345679'
@@ -72,12 +69,13 @@ export class HomePage {
 
     push.on('notification').subscribe(d => {
       console.log('recieve a notification');
+      console.log(d);
     });
 
     push.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
 
-    push.on('error').subscribe(error => console.error('Error with Push plugin', error));  
-    
+    push.on('error').subscribe(error => console.error('Error with Push plugin', error));
+
    // TODO: check connection
    /*
     this.network.onConnect().subscribe(data=>{
@@ -120,18 +118,11 @@ export class HomePage {
     this.navCtrl.push(page);
   }
 
-  navToAdv(addsLink) {
-    // navigate to the advertise link or the advertise owner
-    console.log('You have to go to ' + addsLink)
-  }
+  navToAdv(addsLink): void {
+  // navigate to the advertise link or the advertise owner
+  console.log('You have to go to ' + addsLink);
 
-  openMaps() {
-    let modal = this.modalCtrl.create(MapsModal);
-    modal.onDidDismiss((d) => {
-      console.log('Data from Modal', d);
-    })
-    modal.present();
+  //this.navCtrl.push(link)
   }
-
 
 }

@@ -1,7 +1,7 @@
-import { Component, ElementRef, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, ToastController } from 'ionic-angular';
 import { ItemProvider } from '../../providers/item';
-import { IProduct, IlocalUser, IShelfRequest } from '../../app/service/interfaces';
+import {  IlocalUser, IShelfRequest } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { DeliveryProvider } from '../../providers/delivery';
 @IonicPage()
@@ -13,7 +13,6 @@ export class DeliveryrequestPage {
 
   shelfNumbers;
   timeStarts = 1;
-  editedQuantity: number = 1;
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   Shelfs: IShelfRequest[];
   matgar_id: number;
@@ -24,8 +23,6 @@ export class DeliveryrequestPage {
   noProducts: boolean = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public ele: ElementRef,
-    public render: Renderer2,
     private itemProvider: ItemProvider,
     private shelfsProvider: ShelfsProvider,
     private deliveryProvider: DeliveryProvider,
@@ -43,7 +40,7 @@ export class DeliveryrequestPage {
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
     }
-
+    //TODO: if i have time i will use observable.merge in both functions blew
     this.getAcceptedShelfsRequests();
     this.getProducts();
 
@@ -76,7 +73,7 @@ export class DeliveryrequestPage {
       }
       )
   }
-  triggerChecked(product) {
+  triggerChecked(product):void {
 
     console.log(product);
 
@@ -159,7 +156,7 @@ export class DeliveryrequestPage {
         };
         console.table(items, requestData);
 
-        this.deliveryProvider.addDeliveryRequest(requestData).subscribe(({ status, data, errors }) => {
+        this.deliveryProvider.addDeliveryRequest(requestData).subscribe(({ status, errors }) => {
           if (status == 'success') {
             this.showToast('تم ارسال طلب التسليم بنجاح');
             setTimeout(() => {
@@ -181,18 +178,18 @@ export class DeliveryrequestPage {
 
   }
 
-  limitString(str: string) {
+  limitString(str: string):string {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
-  changeValue(event, product) {
-    let targetValue = event.target.value;
-    console.log(event, targetValue);
-    console.log(product.item_quantity);
-    product.item_quantity = targetValue;
-    console.log(product.item_quantity);
-    
-  }
+  changeValue(event, product): void {
+  let targetValue = event.target.value;
+  console.log(event, targetValue);
+  console.log(product.item_quantity);
+  product.item_quantity = targetValue;
+  console.log(product.item_quantity);
+
+}
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

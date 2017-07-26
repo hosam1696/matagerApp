@@ -31,8 +31,7 @@ export class ProfilePage {
   userLevelId: number;
   showSettings: boolean = false;
   cameraError: any;
-  numbersOfFollowers: any = 0;
-  numbersOfFollowings: any = 0;
+  netErr:boolean = false;
   ItemsDelivered: any;
   noAcceptedItems: boolean = false;
   constructor(
@@ -61,7 +60,7 @@ export class ProfilePage {
 
 
 
-    
+
   }
 
   ionViewWillEnter(): void {
@@ -86,7 +85,7 @@ export class ProfilePage {
         // client profile
       }
     }
-    
+
   }
 
   pickImage(cameraImage:string):void {
@@ -234,11 +233,11 @@ export class ProfilePage {
   }
 
   getShelfs(userId: number): void {
-    
+
     [this.showLoader, this.noShelfs] = [true, null];
-    
+
     if (this.userLocal.level_id == 2) {
-      
+
 
       this.shelfsProvider.getShelfs(userId).subscribe(({ status, data }) => {
         console.log(status, data);
@@ -284,7 +283,8 @@ export class ProfilePage {
       },
         err => {
           console.warn(err);
-          [this.showLoader, this.noShelfs, this.AllShelfs] = [false, 'netErr', []];
+
+          [this.netErr,this.showLoader, this.noShelfs, this.AllShelfs] = [true,false, 'netErr', []];
         },
         () => {
           this.showLoader = false;
@@ -295,7 +295,7 @@ export class ProfilePage {
 
     }
 
-    
+
   }
 
 
@@ -324,7 +324,7 @@ export class ProfilePage {
           },
           {
             text: 'حذف',
-            handler: (data) => {
+            handler: () => {
               this.shelfsProvider.deleteShelf(shelfData).subscribe(res => {
                 console.log(res);
                 if (res.status == 'success') {
@@ -345,7 +345,7 @@ export class ProfilePage {
             }
           }
         ]
-      }
+      };
       let alert = this.alert.create(this.alertOptions);
 
       alert.present();
@@ -361,7 +361,7 @@ export class ProfilePage {
     if (pageParams.close == 1)
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
      else
-        this.navigateToPage('AddshelfPage', pageParams)
+        this.navigateToPage(page, pageParams)
   }
 
   chunk(arr, limit) {
@@ -379,7 +379,7 @@ export class ProfilePage {
     if (this.userLocal.level_id == 3) {
       const prodService = this.productsProvider.getProductByUserId(id).retry(2);
       [this.showLoader, this.noProducts] = [true, null];
-      prodService.subscribe(({ status, data }) => {
+      prodService.retry(2).subscribe(({ status, data }) => {
         if (status.message == 'success') {
           if (data.length <= 0) {
             [this.showLoader, this.noProducts] = [false, 'empty'];
@@ -395,7 +395,9 @@ export class ProfilePage {
       },
         err => {
           console.warn(err);
-          this.noProducts = 'empty';
+
+          [this.showLoader , this.netErr]= [false, true];
+
         }
       )
     } else if (this.userLocal.level_id == 2) {
@@ -412,6 +414,7 @@ export class ProfilePage {
           }
         },
         err => {
+          [this.showLoader , this.netErr]= [false, true];
           console.warn(err);
         },
         () => {
@@ -419,7 +422,7 @@ export class ProfilePage {
         }
         )
     }
-    
+
   }
 
   deleteProduct(product: IProduct) {
@@ -438,7 +441,7 @@ export class ProfilePage {
         },
         {
           text: 'حذف',
-          handler: (data) => {
+          handler: () => {
             this.productsProvider.deleteItem({ id: product.id, 'user_id': this.userLocal.id })
               .subscribe(response => {
                 console.log(response);
@@ -463,11 +466,6 @@ export class ProfilePage {
     this.alert.create(alertOptions).present();
   }
 
-  fetchMoreProducts(event) {
-    setTimeout(function(){
-      event.complete();
-    },2000)
-  }
 
   editProduct(pageParams) {
     this.navigateToPage('AddproductPage', pageParams, null)
@@ -496,13 +494,13 @@ export class ProfilePage {
 
   }
 
-  userLevel(level:number):string {
+  /*userLevel(level:number):string {
     return levelToAr[level]
   }
 
   limitString(str:string) {
     return (str.length > 55)? str.slice(0,50)+ '.....': str;
-  }
+  }*/
 
   showToast(msg) {
     let toast = this.toastCtrl.create({

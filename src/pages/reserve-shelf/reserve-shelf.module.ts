@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ReserveShelfPage } from './reserve-shelf';
 import { HsaloaderComponentModule } from '../../components/hsa-loader/hsa-loader.module';
 import { SinceDatePipeModule } from '../../app/service/since-date/since-date.module';
+import {ArabicDatePipeModule} from "../../app/service/arabic-date/arabic-date.module";
 @NgModule({
   declarations: [
     ReserveShelfPage,
@@ -10,7 +11,8 @@ import { SinceDatePipeModule } from '../../app/service/since-date/since-date.mod
   imports: [
     IonicPageModule.forChild(ReserveShelfPage),
     HsaloaderComponentModule,
-    SinceDatePipeModule
+    SinceDatePipeModule,
+    ArabicDatePipeModule
   ],
   exports: [
     ReserveShelfPage

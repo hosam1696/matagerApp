@@ -5,7 +5,6 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
 import { UserProvider } from "../../providers/user";
-import { AreaProvider } from "../../providers/area";
 
 
 @IonicPage()
@@ -16,11 +15,9 @@ import { AreaProvider } from "../../providers/area";
 export class Login {
   LoginForm: FormGroup;
   showLoader: boolean = false;
-  connectingStatus: boolean;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public userLogin: UserProvider,
-    public areaProvider:AreaProvider,
     public toastCtrl: ToastController,
     public network: Network
   ) {
@@ -31,19 +28,15 @@ export class Login {
   }
 
   ionViewDidLoad() {
-    //this.showToast('Connection Type ['+ this.network.type+ ']');
+    // check network connection on devices this.showToast('Connection Type ['+ this.network.type+ ']');
 
     /* this.LoginForm.valueChanges.subscribe((data)=>{
        console.log(data);
      })
- */
+    */
 
   }
 
-
-  ionViewWillLeave() {
-
-  }
 
   submitLogin() {
 
@@ -68,6 +61,7 @@ export class Login {
 
               // TODO: navigate to the home page
               this.navCtrl.setRoot('HomePage');
+
               this.navCtrl.popToRoot();
 
               console.table(localStorage.getItem('userLocalData'));
@@ -95,7 +89,7 @@ export class Login {
           }
 
           /*
-          
+
           if (this.LoginForm.value.Username == "")
             this.showToast(' يرجى ادخال اسم  المستخدم');
           else {

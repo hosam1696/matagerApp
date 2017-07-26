@@ -10,8 +10,8 @@ export class SinceDatePipe implements PipeTransform {
   constructor(public ngZone: NgZone,public chRef:ChangeDetectorRef){}
   transform(value: string, ...args) {
       this.transformed = this.getDateSince(value);
-          
-   
+
+
     this.ngZone.runOutsideAngular(()=>{
       setTimeout(()=> {
         this.transformed = this.getDateSince(value);
@@ -28,7 +28,7 @@ export class SinceDatePipe implements PipeTransform {
   getDateSince(date, dNow= Date.now()) {
 
     let dTimeStamp = this.getTime(date);
-    let diff = (dNow - dTimeStamp) / 1000; // get time difference in seconds --pareseInt() 
+    let diff = (dNow - dTimeStamp) / 1000; // get time difference in seconds --pareseInt()
 
   //  console.log(date, dTimeStamp,dNow, diff);
     for (let i in this.unitsId) {
@@ -37,13 +37,13 @@ export class SinceDatePipe implements PipeTransform {
       if (sinceTime > 0) {
         //console.log(i,sinceTime, this.timeId[i]);
         let [arTime, doubleArTime, lessThanTenTime] = [ArTimeId[this.timeId[i]], ArDTimeId[this.timeId[i]], ArLttTimeId[this.timeId[i]]];
-        
+
         if (sinceTime == 1)
           return ' ' + arTime;
         else if (sinceTime == 2)
           return ' ' + doubleArTime;
         else if (sinceTime > 2 && sinceTime <= 10)
-          return sinceTime + ' ' + lessThanTenTime
+          return sinceTime + ' ' + lessThanTenTime;
         else
           return sinceTime + ' ' + arTime
       }

@@ -1,9 +1,8 @@
-import { ProductModal } from './../productmodal';
-import { NotificationsProvider } from './../../providers/notifications';
+import { ProductModal } from '../productmodal';
+import { NotificationsProvider } from '../../providers/notifications';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams, ModalController } from 'ionic-angular';
 
-'../../providers/notifications';
 import { INotification, IDeliveryNotifyInfo } from '../../app/service/interfaces';
 import { DeliveryProvider } from "../../providers/delivery";
 
@@ -17,7 +16,7 @@ export class NotificationDeleveryReqPage {
   DeliverData: IDeliveryNotifyInfo;
   userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   noDeliveryData: boolean = false;
-  showDeliveryInfo: boolean = false; 
+  showDeliveryInfo: boolean = false;
   showLoader: boolean = true;
   showRefuseMsg: boolean = false;
   refuseMsg: any = '';
@@ -42,7 +41,7 @@ export class NotificationDeleveryReqPage {
     if (this.pageData.status == 0) {
       this.notificationProvider.updatereadNotify(this.pageData.id, this.pageData.user_id)
 
-       
+
     } else {
       console.info('you have been read this notification')
     }
@@ -65,7 +64,8 @@ export class NotificationDeleveryReqPage {
       },
       err => {
         [this.noDeliveryData] = [true];
-        this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
+        console.warn(err);
+        this.showToast('التطبيق يتطلب اتصال بالانترنت. ')
       },
       () => {
         this.showLoader = false
@@ -93,7 +93,7 @@ export class NotificationDeleveryReqPage {
 
   sendReplyRequest(accept: boolean = true) {
     if (this.userLocal.level_id == 2) {
-      
+
       if (accept) {
         let requestData = {
           'receive_user_id': this.pageData.send_user_id,
@@ -114,6 +114,8 @@ export class NotificationDeleveryReqPage {
             }
           },
           err => {
+
+            console.warn(err);
             this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
           }
         )
@@ -142,17 +144,18 @@ export class NotificationDeleveryReqPage {
               }
             },
             err => {
-              this.showToast('تفقد الاتصال وحاول مجدا')
+              console.warn(err);
+              this.showToast('التطبيق يتطلب اتصال بالانترنت')
             }
           )
-          
+
         } else {
           this.showToast('يرجى ادخال سبب للرفض ليتم ارساله الى المورد')
         }
-        
-      }  
-    } else {
 
+      }
+    } else {
+        return false;
     }
   }
 

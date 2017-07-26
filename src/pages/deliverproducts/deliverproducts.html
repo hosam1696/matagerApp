@@ -1,47 +1,48 @@
-
 <ion-header>
 
   <ion-navbar color="primary">
     <ion-title>التسليمات</ion-title>
     <ion-buttons end (click)="navigateToPage('DeliveryrequestPage')">
-      <button ion-button class="small" >
+      <button ion-button class="small">
 
-      <ion-icon name="add"></ion-icon>&nbsp;
-             اضف طلب تسليم
-    </button>
+        <ion-icon name="add"></ion-icon>&nbsp;
+        اضف طلب تسليم
+      </button>
     </ion-buttons>
   </ion-navbar>
-  
+
 </ion-header>
 
 
-<ion-content >
-    
-    <p text-center *ngIf="showLoader">
-      <hsa-loader ></hsa-loader>
-    </p>
-    <p text-center *ngIf="noRequests" class="err-small">
-      لا يوجد طلبات حتى الان.. اضف طلب تسليم جديد
-    </p>
+<ion-content>
 
-    <ion-list *ngIf="AllRequests">
-      <ion-list-header>
-كل التسليمات  
-      </ion-list-header>
-      <ion-item *ngFor="let request of AllRequests" (click)="showInfo(request)">
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
+  <p text-center *ngIf="noRequests" class="err-small">
+    لا يوجد طلبات حتى الان.. اضف طلب تسليم جديد
+  </p>
 
-        
-        <p color="primaryDark">رقم الرف
-          <span>{{request.shelf_name}} &nbsp; &nbsp; &gt; {{request.name}}</span>
-        </p>
-        <p>حالة التسليم
-<ion-badge [color]="(request.delivery_status == 1)?'primary':((request.delivery_status == 2)?'danger':'bgColor')" item-left>
+  <ion-list *ngIf="AllRequests">
+    <ion-list-header>
+      كل التسليمات
+    </ion-list-header>
+    <ion-item *ngFor="let request of AllRequests" (click)="showInfo(request)">
+
+
+      <p color="primaryDark">رقم الرف
+        <span>{{request.shelf_name}} &nbsp; &nbsp; &gt; {{request.name}}</span>
+      </p>
+      <p>حالة التسليم
+        <ion-badge
+          [color]="(request.delivery_status == 1)?'primary':((request.delivery_status == 2)?'danger':'bgColor')"
+          item-left>
           <span *ngIf="request.delivery_status == 0">معلق</span>
           <span *ngIf="request.delivery_status == 1">تم القبول</span>
           <span *ngIf="request.delivery_status == 2">تم الرفض</span>
-</ion-badge>
-        </p>
-      </ion-item>
-    </ion-list>
+        </ion-badge>
+      </p>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

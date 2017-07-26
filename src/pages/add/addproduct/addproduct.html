@@ -38,14 +38,14 @@
 
 
     <div class="form-group">
-      <input type="text"
+      <input
              placeholder="اسم المنتج"
              formControlName = "item_name"
              class="form-control">
     </div>
 
     <div class="form-group">
-      <input type="text"
+      <input
              placeholder="سعر المنتج"
              formControlName = "item_price"
 
@@ -55,16 +55,16 @@
             </div>
     </div>
     <div class="form-group">
-      <input hidden type="text" placeholder="تاريخ الانتاج"
+      <input hidden placeholder="تاريخ الانتاج"
              formControlName="item_production_date"
              class="form-control">
 
-            <ion-datetime
-              text-center
-              class="form-control"
-              displayFormat="YYYY / MMMM / DD"
-              pickerFormat="YYYY MMMM DD"
-              monthNames="يناير,
+      <ion-datetime
+        text-center
+        class="form-control"
+        displayFormat="YYYY / MMMM / DD"
+        pickerFormat="YYYY MMMM DD"
+        monthNames="يناير,
                 فبراير,
                 مارس,
                 ابريل,
@@ -76,26 +76,22 @@
                 اكتوبر,
                 نوفمبر,
                 ديسمبر"
-              placeholder="تاريخ الانتاج"
-              formControlName="item_production_date">
-            </ion-datetime>
-    </div>
+        placeholder="تاريخ الانتاج"
+        formControlName="item_production_date">
+      </ion-datetime>
 
-
-    <div class="form-group">
       <input
         hidden
-        type="text"
         placeholder="تاريخ الانتهاء"
         formControlName="item_expiry_date"
         class="form-control">
 
-        <ion-datetime
-          text-center
-          class="form-control"
-          displayFormat="YYYY / MMMM / DD"
-          pickerFormat="YYYY MMMM DD"
-          monthNames="يناير,
+      <ion-datetime
+        text-center
+        class="form-control"
+        displayFormat="YYYY / MMMM / DD"
+        pickerFormat="YYYY MMMM DD"
+        monthNames="يناير,
             فبراير,
             مارس,
             ابريل,
@@ -107,17 +103,15 @@
             اكتوبر,
             نوفمبر,
             ديسمبر"
-          placeholder="تاريخ الانتهاء"
-          class="form-control"
-          formControlName="item_expiry_date">
-        </ion-datetime>
+        placeholder="تاريخ الانتهاء"
+        formControlName="item_expiry_date">
+      </ion-datetime>
 
     </div>
 
 
     <div class="form-group">
       <textarea placeholder="الوصف" class="form-control"
-
                 rows="5"
              formControlName ="item_desc"
       ></textarea>

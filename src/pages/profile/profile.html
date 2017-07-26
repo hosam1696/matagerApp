@@ -147,9 +147,9 @@
             <div class="shelf-status">
               <div class="reserved">
                 <span *ngIf="shelf.shelf_status == 0 || shelf.shelf_status == 2">غير محجوز</span>
-                <span *ngIf="shelf.shelf_status == 1"> 
+                <span *ngIf="shelf.shelf_status == 1">
                   محجوز حتى
-                  {{shelf.end_date | date:'longDate'}}
+                  <ion-badge color="bgColor">{{shelf.end_date | date:'longDate' | arabicdate}}</ion-badge>
                 </span>
                 </div>
               <div class="shelf-controls">
@@ -164,7 +164,7 @@
             </div>
         </ion-item>
 
-      
+
 
         <p text-center *ngIf="showLoader">
           <hsa-loader></hsa-loader>
@@ -184,8 +184,8 @@
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
       </p>
 
-      <ion-item 
-        class="shelfRequest" 
+      <ion-item
+        class="shelfRequest"
         *ngFor="let request of AllShelfs; let i = index"
         (click)="navigateToPage('VprofilePage', [request.matger_id, userLocal.id])"
         >
@@ -196,7 +196,7 @@
           {{request.shelf_name}}
         </span>
           <span>
-          &nbsp; &gt; &nbsp; 
+          &nbsp; &gt; &nbsp;
           {{request.matger_name}}
         </span>
           <span>
@@ -282,11 +282,15 @@
       <br>
       لا يوجد منتجات حتى الان ليتم عرضها
     </p>
+    <p text-center *ngIf="netErr">
+      <br>
+      التطبيق يتطلب اتصال بالانترنت
+    </p>
 
     <!-- list for stores delivered products-->
     <ion-grid padding-horizontal>
       <ion-row *ngFor="let products of ItemsDelivered">
-        <ion-col col-6 *ngFor="let product of products;let i = index"> 
+        <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
 
             <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/product-iphone.png'" alt="product">

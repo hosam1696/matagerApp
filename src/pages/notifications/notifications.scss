@@ -1,11 +1,19 @@
 page-notifications {
 
-  
+
     .small {
       font-size: 12px;
       color: #666;
       margin-top:  0 !important;
     }
+  .err-small {
+    font-size: 1.7rem;
+    color: #666;
+    text-shadow: 1px 1px #fff;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+  }
   ion-content {
     &.content {
       background-color: #eee;
@@ -32,7 +40,7 @@ page-notifications {
         color: color($colors, light);
         background-color: color($colors, primary);
       }
-      
+
       &:last-of-type  {
         background-color: color($colors, light);
       }
@@ -47,7 +55,7 @@ page-notifications {
         }
 
         }
-        
+
       }
       #notLggin {
       width: 100%;
@@ -84,10 +92,10 @@ page-notifications {
         }*/
         border-bottom: 1px solid #eee !important;
         .unread {
-          font-weight: bold;      
+          font-weight: bold;
           //background-color : #eee !important
         }
-        
+
         .item-inner {
           border-bottom: none !important;
         }
@@ -130,7 +138,7 @@ page-notifications {
   }
 
   #offline {
-    
+
       text-align: center;
       display: flex;
       justify-content: center;

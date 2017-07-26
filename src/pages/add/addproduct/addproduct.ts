@@ -2,17 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController,ToastController, NavParams, ActionSheetController } from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { IlocalUser } from '../../../app/service/inewUserData';
-import { IProduct } from '../../../app/service/interfaces';
+import { IProduct, ArProductForm } from '../../../app/service/interfaces';
 import {ItemProvider} from '../../../providers/item';
-
-let ArProductForm;
-(function (ArProductForm) {
-    ArProductForm[ArProductForm["item_name"] = "اسم المنتج"] = "item_name";
-    ArProductForm[ArProductForm["item_price"] = "سعر المنتج"] = "item_price";
-    ArProductForm[ArProductForm["item_production_date"] = "تاريخ انتاج المنتج"] = "item_production_data";
-    ArProductForm[ArProductForm["item_expiry_date"] = "تاريخ انتهاء المنتج"] = "item_expiry_data";
-    ArProductForm[ArProductForm["item_desc"] = "وصف المنتج"] = "item_desc";
-})(ArProductForm || (ArProductForm = {}));
 
 
 @IonicPage()
@@ -37,7 +28,7 @@ export class AddproductPage {
 
     this.addProductForm = new FormGroup({
       item_name: new FormControl('', [Validators.required, Validators.minLength(4)]),
-      item_price: new FormControl('', [Validators.required, Validators.pattern('[1-9]+(\.[0-9]*)?|[0]+(\.[0-9]+)+')]),
+      item_price: new FormControl('', [Validators.required, Validators.pattern('[1-9]+(\.[0-9]+)?|[0]+(\.[0-9]+)+')]),
       item_production_date: new FormControl(''),
       item_expiry_date: new FormControl(''),
       item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)]),
@@ -49,54 +40,37 @@ export class AddproductPage {
   ionViewDidLoad() {
 
     this.InitData = this.navParams.get('pageData');
+
     //console.log(Object.prototype.toString.call(new Date(this.InitData.item_expiry_date)),new Date(this.InitData.item_expiry_date).toISOString());
 
     console.info(this.InitData);
     if (typeof this.InitData == 'object') {
       const formKeys = Object.keys(this.addProductForm.value);
-
-
       this.actionText = 'تعديل';
       this.actionBtnTxt = 'تعديل';
-      formKeys.forEach((value, index)=> {
+      formKeys.forEach((value)=> {
        /* if (typeof value == "object") {
            console.log(value);
            //console.log(new Date(this.InitData[value]).toISOString());
            this.addProductForm.get(value).setValue(this.InitData[value])
         }else {*/
           this.addProductForm.get(value).setValue(this.InitData[value])
-        /*
-          [
-            'يناير',
-            'فبراير',
-            'مارس',
-            'ابريل',
-            'مايو',
-            'يونيو',
-            'يوليو',
-            'اغسطس',
-            'سبتمبر',
-            'اكتوبر',
-            'نوفمبر',
-            'ديسمبر'
-          ]*/
-
       });
     }
 
     console.log(this.InitData);
-    this.addProductForm.valueChanges
+    this.addProductForm.valueChanges // for testing from
       .debounceTime(500)
       .distinctUntilChanged()
       .subscribe(values => {
         console.log(values);
       })
   }
-
+/* Get Type of js objects
   getDataType(val) {
     return Object.prototype.toString.call(new Date(val)).slice(7,-1).trim()
   }
-
+*/
   pickImage() {
 
     let actionSheetCtrl = this.actionCtrl.create({
@@ -212,7 +186,7 @@ export class AddproductPage {
   detectUnvalidFormErrors(form:FormGroup = this.addProductForm,   formKeys: string[] = Object.keys(form.value) ) {
 
 
-    formKeys.every((value, index)=> {
+    formKeys.every((value)=> {
 
       if(form.get(value).getError('required')) {
 
@@ -226,7 +200,7 @@ export class AddproductPage {
 
         return false;
       } else if (form.get(value).getError('pattern')){
-        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArProductForm[value]}`)
+        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArProductForm[value]}`);
         return false;
       } else {
         return true;

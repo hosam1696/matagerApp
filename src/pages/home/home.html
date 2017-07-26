@@ -3,7 +3,7 @@
 
     <ion-title>
       الصفحة الرئيسية
-      </ion-title>
+    </ion-title>
 
   </ion-navbar>
 </ion-header>
@@ -11,19 +11,19 @@
 <ion-content>
 
 
- <ion-slides  pager="true" autoplay="3000" loop="true">
-   <ion-slide (click)="navToAdv('advertiseLink')">
+  <ion-slides pager="true" autoplay="3000" loop="true">
+    <ion-slide (click)="navToAdv('advertiseLink')">
       <img src="assets/img/adds_01.png" height='170' width="100%">
-   </ion-slide>
-   <ion-slide (click)="navToAdv('advertiseLink')">
+    </ion-slide>
+    <ion-slide (click)="navToAdv('advertiseLink')">
 
-    <img src="assets/img/adds_02.png" height='170' width="100%">
+      <img src="assets/img/adds_02.png" height='170' width="100%">
 
-   </ion-slide>
-   <ion-slide (click)="navToAdv('advertiseLink')">
-    <img src="assets/img/adds_01.png" height='170'>
-   </ion-slide>
- </ion-slides>
+    </ion-slide>
+    <ion-slide (click)="navToAdv('advertiseLink')">
+      <img src="assets/img/adds_01.png" height='170'>
+    </ion-slide>
+  </ion-slides>
 
   <ion-grid id="surf">
 
@@ -33,7 +33,7 @@
 
 
       <ion-col (click)="navigateTo('StoresPage')" class="animate">
-        <h4 >متاجر</h4>
+        <h4>متاجر</h4>
         <img src="assets/img/store-icon.png" alt="">
         <ion-icon name="arrow-dropleft-circle"></ion-icon>
       </ion-col>
@@ -47,19 +47,19 @@
     </ion-row>
 
   </ion-grid>
-<!--
-  <button ion-button (click)="showLocalData = !showLocalData">toggle localStorage Data</button>
+  <!--
+    <button ion-button (click)="showLocalData = !showLocalData">toggle localStorage Data</button>
 
-  <p *ngIf="showLocalData" item-left>
-    {{ userLocalData | json }}
-  </p>
+    <p *ngIf="showLocalData" item-left>
+      {{ userLocalData | json }}
+    </p>
 
-  <div id="map"></div>
-  -->
-<!--
-    <button text-center  ion-button (click)="openMaps()">
-      open google maps
-    </button> -->
+    <div id="map"></div>
+    -->
+  <!--
+      <button text-center  ion-button (click)="openMaps()">
+        open google maps
+      </button> -->
 
 </ion-content>
 

@@ -11,7 +11,7 @@ import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
-import {ProductModal } from '../pages/productmodal.ts';
+import {ProductModal } from '../pages/productmodal';
 
 
 import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
@@ -39,6 +39,7 @@ import { Transfer} from '@ionic-native/transfer';
 import { ActionSheet } from '@ionic-native/action-sheet';
 import {changePropDirectiveModule} from "./service/changeprop.directive.module";
 import {MapsModal} from "../pages/mapsmodal";
+import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
 
 
 //import { GenderPipe } from '../pipes/gender/gender';
@@ -71,7 +72,9 @@ import {MapsModal} from "../pages/mapsmodal";
     }),
     HsaloaderComponentModule,
     changePropDirectiveModule,
-    SinceDatePipeModule  ],
+    SinceDatePipeModule,
+    ArabicDatePipeModule
+    ],
 
   bootstrap: [IonicApp],
   entryComponents: [

@@ -1,9 +1,8 @@
-import { DeliveryRequestInfo } from './../deliveryrequestmodal';
+import { DeliveryRequestInfo } from '../deliveryrequestmodal';
 
 import { Component} from '@angular/core';
 import { NavController, NavParams,ModalController, IonicPage, ToastController } from 'ionic-angular';
 import {  IlocalUser } from '../../app/service/interfaces';
-import { ShelfsProvider } from '../../providers/shelfs';
 import { DeliveryProvider } from '../../providers/delivery';
 
 @IonicPage()
@@ -19,7 +18,6 @@ export class DeliverproductsPage {
   netErr: boolean = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private shelfsProvider: ShelfsProvider,
     private deliveryProvider: DeliveryProvider,
     public toastCtrl: ToastController,
     public modal: ModalController
@@ -37,16 +35,16 @@ export class DeliverproductsPage {
       this.getDeliveryRequests(this.userLocal.id);
     }
 
-    
-  
+
+
   }
   showInfo(request, user_id) {
     let modal = this.modal.create(DeliveryRequestInfo, { pageData: request, user_id });
-    
+
     modal.present();
 
   }
-  
+
   getDeliveryRequests(user_id) {
 
 

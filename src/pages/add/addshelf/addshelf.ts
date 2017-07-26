@@ -3,22 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angu
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { ShelfsProvider } from '../../../providers/shelfs';
-import { IlocalUser } from '../../../app/service/inewUserData';
-interface IShelf {
-  'id': number,
-  'user_id': number,
-  name: string,
-  area: string,
-  cost: string
-}
-
-var ArShelfForm;
-(function (ArShelfForm) {
-    ArShelfForm[ArShelfForm["name"] = "رقم الرف"] = "name";
-    ArShelfForm[ArShelfForm["area"] = "مساحة الرف"] = "area";
-    ArShelfForm[ArShelfForm["cost"] = "سعر الرف"] = "cost";
-})(ArShelfForm || (ArShelfForm = {}));
-
+import { IlocalUser, ArShelfForm } from '../../../app/service/interfaces';
 
 @IonicPage()
 @Component({
@@ -41,9 +26,9 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
-      area: new FormControl('',[Validators.pattern('[0-9]+'),Validators.required]),
-      cost: new FormControl('',[Validators.pattern('[0-9]+(\.[0-9]*)?'), Validators.required])
+      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required, Validators.minLength(4)]),
+      area: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'),Validators.required]),
+      cost: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'), Validators.required])
     });
   }
 
@@ -85,23 +70,23 @@ export class AddshelfPage {
 
       this.shelfsProvider.addShelf(shelfForm)
         .subscribe(
-        res => {
+          ({status, errors}) => {
 
-          if (res.status == 'success') {
+          if (status == 'success') {
             this.showToast('تم اضافة الرف بنجاح');
-            
+
             this.navCtrl.pop();
           } else {
-            
-            let errorsKeys = Object.keys(res.errors);
-            let msg = res.errors[errorsKeys[0]][0];
+
+            let errorsKeys = Object.keys(errors);
+            let msg = errors[errorsKeys[0]][0];
             this.showToast(msg);
           }
 
         },
         err => {
           console.warn(err);
-          this.showToast(err);
+          this.showToast('تفقد الاتصال وحاول مجددا');
           this.showLoader = false
         }, () => {
           this.showLoader = false;
@@ -109,7 +94,7 @@ export class AddshelfPage {
         );
 
       } else {
-        
+
         if (this.addShelfForm.dirty) {
           shelfForm['id'] = this.InitData.id;
           this.shelfsProvider.editShelf(shelfForm).subscribe(
@@ -118,7 +103,7 @@ export class AddshelfPage {
 
 
               if (res.status == 'success') {
-                
+
                 this.navCtrl.pop();
               } else {
 
@@ -129,7 +114,7 @@ export class AddshelfPage {
             },
             err => {
               console.warn(err);
-              this.showToast(`مشكلة فى الاتصال الرجاء المحاولة فى وقت لاحق`);
+              this.showToast(`تفقد الاتصال وحاول مجددا`);
               this.showLoader = false
             }
           )
@@ -138,8 +123,8 @@ export class AddshelfPage {
           console.log('no data has been changed');
           this.navCtrl.pop();
         }
-          
-        
+
+
     }
     } else {
       this.detectUnvalidFormErrors();
@@ -151,7 +136,7 @@ export class AddshelfPage {
   detectUnvalidFormErrors(form:FormGroup = this.addShelfForm, formKeys: string[] = Object.keys(form.value) ) {
 
 
-    formKeys.every((value, index)=> {
+    formKeys.every((value)=> {
 
       if(form.get(value).getError('required')) {
 
@@ -163,6 +148,9 @@ export class AddshelfPage {
 
         this.showToast(`${ArShelfForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
 
+        return false;
+      }else if (form.get(value).getError('pattern')){
+        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArShelfForm[value]}`);
         return false;
       }else {
 
