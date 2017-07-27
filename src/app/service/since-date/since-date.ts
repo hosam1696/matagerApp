@@ -37,8 +37,9 @@ export class SinceDatePipe implements PipeTransform {
       if (sinceTime > 0) {
         //console.log(i,sinceTime, this.timeId[i]);
         let [arTime, doubleArTime, lessThanTenTime] = [ArTimeId[this.timeId[i]], ArDTimeId[this.timeId[i]], ArLttTimeId[this.timeId[i]]];
-
-        if (sinceTime == 1)
+        if(sinceTime == 0)
+          return 'الان';
+        else if (sinceTime == 1)
           return ' ' + arTime;
         else if (sinceTime == 2)
           return ' ' + doubleArTime;

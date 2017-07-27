@@ -18,10 +18,11 @@ export class CommentProvider {
         return this.http.post<IPost>(this.API_URL + 'comments.php', body);
     }
 
-    getComments(item_id: number, limit:number, start= 0) {
-        const action = 'getCommments';
+    getComments(itemData, limit:number, start= 0) {
+        const action = 'getComments';
 
-        return this.http.post<IPost>(this.API_URL + 'comments.php', JSON.stringify({action,limit,start, item_id}))
+        let body  = JSON.stringify(Object.assign({action, limit, start}, itemData));
+        return this.http.post<IPost>(this.API_URL + 'comments.php', body)
     }
 
     deleteComment(commentInfo) {

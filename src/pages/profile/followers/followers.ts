@@ -110,6 +110,9 @@ export class FollowersPage {
 
   navigateToProfile(user_id, visited_id) {
     let id = (this.userLocal && this.userLocal.id) ? this.userLocal.id : 0;
-    this.navCtrl.push('VprofilePage', { pageData: [user_id, id] });
+    if (user_id == id) // the user will visit his page
+      this.navCtrl.push('ProfilePage');
+    else
+      this.navCtrl.push('VprofilePage', { pageData: [user_id, id] });
   }
 }

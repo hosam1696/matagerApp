@@ -163,8 +163,10 @@ export class MapsModal {
       console.log('init Map from geolocation resolve', this.initMap);
       (this.initMap) ? this.loadMap(this.initMap.latitude, this.initMap.longitude) :this.loadMap(this.latitude, this.longitude);
 
-    }).catch((err) => {
-      
+    });
+
+    geolocate.catch((err) => {
+
         //alert('no geolocation activated');
         console.warn(err);
         console.log('no location');
@@ -190,7 +192,7 @@ export class MapsModal {
     this.loader = false;
     //this.loader.dismiss();
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    
+
 
     let input = document.getElementById('pac-input');
     let searchBox = new google.maps.places.SearchBox(input);
@@ -264,15 +266,39 @@ export class MapsModal {
       geoloacte.then((res)=>{
         let [lat, lng] = [res.coords.latitude, res.coords.longitude];
         console.log('your location is ', lat,lng);
-        let loc =  {lat, lng}
-        
-        this.addMarker(loc);
-      }).catch((err)=>{
+        let loc =  {lat, lng};
+        /*this.mapLoaded = false;
+        this.loadMap(loc.lat, loc.lng);*/
+        let latLng = new google.maps.LatLng(loc.lat, loc.lng);
+
+        let mapOptions = {
+          center: latLng,
+          zoom: 17,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+        };
+
+        this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+        google.maps.event.addListener(this.map,'click', (event) => {
+          console.log('set maker here');
+          console.log(event);
+
+          console.log('event latLng', event.latLng);
+          this.addMarker(event.latLng);
+        });
+
+        this.addMarker();
+
+
+      });
+
+        geoloacte.catch((err)=>{
         console.log('The GPS is not activated also');
         console.warn(err);
       })
   }
-  
+
   loadMapWithoutplaces(latitude, longitude) {
     let latLng = new google.maps.LatLng(latitude, longitude);
 
@@ -287,7 +313,7 @@ export class MapsModal {
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
     this.addMarker();
-    
+
   }
 
   getUserDataFormIp() {
@@ -303,7 +329,7 @@ export class MapsModal {
           ip: res.ip,
           address: res.city + ' ' + res.country
         };
-        
+
         this.loadMap(this.modalData.latitude, this.modalData.longitude);
 
       });
@@ -317,11 +343,11 @@ export class MapsModal {
       animation: google.maps.Animation.DROP,
       position: (!loc) ? this.map.getCenter() : loc
     });
-    if (loc) {
+    /*if (loc) {
       console.log('new location of the client', loc, loc.lat(), loc.lng());
       this.setNewLoc(this.modalData, loc.lat(), loc.lng());
       this.getAddress(loc.lat(), loc.lng());
-    }
+    }*/
 
 
     google.maps.event.addListener(marker, 'drag', (event) => {
@@ -383,13 +409,13 @@ export class MapsModal {
 
   closeModal(): void {
     this.loader = false;
-    
+
     //this.loader.dismiss();
     this.viewCtrl.dismiss( this.modalData )
   }
   closeModalwithoutSave() {
     this.loader = false;
-    
+
     //this.loader.dismiss();
     this.viewCtrl.dismiss();
   }

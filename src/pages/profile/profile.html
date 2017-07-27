@@ -8,7 +8,7 @@
 <ion-content>
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
-      <img *ngIf="userLocal.cover" [src]="userLocal.cover" alt="user background image">
+      <img *ngIf="userLocal.cover" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.cover" alt="user background image">
       <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
@@ -22,7 +22,7 @@
              <button type="button" class="pick-image" (click)="pickImage('avatar')">
                <ion-icon name="camera-outline"></ion-icon>
               </button>
-              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="userLocal.avatar" alt="">
+              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar" alt="">
               <ng-template #avatarIcon>
                   <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
 

@@ -9,7 +9,7 @@ export interface IProduct {
     item_production_date: string,
     item_images?: string[],
     user_id?:number
-  
+
 }
 
 export interface Iplace {
@@ -179,6 +179,31 @@ export enum ArProductForm {
   item_production_date = 'تاريخ انتاج المنتج',
   item_desc = 'وصف المنتج'
 
+}
+/*'
+
+avatar
+:
+""
+comment_text
+:
+"sadasd"
+date_added
+:
+"2017-07-27 09:19:22"
+gender
+:
+"male"
+name
+:
+"الحسام"
+ */
+export interface IproductComment {
+  avatar: string | any,
+  comment_text:string | any,
+  date_added: any,
+  gender: string | any,
+  name: string
 }
 
 export enum ArShelfForm {

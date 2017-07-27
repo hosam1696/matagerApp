@@ -1,5 +1,5 @@
 page-notification-delevery-req {
-    
+
     ion-content {
 
         &.content {
@@ -36,7 +36,7 @@ page-notification-delevery-req {
           align-items: center;
           //font-weight: bold;
           font-size: 16px;
-          margin-bottom: 0;
+          margin-bottom: 2px;
           color: color($colors, primary);
 
           .since-time {
@@ -71,7 +71,7 @@ page-notification-delevery-req {
         }
 
     }
-      
+
       .msg-small {
             margin-top: 0;
     font-size: 14px !important;
@@ -98,14 +98,14 @@ page-notification-delevery-req {
          * {
            margin: 0 !important;
            color: color($colors, primaryDark);
-         } 
+         }
         }
         ion-item {
 .item-inner {
           border-bottom:0.5px solid color($colors, bgColor) !important
           }
         &.dstatus {
-          
+
           ion-label {
             flex: initial;
             display: block;

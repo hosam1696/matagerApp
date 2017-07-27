@@ -37,95 +37,74 @@
     </section>
 
 
-
     <section id="product">
       <h4> {{ productData['item_name'] }}</h4>
       <p class="price"><span>{{ productData['item_price'] }}</span> ريال</p>
       <p class="description">
         {{productData['item_desc']}}
       </p>
-      <div class="product-date" *ngIf="productData.item_expiry_date=='0000-00-00'&& productData.item_production_date=='0000-00-00'">
-        <p>انتاج: <span class="production-date">{{productData['item_production_date'] }}</span></p>
-        <p>انتهاء: <span class="expire-date">{{productData['item_expiry_date']}}</span></p>
+      <div class="product-date"
+           *ngIf="productData.item_expiry_date!='0000-00-00'&& productData.item_production_date!='0000-00-00'">
+        <p>انتاج: <span
+          class="production-date">{{productData['item_production_date'] | date:'longDate' | arabicdate}}</span></p>
+        <p>انتهاء: <span class="expire-date">{{productData['item_expiry_date'] | date:'longDate' | arabicdate}}</span>
+        </p>
       </div>
 
     </section>
 
     <section id="comments-wrapper">
-      <section id="add-comment">
-        <textarea #commentInput class="add-input"></textarea>
+      <ion-item-divider color="bgColor">
+        <div class="product-states">
+          <p>
+            الاراء
+            <span class="reviews"> (5) </span>
+          </p>
+          <p>
+            الاعجابات
+            <span class="likes">(15)</span>
+          </p>
+
+        </div>
+      </ion-item-divider>
+
+      <p text-center class="small" *ngIf="NoComments">
+        لا يوجد اراء
+      </p>
+
+
+      <ion-list>
+        <ion-item *ngFor="let comment of AllComments">
+          <ion-avatar item-left>
+            <img [src]="(comment.avatar)?'link'+comment.avatar:'assets/img/male-alt.png'" alt="male">
+          </ion-avatar>
+          <div class="message-sender">
+            <h4>{{comment.name}}</h4>
+            <div class="message-et">
+              <ion-icon name="timer-outline"></ion-icon>
+              منذ
+              <span>{{comment.date_added | sincedate}}</span>
+            </div>
+          </div>
+          <p>{{comment.comment_text}}</p>
+        </ion-item>
+
+      </ion-list>
+
+      <section [hidden]="!showAddComment" id="add-comment">
+        <textarea #commentInput (input)="watchHeight($event)" class="add-input"></textarea>
         <button type="button" ion-button (click)="addComment(commentInput.value)">اضف تعليق</button>
       </section>
-      <ion-list>
 
-        <ion-item-divider>
-          <div class="product-states">
-            <p>
-              الاراء
-              <span class="reviews"> (5) </span>
-            </p>
-            <p>
-              الاعجابات
-              <span class="likes">(15)</span>
-            </p>
 
-          </div>
-        </ion-item-divider>
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="assets/img/male-alt.png" alt="male">
-          </ion-avatar>
-          <div class="message-sender">
-            <h4>محمد أحمد</h4>
-            <div class="message-et">
-              <ion-icon name="timer-outline"></ion-icon>
-              منذ
-              <span>يومان</span>
-            </div>
-          </div>
-          <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-        </ion-item>
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="assets/img/male-alt.png" alt="male">
-          </ion-avatar>
-          <div class="message-sender">
-            <h4>محمد أحمد</h4>
-            <div class="message-et">
-              <ion-icon name="timer-outline"></ion-icon>
-              منذ
-              <span>يومان</span>
-            </div>
-          </div>
-          <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-        </ion-item>
 
-        <ion-item>
-          <ion-avatar item-left>
-            <img src="assets/img/female-alt.png" alt="female">
-          </ion-avatar>
-          <div class="message-sender">
-
-            <h4>محمد أحمد</h4>
-
-            <div class="message-et">
-              <ion-icon name="timer-outline">
-
-              </ion-icon>
-              منذ
-              <span>يومان</span>
-            </div>
-          </div>
-          <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-        </ion-item>
-      </ion-list>
       <div class="float-buttons">
-        <button ion-button clear>
-      <ion-icon name="heart-outline"></ion-icon>
-    </button>
-        <button ion-button clear>
-      <ion-icon name="chatbubbles-outline"></ion-icon>
-    </button>
+        <button ion-button clear (click)="likeProduct()">
+          <ion-icon name="heart-outline"></ion-icon>
+        </button>
+        <button ion-button clear (click)="commentProduct()">
+          <ion-icon name="chatbubbles-outline"></ion-icon>
+        </button>
       </div>
       <div class="margin-div"></div>
 

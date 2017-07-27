@@ -28,11 +28,14 @@ export class BarcodePage {
     let scanBarcode = this.barcodeScanner.scan(scanOptions);
 
     console.log(scanBarcode);
+
     scanBarcode.then((barcodeData) => {
       console.log(barcodeData);
       this.showData = true;
       this.BarcodeResult.push( barcodeData );
-    }).catch(err => {
+    });
+
+    scanBarcode.catch(err => {
       console.log(err)
     });
   }

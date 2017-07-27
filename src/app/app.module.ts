@@ -1,3 +1,6 @@
+
+// Default image path on server => http://rfapp.net/templates/default/uploads/users/
+
 import { CommentProvider } from './../providers/comments';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,6 +13,8 @@ import { MomentModule } from 'angular2-moment';
 import { MyApp } from './app.component';
 import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
+
+
 import { PlacesModal } from '../pages/filtermodal';
 import { ChooseArea } from '../pages/chooselocmodal';
 import {ProductModal } from '../pages/productmodal';

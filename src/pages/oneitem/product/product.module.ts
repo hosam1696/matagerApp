@@ -2,6 +2,8 @@ import { HsaloaderComponentModule } from './../../../components/hsa-loader/hsa-l
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ProductPage } from './product';
+import {SinceDatePipeModule} from "../../../app/service/since-date/since-date.module";
+import {ArabicDatePipeModule} from "../../../app/service/arabic-date/arabic-date.module";
 
 @NgModule({
   declarations: [
@@ -9,7 +11,9 @@ import { ProductPage } from './product';
   ],
   imports: [
     IonicPageModule.forChild(ProductPage),
-    HsaloaderComponentModule
+    HsaloaderComponentModule,
+    SinceDatePipeModule,
+    ArabicDatePipeModule
   ],
   exports: [
     ProductPage

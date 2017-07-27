@@ -179,13 +179,13 @@ export class ProfilePage {
       extension = extIndex.match(/\w+/)[0];*/
 
       window.alert(imageData+"  && "+ extension);
-      
 
-      
+
+
       return Promise.resolve([imageData, extension, cameraImage])
 
     }).then(data => {
-      
+
       this.uploadImage(data[0], data[1], data[2]);
 
     }).catch(err => {
@@ -209,13 +209,13 @@ export class ProfilePage {
     let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + filePath + "&ImgName=" + fileName + "&userId=" + this.userLocal.id + "&type=" + ((cameraImage == 'avatar') ? 'avatars' : 'covers');
 
     console.log('file uri',file,'server file & path', serverFile, 'file name', fileName);
+let ftUpload = fto.upload(file, serverFile, uploadOptions);
 
-    fto.upload(file, serverFile, uploadOptions)
-      .then(res=> {
+    ftUpload.then(res=> {
         console.log('uploaded', res);
         return Promise.resolve('uploaded')
-      })
-      .then(res => {
+      });
+    ftUpload.then(res => {
         console.log('upload status', res);
       })
       .catch(err=> {
