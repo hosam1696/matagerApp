@@ -1,6 +1,6 @@
 import { UserProvider } from './../providers/user';
 import { Component, ViewChild, ElementRef } from "@angular/core";
-import { NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { NavParams, ViewController, LoadingController, Events } from 'ionic-angular';
 import { Geolocation} from '@ionic-native/geolocation';
 import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult} from "@ionic-native/native-geocoder";
 import {IlocalUser} from "../app/service/InewUserData";
@@ -15,10 +15,10 @@ declare let google;
 
       <ion-navbar color="primary">
         <ion-title>تحديد المكان</ion-title>
-        <ion-buttons end>
+        <ion-buttons start>
           <button ion-button (click)="myCurrentLoc()"  class="small"> موقعى&nbsp;<ion-icon name="pin"></ion-icon> </button>
         </ion-buttons> 
-        <ion-buttons start>
+        <ion-buttons end>
           <button ion-button class="close-btn" (click)="closeModalwithoutSave()">
             <ion-icon name="md-close-circle" color="light">
             </ion-icon>
@@ -33,7 +33,11 @@ declare let google;
 
 
     <ion-content>
-
+<!--*ngIf="loader"-->
+      <p text-center *ngIf="loader" class="center-loader">
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+        &nbsp; تحميل...
+      </p>
       
       <div #map id="map" style="height:100%;"></div>
 
@@ -43,6 +47,13 @@ declare let google;
 
   `,
   styles: [`
+
+  .center-loader {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+  }
   #pac-input {
         z-index: 0;
     position: absolute;
@@ -88,7 +99,7 @@ export class MapsModal {
   longitude: any;
   map: any;
   markers = [];
-  loader: any;
+  loader: any = true;
   constructor(params:NavParams,
               public viewCtrl:ViewController,
               public geolocation: Geolocation,
@@ -100,28 +111,28 @@ export class MapsModal {
     console.log('params',params.get('pageData'));
 
     this.initMap = params.get('pageData');
-
+    console.log('init Map',this.initMap);
   }
 
 
 
   ionViewDidLoad() {
 
-    this.getAddress(30.078462054468716,30.078462054468716);
+    //this.getAddress(30.078462054468716,30.078462054468716);
 
     //this.getUserDataFormIp();
-    this.loader = this.loadingCtrl.create({
+    /*this.loader = this.loadingCtrl.create({
       content: '&nbsp;&nbsp;تحميل ..&nbsp;',
       spinner: 'crescent'
     });
 
-    this.loader.present();
+    this.loader.present(); */
 
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
     if (this.userLocal) {
       this.user = JSON.parse(localStorage.getItem('userLocalData'))['username'];
-      this.userMap = JSON.parse(localStorage.getItem('userLocalData'))['map'];
+      //this.userMap = JSON.parse(localStorage.getItem('userLocalData'))['map'];
       console.log(this.user, this.userMap);
 
       //this.getAddress(this.userMap.split(',')[0],this.userMap.split(',')[1] );
@@ -149,13 +160,15 @@ export class MapsModal {
 
       [this.latitude, this.longitude] = [res.coords.latitude, res.coords.longitude];
       this.setNewLoc(this.modalData, this.latitude, this.longitude);
+      console.log('init Map from geolocation resolve', this.initMap);
       (this.initMap) ? this.loadMap(this.initMap.latitude, this.initMap.longitude) :this.loadMap(this.latitude, this.longitude);
 
-    })
-      .catch((err) => {
-
+    }).catch((err) => {
+      
+        //alert('no geolocation activated');
         console.warn(err);
         console.log('no location');
+        console.log('init Map from geolocation catch', this.initMap);
 
         (this.initMap) ? this.loadMap(this.initMap.latitude, this.initMap.longitude) : this.getUserDataFormIp();
       });
@@ -165,8 +178,7 @@ export class MapsModal {
     if (!latitude && !longitude) {
       [latitude, longitude] = [(this.userLocal.latitude) ? this.userLocal.latitude : this.modalData.latitude, (this.userLocal.longitude) ? this.userLocal.longitude : this.modalData.longitude];
     }
-
-    this.mapLoaded = true;
+    this.getAddress(latitude, longitude); // geocoding the location address
     let latLng = new google.maps.LatLng(latitude, longitude);
 
     let mapOptions = {
@@ -175,12 +187,15 @@ export class MapsModal {
       mapTypeId: google.maps.MapTypeId.ROADMAP,
 
     };
-    this.loader.dismiss();
+    this.loader = false;
+    //this.loader.dismiss();
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    
 
     let input = document.getElementById('pac-input');
     let searchBox = new google.maps.places.SearchBox(input);
     this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    this.mapLoaded = true;
     this.map.addListener('bounds_changed', function () {
       //searchBox.setBounds(this.map.getBounds());
     });
@@ -204,12 +219,12 @@ export class MapsModal {
         }
 
         // Create a marker for each place.
-        this.markers.push(new google.maps.Marker({
+        /*this.markers.push(new google.maps.Marker({
           map: this.map,
           title: place.name,
           position: place.geometry.location
         }));
-
+        */
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
           bounds.union(place.geometry.viewport);
@@ -249,19 +264,30 @@ export class MapsModal {
       geoloacte.then((res)=>{
         let [lat, lng] = [res.coords.latitude, res.coords.longitude];
         console.log('your location is ', lat,lng);
-        let loc = {
-          lat() {
-            return lat
-          },
-          lng() {
-            return lng;
-          }
-        };
+        let loc =  {lat, lng}
+        
         this.addMarker(loc);
       }).catch((err)=>{
         console.log('The GPS is not activated also');
         console.warn(err);
       })
+  }
+  
+  loadMapWithoutplaces(latitude, longitude) {
+    let latLng = new google.maps.LatLng(latitude, longitude);
+
+    let mapOptions = {
+      center: latLng,
+      zoom: 17,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+
+    };
+    this.loader = false;
+    //this.loader.dismiss();
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+
+    this.addMarker();
+    
   }
 
   getUserDataFormIp() {
@@ -277,6 +303,7 @@ export class MapsModal {
           ip: res.ip,
           address: res.city + ' ' + res.country
         };
+        
         this.loadMap(this.modalData.latitude, this.modalData.longitude);
 
       });
@@ -325,7 +352,8 @@ export class MapsModal {
     this.http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&key=AIzaSyBL9-cIsQpwffcZ5NCHEuHilTG_7sEhSXg').pluck('results')
       .subscribe(result=>{
         console.log('response from geocoding', result[0].formatted_address);
-          this.modalData.address = result[0].formatted_address;
+        this.modalData.address = result[0].formatted_address;
+
       },
         err=> {
         console.warn(err);
@@ -354,9 +382,15 @@ export class MapsModal {
   }
 
   closeModal(): void {
+    this.loader = false;
+    
+    //this.loader.dismiss();
     this.viewCtrl.dismiss( this.modalData )
   }
   closeModalwithoutSave() {
+    this.loader = false;
+    
+    //this.loader.dismiss();
     this.viewCtrl.dismiss();
   }
 }

@@ -76,5 +76,10 @@ export interface Ishelf {
   name: string,
   user_id: number,
   data_added?: Date,
-  data_modified?: Date
+  data_modified?: Date,
+  shelf_status?: number,
+  start_date?: any,
+  end_date?: any,
+  shelf_name?: string,
+  matger_id?:number
 }

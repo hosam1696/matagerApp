@@ -49,7 +49,7 @@
         <div class="message-sender">
           <h4>{{ notification.name || 'محمد النبوى' }}</h4>
           <div class="message-et" [ngClass]="{'unread': notification.status == 0}">
-            <ion-icon name="timer-outline"></ion-icon>
+            <ion-icon name="time-outline"></ion-icon>
             منذ
             <span>{{notification.date_added | sincedate}}</span>
           </div>

@@ -94,6 +94,7 @@
           المكان على الخريطة
           </button>
         </div>
+        <span class="small-height" *ngIf="userLocal.level_id == 4">&nbsp;</span>
         <div id="page-segments" padding *ngIf="userLocal&&userLocal.level_id != 4">
           <ion-segment [(ngModel)]="showContent">
 
@@ -212,10 +213,10 @@
 
         <p>
           <span>
-         <span class="prim">بداية الحجز :</span> {{request.start_date | date}}
+         <span class="prim">بداية الحجز :</span> {{request.start_date | date:'longDate' | arabicdate}}
           </span>
           <span>
-        <span class="prim">نهاية الحجز :</span> {{request.end_date | date}}
+        <span class="prim">نهاية الحجز :</span> {{request.end_date | date:'longDate'|arabicdate}}
           </span>
         </p>
       </ion-item>
@@ -233,7 +234,7 @@
 
   </ion-card>
 
-  <ion-card *ngIf="showContent == 'products' && userLocal" class="show-card products-card">
+  <ion-card *ngIf="showContent == 'products' && userLocal " class="show-card products-card">
 
     <!--
     <ion-grid padding-horizontal>
@@ -288,7 +289,7 @@
     </p>
 
     <!-- list for stores delivered products-->
-    <ion-grid padding-horizontal>
+    <ion-grid padding-horizontal *ngIf="ItemsDelivered">
       <ion-row *ngFor="let products of ItemsDelivered">
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
@@ -310,7 +311,7 @@
     </ion-grid>
 
     <!-- list for exporter products -->
-    <ion-grid padding-horizontal>
+    <ion-grid padding-horizontal *ngIf="AllProducts">
       <ion-row *ngFor="let products of AllProducts">
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">

@@ -362,7 +362,7 @@ page-vprofile {
       }
 
       #profile-buttons {
-        margin: 10px 0;
+        margin: 10px 0 0;
         @extend %flex-between;
         button {
           ion-icon {
@@ -372,7 +372,7 @@ page-vprofile {
       }
       #profile-follow {
         @extend %flex-between;
-        margin: 0 auto 7px !important;
+        margin: -2px auto 12px !important;
         padding: 0 13px;
         font-size: 13px;
         a {

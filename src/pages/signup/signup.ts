@@ -77,8 +77,8 @@ export class Signup implements AfterViewInit{
   }
   constructSignForm() {
     this.SignUpFrom = this.fb.group({
-      username: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(4)]),
       InsurePassword: new FormControl('', [Validators.required, this.insurePass]),
       name: new FormControl('', [Validators.required, Validators.minLength(5)]),
       email: new FormControl('', Validators.required),
@@ -165,8 +165,8 @@ export class Signup implements AfterViewInit{
       [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
       console.log('store');
           this.SignUpFrom = this.fb.group({
-          username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(5)]),
-          password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(8)]),
+          username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+          password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
           InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
           name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
           email: new FormControl(this.SignUpFrom.value.email, Validators.required),
@@ -188,8 +188,8 @@ export class Signup implements AfterViewInit{
       [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
       console.log('exporter');
       this.SignUpFrom = this.fb.group({
-        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(5)]),
-        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(8)]),
+        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
@@ -211,8 +211,8 @@ export class Signup implements AfterViewInit{
       [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
 
       this.SignUpFrom = this.fb.group({
-        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(4)]),
-        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(8)]),
+        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
         InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
         name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
         email: new FormControl(this.SignUpFrom.value.email, Validators.required),
@@ -376,7 +376,7 @@ export class Signup implements AfterViewInit{
     }
     let modal = this.modalCrtl.create(MapsModal, {pageData});
     modal.onDidDismiss((data) => {
-
+      console.log('data from modal', data);
       if (data&&data.latitude && data.longitude) {
         console.log(data);
         this.SignUpFrom.get('latitude').setValue(data.latitude);

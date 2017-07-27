@@ -1,3 +1,4 @@
+import { MapsModal } from './../mapsmodal';
 import { Component } from '@angular/core';
 import { NavController, ToastController, IonicPage, Config, ModalController } from 'ionic-angular';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
@@ -22,6 +23,7 @@ export class HomePage {
      public toastCont: ToastController,
      public push: Push,
      public config: Config,
+     public modalCrtl: ModalController
   ) {
 
   }
@@ -34,25 +36,17 @@ export class HomePage {
 
 
    /* Get the current location if user activates the location */
-    this.geolocation.getCurrentPosition()
+ /*   this.geolocation.getCurrentPosition()
       .then((res)=>{
       let coords = res.coords.latitude+','+res.coords.longitude;
       console.log(`User Location: ${coords}`);
         localStorage.setItem('currentLocation', coords);
-
-      /*
-      if (this.userLocalData) {
-        this.userLocalData.map = coords;
-        localStorage.setItem('userLocalData', JSON.stringify(this.userLocalData)) ;
-      } else {
-        console.warn('No user had signed in or the user didn\'t allow geolocation ')
-      }
-      */
     }).catch(err=> {
       console.warn(err);
+      console.log('geolocation didn\'t get current location');
     });
 
-
+*/
     let pushOptios: PushOptions = {
       android: {
         senderID: '12345679'
@@ -123,6 +117,30 @@ export class HomePage {
   console.log('You have to go to ' + addsLink);
 
   //this.navCtrl.push(link)
+  }
+
+  openMaps() {
+    let pageData: any = null;
+    /*if (this.SignUpFrom.get('latitude').value && this.SignUpFrom.get('latitude').value) {
+
+      pageData = { latitude: this.SignUpFrom.get('latitude').value, longitude: this.SignUpFrom.get('longitude').value };
+    }*/
+    let modal = this.modalCrtl.create(MapsModal, { pageData });
+    modal.onDidDismiss((data) => {
+      console.log('data from modal', data);
+      if (data && data.latitude && data.longitude) {
+        console.log(data);
+        /*this.SignUpFrom.get('latitude').setValue(data.latitude);
+        this.SignUpFrom.get('longitude').setValue(data.longitude);
+        if (data.address)
+          this.locationOnMap = data.address;
+
+  */        //this.SignUpFrom.get('latitude').setValue(data.latitude);
+        //this.loactionOnMap = 'تم تحديد الموقع'
+      }
+
+    });
+    modal.present();
   }
 
 }

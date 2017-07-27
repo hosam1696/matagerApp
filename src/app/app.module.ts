@@ -1,3 +1,4 @@
+import { CommentProvider } from './../providers/comments';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
@@ -98,6 +99,7 @@ import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
     AreaProvider,
     ShelfsProvider,
     DeliveryProvider,
+    CommentProvider,
     NotificationsProvider,
     ImagePicker,
     NativeGeocoder,

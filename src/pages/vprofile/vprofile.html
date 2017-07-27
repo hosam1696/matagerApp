@@ -217,7 +217,7 @@
       التطبيق يتطلب اتصال بالانترنت
     </p>
     <p text-center *ngIf="noShelfs" class="small">
-      لا يوجد رفوف لعرضها حتى الان
+      لا يوجد رفوف 
     </p>
     <ion-list>
 
@@ -231,7 +231,7 @@
           <div class="reserved">
             <span *ngIf="shelf.shelf_status == 0">غير محجوز</span>
             <ion-badge *ngIf="shelf.shelf_status == 1">
-               محجوز حتى {{shelf.end_date | date:'longDate'}}</ion-badge>
+               محجوز حتى {{shelf.end_date | date:'longDate'|arabicdate}}</ion-badge>
           </div>
 
 

@@ -4,9 +4,12 @@ export interface IProduct {
     item_name: string,
     item_desc: string,
     item_expiry_date: string,
-    item_image: string,
+    item_image?: string,
     item_price: string,
-    item_production_date: string
+    item_production_date: string,
+    item_images?: string[],
+    user_id?:number
+  
 }
 
 export interface Iplace {

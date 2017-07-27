@@ -26,7 +26,7 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required, Validators.minLength(4)]),
+      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
       area: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'),Validators.required]),
       cost: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'), Validators.required])
     });

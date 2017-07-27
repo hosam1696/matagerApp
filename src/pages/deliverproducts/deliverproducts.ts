@@ -44,8 +44,10 @@ export class DeliverproductsPage {
     modal.present();
 
   }
-
-  getDeliveryRequests(user_id) {
+  refresh(event) {
+    this.getDeliveryRequests(this.userLocal.id, event);
+  }
+  getDeliveryRequests(user_id, event?:any) {
 
 
     this.deliveryProvider.getDeliveryRequests({ user_id })
@@ -54,12 +56,15 @@ export class DeliverproductsPage {
           this.AllRequests = data
         } else {
           this.noRequests = true;
+          event && event.dismiss();
           console.warn(errors);
         }
       },
       err => {
         console.warn(err);
+
         [this.noRequests, this.showLoader] = [true, false];
+        event && event.dismiss();
       },
       () => {
         this.showLoader = false;

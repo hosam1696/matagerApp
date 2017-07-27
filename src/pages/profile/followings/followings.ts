@@ -109,7 +109,8 @@ export class FollowingsPage {
   }
 
   navigateToProfile(user_id) {
-    this.navCtrl.push('VprofilePage', { userData: [user_id, this.userLocal.id] });
+    let id = (this.userLocal && this.userLocal.id) ? this.userLocal.id : 0;
+    this.navCtrl.push('VprofilePage', { pageData: [user_id, id] });
   }
 
 

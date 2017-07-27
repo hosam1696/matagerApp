@@ -33,12 +33,18 @@
                 <span *ngIf="modalInfo.shelf_status == 0 || modalInfo.shelf_status == 2">غير محجوز</span>
                 <span *ngIf="modalInfo.shelf_status == 1"> 
                   محجوز حتى
-                  {{modalInfo.end_date | date:'longDate'}}
+                  {{modalInfo.end_date | date:'longDate'|arabicdate}}
                 </span>
             </p>
         </ion-item>
+        <ion-item *ngIf="userLocal&&userLocal.id == modalInfo.user_id">
+            تاريخ اضافة الرف
+            <p>
+                {{modalInfo.date_added | date:'longDate'|arabicdate}} 
+            </p>
+        </ion-item>
     </ion-list>
-    <form [formGroup]="reserveShelfForm" novalidate (ngSubmit)="submitForm(reserveShelfForm)">
+    <form *ngIf="userLocal.level_id == 3" [formGroup]="reserveShelfForm" novalidate (ngSubmit)="submitForm(reserveShelfForm)">
         
         <ion-list >
 

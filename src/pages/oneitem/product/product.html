@@ -35,95 +35,101 @@
         </ion-slide>
       </ion-slides>
     </section>
+
+
+
     <section id="product">
       <h4> {{ productData['item_name'] }}</h4>
       <p class="price"><span>{{ productData['item_price'] }}</span> ريال</p>
       <p class="description">
         {{productData['item_desc']}}
-
-        <!--مجموعة متنوعة من الهواتف الذكية لماركة سامسونج وبأسعار وتخفيضات هائلة وعروض مميزة بادر بالحجز وتواصل معنا للحصول على الهاتف-->
       </p>
-      <div class="product-date">
+      <div class="product-date" *ngIf="productData.item_expiry_date=='0000-00-00'&& productData.item_production_date=='0000-00-00'">
         <p>انتاج: <span class="production-date">{{productData['item_production_date'] }}</span></p>
         <p>انتهاء: <span class="expire-date">{{productData['item_expiry_date']}}</span></p>
       </div>
 
     </section>
 
-    <ion-list>
+    <section id="comments-wrapper">
+      <section id="add-comment">
+        <textarea #commentInput class="add-input"></textarea>
+        <button type="button" ion-button (click)="addComment(commentInput.value)">اضف تعليق</button>
+      </section>
+      <ion-list>
 
-      <ion-item-divider>
-        <div class="product-states">
-          <p>
-            الاراء
-            <span class="reviews"> (5) </span>
-          </p>
-          <p>
-            الاعجابات
-            <span class="likes">(15)</span>
-          </p>
+        <ion-item-divider>
+          <div class="product-states">
+            <p>
+              الاراء
+              <span class="reviews"> (5) </span>
+            </p>
+            <p>
+              الاعجابات
+              <span class="likes">(15)</span>
+            </p>
 
-        </div>
-      </ion-item-divider>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/male-alt.png" alt="male">
-        </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
-            <ion-icon name="timer-outline"></ion-icon>
-            منذ
-            <span>يومان</span>
           </div>
-        </div>
-        <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-      </ion-item>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/male-alt.png" alt="male">
-        </ion-avatar>
-        <div class="message-sender">
-          <h4>محمد أحمد</h4>
-          <div class="message-et">
-            <ion-icon name="timer-outline"></ion-icon>
-            منذ
-            <span>يومان</span>
+        </ion-item-divider>
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="assets/img/male-alt.png" alt="male">
+          </ion-avatar>
+          <div class="message-sender">
+            <h4>محمد أحمد</h4>
+            <div class="message-et">
+              <ion-icon name="timer-outline"></ion-icon>
+              منذ
+              <span>يومان</span>
+            </div>
           </div>
-        </div>
-        <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-      </ion-item>
-
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="assets/img/female-alt.png" alt="female">
-        </ion-avatar>
-        <div class="message-sender">
-
-          <h4>محمد أحمد</h4>
-
-          <div class="message-et">
-            <ion-icon name="timer-outline">
-
-            </ion-icon>
-            منذ
-            <span>يومان</span>
+          <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+        </ion-item>
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="assets/img/male-alt.png" alt="male">
+          </ion-avatar>
+          <div class="message-sender">
+            <h4>محمد أحمد</h4>
+            <div class="message-et">
+              <ion-icon name="timer-outline"></ion-icon>
+              منذ
+              <span>يومان</span>
+            </div>
           </div>
-        </div>
-        <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
-      </ion-item>
-    </ion-list>
-    <div class="float-buttons">
-      <button ion-button clear>
+          <p> بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+        </ion-item>
+
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="assets/img/female-alt.png" alt="female">
+          </ion-avatar>
+          <div class="message-sender">
+
+            <h4>محمد أحمد</h4>
+
+            <div class="message-et">
+              <ion-icon name="timer-outline">
+
+              </ion-icon>
+              منذ
+              <span>يومان</span>
+            </div>
+          </div>
+          <p>بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة</p>
+        </ion-item>
+      </ion-list>
+      <div class="float-buttons">
+        <button ion-button clear>
       <ion-icon name="heart-outline"></ion-icon>
     </button>
-      <button ion-button clear>
+        <button ion-button clear>
       <ion-icon name="chatbubbles-outline"></ion-icon>
     </button>
-      <button ion-button clear>
-      <ion-icon name="card-outline"></ion-icon>
-    </button>
-    </div>
-    <div class="margin-div"></div>
+      </div>
+      <div class="margin-div"></div>
+
+    </section>
+
   </section>
 </ion-content>

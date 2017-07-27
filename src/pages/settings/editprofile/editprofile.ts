@@ -23,7 +23,7 @@ export class Editprofile {
   password: FormControl = new FormControl('');
   mobilecc: any ;
   mobilenum: any;
-  loactionOnMap: string = 'Salah Salem Road, Tanamel Ash sharq alwahat, Cairo';
+  loactionOnMap: string = 'اضغط للتحديد';
   constructor(public fb: FormBuilder,
               public navCtrl: NavController,
               public navParams: NavParams,
@@ -40,7 +40,7 @@ export class Editprofile {
 
     this.EditUserForm =fb.group( {
       name:  [ this.localUser.name, Validators.compose([Validators.required])],
-      username: [this.localUser.username, Validators.compose([Validators.required,Validators.minLength(5)])],
+      username: [this.localUser.username, Validators.compose([Validators.required,Validators.minLength(3)])],
       password: [''],
       InsurePassword: [],
 
@@ -255,7 +255,7 @@ console.log(form, form.valid);
       this.hidepass = true;
       this.EditUserForm = this.fb.group({
         name: [this.EditUserForm.get('name').value],
-        username: [this.EditUserForm.get('username').value, Validators.minLength(5)],
+        username: [this.EditUserForm.get('username').value, Validators.minLength(3)],
         password: [this.EditUserForm.get('password').value],
         InsurePassword: [''],
 
@@ -275,8 +275,8 @@ console.log(form, form.valid);
 
       this.EditUserForm = this.fb.group( {
       name: [this.EditUserForm.get('name').value],
-      username: [ this.EditUserForm.get('username').value, Validators.minLength( 5 ) ],
-      password: [this.EditUserForm.get('password').value, Validators.compose([Validators.required, Validators.minLength(8)])],
+      username: [ this.EditUserForm.get('username').value, Validators.minLength( 3 ) ],
+      password: [this.EditUserForm.get('password').value, Validators.compose([Validators.required, Validators.minLength(4)])],
       InsurePassword: ['', Validators.compose([this.insurePass, Validators.required])],
 
       email: [ this.EditUserForm.get('email').value],

@@ -1,7 +1,7 @@
 import { DeliveryProvider } from './../../providers/delivery';
 import { Component,Inject,Renderer2 } from '@angular/core';
 import { NavController, IonicPage, AlertController, AlertOptions, PopoverController ,ActionSheetController, ToastController, ModalController } from 'ionic-angular';
-import {IlocalUser, levelToAr, Ishelf} from '../../app/service/InewUserData';
+import {IlocalUser, Ishelf} from '../../app/service/InewUserData';
 import {IProduct} from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { ItemProvider } from '../../providers/item';
@@ -22,17 +22,17 @@ import {InAppBrowser} from '@ionic-native/in-app-browser'
 export class ProfilePage {
   userLocal: IlocalUser;
   showContent: string = 'products';
-  AllShelfs :Ishelf[]| any = [];
+  AllShelfs :Ishelf[]| null = null;
   noShelfs:string;
   noProducts: string;
-  AllProducts: IProduct[] = [];
+  AllProducts: IProduct[] | null = null;
   alertOptions: AlertOptions;
   showLoader: boolean = false;
   userLevelId: number;
   showSettings: boolean = false;
   cameraError: any;
   netErr:boolean = false;
-  ItemsDelivered: any;
+  ItemsDelivered: any| null = null;
   noAcceptedItems: boolean = false;
   constructor(
     @Inject('API_URL') private API_URL,
@@ -56,11 +56,6 @@ export class ProfilePage {
 
   ionViewDidLoad() {
     this.ionViewWillEnter();
-
-
-
-
-
   }
 
   ionViewWillEnter(): void {
@@ -145,6 +140,11 @@ export class ProfilePage {
    // popOver.present();
   }
 
+  ionViewWillLeave() {
+    console.log('profile leaves');
+    this.AllProducts = null;
+    this.AllShelfs = null;
+  }
   popSettings() {
     const popOver = this.popover.create('popped up');
 
@@ -167,28 +167,28 @@ export class ProfilePage {
 
 
     this.camera.getPicture(cameraOptions).then(imageData => {
-      console.log(imageData);
+
+      console.log('line 171 on promise resolve function', imageData);
       // detect image extension
-      let extension:string = 'jpg';
+      let extension: string = imageData.substring(imageData.lastIndexOf('.') + 1, imageData.lastIndexOf('?') != -1 ? imageData.lastIndexOf('?') : imageData.length);
 
-      let extIndex = imageData.lastIndexOf('.');
+      console.log('file extension', extension);
 
-      extension = extIndex.match(/\w+/)[0];
+      /*let extIndex = imageData.lastIndexOf('.');
 
-      this.uploadImage(imageData, extension, cameraImage)
+      extension = extIndex.match(/\w+/)[0];*/
 
-      //(2) save to the database
-      /* if the camera destination type: data url
+      window.alert(imageData+"  && "+ extension);
+      
 
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.userLocal[cameraImage] = base64Image;
-      console.log(base64Image);
-      // (1) save to the local storage
-        localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
-      */
+      
+      return Promise.resolve([imageData, extension, cameraImage])
 
+    }).then(data => {
+      
+      this.uploadImage(data[0], data[1], data[2]);
 
-      }).catch(err => {
+    }).catch(err => {
 
         console.error('getPicture Error ', err);
         this.cameraError = err;
@@ -197,25 +197,29 @@ export class ProfilePage {
 
   uploadImage(file, type, cameraImage) {
 
+    const fto: TransferObject = this.transfer.create();
+    let fileName = file.split('/').pop();
     const uploadOptions: FileUploadOptions = {
       fileKey: 'file',
-      fileName: file
-
+      fileName: fileName
     }
 
-    const fto: TransferObject = this.transfer.create();
-    let filePath = this.API_URL + '/templates/default/uploads/' + (cameraImage == 'avatar')?'avatars': 'covers';
+    let filePath = 'templates/default/uploads'  ;
 
-    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + filePath + "&userId=" + this.userLocal.id + "&type=" + type;
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + filePath + "&ImgName=" + fileName + "&userId=" + this.userLocal.id + "&type=" + ((cameraImage == 'avatar') ? 'avatars' : 'covers');
 
-    console.log('server file & path', serverFile);
+    console.log('file uri',file,'server file & path', serverFile, 'file name', fileName);
 
-    fto.upload(serverFile, file, uploadOptions)
+    fto.upload(file, serverFile, uploadOptions)
       .then(res=> {
-        console.log(res);
+        console.log('uploaded', res);
+        return Promise.resolve('uploaded')
+      })
+      .then(res => {
+        console.log('upload status', res);
       })
       .catch(err=> {
-        console.warn(err);
+        console.warn('uploAD ERROR',err);
       });
 
 
@@ -494,13 +498,10 @@ export class ProfilePage {
 
   }
 
-  /*userLevel(level:number):string {
-    return levelToAr[level]
-  }
 
   limitString(str:string) {
     return (str.length > 55)? str.slice(0,50)+ '.....': str;
-  }*/
+  }
 
   showToast(msg) {
     let toast = this.toastCtrl.create({
