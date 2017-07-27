@@ -4,7 +4,8 @@
 import { CommentProvider } from './../providers/comments';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http';
+// if i upgrade to angular 4.3 import { HttpClientModule} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 
@@ -65,7 +66,8 @@ import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
+    HttpModule,
+    //HttpClientModule,
     MomentModule,
     ReactiveFormsModule,
     IonicModule.forRoot(MyApp, {
@@ -93,13 +95,13 @@ import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
     DeliveryRequestInfo,
     PopSettings
   ],
-  providers: [
+  providers: [  
     StatusBar,
     SplashScreen,
     UserProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
-    Network,
+    Network,    
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,

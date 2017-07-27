@@ -1,11 +1,12 @@
+import { Http } from '@angular/http';
 import {Inject, Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { IPost } from '../app/service/interfaces';
 @Injectable()
 
 export class ItemProvider {
 
-  constructor(@Inject('API_URL') public API_URL, public http:HttpClient) {
+  constructor(@Inject('API_URL') public API_URL, public http:Http) {
 
   }
 
@@ -15,7 +16,7 @@ export class ItemProvider {
 
     const body = Object.assign({}, { action },itemData );
 
-    return this.http.post<IPost>(this.API_URL+'items.php', JSON.stringify(body));
+    return this.http.post(this.API_URL+'items.php', JSON.stringify(body)).map(res=>res.json());
   }
 
   editProduct(itemData) {
@@ -26,7 +27,7 @@ export class ItemProvider {
 
     console.log('data will be sent to the database', body);
     
-    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
+    return this.http.post(this.API_URL + 'items.php', JSON.stringify(body)).map(res=>res.json());
 
   }
 
@@ -36,7 +37,7 @@ export class ItemProvider {
 
     const body = Object.assign({}, { action }, itemData);
 
-    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
+    return this.http.post(this.API_URL + 'items.php', JSON.stringify(body)).map(res=>res.json());
   }
 
   getProductByUserId(user_id:number) {
@@ -45,7 +46,7 @@ export class ItemProvider {
 
     const body = Object.assign({action}, {user_id});
 
-    return this.http.post<IPost>(this.API_URL+'items.php',  JSON.stringify(body));
+    return this.http.post(this.API_URL+'items.php',  JSON.stringify(body)).map(res=>res.json());
   }
 
   getProductById(id) {
@@ -53,7 +54,7 @@ export class ItemProvider {
 
     const body = Object.assign({ action }, { id });
 
-    return this.http.post<IPost>(this.API_URL + 'items.php', JSON.stringify(body));
+    return this.http.post(this.API_URL + 'items.php', JSON.stringify(body)).map(res=>res.json());
   }
 
 }

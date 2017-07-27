@@ -1,5 +1,6 @@
+import { Http } from '@angular/http';
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import { IPost } from '../app/service/interfaces';
 @Injectable()
 export class DeliveryProvider {
@@ -7,7 +8,7 @@ export class DeliveryProvider {
 
     constructor(
         @Inject('API_URL') private API_URL,
-        private http: HttpClient
+        private http: Http
     ) { }
     
     addDeliveryRequest(requestData) {
@@ -16,7 +17,7 @@ export class DeliveryProvider {
 
         let body = JSON.stringify(Object.assign({ action }, requestData));
 
-        return this.http.post<IPost>(this.API_URL +'delivery.php', body)
+        return this.http.post(this.API_URL +'delivery.php', body).map(res=>res.json());
 
     }
 
@@ -24,21 +25,21 @@ export class DeliveryProvider {
         const action = 'getDeliveryRequestsByUser';
         let body = JSON.stringify(Object.assign({ action }, requestData));
 
-        return this.http.post<IPost>(this.API_URL + 'delivery.php', body);
+        return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
     }
 
     getRequestDeliveryInfo(requestData) {
         const action = 'getDeliveryRequestInfo';
         let body = JSON.stringify(Object.assign({ action }, requestData));
 
-        return this.http.post<IPost>(this.API_URL + 'delivery.php', body);
+        return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
     }
 
     getAccDeliveryReqs(matger_id) {
     
         const action = "getAcceptedDeliveryRequests"; 
 
-        return this.http.post<IPost>(this.API_URL + 'delivery.php', JSON.stringify({ action, matger_id}))
+        return this.http.post(this.API_URL + 'delivery.php', JSON.stringify({ action, matger_id})).map(res=>res.json())
     
     }
 
@@ -49,7 +50,7 @@ export class DeliveryProvider {
 
         let body = JSON.stringify(Object.assign({ action }, requestData));
 
-        return this.http.post<IPost>(this.API_URL + 'delivery.php', body);
+        return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
     }
 
     refuseDeliveryRequest(requestData) {
@@ -57,6 +58,6 @@ export class DeliveryProvider {
 
         let body = JSON.stringify(Object.assign({ action }, requestData));
 
-        return this.http.post<IPost>(this.API_URL + 'delivery.php', body);
+        return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
     }
 }

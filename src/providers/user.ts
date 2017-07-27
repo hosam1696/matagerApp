@@ -1,5 +1,6 @@
+import { Http } from '@angular/http';
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/RX';
 import { IPost, ipUserInfo } from '../app/service/interfaces';
@@ -7,7 +8,7 @@ import { IPost, ipUserInfo } from '../app/service/interfaces';
 @Injectable()
 export class UserProvider {
 
-  constructor( @Inject('API_URL') private API_URL, public http: HttpClient) {
+  constructor( @Inject('API_URL') private API_URL, public http: Http) {
   }
 
   LoginUser(userData){
@@ -16,7 +17,7 @@ export class UserProvider {
     let data = JSON.stringify(Object.assign({}, { action}, userData));
     console.log('Data entered', data, typeof data);
 
-    return this.http.post<IPost>(this.API_URL +'users.php', data);
+    return this.http.post(this.API_URL +'users.php', data).map(res=>res.json());
   }
 
   addUser(newUserData) {
@@ -24,13 +25,13 @@ export class UserProvider {
     let action = 'newUser';
     let data = JSON.stringify(Object.assign({}, { action}, newUserData));
     console.log('Data entered', data);
-    return this.http.post<IPost>(this.API_URL+'users.php', data);
+    return this.http.post(this.API_URL+'users.php', data).map(res=>res.json());
 
   }
 
   forgetPassword(email) {
     const action = 'forgetPassword';
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, email }));
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, email })).map(res=>res.json());
   }
 
   editUser(userData) {
@@ -39,19 +40,19 @@ export class UserProvider {
 
     console.log('Data will be sent to the server\n', body);
 
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify(body));
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify(body)).map(res=>res.json());
   }
 
   getUserById(id: number, login_user_id:number) {
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id}));
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ "action": "getUser", id, login_user_id})).map(res=>res.json());
   }
 
   getUserIP() {
-    return this.http.get('http://ipv4.myexternalip.com/json');
+    return this.http.get('http://ipv4.myexternalip.com/json').map(res=>res.json());
   }
 
   getUserLocayionInfoByIp(ip) {
-    return (ip) ? this.http.get<ipUserInfo>('http://ipinfo.io/' + ip) : null;
+    return (ip) ? this.http.get('http://ipinfo.io/' + ip).map(res=>res.json()) : null;
   }
 
   getUsersByLevel(level_id: number, limit: number, start: number,user_id?: number, map?:string) {
@@ -61,21 +62,21 @@ export class UserProvider {
      [latitude, longitude] = map.split(',');
     
     
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude }));    
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, level_id, user_id, limit, start, latitude, longitude })).map(res=>res.json());    
   }
 
   follow(followerData, newFollow:boolean) {
     const action = newFollow?'follow':'unfollow';
     let body = Object.assign({}, {action}, followerData);
 
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify(body));
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify(body)).map(res=>res.json());
   }
 
   getUserFollowers(user_id: number,limit:number, start:number, membersType: boolean = true) {
 
     const action = membersType ? 'getFollowers' : 'getFollowings';
 
-    return this.http.post<IPost>(this.API_URL + 'users.php', JSON.stringify({ action, limit, start ,user_id }));
+    return this.http.post(this.API_URL + 'users.php', JSON.stringify({ action, limit, start ,user_id })).map(res=>res.json());
 
   }
 
@@ -90,7 +91,7 @@ export class UserProvider {
   filterUsersByPlaces(placesData, limit, start) {
     const action = 'filterByPlaces';
     let body = JSON.stringify(Object.assign({ action }, placesData, {limit, start}));
-    return this.http.post<IPost>(this.API_URL + 'users.php', body);
+    return this.http.post(this.API_URL + 'users.php', body).map(res=>res.json());
   }
   
 

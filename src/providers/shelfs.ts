@@ -1,5 +1,6 @@
+import { Http } from '@angular/http';
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
 
 import { IPost } from '../app/service/interfaces';
 
@@ -8,13 +9,13 @@ import { IPost } from '../app/service/interfaces';
 
 export class ShelfsProvider {
 
-    constructor(@Inject('API_URL') private API_URL, public http: HttpClient) {
+    constructor(@Inject('API_URL') private API_URL, public http: Http) {
 
     }
 
     getShelfs(matger_id: number, user_id:number = matger_id) {
         let body = {"action": "all", user_id, matger_id};
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
     }
 
     addShelf(shelfData) {
@@ -24,7 +25,7 @@ export class ShelfsProvider {
 
         console.info('data to the server', body);
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
 
     }
 
@@ -36,7 +37,7 @@ export class ShelfsProvider {
 
         console.info('data to the server', body);
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
 
     }
 
@@ -47,20 +48,20 @@ export class ShelfsProvider {
         let body = Object.assign({}, { action }, editedShelfData);
 
         console.log('data to the server', body);
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
     }
 
     getShelfById(shelfId:number, user_id:number) {
         const action = 'getShelfById';
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({ action, id: shelfId, user_id }));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({ action, id: shelfId, user_id })).map(res=>res.json());
     }
 
 
     getShelfRequestInfo(shelf_request_id: number, user_id: number) {
         const action = 'getShelfRequestInfo';
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({ action, shelf_request_id, user_id}))
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({ action, shelf_request_id, user_id})).map(res=>res.json())
     }
 
     reserveShelf(reservedShelfData) {
@@ -70,7 +71,7 @@ export class ShelfsProvider {
 
         console.log('Data will be sent to the server\n', body);
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
     }
 
     addShelfPercentage(percentageData) {
@@ -80,7 +81,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, percentageData);
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
 
         
     }
@@ -93,7 +94,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
 
     }
 
@@ -107,7 +108,7 @@ export class ShelfsProvider {
 
         let body = Object.assign({ action }, requestData );
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify(body));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify(body)).map(res=>res.json());
 
 
     }
@@ -117,19 +118,19 @@ export class ShelfsProvider {
         const action = accepted ? 'acceptPercenatge' :'refusePercenatge';
         let body = JSON.stringify(Object.assign({ action }, percentageData));
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', body);
+        return this.http.post(this.API_URL + 'shelfs.php', body).map(res=>res.json());
     }
 
 
     getAllRequests(user_id: number) {
         const action = 'getShelfRequests';
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({action, user_id}));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({action, user_id})).map(res=>res.json());
     }
     getAcceptedRequests(user_id: number) {
         const action = 'getAcceptedRequests';
 
-        return this.http.post<IPost>(this.API_URL + 'shelfs.php', JSON.stringify({ action, user_id }));
+        return this.http.post(this.API_URL + 'shelfs.php', JSON.stringify({ action, user_id })).map(res=>res.json());
     }
 
 

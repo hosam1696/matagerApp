@@ -1,10 +1,11 @@
+import { Http } from '@angular/http';
 import { UserProvider } from './../providers/user';
 import { Component, ViewChild, ElementRef } from "@angular/core";
 import { NavParams, ViewController, LoadingController, Events } from 'ionic-angular';
 import { Geolocation} from '@ionic-native/geolocation';
 import {NativeGeocoder, NativeGeocoderForwardResult, NativeGeocoderReverseResult} from "@ionic-native/native-geocoder";
 import {IlocalUser} from "../app/service/InewUserData";
-import {HttpClient} from "@angular/common/http";
+//import {HttpClient} from "@angular/common/http";
 
 declare let google;
 
@@ -106,7 +107,7 @@ export class MapsModal {
               public userProvider: UserProvider,
               public geocoderNative: NativeGeocoder,
               public loadingCtrl: LoadingController,
-              public http: HttpClient
+              public http: Http
   ) {
     console.log('params',params.get('pageData'));
 
