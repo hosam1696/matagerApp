@@ -2,9 +2,10 @@ import { IlocalUser } from './../../../app/service/interfaces';
 import { CommentProvider } from './../../../providers/comments';
 import { ItemProvider } from './../../../providers/item';
 import {Component, ViewChild} from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import {AlertController, AlertOptions, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 
-import {IProduct, IproductComment} from '../../../app/service/interfaces';
+import {IProductData, IproductComment} from '../../../app/service/interfaces';
+//import {Observable} from "rxjs/Observable";
 
 @IonicPage()
 @Component({
@@ -13,11 +14,10 @@ import {IProduct, IproductComment} from '../../../app/service/interfaces';
 })
 export class ProductPage {
   @ViewChild('commentInput') commentInput: any;
-  AllComments:IproductComment[]|any = [];
   showAddComment:boolean = false;
   NoComments:boolean = false;
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
-  productData: IProduct;
+  productData: IProductData;
   initId: number;
   showLoader: boolean = true;
   initLimit:number = 5;
@@ -27,7 +27,8 @@ export class ProductPage {
     public navParams: NavParams,
     public itemProvider: ItemProvider,
     public commentProvider: CommentProvider,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public alertCtrl: AlertController
 
   ) {
 
@@ -35,7 +36,11 @@ export class ProductPage {
 
     this.initId = this.navParams.get('pageData');
 
-    console.log(this.productData);
+
+  }
+
+  ionViewWillLoad() {
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
   ionViewDidLoad() {
@@ -45,21 +50,36 @@ export class ProductPage {
     console.log('ionViewDidLoad ProductPage');
     this.getProductById(this.initId);
 
-    this.getComments()
+    //this.getComments();
+    /*let commentDate = {
+      user_id: this.userLocal.id,
+      item_id: this.initId
+    };
+    let productId = this.itemProvider.getProductById(this.initId);
+    let getComment =this.commentProvider.getComments(commentDate, this.initLimit)
+
+    Observable.merge(getComment, productId)
+      .subscribe(res=>{
+        console.log('%c%s', 'font-size: 30px; color: #555','merged response');
+        console.log(res.data);
+
+      })*/
+
   }
 
   getProductById(id) {
-
-    this.itemProvider.getProductById(id)
+    let user_id = (this.userLocal)?this.userLocal.id:0;
+    this.itemProvider.getProductById(id, user_id)
       .subscribe(
       ({ status, data}) => {
         if (status === 'success') {
           this.productData = data;
+
         } else {
           console.warn('no data');
         }
       },
-      (err) => {
+      err => {
         console.warn(err);
       },
       () => {
@@ -67,6 +87,31 @@ export class ProductPage {
       }
       )
 
+  }
+
+  showLoginAction() {
+    let alertOptions: AlertOptions = {
+      title: 'تسجيل',
+      message: 'يرجى تسجيل الدخول بحسابك لكى يتم تنفيذ طلبك',
+      buttons:[
+        {
+          text: 'تسجيل الدخول',
+          handler: ()=>{
+            this.navigateToPage('Login', null);
+          }
+        },
+        {
+          text: 'تسجيل حساب جديد',
+          handler: ()=>{
+            this.navigateToPage('Signup', null);
+          }
+        }
+      ],
+      enableBackdropDismiss: true
+    };
+    let alert = this.alertCtrl.create(alertOptions);
+
+    alert.present();
   }
 
   watchHeight(event) {
@@ -106,7 +151,8 @@ export class ProductPage {
             this.NoComments = false;
             console.log(this.commentInput.nativeElement, lastComment);
             console.log('user lat comment', );
-            this.AllComments.push(lastComment);
+            this.productData.comments.push(lastComment);
+            this.productData.commentsCount = parseInt(this.productData.commentsCount) + 1;
             this.showToast('تم اضافة تعليقك بنجاح');
             // TODO: reset the input button value
           } else {
@@ -126,7 +172,7 @@ export class ProductPage {
 
 
   }
-
+/*
   getComments() {
     let commentDate = {
       user_id: this.userLocal.id,
@@ -152,7 +198,7 @@ export class ProductPage {
         )
       )
   }
-
+*/
   showToast(msg): void {
     let toast = this.toastCtrl.create(
       {
@@ -166,16 +212,81 @@ export class ProductPage {
 
 
   likeProduct() {
+    //"user_id":"39","item_id":"7","item_name":"كرسي مكتب ","matger_id":"4"
 
+    if (this.userLocal) {
+      if (!this.productData.like) {
+        let likeData = {
+          user_id: this.userLocal.id,
+          item_id: this.initId,
+          item_name: this.productData.item_name,
+          matger_id: this.productData.user_id
+        };
+
+        this.itemProvider.likeItem(likeData)
+          .subscribe(
+            res=> {
+              if (res.status == 'success') {
+                this.showToast('لقد قمت بالاعجاب بهذا المنتج');
+                this.productData.like = true;
+                this.productData.likesCount = parseInt(this.productData.likesCount) + 1;
+              } else {
+                console.warn(res.errors);
+                this.showToast('الرجاء المحاولة فى وقت اخر')
+              }
+            },
+            err=> {
+              console.warn(err);
+              this.showToast('التطبيق يتطلب اتصال بالانترنت')
+            }
+          );
+
+      } else {
+        let unlikeData = {
+          user_id: this.userLocal.id,
+          item_id: this.initId
+        };
+        this.itemProvider.likeItem(unlikeData, false)
+          .subscribe(
+            res=> {
+              if (res.status == 'success') {
+                this.showToast('لقد قمت بحذف اعجابك بهذا المنتج');
+
+                this.productData.like = false;
+                this.productData.likesCount = Math.max(0,parseInt(this.productData.likesCount) - 1);
+              } else {
+                console.warn(res.errors);
+                this.showToast('الرجاء المحاولة فى وقت اخر')
+              }
+            },
+            err=> {
+              console.warn(err);
+              this.showToast('التطبيق يتطلب اتصال بالانترنت')
+            }
+          )
+
+      }
+    } else {
+      this.showLoginAction()
+    }
+
+
+    }
+
+  navigateToPage(page, pageData) {
+    this.navCtrl.push(page, {pageData});
   }
-
   commentProduct() {
-    this.showAddComment = !this.showAddComment;
-    setTimeout(()=>{
-      console.log(this.commentInput.nativeElement);
-      this.commentInput.nativeElement.focus();
+    if (this.userLocal) {
+      this.showAddComment = !this.showAddComment;
+      setTimeout(()=>{
+        console.log(this.commentInput.nativeElement);
+        this.commentInput.nativeElement.focus();
 
-    },0)
+      },0);
+    } else {
+      this.showLoginAction()
+    }
   }
 
 }

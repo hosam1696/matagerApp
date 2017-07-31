@@ -235,6 +235,8 @@ export class NotificationsPage {
       this.navCtrl.push(pageData);
     } else if (pageData.type == 'deliveryRequest'){
       this.navCtrl.push('NotificationDeleveryReqPage', {pageData})
+    } else if (pageData.type == 'addComment') {
+      this.navCtrl.push('CommentNotificationPage', {pageData})
     } else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
       /*if (pageData.type == 'reserveShlef') {

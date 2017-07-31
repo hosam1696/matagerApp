@@ -1,0 +1,95 @@
+page-comment-notification {
+  ion-content {
+
+    &.content {
+      background-color: color($colors, bgColor)
+    }
+
+    #sales-percentage {
+      background: none !important;
+      box-shadow: none !important;
+      padding: 5px 25px;
+
+      h2 {
+        font-weight: bold;
+        text-shadow: 1px 1px #fff;
+        color: color($colors, primary)
+      }
+      h4 {
+        font-weight: bold;
+        text-shadow: 1px 1px #fff;
+        color: color($colors, primary)
+      }
+    }
+    ion-item-group {
+      margin-top: 6px;
+      ion-item {
+        .item-inner {
+          padding-right: 0 !important;
+        }
+        height: 45px;
+        color: color($colors, primaryDark) !important;
+        font-weight: bold;
+        padding-left: 0 !important;
+        font-size: 14px !important;
+
+        ion-grid {
+          ion-row {
+            ion-col {
+              &:first-of-type {
+                color: color($colors, primary) !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ion-item#hero {
+    background: color($colors, light);
+    height: auto;
+    width: 100%;
+    position: relative;
+
+    h3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      //font-weight: bold;
+      font-size: 16px;
+      margin-bottom: 2px;
+      color: color($colors, primary);
+
+      .since-time {
+        color: #666;
+        font-size: 12px;
+      }
+    }
+    p {
+      margin-top: 0;
+      font-size: 12px !important;
+      white-space: normal;
+    }
+    ion-avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(to right, #fff 0%, #fff 50%, #ddd 50%);
+      overflow: hidden;
+      border: 2px solid color($colors, primaryDark);
+      img {
+        width: 100% !important;
+        height: 100% !important;
+        //height: auto;
+        &.alt {
+          width: 45px !important;
+        }
+      }
+
+    }
+  }
+}

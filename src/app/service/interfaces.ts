@@ -205,6 +205,16 @@ export interface IproductComment {
   gender: string | any,
   name: string
 }
+/*
+
+{"status":"success","data":{"user_id":"15","name":"\u0645\u0648\u0631\u062f\u064a\u0646 \u062a\u0631\u0649","item_code":"","item_name":"\u062e\u0634\u0628 \u0632\u0627\u0646 \u062a\u0631\u0643\u0649","item_price":"200.00","item_desc":"\u0645\u0646 \u0627\u0641\u0636\u0644 \u0627\u0646\u0648\u0627\u0639 \u0627\u0644\u0623\u062e\u0634\u0627\u0628 \u0627\u0644\u062e\u0634\u0628 \u0627\u0644\u0632\u0627\u0646 \u0645\u0646\u0627\u0633\u0628 \u0644\u062c\u0645\u064a\u0639 \u0627\u062d\u062a\u064a\u0627\u062c\u0627\u062a \u0627\u0644\u0645\u0646\u0632\u0644 \u0645\u0646 \u0627\u062b\u0627\u062b \u0648\u062f\u064a\u0643\u0648\u0631\u0627\u062a","item_production_date":"2016-01-01","item_expiry_date":"2017-03-01","active":"1","commentsCount":"7","likesCount":"0","item_images":[],"comments":[{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"sadasd","date_added":"2017-07-27 09:19:22"},{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"Hosam elnabawy","date_added":"2017-07-27 11:04:56"},{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"dsfsd\nsdfsdf\nsdfsdfsdf\nfsdfsdf","date_added":"2017-07-27 11:39:18"},{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"asdasdasdasd","date_added":"2017-07-27 12:09:56"},{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"sssss","date_added":"2017-07-27 12:10:45"},{"name":"\u0627\u0644\u062d\u0633\u0627\u0645","gender":"male","avatar":"","comment_text":"asdasdasd","date_added":"2017-07-27 12:12:57"},{"name":"\u0645\u062d\u0645\u062f \u0627\u0644\u0646\u0628\u0648\u0649 \u0623\u062d\u0645\u062f","gender":"male","avatar":"","comment_text":"Good","date_added":"2017-07-29 18:11:11"}],"like":false}}
+ */
+export interface  IProductData extends IProduct{
+  comments: IproductComment[];
+  commentsCount: any,
+  likesCount:  any,
+  like: boolean|any,
+}
 
 export enum ArShelfForm {
   name= 'رقم الرف',

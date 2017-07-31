@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "81559743575",
+    "firebase_url": "https://angpeople-bbea4.firebaseio.com",
+    "project_id": "angpeople-bbea4",
+    "storage_bucket": "angpeople-bbea4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81559743575:android:fc5578eceb25e5f7",
+        "android_client_info": {
+          "package_name": "co.itplus.rf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81559743575-e588fl509qmfrasfvjuedeq3hhdsoj9f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCp5en7ex5cbHPO_fyuSCRBzCzZ6WliSmw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

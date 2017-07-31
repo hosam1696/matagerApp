@@ -21,6 +21,8 @@ export class ReservedshelfsPage {
   initLimit: number = 10;
   initStart: number = 0;
   noRequests: boolean = false;
+  netErr: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public shelfsProvider: ShelfsProvider
   ) {
@@ -32,28 +34,39 @@ export class ReservedshelfsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ReservedshelfsPage');
 
-    this.shelfsProvider.getAllRequests(this.userLocal.id)
+    this.getAllRequests(this.userLocal.id);
+  }
+
+  refresh(event) {
+    this.getAllRequests(this.userLocal.id, event);
+  }
+  getAllRequests(id, event?:any) {
+    this.shelfsProvider.getAllRequests(id)
       .subscribe(({ status, data }) => {
-        
-        if (status == 'success') {
-          
-          this.AllRequests = data;
-        } else {
+
+          if (status == 'success') {
+
+            this.AllRequests = data;
+          } else {
+            this.showLoader = false;
+            this.noRequests = true;
+            console.warn('no data');
+          }
+
+          console.log(status, data);
+        },
+        err => {
+          console.warn(err);
+          this.netErr = true;
+          event&&event.complete();
+        },
+        () => {
           this.showLoader = false;
-          this.noRequests = true;
-          console.warn('no data');
+          console.log('completed');
+
+          event&&event.complete();
         }
-          
-        console.log(status, data);
-      },
-      err => {
-        console.warn(err)
-      },
-      () => {
-        this.showLoader = false;
-        console.log('completed');
-      }
-    )
+      )
   }
 
 }

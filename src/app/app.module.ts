@@ -42,6 +42,9 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
+import {File} from '@ionic-native/file';
+import {FilePath} from '@ionic-native/file-path';
+
 import { Transfer} from '@ionic-native/transfer';
 import { ActionSheet } from '@ionic-native/action-sheet';
 import {changePropDirectiveModule} from "./service/changeprop.directive.module";
@@ -111,7 +114,10 @@ import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
     ImagePicker,
     NativeGeocoder,
     InAppBrowser,
-    ActionSheet, Camera,
+    ActionSheet,
+     Camera,
+     File,
+     FilePath,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
     Transfer,

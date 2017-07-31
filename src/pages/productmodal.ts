@@ -1,6 +1,7 @@
 import { ItemProvider } from './../providers/item';
 import { ViewController, NavParams } from 'ionic-angular';
 import { Component } from '@angular/core';
+import {IlocalUser} from "../app/service/interfaces";
 @Component({
     template:`
     <ion-header>
@@ -113,17 +114,21 @@ import { Component } from '@angular/core';
       `]
 })
 export class ProductModal {
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
     product_id: any;
     productData: any;
     showErr: boolean = false;
     netErr: boolean = false;
     constructor(params: NavParams, public viewCtrl: ViewController, public productProvider: ItemProvider) {
         this.product_id = params.get('pageData');
+        this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
         this.getProduct(this.product_id);
     }
 
-    getProduct(product_id) {
-        this.productProvider.getProductById(product_id)
+    getProduct(product_id:number) {
+        if (!this.userLocal)
+          this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+        this.productProvider.getProductById(product_id, this.userLocal.id)
             .subscribe(({status, data})=>{
                 if(status == 'success') {
                   this.productData = data;
@@ -140,6 +145,6 @@ export class ProductModal {
 
     closeModal():void {
         this.viewCtrl.dismiss();
-    } 
+    }
 
 }

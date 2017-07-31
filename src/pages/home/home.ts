@@ -1,6 +1,6 @@
 import { MapsModal } from './../mapsmodal';
 import { Component } from '@angular/core';
-import { NavController, ToastController, IonicPage, Config, ModalController } from 'ionic-angular';
+import { NavController, ToastController, IonicPage, Config, ModalController, Platform } from 'ionic-angular';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { Geolocation } from '@ionic-native/geolocation';
 import {Network} from '@ionic-native/network';
@@ -23,7 +23,8 @@ export class HomePage {
      public toastCont: ToastController,
      public push: Push,
      public config: Config,
-     public modalCrtl: ModalController
+     public modalCrtl: ModalController,
+     public platform: Platform
   ) {
 
   }
@@ -49,7 +50,7 @@ export class HomePage {
 */
     let pushOptios: PushOptions = {
       android: {
-        senderID: '12345679'
+        senderID: '81559743575'
       },
       ios: {
         alert: 'true',
@@ -63,10 +64,14 @@ export class HomePage {
 
     push.on('notification').subscribe(d => {
       console.log('recieve a notification');
+     
       console.log(d);
     });
 
-    push.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+    push.on('registration').subscribe((registration: any) => {
+      console.log('Device registered', registration,  this.platform.is('android')?'android':'ios')
+    }
+    );
 
     push.on('error').subscribe(error => console.error('Error with Push plugin', error));
 

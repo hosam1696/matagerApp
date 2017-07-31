@@ -1,11 +1,16 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      صفحتى </ion-title>
+      صفحتى 
+    </ion-title>
+    <ion-buttons end *ngIf="loadImage">
+      رفع الصورة
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
+  {{uploadErr | json}}
   <ion-card *ngIf="userLocal" id="user-info">
     <section  id="hero">
       <img *ngIf="userLocal.cover" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.cover" alt="user background image">
@@ -22,7 +27,8 @@
              <button type="button" class="pick-image" (click)="pickImage('avatar')">
                <ion-icon name="camera-outline"></ion-icon>
               </button>
-              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar" alt="">
+            <img *ngIf="avatarBase64;else avatarIcon" [src]="avatarBase64" alt="">
+              <!--<img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar" alt=""> -->
               <ng-template #avatarIcon>
                   <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
 

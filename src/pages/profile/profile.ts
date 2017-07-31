@@ -1,18 +1,20 @@
 import { DeliveryProvider } from './../../providers/delivery';
-import { Component,Inject,Renderer2 } from '@angular/core';
-import { NavController, IonicPage, AlertController, AlertOptions, PopoverController ,ActionSheetController, ToastController, ModalController } from 'ionic-angular';
-import {IlocalUser, Ishelf} from '../../app/service/InewUserData';
-import {IProduct} from '../../app/service/interfaces';
+import { Component, Inject, Renderer2 } from '@angular/core';
+import { NavController, IonicPage, AlertController, AlertOptions, PopoverController, ActionSheetController, ToastController, ModalController, Platform } from 'ionic-angular';
+import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
+import { IProduct } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { ItemProvider } from '../../providers/item';
 import { UserProvider } from '../../providers/user';
 import { ShelfModal } from './shelf/shelfpage';
+import { FilePath } from '@ionic-native/file-path';
+import { File } from '@ionic-native/file';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
-import {InAppBrowser} from '@ionic-native/in-app-browser'
+import { InAppBrowser } from '@ionic-native/in-app-browser'
 //import {PopSettings} from './popsetting';
-
-
+import {LZString} from '../../app/service/lz-string';
+declare let cordova: any;
 
 @IonicPage()
 @Component({
@@ -20,10 +22,11 @@ import {InAppBrowser} from '@ionic-native/in-app-browser'
   templateUrl: 'profile.html'
 })
 export class ProfilePage {
+  lastImage: any;
   userLocal: IlocalUser;
   showContent: string = 'products';
-  AllShelfs :Ishelf[]| null = null;
-  noShelfs:string;
+  AllShelfs: Ishelf[] | null = null;
+  noShelfs: string;
   noProducts: string;
   AllProducts: IProduct[] | null = null;
   alertOptions: AlertOptions;
@@ -31,9 +34,14 @@ export class ProfilePage {
   userLevelId: number;
   showSettings: boolean = false;
   cameraError: any;
-  netErr:boolean = false;
-  ItemsDelivered: any| null = null;
+  netErr: boolean = false;
+  ItemsDelivered: any | null = null;
   noAcceptedItems: boolean = false;
+  avatarBase64: any;
+  uploadErr = null;
+  coverBase64: any;
+  loadImage: boolean = false;
+
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -46,10 +54,13 @@ export class ProfilePage {
     private productsProvider: ItemProvider,
     public popover: PopoverController,
     private transfer: Transfer,
+    private file: File,
+    private filePath: FilePath,
     public rendrer: Renderer2,
     public userProvider: UserProvider,
     public iab: InAppBrowser,
-    public deliveryProvider: DeliveryProvider
+    public deliveryProvider: DeliveryProvider,
+    private platform: Platform
   ) {
 
   }
@@ -83,7 +94,7 @@ export class ProfilePage {
 
   }
 
-  pickImage(cameraImage:string):void {
+  pickImage(cameraImage: string): void {
 
     let actionSheetCtrl = this.actionCtrl.create({
       title: 'اختر من',
@@ -129,15 +140,15 @@ export class ProfilePage {
   showProductSettings(event, product, index) {
     //console.log(product);
     //let popOver = this.popover.create(PopSettings, {thePage: product})
-      const targetElement = document.getElementById(index);
+    const targetElement = document.getElementById(index);
 
-      console.log(targetElement);
-      /*console.log(event);
-      console.log(event.target.parentElement.nextElementSibling);
-      event.target.parentElement.nextElementSibling.style.display = 'block';
-      event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;*/
-      this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
-   // popOver.present();
+    console.log(targetElement);
+    /*console.log(event);
+    console.log(event.target.parentElement.nextElementSibling);
+    event.target.parentElement.nextElementSibling.style.display = 'block';
+    event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;*/
+    this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
+    // popOver.present();
   }
 
   ionViewWillLeave() {
@@ -145,41 +156,63 @@ export class ProfilePage {
     this.AllProducts = null;
     this.AllShelfs = null;
   }
+
   popSettings() {
     const popOver = this.popover.create('popped up');
 
     popOver.present();
   }
 
-  openCamera(type:string='CAMERA', cameraImage:string = 'avatar') {
+  openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
 
-    const cameraOptions:CameraOptions = {
+    const cameraOptions: CameraOptions = {
       quality: 70,
       destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       allowEdit: true,
       sourceType: this.camera.PictureSourceType[type]
     };
 
+
     // returned File URI => file:///storage/emulated/0/Android/data/co.itplus.rf/cache/.Pic.jpg?1498042093580
 
 
     this.camera.getPicture(cameraOptions).then(imageData => {
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      let compressed = LZString.compressToUTF16(base64Image);
+
+      console.log(compressed);
 
       console.log('line 171 on promise resolve function', imageData);
+
+      // Special handling for Android library
+      if (this.platform.is('android') && type == 'PHOTOLIBRARY') {
+        this.filePath.resolveNativePath(imageData)
+          .then(filePath => {
+            console.log('file path from resolve native path', filePath);
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
+            console.log('correctPath',correctPath, 'currentName',currentName);
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
+      } else {
+        console.log('line 197 image file path', imageData);
+        let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
+        let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+        console.log('correctPath',correctPath, 'currentName',currentName);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+      }
+
+
+
       // detect image extension
       let extension: string = imageData.substring(imageData.lastIndexOf('.') + 1, imageData.lastIndexOf('?') != -1 ? imageData.lastIndexOf('?') : imageData.length);
 
       console.log('file extension', extension);
 
-      /*let extIndex = imageData.lastIndexOf('.');
-
-      extension = extIndex.match(/\w+/)[0];*/
-
-      window.alert(imageData+"  && "+ extension);
-
+      window.alert(imageData + "  && " + extension);
 
 
       return Promise.resolve([imageData, extension, cameraImage])
@@ -190,37 +223,78 @@ export class ProfilePage {
 
     }).catch(err => {
 
-        console.error('getPicture Error ', err);
-        this.cameraError = err;
-      })
+      console.error('getPicture Error ', err);
+      this.cameraError = err;
+    })
+  }
+
+  private createFileName() {
+    var d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+
+  private copyFileToLocalDir(namePath, currentName, newFileName) {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+      this.lastImage = newFileName;
+    }, error => {
+      this.presentToast('Error while storing file.');
+    });
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  // Always get the accurate path to your apps folder
+  public pathForImage(img) {
+    if (img === null) {
+      return '';
+    } else {
+      return cordova.file.dataDirectory + img;
+    }
   }
 
   uploadImage(file, type, cameraImage) {
-
     const fto: TransferObject = this.transfer.create();
-    let fileName = file.split('/').pop();
-    const uploadOptions: FileUploadOptions = {
+    let uploadFolder = 'templates/default/uploads/users';
+     // File for Upload
+    let targetPath = this.pathForImage(this.lastImage);
+
+    let fileName = file.substr(file.lastIndexOf('/') + 1);
+
+    let uploadOptions: FileUploadOptions = {
       fileKey: 'file',
-      fileName: fileName
-    }
+      fileName: fileName,
+      chunkedMode: false,
+      mimeType: "multipart/form-data",
+      params: {
+        ImgName: fileName,
+        uploadFolder,
+        userId: this.userLocal.id,
+        type: (cameraImage == 'avatar') ? 'avatars' : 'covers'
+      }
+    };
 
-    let filePath = 'templates/default/uploads'  ;
+    let serverFile = this.API_URL + "uploadImage.php";
 
-    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + filePath + "&ImgName=" + fileName + "&userId=" + this.userLocal.id + "&type=" + ((cameraImage == 'avatar') ? 'avatars' : 'covers');
+    console.log('file uri', file,'target Path',targetPath, 'server file & path', serverFile, 'file name', fileName);
 
-    console.log('file uri',file,'server file & path', serverFile, 'file name', fileName);
-let ftUpload = fto.upload(file, serverFile, uploadOptions);
-
-    ftUpload.then(res=> {
-        console.log('uploaded', res);
-        return Promise.resolve('uploaded')
-      });
-    ftUpload.then(res => {
-        console.log('upload status', res);
-      })
-      .catch(err=> {
-        console.warn('uploAD ERROR',err);
-      });
+    fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true).then(res => {
+      this.loadImage = true;
+      this.showToast('تم الرفع بنجاح');
+      console.log('uploaded', res);
+    }).catch(err => {
+      this.uploadErr = err;
+      this.showToast('uploAD ERROR'+err);
+      console.log(err);
+    });
 
 
   }
@@ -243,22 +317,23 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
     if (this.userLocal.level_id == 2) {
 
 
-      this.shelfsProvider.getShelfs(userId).subscribe(({ status, data }) => {
-        console.log(status, data);
-        //console.table( res);
-        if (status == 'success') {
-          [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
-          if (this.AllShelfs.length <= 0) {
+      this.shelfsProvider.getShelfs(userId)
+        .subscribe(({ status, data }) => {
+          console.log(status, data);
+          //console.table( res);
+          if (status == 'success') {
+            [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+            if (this.AllShelfs.length <= 0) {
+              this.noShelfs = 'empty';
+              this.showLoader = false
+            }
+          } else {
             this.noShelfs = 'empty';
             this.showLoader = false
           }
-        } else {
-          this.noShelfs = 'empty';
-          this.showLoader = false
-        }
 
 
-      },
+        },
         err => {
           console.warn(err);
           [this.showLoader, this.noShelfs, this.AllShelfs] = [false, 'netErr', []];
@@ -266,7 +341,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
         () => {
           this.showLoader = false;
         }
-      );
+        );
     } else if (this.userLocal.level_id == 3) {
 
       this.shelfsProvider.getAcceptedRequests(userId).subscribe(({ status, data }) => {
@@ -288,7 +363,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
         err => {
           console.warn(err);
 
-          [this.netErr,this.showLoader, this.noShelfs, this.AllShelfs] = [true,false, 'netErr', []];
+          [this.netErr, this.showLoader, this.noShelfs, this.AllShelfs] = [true, false, 'netErr', []];
         },
         () => {
           this.showLoader = false;
@@ -302,9 +377,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
 
   }
 
-
-
-  deleteShelf(shelf: Ishelf):void {
+  deleteShelf(shelf: Ishelf): void {
     //console.log(shelf);
     if (shelf.close == 1) {
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه')
@@ -358,14 +431,12 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
 
   }
 
-
-
   editShelf(page, pageParams) {
 
     if (pageParams.close == 1)
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
-     else
-        this.navigateToPage(page, pageParams)
+    else
+      this.navigateToPage(page, pageParams)
   }
 
   chunk(arr, limit) {
@@ -373,11 +444,12 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
     let chunked = [];
     let start = 0;
     while (start < length) {
-      chunked.push(arr.slice(start,limit+start));
-      start+=limit
+      chunked.push(arr.slice(start, limit + start));
+      start += limit
     }
     return chunked;
   }
+
   getProducts(id: number) {
     this.showLoader = true;
     if (this.userLocal.level_id == 3) {
@@ -400,7 +472,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
         err => {
           console.warn(err);
 
-          [this.showLoader , this.netErr]= [false, true];
+          [this.showLoader, this.netErr] = [false, true];
 
         }
       )
@@ -408,7 +480,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
 
       this.deliveryProvider.getAccDeliveryReqs(id)
         .subscribe(
-        ({ status, data, errors}) => {
+        ({ status, data, errors }) => {
           if (status === 'success') {
             this.ItemsDelivered = this.chunk(data, 2);
             console.log('success', this.ItemsDelivered);
@@ -418,7 +490,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
           }
         },
         err => {
-          [this.showLoader , this.netErr]= [false, true];
+          [this.showLoader, this.netErr] = [false, true];
           console.warn(err);
         },
         () => {
@@ -432,7 +504,7 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
   deleteProduct(product: IProduct) {
 
     let productIndex = this.AllProducts.indexOf(product);
-    const alertOptions:AlertOptions = {
+    const alertOptions: AlertOptions = {
       title: 'حذف منتج',
       message: `هل انت متأكد من رغبتك فى حذف 
       " ${product.item_name} "`,
@@ -492,15 +564,15 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
     shelf.present();
   }
 
-  navigateToPage(page, pageData="test", reciever=null):void {
+  navigateToPage(page, pageData = "test", reciever = null): void {
 
-    this.navCtrl.push(page ,{pageData, reciever});
+    this.navCtrl.push(page, { pageData, reciever });
 
   }
 
 
-  limitString(str:string) {
-    return (str.length > 55)? str.slice(0,50)+ '.....': str;
+  limitString(str: string) {
+    return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
   showToast(msg) {
@@ -511,6 +583,5 @@ let ftUpload = fto.upload(file, serverFile, uploadOptions);
     });
     toast.present();
   }
-
 
 }

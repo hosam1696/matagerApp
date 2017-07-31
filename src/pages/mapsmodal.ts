@@ -160,13 +160,10 @@ export class MapsModal {
       console.log('your current locations are \n' + res.coords.latitude + '\n' + res.coords.longitude);
 
       [this.latitude, this.longitude] = [res.coords.latitude, res.coords.longitude];
-      this.setNewLoc(this.modalData, this.latitude, this.longitude);
       console.log('init Map from geolocation resolve', this.initMap);
       (this.initMap) ? this.loadMap(this.initMap.latitude, this.initMap.longitude) :this.loadMap(this.latitude, this.longitude);
 
-    });
-
-    geolocate.catch((err) => {
+    }).catch((err) => {
 
         //alert('no geolocation activated');
         console.warn(err);
@@ -178,6 +175,8 @@ export class MapsModal {
   }
 
   loadMap(latitude, longitude) {
+    this.setNewLoc(this.modalData, latitude, longitude);
+    console.log('load map with latlng', latitude, longitude);
     if (!latitude && !longitude) {
       [latitude, longitude] = [(this.userLocal.latitude) ? this.userLocal.latitude : this.modalData.latitude, (this.userLocal.longitude) ? this.userLocal.longitude : this.modalData.longitude];
     }
@@ -241,17 +240,8 @@ export class MapsModal {
 
     google.maps.event.addListener(this.map,'click', (event) => {
       console.log('set maker here');
-      console.log(event);
-      /*let marker = new google.maps.Marker({
-        map: this.map,
-        animation: google.maps.Animation.DROP,
-        position: this.map.
-      });
-
-      let content = "<h4>موقعى!</h4>";
-
-      this.addInfoWindow(marker, content);*/
-      console.log('event latLng', event.latLng);
+      console.log('event latLng', event.latLng, event.latLng.lat(), event.latLng.lng());
+      this.setNewLoc(this.modalData, event.latLng.lat(), event.latLng.lng());
       this.addMarker(event.latLng);
     });
 
@@ -283,18 +273,15 @@ export class MapsModal {
 
         google.maps.event.addListener(this.map,'click', (event) => {
           console.log('set maker here');
-          console.log(event);
-
-          console.log('event latLng', event.latLng);
+          console.log('event latLng', event.latLng, event.latLng.lat(), event.latLng.lng());
+          this.setNewLoc(this.modalData, event.latLng.lat(), event.latLng.lng());
           this.addMarker(event.latLng);
         });
 
         this.addMarker();
 
 
-      });
-
-        geoloacte.catch((err)=>{
+      }).catch((err)=>{
         console.log('The GPS is not activated also');
         console.warn(err);
       })
@@ -330,7 +317,7 @@ export class MapsModal {
           ip: res.ip,
           address: res.city + ' ' + res.country
         };
-
+        console.log(this.modalData);
         this.loadMap(this.modalData.latitude, this.modalData.longitude);
 
       });
@@ -375,9 +362,12 @@ export class MapsModal {
 
   getAddress(latitude, longitude) {
 
-
-    this.http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&key=AIzaSyBL9-cIsQpwffcZ5NCHEuHilTG_7sEhSXg').pluck('results')
-      .subscribe(result=>{
+    let geocodeUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&key=AIzaSyBL9-cIsQpwffcZ5NCHEuHilTG_7sEhSXg';
+    this.http.get(geocodeUrl)
+      .map(res=>res.json())
+      .pluck('results')
+      .subscribe(
+        result=>{
         console.log('response from geocoding', result[0].formatted_address);
         this.modalData.address = result[0].formatted_address;
 

@@ -58,11 +58,11 @@
         <div class="product-states">
           <p>
             الاراء
-            <span class="reviews"> (5) </span>
+            <span class="reviews"> ({{productData.commentsCount}}) </span>
           </p>
           <p>
             الاعجابات
-            <span class="likes">(15)</span>
+            <span class="likes">({{productData.likesCount}})</span>
           </p>
 
         </div>
@@ -74,7 +74,7 @@
 
 
       <ion-list>
-        <ion-item *ngFor="let comment of AllComments">
+        <ion-item *ngFor="let comment of productData.comments">
           <ion-avatar item-left>
             <img [src]="(comment.avatar)?'link'+comment.avatar:'assets/img/male-alt.png'" alt="male">
           </ion-avatar>
@@ -98,9 +98,9 @@
 
 
 
-      <div class="float-buttons">
+      <div class="float-buttons" >
         <button ion-button clear (click)="likeProduct()">
-          <ion-icon name="heart-outline"></ion-icon>
+          <ion-icon [name]="!productData.like?'heart-outline':'heart'" [color]="(!productData.like)?'primary':'danger'"></ion-icon>
         </button>
         <button ion-button clear (click)="commentProduct()">
           <ion-icon name="chatbubbles-outline"></ion-icon>

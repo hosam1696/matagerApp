@@ -16,7 +16,7 @@
 
 <ion-content>
 <ion-refresher (ionRefresh)="refresh($event)">
-  <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+  <ion-refresher-content margin-top pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
 </ion-refresher>
   <p text-center *ngIf="showLoader">
     <hsa-loader></hsa-loader>

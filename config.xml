@@ -3,7 +3,7 @@
     <name>رف</name>
     <description>تطبيق رف</description>
     <author email="info@it-plus.co" href="http://it-plus.co/">IT PLUS TEAM</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.1.10:8100" />
     <access origin="*" />
     <access launch-external="yes" origin="geo:*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -17,6 +17,9 @@
     <allow-navigation href="http://192.168.1.2:8101" />
     <allow-navigation href="http://192.168.1.2:8100" />
     <allow-navigation href="http://192.168.1.3:8100" />
+    <allow-navigation href="http://192.168.1.5:8100" />
+    <allow-navigation href="http://192.168.1.11:8100" />
+    <allow-navigation href="http://192.168.1.7:8100" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -97,6 +100,7 @@
     <plugin name="cordova-plugin-console" spec="1.0.7" />
     <plugin name="cordova-plugin-device" spec="1.1.6" />
     <plugin name="cordova-plugin-file-transfer" spec="1.6.3" />
+    <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="2.4.3" />
     <plugin name="cordova-plugin-image-picker" spec="1.1.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="1.7.1" />

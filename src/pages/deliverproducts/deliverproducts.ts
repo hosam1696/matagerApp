@@ -45,7 +45,9 @@ export class DeliverproductsPage {
 
   }
   refresh(event) {
+    console.log('refresh page', event);
     this.getDeliveryRequests(this.userLocal.id, event);
+
   }
   getDeliveryRequests(user_id, event?:any) {
 
@@ -56,7 +58,7 @@ export class DeliverproductsPage {
           this.AllRequests = data
         } else {
           this.noRequests = true;
-          event && event.dismiss();
+          event && event.complete();
           console.warn(errors);
         }
       },
@@ -64,9 +66,10 @@ export class DeliverproductsPage {
         console.warn(err);
 
         [this.noRequests, this.showLoader] = [true, false];
-        event && event.dismiss();
+        event && event.complete();
       },
       () => {
+        event && event.complete();
         this.showLoader = false;
       })
   }

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
 import { UserProvider } from "../../providers/user";
+import {Push, PushOptions} from "@ionic-native/push";
 
 
 @IonicPage()
@@ -19,7 +20,9 @@ export class Login {
     public navParams: NavParams,
     public userLogin: UserProvider,
     public toastCtrl: ToastController,
-    public network: Network
+    public network: Network,
+    public push: Push,
+    public platform: Platform
   ) {
     this.LoginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -49,6 +52,32 @@ export class Login {
     } else {
       */
         if (this.LoginForm.valid) {
+
+          let pushOptios: PushOptions = {
+            android: {
+              senderID: '81559743575'
+            },
+            ios: {
+              alert: 'true',
+              badge: true,
+              sound: 'false'
+            },
+            windows: {}
+          };
+
+          let push = this.push.init(pushOptios);
+
+          push.on('registration').subscribe(registration => {
+              console.log('Device registered', registration,  this.platform.is('android')?'android':'ios');
+
+              let pushData = {
+                device_token: registration,
+                type: this.platform.is('android')?'android':'ios'
+              }
+
+
+            }
+          );
         this.showLoader = true;
         this.userLogin.LoginUser(this.LoginForm.value)
           .subscribe(({status, message, data}) => {

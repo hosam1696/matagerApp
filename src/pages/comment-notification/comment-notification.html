@@ -1,0 +1,41 @@
+<!--
+  Generated template for the CommentNotificationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>تعليق</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item no-lines id="hero">
+      <ion-avatar item-left>
+        <img *ngIf="pageData.avatar != '' ;else altImages" [src]="pageData.avatar" alt="profile image">
+        <ng-template #altImages>
+          <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
+          <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
+        </ng-template>
+      </ion-avatar>
+      <h3 (click)="navigateToPage('VprofilePage', pageData.send_user_id)">
+        <span>{{ pageData.name }}</span>
+        <span class="since-time">منذ
+        {{pageData.date_added | sincedate}}
+      </span>
+      </h3>
+      <p>{{ pageData.notifiy_message}}</p>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="openComment()">الذهاب للتعليق</button>
+    </ion-item>
+  </ion-list>
+
+
+</ion-content>
