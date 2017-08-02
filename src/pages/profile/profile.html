@@ -1,18 +1,20 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      صفحتى 
+      صفحتى
     </ion-title>
     <ion-buttons end *ngIf="loadImage">
-      رفع الصورة
+      جارى الرفع &nbsp;
+      <ion-spinner name="crescent"></ion-spinner>
+
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  {{uploadErr | json}}
+  <span *ngIf="uploadErr">{{uploadErr | json}}</span>
   <ion-card *ngIf="userLocal" id="user-info">
-    <section  id="hero">
+    <section id="hero">
       <img *ngIf="userLocal.cover" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.cover" alt="user background image">
       <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
@@ -21,97 +23,88 @@
       <ion-grid>
         <ion-row>
 
-        <ion-col col-3>
+          <ion-col col-3>
 
-          <ion-avatar>
-             <button type="button" class="pick-image" (click)="pickImage('avatar')">
+            <ion-avatar>
+              <button type="button" class="pick-image" (click)="pickImage('avatar')">
                <ion-icon name="camera-outline"></ion-icon>
               </button>
-            <img *ngIf="avatarBase64;else avatarIcon" [src]="avatarBase64" alt="">
-              <!--<img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar" alt=""> -->
+              <!--<img *ngIf="avatarBase64;else avatarIcon" [src]="avatarBase64" alt=""> -->
+              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar"
+                alt="">
               <ng-template #avatarIcon>
-                  <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
+                <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
 
-                  <img class="avatar-alt" *ngIf="userLocal.gender == 'female'" width="70" src="assets/img/female-alt.png">
+                <img class="avatar-alt" *ngIf="userLocal.gender == 'female'" width="70" src="assets/img/female-alt.png">
               </ng-template>
 
-          </ion-avatar>
-          <div class="clearfix"></div>
-        </ion-col>
+            </ion-avatar>
+            <div class="clearfix"></div>
+          </ion-col>
 
-        <ion-col>
-          <h4>{{userLocal.name}}</h4>
-          <div id="rank">
-            <ion-icon name="star" color="yellow"></ion-icon>
-            <ion-icon name="star" color="yellow"></ion-icon>
-            <ion-icon name="star" color="yellow"></ion-icon>
-            <ion-icon name="star" color="yellow"></ion-icon>
-            <ion-icon name="star-outline" color="light"></ion-icon>
-            &nbsp;
-            <span class="user-rank">4</span> / 5
-          </div>
+          <ion-col>
+            <h4>{{userLocal.name}}</h4>
+            <div id="rank">
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star" color="yellow"></ion-icon>
+              <ion-icon name="star-outline" color="light"></ion-icon>
+              &nbsp;
+              <span class="user-rank">4</span> / 5
+            </div>
 
-          <div id="profile-buttons">
+            <div id="profile-buttons">
 
-            <button
-              (click)="navigateToPage('Editprofile')"
-              ion-button
-              color="primary"
-              small
-              outline>
+              <button (click)="navigateToPage('Editprofile')" ion-button color="primary" small outline>
               <ion-icon name="person"></ion-icon>
              تعديل البيانات
             </button>
 
-            <button
-              ion-button
-              color="primary"
-              small
-              outline
-              (click)="navigateToPage('Messages')">
+              <button ion-button color="primary" small outline (click)="navigateToPage('Messages')">
               <ion-icon name="chatboxes"></ion-icon>
            الرسائل
           </button>
-          </div>
+            </div>
 
-        </ion-col>
+          </ion-col>
 
         </ion-row>
       </ion-grid>
 
-        <div id="profile-follow">
-          <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
-            <ion-icon name="people"></ion-icon>
-            المتابِعون
+      <div id="profile-follow">
+        <a color="primary" (click)="navigateToPage('FollowersPage', userLocal.id)">
+          <ion-icon name="people"></ion-icon>
+          المتابِعون
 
-            <span class="following">{{userLocal.followers}}</span>
-          </a>
+          <span class="following">{{userLocal.followers}}</span>
+        </a>
 
-          <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
-            <ion-icon name="people"></ion-icon>
-            المتابَعون <span class="followers">{{userLocal.followings}}</span>
+        <a color="primary" (click)="navigateToPage('FollowingsPage', userLocal.id)">
+          <ion-icon name="people"></ion-icon>
+          المتابَعون <span class="followers">{{userLocal.followings}}</span>
 
-          </a>
-        </div>
-        <div class="map-btn">
+        </a>
+      </div>
+      <div class="map-btn">
 
-          <button (click)="openBrowserMap()" ion-button  full clear text-center>
+        <button (click)="openBrowserMap()" ion-button full clear text-center>
           <ion-icon name="pin" color="primary"></ion-icon> &nbsp;
           المكان على الخريطة
           </button>
-        </div>
-        <span class="small-height" *ngIf="userLocal.level_id == 4">&nbsp;</span>
-        <div id="page-segments" padding *ngIf="userLocal&&userLocal.level_id != 4">
-          <ion-segment [(ngModel)]="showContent">
+      </div>
+      <span class="small-height" *ngIf="userLocal.level_id == 4">&nbsp;</span>
+      <div id="page-segments" padding *ngIf="userLocal&&userLocal.level_id != 4">
+        <ion-segment [(ngModel)]="showContent">
 
-            <ion-segment-button value="products" (click)="getProducts(userLocal.id)">
-              المنتجات
-            </ion-segment-button>
+          <ion-segment-button value="products" (click)="getProducts(userLocal.id)">
+            المنتجات
+          </ion-segment-button>
 
-            <ion-segment-button value="shelfs"  (click)="getShelfs(userLocal.id)">
-              الرفوف
-            </ion-segment-button>
-          </ion-segment>
+          <ion-segment-button value="shelfs" (click)="getShelfs(userLocal.id)">
+            الرفوف
+          </ion-segment-button>
+        </ion-segment>
       </div>
 
 
@@ -120,11 +113,11 @@
 
   </ion-card>
   <div class="clearfix"></div>
-  <ion-card  *ngIf="showContent == 'shelfs' && userLocal" class="show-card shelfcard">
+  <ion-card *ngIf="showContent == 'shelfs' && userLocal" class="show-card shelfcard">
 
 
-          <!-- add loADER -->
-          <!--<ion-scroll scrollY="true">
+    <!-- add loADER -->
+    <!--<ion-scroll scrollY="true">
 
 
           <ion-refresher (ionRefresh)="refreshShelfs($event)">
@@ -135,47 +128,40 @@
 
     <ion-list *ngIf="userLocal.level_id==2">
 
-        <p text-center *ngIf="noShelfs=='empty'">
-          <br>
-             لم يتم اضافة رفوف حتى الان
-        </p>
-        <p text-center *ngIf="noShelfs =='netErr'">
-         <br>
-          التطبيق يتطلب اتصال بالانترنت
-         <br>
+      <p text-center *ngIf="noShelfs=='empty'">
+        <br> لم يتم اضافة رفوف حتى الان
+      </p>
+      <p text-center *ngIf="noShelfs =='netErr'">
+        <br> التطبيق يتطلب اتصال بالانترنت
+        <br>
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
-        </p>
+      </p>
 
-        <ion-item   *ngFor="let shelf of AllShelfs; let i = index" >
-            <div class="shelf-id" (click)="showShelf(shelf)">
-              <p>رقم الرف <span>{{shelf.name}} </span></p>
-            </div>
-            <hr>
-            <div class="shelf-status">
-              <div class="reserved">
-                <span *ngIf="shelf.shelf_status == 0 || shelf.shelf_status == 2">غير محجوز</span>
-                <span *ngIf="shelf.shelf_status == 1">
+      <ion-item *ngFor="let shelf of AllShelfs; let i = index">
+        <div class="shelf-id" (click)="showShelf(shelf)">
+          <p>رقم الرف <span>{{shelf.name}} </span></p>
+        </div>
+        <hr>
+        <div class="shelf-status">
+          <div class="reserved">
+            <span *ngIf="shelf.shelf_status == 0 || shelf.shelf_status == 2">غير محجوز</span>
+            <span *ngIf="shelf.shelf_status == 1">
                   محجوز حتى
                   <ion-badge color="bgColor">{{shelf.end_date | date:'longDate' | arabicdate}}</ion-badge>
                 </span>
-                </div>
-              <div class="shelf-controls">
-                <ion-icon name="open-outline"
-                  (click)="editShelf('AddshelfPage', shelf)"
-                ></ion-icon>
-                <ion-icon
-                  name="trash-outline"
-                  (click)="deleteShelf(shelf)"
-                  ></ion-icon>
-              </div>
-            </div>
-        </ion-item>
+          </div>
+          <div class="shelf-controls">
+            <ion-icon name="open-outline" (click)="editShelf('AddshelfPage', shelf)"></ion-icon>
+            <ion-icon name="trash-outline" (click)="deleteShelf(shelf)"></ion-icon>
+          </div>
+        </div>
+      </ion-item>
 
 
 
-        <p text-center *ngIf="showLoader">
-          <hsa-loader></hsa-loader>
-        </p>
+      <p text-center *ngIf="showLoader">
+        <hsa-loader></hsa-loader>
+      </p>
 
     </ion-list>
 
@@ -191,11 +177,7 @@
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
       </p>
 
-      <ion-item
-        class="shelfRequest"
-        *ngFor="let request of AllShelfs; let i = index"
-        (click)="navigateToPage('VprofilePage', [request.matger_id, userLocal.id])"
-        >
+      <ion-item class="shelfRequest" *ngFor="let request of AllShelfs; let i = index" (click)="navigateToPage('VprofilePage', [request.matger_id, userLocal.id])">
         <p>
           رقم الرف :
           <span>
@@ -282,16 +264,13 @@
     </ion-grid>
     -->
     <p text-center *ngIf="noAcceptedItems">
-      <br>
-      لا يوجد منتجات تم قبول تسليمها حتى الان
+      <br> لا يوجد منتجات تم قبول تسليمها حتى الان
     </p>
     <p text-center *ngIf="noProducts== 'empty'">
-      <br>
-      لا يوجد منتجات حتى الان ليتم عرضها
+      <br> لا يوجد منتجات حتى الان ليتم عرضها
     </p>
     <p text-center *ngIf="netErr">
-      <br>
-      التطبيق يتطلب اتصال بالانترنت
+      <br> التطبيق يتطلب اتصال بالانترنت
     </p>
 
     <!-- list for stores delivered products-->
@@ -340,30 +319,30 @@
             <span></span>
           </div>
 
-           <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
-              <ion-item (click)="editProduct(product)">
-                <ion-icon color="primary" name="open-outline" item-left></ion-icon>
-                <ion-label>تعديل المنتج</ion-label>
-              </ion-item>
-              <ion-item (click)="deleteProduct(product)">
-                <ion-icon  color="primary" name="trash-outline" item-left> </ion-icon>
-                <ion-label>حذف المنتج</ion-label>
-              </ion-item>
+          <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
+            <ion-item (click)="editProduct(product)">
+              <ion-icon color="primary" name="open-outline" item-left></ion-icon>
+              <ion-label>تعديل المنتج</ion-label>
+            </ion-item>
+            <ion-item (click)="deleteProduct(product)">
+              <ion-icon color="primary" name="trash-outline" item-left> </ion-icon>
+              <ion-label>حذف المنتج</ion-label>
+            </ion-item>
 
-              <ion-item (click)="navigateToPage('ProductreportPage', product)">
-                <ion-icon  color="primary" name="warning-outline" item-left></ion-icon>
-                <ion-label>ابلاغ عن المنتج</ion-label>
-              </ion-item>
-            </ion-list>
+            <ion-item (click)="navigateToPage('ProductreportPage', product)">
+              <ion-icon color="primary" name="warning-outline" item-left></ion-icon>
+              <ion-label>ابلاغ عن المنتج</ion-label>
+            </ion-item>
+          </ion-list>
 
         </ion-col>
       </ion-row>
     </ion-grid>
-     <p text-center *ngIf="showLoader">
-          <hsa-loader></hsa-loader>
-        </p>
+    <p text-center *ngIf="showLoader">
+      <hsa-loader></hsa-loader>
+    </p>
 
-        <!--
+    <!--
           <ion-infinite-scroll (ionInfinite)="fetchMoreProducts($event)">
             <ion-infinite-scroll-content
               loadingSpinner="bubbles"
@@ -373,21 +352,23 @@
 
         -->
 
-        {{ cameraError | json}}
+    {{ cameraError | json}}
   </ion-card>
   <div *ngIf="userLocal">
 
-      <button *ngIf="showContent == 'shelfs' && userLocal['level_id'] == 2" ion-button small (click)="navigateToPage('AddshelfPage')" class="float-button"> أضف رف</button>
+    <button *ngIf="showContent == 'shelfs' && userLocal['level_id'] == 2" ion-button small (click)="navigateToPage('AddshelfPage')"
+      class="float-button"> أضف رف</button>
 
 
 
-    <button *ngIf="showContent == 'products' && userLocal['level_id'] == 3" ion-button small (click)="navigateToPage('AddproductPage')" class="float-button"> أضف منتج</button>
+    <button *ngIf="showContent == 'products' && userLocal['level_id'] == 3" ion-button small (click)="navigateToPage('AddproductPage')"
+      class="float-button"> أضف منتج</button>
   </div>
 
   <ion-card id="notLggin" *ngIf="userLocal == null || userLocal == undefined">
 
     <button class="log-btn" (click)="navigateToPage('Login')">تسجيل الدخول</button><br>
 
-    <button class="log-btn" (click)="navigateToPage('Signup')" color="light" >تسجيل حساب جديد</button>
+    <button class="log-btn" (click)="navigateToPage('Signup')" color="light">تسجيل حساب جديد</button>
   </ion-card>
 </ion-content>

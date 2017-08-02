@@ -81,5 +81,6 @@ export interface Ishelf {
   start_date?: any,
   end_date?: any,
   shelf_name?: string,
-  matger_id?:number
+  matger_id?:number,
+  matger_name?:string
 }

@@ -14,6 +14,20 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+$primary:    color($colors, primary);
+$bgPrimary: color($colors, bgPrimary);
+$secondary:  color($colors, secondary);
+$danger:     color($colors, danger);
+$warning: color($colors,warning );
+$yellow: color($colors, yellow);
+$light:      color($colors, light);
+$highlight: color($colors, highlight);
+$dark:       color($colors, dark);
+$primaryDark: color($colors, primaryDark);
+$lightDark : color($colors, lightDark);
+$bgColor: color($colors, bgColor);
+
 ion-app._gmaps_cdv_ .nav-decor{
   background-color: transparent !important;
 }

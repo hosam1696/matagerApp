@@ -18,13 +18,13 @@
         <!--<span>
           عنوان الرسالة
         </span>-->
-        <input type="text" placeholder="عنوان الرسالة">
+        <input #messsageTitle type="text" placeholder="عنوان الرسالة">
       </div>
-      
-     <textarea  class="msg-body" placeholder="محتوى الرسالة" rows="5" (input)="watchHeight($event)"></textarea>
+
+     <textarea  #messageBody class="msg-body" placeholder="محتوى الرسالة" rows="5" (input)="watchHeight($event)"></textarea>
 
 
-     <button ion-button block full class="float-btn">ارسل رسالتك</button>
+     <button ion-button block full class="float-btn" (click)="sendMessage(messsageTitle.value, messageBody.value)">ارسل رسالتك</button>
 
     <!--
     <div class="messages">
@@ -42,7 +42,7 @@
                 3:75 am
               </div>
           </div>
-          
+
         </ion-item>
 
         <ion-item class="message">
@@ -57,7 +57,7 @@
                 3:75 am
               </div>
           </div>
-          
+
         </ion-item>
 
         <ion-item class="message sender">
@@ -75,11 +75,11 @@
                 3:75 am
               </div>
           </div>
-          
+
         </ion-item>
 
         <ion-item class="message reciever">
-          
+
           <div class="message-body msg-left">
             <p>
               بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
@@ -88,19 +88,19 @@
                 3:75 am
               </div>
           </div>
-          
+
         </ion-item>
         <ion-item class="message reciever">
-          
+
           <div class="message-body msg-left">
             <p>
-              بسم الله الرحمن الرحيم 
+              بسم الله الرحمن الرحيم
             </p>
               <div class="msg-time">
                 3:75 am
               </div>
           </div>
-          
+
         </ion-item>
 
       </ion-list>
@@ -113,10 +113,10 @@
         <input type="text">
         <div class="controls-icon">
           <ion-icon name="camera-outline" color="primaryDark"></ion-icon>
-          
+
         </div>
       </div>
-      
+
       <button ion-button small outline color="primary">
         <ion-icon name="send"></ion-icon>
       </button>

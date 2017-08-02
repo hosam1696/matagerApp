@@ -13,7 +13,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser'
 //import {PopSettings} from './popsetting';
-import {LZString} from '../../app/service/lz-string';
+import { LZString } from '../../app/service/lz-string';
 declare let cordova: any;
 
 @IonicPage()
@@ -177,31 +177,38 @@ export class ProfilePage {
 
     // returned File URI => file:///storage/emulated/0/Android/data/co.itplus.rf/cache/.Pic.jpg?1498042093580
 
+    /* response
+    {"bytesSent":176215,"responseCode":200,"response":"/home/httpprim/rfapp.net<br>/api/uploadImage.
+      php<pre>Array\n(\n
+      [0] => \n [1] => api\n [2] => uploadImage.php\n)\n/home/httpprim/rfapp.net<br>/api","objectId":""} */
 
     this.camera.getPicture(cameraOptions).then(imageData => {
+      
+      /* If data
+      
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
       let compressed = LZString.compressToUTF16(base64Image);
 
       console.log(compressed);
-
+      */
       console.log('line 171 on promise resolve function', imageData);
 
       // Special handling for Android library
-      if (this.platform.is('android') && type == 'PHOTOLIBRARY') {
+      if (this.platform.is('android') || type == 'PHOTOLIBRARY') {
         this.filePath.resolveNativePath(imageData)
           .then(filePath => {
             console.log('file path from resolve native path', filePath);
             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
             let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
-            console.log('correctPath',correctPath, 'currentName',currentName);
+            console.log('correctPath', correctPath, 'currentName', currentName);
             this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
           });
       } else {
         console.log('line 197 image file path', imageData);
         let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
         let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
-        console.log('correctPath',correctPath, 'currentName',currentName);
+        console.log('correctPath', correctPath, 'currentName', currentName);
         this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
 
@@ -263,8 +270,9 @@ export class ProfilePage {
 
   uploadImage(file, type, cameraImage) {
     const fto: TransferObject = this.transfer.create();
-    let uploadFolder = 'templates/default/uploads/users';
-     // File for Upload
+
+    let uploadFolder = 'templates/default/uploads';
+
     let targetPath = this.pathForImage(this.lastImage);
 
     let fileName = file.substr(file.lastIndexOf('/') + 1);
@@ -276,26 +284,26 @@ export class ProfilePage {
       mimeType: "multipart/form-data",
       params: {
         ImgName: fileName,
-        uploadFolder,
+        uploadFolder: uploadFolder,
         userId: this.userLocal.id,
         type: (cameraImage == 'avatar') ? 'avatars' : 'covers'
       }
     };
 
-    let serverFile = this.API_URL + "uploadImage.php";
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + fileName;
 
-    console.log('file uri', file,'target Path',targetPath, 'server file & path', serverFile, 'file name', fileName);
+    console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
 
-    fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true).then(res => {
-      this.loadImage = true;
-      this.showToast('تم الرفع بنجاح');
-      console.log('uploaded', res);
-    }).catch(err => {
-      this.uploadErr = err;
-      this.showToast('uploAD ERROR'+err);
-      console.log(err);
-    });
-
+    fto.upload(file, encodeURI(serverFile), uploadOptions, true)
+      .then((res) => {
+        this.loadImage = true;
+        this.showToast('جارى رفع الصورة');
+        console.log('uploaded', res);
+      }, err => {
+        this.uploadErr = JSON.stringify(err);
+        this.showToast('uploAD ERROR' + JSON.stringify(err));
+        console.log(err);
+      });
 
   }
 
@@ -317,7 +325,7 @@ export class ProfilePage {
     if (this.userLocal.level_id == 2) {
 
 
-      this.shelfsProvider.getShelfs(userId)
+      this.shelfsProvider.getShelfs(userId).retry(3)
         .subscribe(({ status, data }) => {
           console.log(status, data);
           //console.table( res);
@@ -344,7 +352,8 @@ export class ProfilePage {
         );
     } else if (this.userLocal.level_id == 3) {
 
-      this.shelfsProvider.getAcceptedRequests(userId).subscribe(({ status, data }) => {
+      this.shelfsProvider.getAcceptedRequests(userId).retry(3)
+      .subscribe(({ status, data }) => {
         console.log(status, data);
         //console.table( res);
         if (status == 'success') {
@@ -383,10 +392,10 @@ export class ProfilePage {
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه')
     } else {
 
-      let shelfData = Object.assign({}, {
+      let shelfData = {
         "user_id": this.userLocal['id'],
         id: shelf.id
-      });
+      };
 
       this.alertOptions = {
         title: 'حذف رف',
@@ -402,7 +411,7 @@ export class ProfilePage {
           {
             text: 'حذف',
             handler: () => {
-              this.shelfsProvider.deleteShelf(shelfData).subscribe(res => {
+              this.shelfsProvider.deleteShelf(shelfData).retry(3).subscribe(res => {
                 console.log(res);
                 if (res.status == 'success') {
 
@@ -416,7 +425,7 @@ export class ProfilePage {
               },
                 err => {
                   console.warn(err);
-                  this.showToast('لم يتم حذ الرف الرجاء المحاولة فى وقت لاحق')
+                  this.showToast('التطبيق يتطلب اتصال بالانترنت')
                 }
               );
             }
@@ -439,7 +448,7 @@ export class ProfilePage {
       this.navigateToPage(page, pageParams)
   }
 
-  chunk(arr, limit) {
+  private chunk(arr, limit) {
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -453,9 +462,9 @@ export class ProfilePage {
   getProducts(id: number) {
     this.showLoader = true;
     if (this.userLocal.level_id == 3) {
-      const prodService = this.productsProvider.getProductByUserId(id).retry(2);
+      const prodService = this.productsProvider.getProductByUserId(id).retry(3);
       [this.showLoader, this.noProducts] = [true, null];
-      prodService.retry(2).subscribe(({ status, data }) => {
+      prodService.subscribe(({ status, data }) => {
         if (status.message == 'success') {
           if (data.length <= 0) {
             [this.showLoader, this.noProducts] = [false, 'empty'];
@@ -478,7 +487,7 @@ export class ProfilePage {
       )
     } else if (this.userLocal.level_id == 2) {
 
-      this.deliveryProvider.getAccDeliveryReqs(id)
+      this.deliveryProvider.getAccDeliveryReqs(id).retry(3)
         .subscribe(
         ({ status, data, errors }) => {
           if (status === 'success') {
@@ -549,7 +558,7 @@ export class ProfilePage {
 
   openBrowserMap(maps = '30.0371616,31.0033728') {
     if (this.userLocal.latitude && this.userLocal.longitude) {
-      maps = this.userLocal.latitude + ',' + this.userLocal.longitude;
+      maps = this.userLocal.latitude + ',' + this.userLocal.longitude; // this.userLocal.latitude.concat(',',this.userLocal.longitude)
     }
     console.info(maps);
     const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';

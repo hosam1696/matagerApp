@@ -230,6 +230,28 @@ export interface IPost {
   message?: string,
   success?:any
 }
+export enum readStatus {
+  unread,
+  read
+}
+export interface IMessage {
+  id: number,
+  title: string | any,
+  message_body: string,
+  status: readStatus,
+  message_date: any
+}
+
+export interface INotificationMessage {
+  id: number,
+  status: readStatus,
+  name: string,
+  gender: string,
+  message_date: any,
+  avatar: string,
+  message_body: string,
+  url:number
+}
 
 export interface ipUserInfo {
   city: string,

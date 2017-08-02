@@ -7,7 +7,7 @@ page-messages {
     }
   }
   ion-content {
-    .scroll-content {
+    &.content {
       background-color: #eee;
     }
     ion-list {

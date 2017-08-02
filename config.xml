@@ -3,7 +3,7 @@
     <name>رف</name>
     <description>تطبيق رف</description>
     <author email="info@it-plus.co" href="http://it-plus.co/">IT PLUS TEAM</author>
-    <content original-src="index.html" src="http://192.168.1.10:8100" />
+    <content original-src="index.html" src="http://192.168.1.10:8101" />
     <access origin="*" />
     <access launch-external="yes" origin="geo:*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -20,6 +20,7 @@
     <allow-navigation href="http://192.168.1.5:8100" />
     <allow-navigation href="http://192.168.1.11:8100" />
     <allow-navigation href="http://192.168.1.7:8100" />
+    <allow-navigation href="http://192.168.1.10:8101" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

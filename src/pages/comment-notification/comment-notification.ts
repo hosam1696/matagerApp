@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {NotificationsProvider} from "../../providers/notifications";
 
 /**
  * Generated class for the CommentNotificationPage page.
@@ -15,12 +16,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CommentNotificationPage {
   pageData: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public notificationsProviders:NotificationsProvider) {
     this.pageData = this.navParams.get('pageData');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommentNotificationPage');
+    if (this.pageData.status == 0) { // check if the notification had read or not
+      this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
+
+        .subscribe(res => { // in developing only
+          console.log(res);
+        })
+    } else {
+      console.info('you have been read this notification')
+    }
   }
 
   openComment() {

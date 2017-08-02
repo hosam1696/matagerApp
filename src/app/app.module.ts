@@ -28,9 +28,11 @@ import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
 import { ItemProvider } from '../providers/item';
+import {MessagesProvider} from '../providers/messagesprovider';
 import { NotificationsProvider } from '../providers/notifications';
 import { DeliveryProvider } from '../providers/delivery';
 import { DeliveryRequestInfo } from '../pages/deliveryrequestmodal';
+
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -50,6 +52,7 @@ import { ActionSheet } from '@ionic-native/action-sheet';
 import {changePropDirectiveModule} from "./service/changeprop.directive.module";
 import {MapsModal} from "../pages/mapsmodal";
 import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
+import {SalesProvider} from "../providers/sales";
 
 
 //import { GenderPipe } from '../pipes/gender/gender';
@@ -98,17 +101,19 @@ import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
     DeliveryRequestInfo,
     PopSettings
   ],
-  providers: [  
+  providers: [
     StatusBar,
     SplashScreen,
     UserProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
-    Network,    
+    Network,
     BarcodeScanner,
     AreaProvider,
     ShelfsProvider,
     DeliveryProvider,
+    MessagesProvider,
+    SalesProvider,
     CommentProvider,
     NotificationsProvider,
     ImagePicker,
