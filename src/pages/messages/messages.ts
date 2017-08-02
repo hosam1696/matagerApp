@@ -17,6 +17,7 @@ export class Messages {
   netError: boolean = false;
   showLoader: boolean = true;
   moreData: boolean = true;
+  noData: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -46,6 +47,8 @@ export class Messages {
     });
 
     */
+
+    this.getMessages();
   }
 
   ionViewDidEnter() {
@@ -58,16 +61,23 @@ export class Messages {
     }*/
   }
   refreshData(event):void {
-    this.getMessages();
+    this.getMessages(event);
   }
   getMessages(event?:any):void {
-    let messageData = {
-      user_id: this.localUser.id
-    };
-    this.messagesProvider.getAllMessage(messageData, this.initLimit, 0)
+
+    this.messagesProvider.getAllMessage(this.localUser.id, this.initLimit, 0)
       .subscribe(
-        res => {
-          console.log('response all messages', res);
+        ({status, data}) => {
+          if (status === 'success') {
+            if (data.length == 0) {
+              //this.showToast('لا يوجد رسائل');
+              this.noData = true;
+            }
+            this.AllMessages = data;
+          } else {
+            this.noData = true;
+          }
+          //console.log('response all messages', res);
         },
         err => {
           event&&event.complete();
@@ -126,6 +136,14 @@ export class Messages {
       cssClass: 'danger-toast'
     });
     toast.present();
+  }
+
+  isRead(status) {
+    return (status == 0) ? 'highlight' : '';
+  }
+
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
   }
 
 }

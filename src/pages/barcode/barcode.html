@@ -14,7 +14,18 @@
     افحص الباركود
     &nbsp; &nbsp;<ion-icon name="search"></ion-icon>
   </button>
+  <ion-list>
+  <ion-item-sliding>
+    <ion-item>
+      ادخل الكود يدويا
+    
 
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button >Unread</button>
+    </ion-item-options>
+  </ion-item-sliding>
+</ion-list>
   <ion-card *ngIf="showData" margin-top>
     <h4 text-center color="primary">
       نتائج فحص الباركود

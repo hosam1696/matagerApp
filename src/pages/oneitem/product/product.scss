@@ -147,7 +147,8 @@ page-product {
           overflow: hidden;
           img {
             width: 50px !important;
-            height: 50px !important
+            height: 50px !important;
+            border-radius: 0 !important;
           }
         }
         .message-sender {

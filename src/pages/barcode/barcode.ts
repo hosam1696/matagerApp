@@ -1,3 +1,4 @@
+import { SalesProvider } from './../../providers/sales';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner';
@@ -11,7 +12,8 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 export class BarcodePage {
   BarcodeResult: any[]=[] ;
   showData:boolean=false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner,
+  public salesProvider: SalesProvider) {
   }
 
   ionViewDidLoad() {
@@ -32,6 +34,12 @@ export class BarcodePage {
     scanBarcode.then((barcodeData) => {
       console.log(barcodeData);
       this.showData = true;
+      console.log(barcodeData.text);
+      this.salesProvider.getItemByCode(barcodeData.text)
+        .subscribe(({status, data})=>{
+          console.log(status, data);
+        })
+
       this.BarcodeResult.push( barcodeData );
     });
 

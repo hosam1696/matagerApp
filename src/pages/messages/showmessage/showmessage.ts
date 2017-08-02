@@ -1,3 +1,4 @@
+import { INotificationMessage } from './../../../app/service/interfaces';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {MessagesProvider} from "../../../providers/messagesprovider";
@@ -16,12 +17,32 @@ import {MessagesProvider} from "../../../providers/messagesprovider";
 })
 export class ShowmessagePage {
   messageId:any;
+  pageData: INotificationMessage;
   constructor(public navCtrl: NavController, public navParams: NavParams,public messagesProvider: MessagesProvider) {
-    this.messageId = this.navParams.get('messageData');
+    //this.messageId = this.navParams.get('messageData');
+    this.pageData  = this.navParams.get('messageData');
+
+    console.log(this.pageData);
+
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShowmessagePage');
+
+    if (this.pageData.status == 0) {
+      this.readMail();
+    } else {
+      console.log('you have read this email');
+      
+    }
+  }
+
+  readMail() {
+    this.messagesProvider.readMessage(this.pageData.id, this.pageData.user_id)
+      .subscribe(res=>{
+        console.log(res);
+      })
   }
 
   getMessage(id) {
@@ -36,8 +57,15 @@ export class ShowmessagePage {
       )
   }
 
-  navigateToPage(pageData, reciever) {
-    this.navCtrl.push('MessagePage', {pageData, reciever})
+  navigateToPage(reciever, reciever_id) {
+    this.navCtrl.push('MessagePage', { reciever,reciever_id})
+  }
+  openProfile() {
+    let localUserId = JSON.parse(localStorage.getItem('userLocalData')).id;
+    this.navCtrl.push('VprofilePage', {pageData: [this.pageData.user_id, localUserId]})
   }
 
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

@@ -202,14 +202,14 @@ export class ProfilePage {
             let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
             let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
             console.log('correctPath', correctPath, 'currentName', currentName);
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+            //this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
           });
       } else {
         console.log('line 197 image file path', imageData);
         let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
         let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
         console.log('correctPath', correctPath, 'currentName', currentName);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        //this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       }
 
 
@@ -246,7 +246,7 @@ export class ProfilePage {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
       this.lastImage = newFileName;
     }, error => {
-      this.presentToast('Error while storing file.');
+      //this.presentToast('Error while storing file.');
     });
   }
 
@@ -281,7 +281,7 @@ export class ProfilePage {
       fileKey: 'file',
       fileName: fileName,
       chunkedMode: false,
-      mimeType: "multipart/form-data",
+      mimeType: "image/"+type,
       params: {
         ImgName: fileName,
         uploadFolder: uploadFolder,
@@ -294,15 +294,19 @@ export class ProfilePage {
 
     console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
 
-    fto.upload(file, encodeURI(serverFile), uploadOptions, true)
+    fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true)
       .then((res) => {
-        this.loadImage = true;
+        //this.loadImage = true;
         this.showToast('جارى رفع الصورة');
-        console.log('uploaded', res);
+        console.log('uploaded', JSON.stringify(res));
       }, err => {
         this.uploadErr = JSON.stringify(err);
-        this.showToast('uploAD ERROR' + JSON.stringify(err));
-        console.log(err);
+        this.showToast('upload' + JSON.stringify(err));
+        console.log(JSON.parse(err));
+        if (err.body.success) {
+          this.showToast('image name '+err.body.name);
+        }
+        console.log(JSON.stringify(err));
       });
 
   }
@@ -591,6 +595,10 @@ export class ProfilePage {
       position: 'top'
     });
     toast.present();
+  }
+
+  imagePath(type,img) {
+    return 'http://rfapp.net/templates/default/uploads/'+type+'/'+img
   }
 
 }

@@ -15,7 +15,34 @@
 
 <ion-content>
 
+<ion-list>
 
+    <ion-item no-lines id="hero" (click)="openProfile()">
+      <ion-avatar item-left>
+        <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
+        <ng-template #altImages>
+          <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
+          <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
+        </ng-template>
+      </ion-avatar>
+      <h3 >
+        <span>{{ pageData.name }}</span>
+        <span class="since-time">منذ
+        {{pageData.date_added | sincedate}}
+      </span>
+      </h3>
+    </ion-item>
 
-  <button ion-button block full class="float-btn" (click)="navigateToPage(15, 'treee')">الرد على الرسالة</button>
+    <ion-item>
+      <p class="primary">عنوان الرسالة</p>
+      <p> {{pageData.mail_title}} </p>
+    </ion-item>
+     <ion-item>
+      <p class="primary">نص الرسالة</p>
+      <p> {{pageData.mail_body}} </p>
+    </ion-item>
+    
+</ion-list>
+
+  <button ion-button block full class="float-btn" (click)="navigateToPage(pageData.name, pageData.user_id)">الرد على الرسالة</button>
 </ion-content>

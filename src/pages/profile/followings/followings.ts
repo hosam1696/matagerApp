@@ -116,6 +116,8 @@ export class FollowingsPage {
       this.navCtrl.push('VprofilePage', { pageData: [user_id, id] });
   }
 
-
+imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 
 }

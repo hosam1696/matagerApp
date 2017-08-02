@@ -91,4 +91,8 @@ export class SettingsPage {
   openTabBrowser(url) {
     this.itb.create(url).show();
   }
+
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

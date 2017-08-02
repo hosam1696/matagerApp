@@ -16,7 +16,7 @@
     <p class="small" text-center *ngIf="netErr">
       تفقد الاتصال وحاول مجددا
     </p>
-    <p class="small" text-center *ngIf="noFollowers">
+    <p class="err-small" text-center *ngIf="noFollowers">
       لا يوجد متابعون حتى الان
     </p>
     <p text-center *ngIf="showLoader">
@@ -29,7 +29,7 @@
       >
       <ion-avatar item-left>
         <!-- To be replaced if the data from server is inistansiated -->
-            <img *ngIf = "follower.avatar;else altImages" [src]="follower.avatar" alt="profile image">
+            <img *ngIf = "follower.avatar;else altImages" [src]="imagePath(follower.avatar)" alt="profile image">
         <ng-template #altImages>
           <img *ngIf="follower.gender == 'female'" src="assets/img/female-alt.png" >
           <img *ngIf="follower.gender == 'male'" src="assets/img/male-alt.png" >

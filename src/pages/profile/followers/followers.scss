@@ -9,6 +9,14 @@ page-followers {
         color: #666;
         background-color: #eee 
       }
+       .err-small {
+    font-size: 1.7rem;
+    color: #666;
+    text-shadow: 1px 1px #fff;
+    position: absolute;
+    top: 40%;
+    width: 100%;
+  }
       ion-refresher {
         ion-refresher-content {
           font-size: 12px !important;
@@ -22,6 +30,7 @@ page-followers {
           .item-inner {
             border-bottom: none !important;
           }
+         
           ion-avatar {
             border-radius: 5px;
             // border: 1px dashed color($colors, primary);
@@ -34,7 +43,8 @@ page-followers {
             overflow: hidden;
             img {
               width: 50px !important;
-              height: 50px !important
+              height: 50px !important;
+              border-radius: 0 !important;
             }
 
           }

@@ -18,7 +18,7 @@
 
     <ion-item no-lines id="hero">
       <ion-avatar item-left>
-        <img *ngIf="pageData.avatar != '' ;else altImages" [src]="pageData.avatar" alt="profile image">
+        <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
         <ng-template #altImages>
           <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
           <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">

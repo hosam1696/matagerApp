@@ -270,4 +270,8 @@ export class NotificationsPage {
     return (status == 0) ? 'highlight' : '';
   }
 
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
+
 }

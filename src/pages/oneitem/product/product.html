@@ -76,7 +76,7 @@
       <ion-list>
         <ion-item *ngFor="let comment of productData.comments">
           <ion-avatar item-left>
-            <img [src]="(comment.avatar)?'link'+comment.avatar:'assets/img/male-alt.png'" alt="male">
+            <img [src]="(comment.avatar)?imagePath(comment.avatar):'assets/img/male-alt.png'" alt="male">
           </ion-avatar>
           <div class="message-sender">
             <h4>{{comment.name}}</h4>

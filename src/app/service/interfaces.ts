@@ -247,10 +247,12 @@ export interface INotificationMessage {
   status: readStatus,
   name: string,
   gender: string,
-  message_date: any,
+  date_added: any,
   avatar: string,
-  message_body: string,
-  url:number
+  mail_body: string,
+  url:number,
+  mail_title: string,
+  user_id: number
 }
 
 export interface ipUserInfo {

@@ -36,4 +36,12 @@ export class CommentNotificationPage {
   openComment() {
     this.navCtrl.push('ProductPage', {pageData: this.pageData.url})
   }
+   navigateToPage(page, user_id) {
+    let id = this.pageData.user_id;
+    this.navCtrl.push(page, { userData: [user_id, id] })
+  }
+
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card *ngIf="userData; else noUser" id="user-info">
     <section id="hero">
-      <img *ngIf="userData.cover" [src]="userData.cover" alt="user background image">
+      <img *ngIf="userData.cover" [src]="imagePath('covers',userData.cover)" alt="user background image">
     </section>
 
     <ion-card>
@@ -21,7 +21,7 @@
 
             <ion-avatar>
 
-              <img *ngIf="userData.avatar;else avatarIcon" [src]="userData.avatar" alt="">
+              <img *ngIf="userData.avatar;else avatarIcon" [src]="imagePath('avatars',userData.avatar)" alt="">
               <ng-template #avatarIcon>
                 <img class="avatar-alt" *ngIf="userData.gender == 'male'" width="70" src="assets/img/male-alt.png">
 
@@ -63,7 +63,7 @@
              </ng-template>
         </button>
 
-              <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage', 'messageData', userData.name)">
+              <button ion-button color="primary" small outline (click)="navigateToPage('MessagePage', 'messageData', userData.name, userData.id)">
               <ion-icon name="chatboxes"></ion-icon>
            راسلنا
           </button>
@@ -133,7 +133,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
 
-            <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/product-iphone.png'" alt="product">
+            <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/adds_02.png'" alt="product">
 
             <p class="prod-desc" text-center>
               {{product.item_name}}
@@ -162,7 +162,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
-            <img src="assets/img/product-iphone.png" alt="product">
+            <img src="assets/img/adds_02.png" alt="product">
 
             <p class="prod-desc">
               {{limitString(product.item_desc)}}

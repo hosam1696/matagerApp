@@ -15,7 +15,7 @@
   <span *ngIf="uploadErr">{{uploadErr | json}}</span>
   <ion-card *ngIf="userLocal" id="user-info">
     <section id="hero">
-      <img *ngIf="userLocal.cover" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.cover" alt="user background image">
+      <img *ngIf="userLocal.cover" [src]="imagePath('covers',userLocal.cover)" alt="user background image">
       <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
@@ -30,7 +30,7 @@
                <ion-icon name="camera-outline"></ion-icon>
               </button>
               <!--<img *ngIf="avatarBase64;else avatarIcon" [src]="avatarBase64" alt=""> -->
-              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="'http://rfapp.net/templates/default/uploads/users/'+userLocal.avatar"
+              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="imagePath('avatars',userLocal.avatar)"
                 alt="">
               <ng-template #avatarIcon>
                 <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
@@ -279,7 +279,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
 
-            <img [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/product-iphone.png'" alt="product">
+            <img [src]="(product.item_image)?imagePath('avatars',product.item_imag):'assets/img/adds_02.png'" alt="product">
 
             <p class="prod-desc" text-center>
               {{product.item_name}}
@@ -301,7 +301,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
-            <img src="assets/img/product-iphone.png" alt="product">
+            <img src="assets/img/adds_02.png" alt="product">
 
             <p class="prod-desc">
               {{limitString(product.item_desc)}}

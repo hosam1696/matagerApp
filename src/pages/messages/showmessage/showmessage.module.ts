@@ -11,7 +11,7 @@ import {HsaloaderComponentModule} from "../../../components/hsa-loader/hsa-loade
   imports: [
     IonicPageModule.forChild(ShowmessagePage),
     HsaloaderComponentModule,
-    SinceDatePipeModule,
+    SinceDatePipeModule
   ],
 })
 export class ShowmessagePageModule {}

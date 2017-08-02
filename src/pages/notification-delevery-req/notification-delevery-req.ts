@@ -164,4 +164,8 @@ export class NotificationDeleveryReqPage {
 
     modal.present()
   }
+
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

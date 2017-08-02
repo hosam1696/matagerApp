@@ -179,6 +179,7 @@ page-profile {
                 background-color: #fff;
                 display: flex;
                 flex-direction: column;
+                border-bottom: 2px solid #ccc;
                 img {
                   width: 100%;
                   height: 100px;
@@ -188,7 +189,8 @@ page-profile {
                   &.prod-desc {
                     flex: 1;
                     color: color($colors, primary);
-                    font-size: 14px;
+                    font-size: 13px;
+                    padding-top: 5px;
 
                   }
                   /*&.price {
@@ -342,9 +344,10 @@ page-profile {
                 }
               }
               img {
-                width: 92%;
+                width: 100%;
                 height: 100%;
                 &.avatar-alt {
+                  width: 92%;
                   margin-top: 5px
                 }
               }

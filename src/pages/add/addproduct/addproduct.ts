@@ -1,10 +1,15 @@
+import { Camera,CameraOptions } from '@ionic-native/camera';
+import { Inject } from '@angular/core';
+import { TransferObject,Transfer,FileUploadOptions } from '@ionic-native/transfer';
+import { File } from '@ionic-native/file';
 import { Component } from '@angular/core';
-import { IonicPage, NavController,ToastController, NavParams, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, ToastController, NavParams, ActionSheetController, Platform } from 'ionic-angular';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { IlocalUser } from '../../../app/service/inewUserData';
 import { IProduct, ArProductForm } from '../../../app/service/interfaces';
 import {ItemProvider} from '../../../providers/item';
 
+declare let cordova;
 
 @IonicPage()
 @Component({
@@ -18,12 +23,21 @@ export class AddproductPage {
   InitData: IProduct;
   actionText: string = 'اضافة';
   actionBtnTxt: any = null;
+  camerError: boolean = false;
+  loadImage;
+  uploadErr;
+  lastImage;
   constructor(
+    @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
     public navParams: NavParams,
     private actionCtrl: ActionSheetController,
     public toastCtrl: ToastController,
-    private productProvider: ItemProvider
+    private productProvider: ItemProvider,
+    private transfer: Transfer,
+    private file: File,
+    public camera: Camera,
+    public platform : Platform
   ) {
 
     this.addProductForm = new FormGroup({
@@ -81,6 +95,7 @@ export class AddproductPage {
           handler: () => {
             console.log('camera clicked');
             //this.openCamera();
+            this.openCamera('CAMERA');
           }
         },
         {
@@ -182,6 +197,148 @@ export class AddproductPage {
 
   }
 
+  private createFileName() {
+    var d = new Date(),
+      n = d.getTime(),
+      newFileName = n + ".jpg";
+    return newFileName;
+  }
+
+  private copyFileToLocalDir(namePath, currentName, newFileName) {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+      this.lastImage = newFileName;
+    }, error => {
+      this.presentToast('Error while storing file.');
+    });
+  }
+
+  private presentToast(text) {
+    let toast = this.toastCtrl.create({
+      message: text,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
+  }
+
+  // Always get the accurate path to your apps folder
+  public pathForImage(img) {
+    if (img === null) {
+      return '';
+    } else {
+      return cordova.file.dataDirectory + img;
+    }
+  }
+
+uploadImage(file, type, cameraImage) {
+    const fto: TransferObject = this.transfer.create();
+
+    let uploadFolder = 'templates/default/uploads';
+
+    let targetPath = this.pathForImage(this.lastImage);
+
+    let fileName = file.substr(file.lastIndexOf('/') + 1);
+
+    let uploadOptions: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: fileName,
+      chunkedMode: false,
+      mimeType: "image/"+type,
+      params: {
+        ImgName: fileName,
+        uploadFolder: uploadFolder,
+        userId: this.userLocal.id,
+        type: (cameraImage == 'avatar') ? 'avatars' : 'covers'
+      }
+    };
+
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + fileName;
+
+    console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
+
+    fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true)
+      .then((res) => {
+        this.loadImage = true;
+        this.showToast('جارى رفع الصورة');
+        console.log('uploaded', res);
+      }, err => {
+        this.uploadErr = JSON.stringify(err);
+        this.showToast('uploAD ERROR' + JSON.stringify(err));
+        console.log(err);
+      });
+
+  }
+
+  openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
+
+    const cameraOptions: CameraOptions = {
+      quality: 70,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      allowEdit: true,
+      sourceType: this.camera.PictureSourceType[type]
+    };
+
+
+    // returned File URI => file:///storage/emulated/0/Android/data/co.itplus.rf/cache/.Pic.jpg?1498042093580
+
+    /* response
+    {"bytesSent":176215,"responseCode":200,"response":"/home/httpprim/rfapp.net<br>/api/uploadImage.
+      php<pre>Array\n(\n
+      [0] => \n [1] => api\n [2] => uploadImage.php\n)\n/home/httpprim/rfapp.net<br>/api","objectId":""} */
+
+    this.camera.getPicture(cameraOptions).then(imageData => {
+      
+      /* If data
+      
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+
+      let compressed = LZString.compressToUTF16(base64Image);
+
+      console.log(compressed);
+      */
+      console.log('line 171 on promise resolve function', imageData);
+
+      // Special handling for Android library
+      /*if (this.platform.is('android') || type == 'PHOTOLIBRARY') {
+        this.filePath.resolveNativePath(imageData)
+          .then(filePath => {
+            console.log('file path from resolve native path', filePath);
+            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+            let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
+            console.log('correctPath', correctPath, 'currentName', currentName);
+            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+          });
+      } else {
+        console.log('line 197 image file path', imageData);
+        let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
+        let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+        console.log('correctPath', correctPath, 'currentName', currentName);
+        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+      }*/
+
+
+
+      // detect image extension
+      let extension: string = imageData.substring(imageData.lastIndexOf('.') + 1, imageData.lastIndexOf('?') != -1 ? imageData.lastIndexOf('?') : imageData.length);
+
+      console.log('file extension', extension);
+
+      window.alert(imageData + "  && " + extension);
+
+
+      return Promise.resolve([imageData, extension, cameraImage])
+
+    }).then(data => {
+
+      this.uploadImage(data[0], data[1], data[2]);
+
+    }).catch(err => {
+
+      console.error('getPicture Error ', err);
+    })
+  }
 
   detectUnvalidFormErrors(form:FormGroup = this.addProductForm,   formKeys: string[] = Object.keys(form.value) ) {
 

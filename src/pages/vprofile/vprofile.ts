@@ -313,8 +313,13 @@ export class VprofilePage {
     alert.present();
   }
 
-  navigateToPage(page, pageData , reciever?: string) {
-    this.navCtrl.push(page, { pageData, reciever });
+  navigateToPage(page, pageData , reciever?: string, reciever_id?:number) {
+
+
+    if(this.navigatedUserId != 0 || page == 'ProductPage')
+      this.navCtrl.push(page, { pageData, reciever,reciever_id });
+    else 
+      this.showLoginAction(); 
   }
 
   showToast(msg) {
@@ -324,5 +329,9 @@ export class VprofilePage {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  imagePath(type,img) {
+    return 'http://rfapp.net/templates/default/uploads/'+type+'/'+img
   }
 }
