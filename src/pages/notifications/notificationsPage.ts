@@ -239,7 +239,9 @@ export class NotificationsPage {
       this.navCtrl.push('CommentNotificationPage', {pageData})
     }  else if (pageData.type == 'like') {
       this.navCtrl.push('CommentNotificationPage', {pageData})
-    }else {
+    } else if (pageData.type == 'salesBill') {
+      this.navCtrl.push('SalesnotificationPage', {pageData})
+    } else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
       /*if (pageData.type == 'reserveShlef') {
 

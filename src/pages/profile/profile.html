@@ -3,11 +3,10 @@
     <ion-title>
       صفحتى
     </ion-title>
-    <ion-buttons end *ngIf="loadImage">
-      جارى الرفع &nbsp;
-      <ion-spinner name="crescent"></ion-spinner>
-
+    <ion-buttons start>
+      <ion-spinner *ngIf="uploadLoader" small name="crescent" color="light"></ion-spinner>
     </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 

@@ -1,3 +1,4 @@
+import { HsaloaderComponentModule } from './../../components/hsa-loader/hsa-loader.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { BarcodePage } from './barcode';
@@ -8,6 +9,7 @@ import { BarcodePage } from './barcode';
   ],
   imports: [
     IonicPageModule.forChild(BarcodePage),
+    HsaloaderComponentModule
   ],
   exports: [
     BarcodePage

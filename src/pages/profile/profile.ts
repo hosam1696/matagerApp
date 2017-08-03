@@ -31,6 +31,7 @@ export class ProfilePage {
   AllProducts: IProduct[] | null = null;
   alertOptions: AlertOptions;
   showLoader: boolean = false;
+  uploadLoader: boolean = false;
   userLevelId: number;
   showSettings: boolean = false;
   cameraError: any;
@@ -183,7 +184,7 @@ export class ProfilePage {
       [0] => \n [1] => api\n [2] => uploadImage.php\n)\n/home/httpprim/rfapp.net<br>/api","objectId":""} */
 
     this.camera.getPicture(cameraOptions).then(imageData => {
-      
+
       /* If data
       
       let base64Image = 'data:image/jpeg;base64,' + imageData;
@@ -219,7 +220,7 @@ export class ProfilePage {
 
       console.log('file extension', extension);
 
-      window.alert(imageData + "  && " + extension);
+      // window.alert(imageData + "  && " + extension);
 
 
       return Promise.resolve([imageData, extension, cameraImage])
@@ -276,12 +277,12 @@ export class ProfilePage {
     let targetPath = this.pathForImage(this.lastImage);
 
     let fileName = file.substr(file.lastIndexOf('/') + 1);
-
+    
     let uploadOptions: FileUploadOptions = {
       fileKey: 'file',
       fileName: fileName,
       chunkedMode: false,
-      mimeType: "image/"+type,
+      mimeType: "image/" + type,
       params: {
         ImgName: fileName,
         uploadFolder: uploadFolder,
@@ -292,6 +293,7 @@ export class ProfilePage {
 
     let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + fileName;
 
+    this.uploadLoader =true;
     console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
 
     fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true)
@@ -299,14 +301,20 @@ export class ProfilePage {
         //this.loadImage = true;
         this.showToast('جارى رفع الصورة');
         console.log('uploaded', JSON.stringify(res));
+        this.uploadLoader = false;
       }, err => {
-        this.uploadErr = JSON.stringify(err);
-        this.showToast('upload' + JSON.stringify(err));
-        console.log(JSON.parse(err));
-        if (err.body.success) {
-          this.showToast('image name '+err.body.name);
+        //this.uploadErr = JSON.stringify(err);
+        //this.showToast('upload' + JSON.stringify(err));
+        console.log(err);
+        this.uploadLoader = false;
+        if (err.body) {
+          this.showToast('image name ' + err.body);
+          console.log('%c%s', 'font-size:20px','Body message from the server', err.body);
+          console.log(JSON.parse(err.body),JSON.parse(err.body).name)
+          this.userLocal[cameraImage] = JSON.parse(err.body).name;
+
+          localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
         }
-        console.log(JSON.stringify(err));
       });
 
   }
@@ -357,22 +365,22 @@ export class ProfilePage {
     } else if (this.userLocal.level_id == 3) {
 
       this.shelfsProvider.getAcceptedRequests(userId).retry(3)
-      .subscribe(({ status, data }) => {
-        console.log(status, data);
-        //console.table( res);
-        if (status == 'success') {
-          [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
-          if (this.AllShelfs.length <= 0) {
+        .subscribe(({ status, data }) => {
+          console.log(status, data);
+          //console.table( res);
+          if (status == 'success') {
+            [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+            if (this.AllShelfs.length <= 0) {
+              this.noShelfs = 'empty';
+              this.showLoader = false
+            }
+          } else {
             this.noShelfs = 'empty';
             this.showLoader = false
           }
-        } else {
-          this.noShelfs = 'empty';
-          this.showLoader = false
-        }
 
 
-      },
+        },
         err => {
           console.warn(err);
 
@@ -381,7 +389,7 @@ export class ProfilePage {
         () => {
           this.showLoader = false;
         }
-      );
+        );
 
 
 
@@ -597,8 +605,8 @@ export class ProfilePage {
     toast.present();
   }
 
-  imagePath(type,img) {
-    return 'http://rfapp.net/templates/default/uploads/'+type+'/'+img
+  imagePath(type, img) {
+    return 'http://rfapp.net/templates/default/uploads/' + type + '/' + img
   }
 
 }
