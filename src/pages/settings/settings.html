@@ -118,9 +118,9 @@
         </ion-item>
 
 
-        <ion-item padding-left *ngIf="userLocalData['level_id'] == 3" ion-item (click)="navigateToPage('DeliverproductsPage')">
+        <ion-item padding-left *ngIf="userLocalData['level_id'] == 3 ||userLocalData['level_id'] == 2" ion-item (click)="navigateToPage('DeliverproductsPage')">
           <ion-icon name="md-clipboard" color="primary"></ion-icon>
-         طلبات تسليم منتجات 
+         طلبات تسليم منتجات
           <ion-icon name="arrow-back" item-right></ion-icon>
         </ion-item>
 
@@ -153,11 +153,11 @@
   <p text-center no-margin>
 
   <button ion-button clear class="powered" (click)="openTabBrowser('http://it-plus.co/ar')" >
-    
+
     <span>&nbsp;ITPLUS&nbsp;</span>
-    Powered By 
-    
-    
+    Powered By
+
+
 
   </button>
 

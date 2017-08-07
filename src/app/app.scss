@@ -29,6 +29,11 @@ $lightDark : color($colors, lightDark);
 $bgColor: color($colors, bgColor);
 $bordered:#9E9E9E;
 
+
+.bold {
+  font-weight: bold;
+}
+
 ion-app._gmaps_cdv_ .nav-decor{
   background-color: transparent !important;
 }

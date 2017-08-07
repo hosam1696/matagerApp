@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
@@ -22,7 +22,8 @@ export class Login {
     public toastCtrl: ToastController,
     public network: Network,
     public push: Push,
-    public platform: Platform
+    public platform: Platform,
+              public events: Events
   ) {
     this.LoginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -84,9 +85,14 @@ export class Login {
             console.log(status, message);
             //TODO: if data is correct navigate to the home page
             if (status == 'success') {
+
               let userLocalData = data;
+
               this.showLoader = false;
+
               localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+              this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
 
               // TODO: navigate to the home page
               this.navCtrl.setRoot('HomePage');

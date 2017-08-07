@@ -41,17 +41,19 @@
                [ngClass]="{'green': product.isChecked, 'lightDark': !product.isChecked}">
             <ion-icon name="checkmark"></ion-icon>
           </div>
-          <img [src]="(!product.item_image)?'assets/img/product-iphone.png':product.item_image" alt="product">
+          <img [src]="(!product.item_image)?'assets/img/adds_02.png':product.item_image" alt="product">
 
           <p class="prod-desc">
             {{limitString(product.item_desc)}} </p>
+
           <div class="quantity-controls">
-            <button class="decreaseQuantity" ion-button small (click)="increaseQuantity(product)">&lt;</button>
+            <button class="decreaseQuantity" color="primary" ion-button small (click)="increaseQuantity(product)"><ion-icon name="add" color="light"></ion-icon></button>
             <!-- <ion-datetime class="quantity-value" displayFormat="s" pickerFormat="s" [(ngModel)]="timeStarts"></ion-datetime> -->
             <input (input)="changeValue($event, product)" [value]="product.item_quantity" type="number"
                    class="quantity-value">
-            <button class="increaseQuantity" ion-button small (click)="decreaseQuantity(product)">&gt;</button>
+            <button class="increaseQuantity" color="primary" ion-button small (click)="decreaseQuantity(product)"><ion-icon name="remove" color="light"></ion-icon></button>
           </div>
+
           <!--<a href="">ابلاغ عن مخالفة</a>-->
         </div>
       </ion-col>

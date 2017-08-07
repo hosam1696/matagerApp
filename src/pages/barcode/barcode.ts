@@ -44,34 +44,14 @@ sendshowLoader:boolean = false;
     console.log(scanBarcode);
 
     scanBarcode.then((barcodeData) => {
-      this.showLoader = true;
-      console.log(barcodeData);
-      this.showData = true;
-      console.log(barcodeData.text);
+
+
       this.itemBarcode = barcodeData.text;
-      this.salesProvider.getItemByCode(barcodeData.text)
-        .subscribe(({status, data})=>{
-          if (status === 'success') {
-            data.item_quantity = 1;
-            data.item_code = this.itemBarcode;
-            console.log(status, data);
-            this.AllScanedProducts.push(data);
-            this.countTotal();
-          } else {
 
-            this.showToast('لم يتم التعرف على الكود يرجى المحاولة مرة اخرى')
-          }
-        },
-      
-      err=> {
-        this.showToast('التطبيق يتطلب اتصال بالانترنت')
-      },
-      () => {
-        this.showLoader= false;
-      }
-    )
-
+      this.showProductByCode(this.itemBarcode);
       this.BarcodeResult.push( barcodeData );
+
+
     });
 
     scanBarcode.catch(err => {
@@ -79,15 +59,70 @@ sendshowLoader:boolean = false;
     });
   }
 
+  keepNumbers(event) {
+    console.log(event);
+    let targetVal:string = event.target.value;
+    const val = parseInt(event.key);
+    if( isNaN(val) && event.key != 'Backspace') {
+      console.warn('rr');
+      event.target.value = event.target.value.substr(0, targetVal.length - 1)
+    } else {
+      console.log('number',val, typeof val, targetVal);
+    }
 
-  
+  }
+
+  scanEnteredBarcode(value) {
+    value = parseInt(value);
+    console.log(value, typeof value);
+
+    //console.log(barcodeData.text);
+    this.showProductByCode(value);
+  }
+  showProductByCode(itemCode) {
+    this.showLoader = true;
+    this.salesProvider.getItemByCode(itemCode)
+      .subscribe(({status, data})=>{
+          if (status === 'success') {
+            let founded = this.AllScanedProducts.find(x=>x.item_id == data.id);
+            console.log('finded match', founded);
+            let isRepeated = (founded)? (founded.item_id == data.id): false;
+            console.log(data, isRepeated);
+
+            [data.item_id,data.item_quantity,data.item_code,this.showData ]= [data.id,1,itemCode, true];
+            console.log(status, data);
+            delete  data.id;
+            if (isRepeated) { // if the product scanned before increase itemNum to existed
+              this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity = this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity + 1
+            } else {
+              this.AllScanedProducts.push(data);
+            }
+
+            console.log('All Products',this.AllScanedProducts);
+            this.billTotal = this.countTotal;
+
+          } else {
+            this.showLoader = false;
+            this.showToast('لم يتم التعرف على الكود يرجى المحاولة مرة اخرى')
+          }
+        },
+
+        err=> {
+          this.showLoader = false;
+          this.showToast('التطبيق يتطلب اتصال بالانترنت');
+          console.warn(err);
+        },
+        () => {
+          this.showLoader= false;
+        }
+      )
+  }
 
   increaseQuantity(product) {
     console.log(product);
     let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
     console.log(editedQuantity);
-    product.item_quantity = editedQuantity;
-    this.countTotal();
+    [product.item_quantity, this.billTotal] = [editedQuantity, this.countTotal];
     //this.render.setAttribute(this.ele.nativeElement.id == 1, 'value', '')
   }
 
@@ -104,16 +139,15 @@ sendshowLoader:boolean = false;
   decreaseQuantity(product) {
     let editedQuantity = Math.max(1, Math.min(product.item_quantity - 1, 100));
     console.log(editedQuantity);
-    product.item_quantity = editedQuantity;
-    this.countTotal();
+    [product.item_quantity, this.billTotal] = [editedQuantity, this.countTotal];
+
   }
 
   changeValue(event, product): void {
     let targetValue = event.target.value;
     console.log(event, targetValue);
     console.log(product.item_quantity);
-    product.item_quantity = targetValue;
-    this.countTotal();
+    [product.item_quantity, this.billTotal] = [targetValue,this.countTotal];
     console.log(product.item_quantity);
 
   }
@@ -122,16 +156,16 @@ sendshowLoader:boolean = false;
     console.log(event);
   }
 
-  countTotal() {
-    this.billTotal = this.AllScanedProducts.reduce((x, d)=>{return x+(parseInt(d.item_price)*parseInt(d.item_quantity))}, 0)
+  private get countTotal():number {
+    return this.AllScanedProducts.reduce((x, d)=>{return x+(parseInt(d.item_price)*parseInt(d.item_quantity))}, 0)
   }
 
 
-  addBill() {
+  private addBill() {
 
     if (this.userLocal && this.userLocal) {
     this.sendshowLoader = true;
-    
+
       let billData = {
         user_id: this.userLocal.id,
         bill_items: this.AllScanedProducts,

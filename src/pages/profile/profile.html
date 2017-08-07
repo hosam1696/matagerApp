@@ -15,7 +15,7 @@
   <ion-card *ngIf="userLocal" id="user-info">
     <section id="hero">
       <img *ngIf="userLocal.cover" [src]="imagePath('covers',userLocal.cover)" alt="user background image">
-      <button type="button" class="pick-image" (click)="pickImage('bgImage')"><ion-icon name="camera-outline"></ion-icon></button>
+      <button type="button" class="pick-image" (click)="pickImage('cover')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
     <ion-card>

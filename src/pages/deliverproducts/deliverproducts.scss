@@ -10,7 +10,7 @@ page-deliverproducts {
         &.content {
                 background-color: color($colors, bgColor);
             //padding-top: 0 !important;
-        }  
+        }
         .err-small {
             font-size: 1.7rem;
         color: #666;
@@ -53,7 +53,7 @@ page-deliverproducts {
                         &:last-child {
                             display: flex;
                             justify-content: space-between;
-
+                          align-items: center;
                         }
                         /*span {
                                 color: #666
@@ -73,8 +73,8 @@ page-deliverproducts {
             }
           }*/
 
-            
+
         }
-     
+
     }
-}   
+}

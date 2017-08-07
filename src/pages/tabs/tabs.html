@@ -5,6 +5,7 @@
    tabIcon="home-outline"
    icon-on="home-ios-outline"
    icon-off="home-ios-outline"
+  *ngIf="!localUser||localUser||localUser.level_id == 2"
    ></ion-tab>
 
   <ion-tab
@@ -13,11 +14,17 @@
     tabIcon="person-outline"
     icon-on="person-ios-outline"
     icon-off="person-ios-outline"
+    *ngIf="!localUser||localUser||localUser.level_id == 2"
   ></ion-tab>
 
   <ion-tab
     [root]="tab3Root"
-    tabTitle="الكاميرا" tabIcon="camera-outline" icon-off="camera-ios-outline" icon-on="camera-ios-outline"></ion-tab>
+    tabTitle="الكاميرا"
+    tabIcon="camera-outline"
+    icon-off="camera-ios-outline"
+    icon-on="camera-ios-outline"
+    *ngIf="localUser&&localUser.level_id == 2"
+  ></ion-tab>
 
   <ion-tab
     [root]="tab4Root"
@@ -25,6 +32,7 @@
     tabIcon="notifications-outline"
     icon-on="notifications-ios-outline"
     icon-off="notifications-ios-outline"
+    *ngIf="!localUser||localUser||localUser.level_id == 2"
   ></ion-tab>
 
 
@@ -34,6 +42,7 @@
   tabIcon="settings-outline"
   icon-on="settings-ios-outline"
   icon-off="settings-ios-outline"
+  *ngIf="!localUser||localUser||localUser.level_id == 2"
   ></ion-tab>
 </ion-tabs>
 <!--

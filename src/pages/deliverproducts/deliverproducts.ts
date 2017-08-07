@@ -55,7 +55,7 @@ export class DeliverproductsPage {
     this.deliveryProvider.getDeliveryRequests({ user_id })
       .subscribe(({ status, data, errors}) => {
         if (status == 'success') {
-          this.AllRequests = data
+          this.AllRequests = data.reverse()
         } else {
           this.noRequests = true;
           event && event.complete();

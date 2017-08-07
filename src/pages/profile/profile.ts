@@ -308,7 +308,7 @@ export class ProfilePage {
         console.log(err);
         this.uploadLoader = false;
         if (err.body) {
-          this.showToast('image name ' + err.body);
+          //this.showToast('image name ' + err.body);
           console.log('%c%s', 'font-size:20px','Body message from the server', err.body);
           console.log(JSON.parse(err.body),JSON.parse(err.body).name)
           this.userLocal[cameraImage] = JSON.parse(err.body).name;

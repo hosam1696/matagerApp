@@ -35,7 +35,7 @@ page-profile {
         color: color($colors, light);
         background-color: color($colors, primary);
       }
-      
+
       &:last-of-type  {
         background-color: color($colors, light);
       }
@@ -88,7 +88,7 @@ page-profile {
       @extend .shelfcard;
     }
     ion-card {
-      
+
 
       margin: 0 !important;
       width: 100% !important;
@@ -191,7 +191,7 @@ page-profile {
                     color: color($colors, primary);
                     font-size: 13px;
                     padding-top: 5px;
-
+                    min-height: 48px;
                   }
                   /*&.price {
                       height: 30px;
@@ -253,7 +253,7 @@ page-profile {
           direction: ltr;
           .segment-button {
           &:first-of-type {
-                 border-left-width: 1px; 
+                 border-left-width: 1px;
           }
         }
       }

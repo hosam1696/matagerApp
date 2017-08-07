@@ -111,7 +111,11 @@ ion-toolbar {
         text-shadow: 1px 1px #fff;
         position: absolute;
         top: 40%;
-        width: 100%;
+        width: 100%;span {
+          font-size: 1.3rem;
+          color: #888;
+          text-shadow:none;
+      }
       }
     #modal-button{
       background-color: #fff;

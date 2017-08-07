@@ -53,6 +53,7 @@ import {changePropDirectiveModule} from "./service/changeprop.directive.module";
 import {MapsModal} from "../pages/mapsmodal";
 import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
 import {SalesProvider} from "../providers/sales";
+import {ViewBillModal} from "../pages/viewbill";
 
 
 //import { GenderPipe } from '../pipes/gender/gender';
@@ -65,6 +66,7 @@ import {SalesProvider} from "../providers/sales";
     ProductModal,
     ChooseArea,
     ShelfModal,
+    ViewBillModal,
     DeliveryRequestInfo,
     MapsModal,
     PopSettings
@@ -97,6 +99,7 @@ import {SalesProvider} from "../providers/sales";
     ChooseArea,
     ProductModal,
     ShelfModal,
+    ViewBillModal,
     MapsModal,
     DeliveryRequestInfo,
     PopSettings

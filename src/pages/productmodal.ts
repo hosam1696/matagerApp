@@ -61,6 +61,7 @@ import {IlocalUser} from "../app/service/interfaces";
     }
     ion-slides img {
       width: 100%;
+      border: 2px solid #5f5a5a
     }
     .margin-div {
       width:100%;
@@ -108,7 +109,7 @@ import {IlocalUser} from "../app/service/interfaces";
          .product-date p {
           margin-top: 2px;
         }
-      
+     
 
     }
       `]

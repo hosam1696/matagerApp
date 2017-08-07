@@ -58,7 +58,7 @@ export class HomePage {
 
 
 
-    console.log('Config Object', this.config, this.config.get('iconMode'));
+    console.log('Config Object', this.config.get('caches'), this.config.get('iconMode'));
 
 
     /* Get the current location if user activates the location */
@@ -148,7 +148,7 @@ export class HomePage {
   }
 
   navToAdv(addsLink): void {
-  
+
     // navigate to the advertise link or the advertise owner
     console.log('You have to go to ' + addsLink);
 

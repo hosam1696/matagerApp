@@ -114,6 +114,11 @@ ion-content {
         position: absolute;
         top: 40%;
         width: 100%;
+        span {
+          font-size: 1.3rem;
+          color: #888;
+          text-shadow:none;
+      }
       }
       #modal-button{
             background-color: color($colors, light);

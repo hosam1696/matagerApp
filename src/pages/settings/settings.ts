@@ -41,8 +41,8 @@ export class SettingsPage {
 
   ionViewWillEnter() {
     console.log('user has cached or not', this.userHasLog);
-    
-    
+
+
 
       this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
 
@@ -75,6 +75,7 @@ export class SettingsPage {
           handler: data=> {
             localStorage.removeItem('userLocalData');
             localStorage.removeItem('currentLocation');
+            this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
             this.navCtrl.push('Login');
           }
         }

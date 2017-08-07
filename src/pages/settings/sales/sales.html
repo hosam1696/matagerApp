@@ -4,260 +4,364 @@
   <ion-navbar color="primary">
     <ion-title>المبيعات</ion-title>
   </ion-navbar>
+  <ion-toolbar>
+    <button type="button" id="modal-button" color="light">
 
-</ion-header>
+      <div class="btn-icon">
+        <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
+      </div>
 
-
-<ion-content no-padding>
-  <button type="button" id="modal-button" color="light">
-
-    <div class="btn-icon">
-      <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
-    </div>
-
-    <div id="search-result" >
-     <!-- <div *ngIf="dataFromModal" class="found-data">
-        <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
-        </div> -->
+      <div id="search-result" >
+        <!-- <div *ngIf="dataFromModal" class="found-data">
+           <span *ngFor="let searched of dataFromModal"> {{searched}}</span>
+           </div> -->
         <div *ngIf="!dataFromModal" class="no-data">
           <span color="primary">خيارات البحث</span>
           <ion-icon name="arrow-back"></ion-icon>
         </div>
-    </div>
-</button>
+      </div>
+    </button>
+  </ion-toolbar>
+</ion-header>
 
 
-    <ion-list padding no-lines>
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-                  <img src="assets/img/product-mac.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+<ion-content no-padding>
 
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                450
-              </span> ريال
-                  </p>
-                </div>
-                </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+  <p class="err-small" text-center *ngIf="netErr">
 
+    التطبيق يتطلب اتصال بالانترنت
+  </p>
+  <p class="err-small" text-center *ngIf="noData">
 
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-camera.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                  كاميرا مراقبة عالية الجودة
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                900
-              </span> ريال
-                  </p>
-                </div>
+    لم يتم اضافه مبيعات حتي الان
+  </p>
+
+  <p text-center *ngIf="showLoader">
+
+    <hsa-loader></hsa-loader>
+  </p>
+  <ion-refresher margin-top (ionRefresh)="refreshData($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles"
+                           refreshingText="جلب المحتوى"></ion-refresher-content>
+  </ion-refresher>
+  <ion-list padding no-lines >
+
+    <ion-item *ngFor="let bill of AllBills" padding margin-bottom="4px" text-start (click)="openBill(bill)">
+      <div class="bill-info">
+        <p>رقم الفاتورة:
+          <span class="bold"> {{bill.id}}</span>
+        </p>
+        <p>
+         {{bill.date_added | date:'longDate' | arabicdate}}
+        </p>
+      </div>
+      <div class="bill-products">
+        <p>عدد المنتجات:
+          <ion-badge>{{bill.items_count}}</ion-badge>
+        </p>
+        <p>
+          اجمالى الفاتورة:
+          <ion-badge>{{fixed(bill.total_cost)}} ريال</ion-badge>
+        </p>
+      </div>
+    </ion-item>
+    <ion-item no-padding margin-bottom="4px" text-start *ngFor="let product of SalaesProducts">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img [src]="(product.item_image)?imagePath(product.item_image):'assets/img/product-mac.png'" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+            {{product.item_name}}
+
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> {{product.item_quantity}}</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              {{fixed(product.item_price)}}
+            </span> ريال
+                </p>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+      >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <!--
 
+  <ion-item padding margin-bottom="4px" text-start>
+      <div class="bill-info">
+        <p>رقم الفاتورة:
+          <span class="bold"> 256499</span>
+        </p>
+        <p>
+          15, اغسطس 2017
+        </p>
+      </div>
+      <div class="bill-products">
+        <p>عدد المنتجات:
+          <ion-badge>6</ion-badge>
+        </p>
+        <p>
+          اجمالى الفاتورة:
+          <ion-badge>1500 ريال</ion-badge>
+        </p>
+      </div>
+    </ion-item>
+  </ion-list>
 
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-iphone.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                ايفون 7 رامات 2 جيجا وكاميرا 16 ميجا
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                1200
-              </span> ريال
-                  </p>
-                </div>
+  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="getMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+      >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-list padding no-lines>
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+                <img src="assets/img/product-mac.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+              ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              450
+            </span> ريال
+                </p>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
-
-
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-camera.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                   كاميرا مراقبة عالية الجودة
-
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                450
-              </span> ريال
-                  </p>
-                </div>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-mac.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                ماك بوك رامات 32 جيجا وهارد 1 تيرا
-
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                450
-              </span> ريال
-                  </p>
-                </div>
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-camera.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+                كاميرا مراقبة عالية الجودة
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              900
+            </span> ريال
+                </p>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-camera.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                ماك بوك رامات 32 جيجا وهارد 1 تيرا
-
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 1</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                 1250
-              </span> ريال
-                  </p>
-                </div>
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-iphone.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+              ايفون 7 رامات 2 جيجا وكاميرا 16 ميجا
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              1200
+            </span> ريال
+                </p>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 
-      <ion-item no-padding margin-bottom="4px" text-start>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4>
-              <img src="assets/img/product-iphone.png" alt="">
-            </ion-col>
-            <ion-col col-8>
-              <h3>
-                ماك بوك رامات 32 جيجا وهارد 1 تيرا
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-camera.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+                 كاميرا مراقبة عالية الجودة
 
-              </h3>
-              <div class="product-info">
-                <p> رقم الرف
-                  <span class="kilos">16544</span> </p>
-                <div class="info-detail">
-                  <p>
-                    الكمية
-                    <span> 6</span>
-                  </p>
-                  <p>
-                    السعر
-                    <span>
-                1505
-              </span> ريال
-                  </p>
-                </div>
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              450
+            </span> ريال
+                </p>
               </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 
-    </ion-list>
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-mac.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+              ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              450
+            </span> ريال
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
 
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-camera.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+              ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 1</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+               1250
+            </span> ريال
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <img src="assets/img/product-iphone.png" alt="">
+          </ion-col>
+          <ion-col col-8>
+            <h3>
+              ماك بوك رامات 32 جيجا وهارد 1 تيرا
+
+            </h3>
+            <div class="product-info">
+              <p> رقم الرف
+                <span class="kilos">16544</span> </p>
+              <div class="info-detail">
+                <p>
+                  الكمية
+                  <span> 6</span>
+                </p>
+                <p>
+                  السعر
+                  <span>
+              1505
+            </span> ريال
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+
+  </ion-list>
+
+-->
 </ion-content>

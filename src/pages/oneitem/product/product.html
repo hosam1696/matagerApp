@@ -71,7 +71,10 @@
       <p text-center class="small" *ngIf="NoComments">
         لا يوجد اراء
       </p>
-
+      <section [hidden]="!showAddComment" id="add-comment">
+        <textarea #commentInput (input)="watchHeight($event)" class="add-input"></textarea>
+        <button type="button" ion-button (click)="addComment(commentInput.value)">اضف تعليق</button>
+      </section>
 
       <ion-list>
         <ion-item *ngFor="let comment of productData.comments">
@@ -91,10 +94,7 @@
 
       </ion-list>
 
-      <section [hidden]="!showAddComment" id="add-comment">
-        <textarea #commentInput (input)="watchHeight($event)" class="add-input"></textarea>
-        <button type="button" ion-button (click)="addComment(commentInput.value)">اضف تعليق</button>
-      </section>
+
 
 
 

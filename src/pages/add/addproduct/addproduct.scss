@@ -4,9 +4,14 @@ page-addproduct {
       background: #eee;
       //background-color: color($colors, bgColor)
     }
-    
+    ion-datetime {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 5px;
+      }
+    }
     form {
-      
+
       .form-group {
         padding: 5px 0;
         position: relative;
@@ -41,11 +46,11 @@ page-addproduct {
               overflow-x: scroll;
               overflow-y: hidden;
               direction: ltr;
-              
+
               .image {
                 direction: ltr;
                 padding: 10px 20px;
-                
+
               }
             }
             /*
@@ -73,7 +78,7 @@ page-addproduct {
               }
             }
             */
-            
+
           }
           textarea {
             height: auto !important;
@@ -81,7 +86,7 @@ page-addproduct {
           }
         .form-control {
           width: 100%;
-          
+
           background-color: rgba(255, 255, 255, 1);
           color: color($colors, primaryDark);
           padding: 7px 10px;
@@ -109,7 +114,7 @@ page-addproduct {
                 top: 5px;
                 box-sizing: border-box;
                 color: color($colors, primaryDark);
-                height: 40px;
+                height: 40px !important;
                 background-color: #f4f4f4;
                 width: 50px;
                 border-right: 1px solid #eee;
@@ -118,7 +123,7 @@ page-addproduct {
                  border: 1px solid #ddd;
                 span {
                     line-height: 40px;
-                   
+
                 }
             }
 

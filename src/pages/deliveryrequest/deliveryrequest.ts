@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, IonicPage, ToastController } from 'ionic-angular';
 import { ItemProvider } from '../../providers/item';
-import {  IlocalUser, IShelfRequest } from '../../app/service/interfaces';
+import { IlocalUser, IShelfRequest } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
 import { DeliveryProvider } from '../../providers/delivery';
 @IonicPage()
@@ -48,7 +48,7 @@ export class DeliveryrequestPage {
   }
 
   getProducts() {
-    this.itemProvider.getProductByUserId(this.userLocal.id)
+    this.itemProvider.getProductByUserId(this.userLocal.id).retry(3)
       .subscribe(
       ({ status, data, errors }) => {
         if (status == 'success' || status.message == 'success') {
@@ -67,13 +67,14 @@ export class DeliveryrequestPage {
       },
       err => {
         console.warn(err);
+        this.showLoader = false;
       },
       () => {
         this.showLoader = false;
       }
       )
   }
-  triggerChecked(product):void {
+  triggerChecked(product): void {
 
     console.log(product);
 
@@ -101,6 +102,11 @@ export class DeliveryrequestPage {
       },
       err => {
         console.warn(err);
+        this.showLoader = false;
+
+      },
+      () => {
+        this.showLoader = false;
       }
       )
   }
@@ -137,8 +143,6 @@ export class DeliveryrequestPage {
   addDeliveryRequest() {
 
     if (this.shelfNumbers) {
-
-
 
       let [matger_id, shelf_id, shelf_name] = this.shelfNumbers.split(',');
 
@@ -178,18 +182,18 @@ export class DeliveryrequestPage {
 
   }
 
-  limitString(str: string):string {
+  limitString(str: string): string {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
   changeValue(event, product): void {
-  let targetValue = event.target.value;
-  console.log(event, targetValue);
-  console.log(product.item_quantity);
-  product.item_quantity = targetValue;
-  console.log(product.item_quantity);
+    let targetValue = event.target.value;
+    console.log(event, targetValue);
+    console.log(product.item_quantity);
+    product.item_quantity = targetValue;
+    console.log(product.item_quantity);
 
-}
+  }
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

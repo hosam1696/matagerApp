@@ -255,6 +255,13 @@ export interface INotificationMessage {
   user_id: number
 }
 
+
+export interface IsalesBill {
+  id: number,
+  total_cost: number| any,
+  date_added: any,
+  items_count: number
+}
 export interface ipUserInfo {
   city: string,
   country: string,

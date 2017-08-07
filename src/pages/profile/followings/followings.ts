@@ -48,6 +48,7 @@ export class FollowingsPage {
         }
       },
       err => {
+        this.showLoader = false;
         console.log(err);
         this.netErr = true;
       },
@@ -81,6 +82,7 @@ export class FollowingsPage {
             this.netErr = true;
           },
           () => {
+            this.showLoader = false;
             event.complete()
           }
         )
@@ -103,6 +105,7 @@ export class FollowingsPage {
         this.netErr = true;
       },
       () => {
+        this.showLoader = false;
         event.complete();
       }
       )

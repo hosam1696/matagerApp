@@ -46,7 +46,7 @@ export class ReservedshelfsPage {
 
           if (status == 'success') {
 
-            this.AllRequests = data;
+            this.AllRequests = data.reverse();
           } else {
             this.showLoader = false;
             this.noRequests = true;
@@ -58,6 +58,7 @@ export class ReservedshelfsPage {
         err => {
           console.warn(err);
           this.netErr = true;
+          this.showLoader = false;
           event&&event.complete();
         },
         () => {

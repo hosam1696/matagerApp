@@ -12,21 +12,29 @@
     افحص الباركود
     &nbsp; &nbsp;<ion-icon name="search"></ion-icon>
   </button>
+
+  </ion-toolbar>
+
+  <ion-toolbar class="toolbar-btn">
+    <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">ادخل الرقم  يدويا</button>
+    <input type="text" (keyup)="keepNumbers($event)" #enetredcode placeholder="ادخل رقم الباركود">
+
+
   </ion-toolbar>
 
 </ion-header>
 
 
 <ion-content no-padding>
-  
- 
+
+
 
   <!--
   <ion-list>
   <ion-item-sliding>
     <ion-item text-center color="primary">
       ادخل الكود يدويا
-    
+
 
     </ion-item>
     <ion-item-options side="right">
@@ -37,7 +45,7 @@
 
 -->
 
-    
+
     <!--
     <ion-card *ngFor="let result of BarcodeResult">
       <p text-left>Bracode Link: <a [attr.href]="result['text']">{{result['text']}}</a></p>
@@ -48,20 +56,20 @@
       <hr>
     </ion-card>
     -->
-  
+
   <p text-center class="err-small" *ngIf="!showData">
     افحص الباركود لاضافه فاتورة
-    <span text-center [hidden]="userLocal">يرجى تسجيل الدخول اولاً<br></span>
+    <span text-center [hidden]="userLocal"><br>يرجى تسجيل الدخول اولاً</span>
   </p>
-    <div  *ngIf="showData" class="bill-title"> 
+    <div  *ngIf="showData" class="bill-title">
 
     <h6  color="primary">
       نتائج فحص الباركود
     </h6>
     <h6>
-      اجمالى الفاتورة 
+      اجمالى الفاتورة
       <ion-badge color="lightDark">{{billTotal}} ريال</ion-badge>
-      
+
     </h6>
     </div>
     <ion-card  (tap)="swipeEvent($event)" class="product-scanned" *ngFor="let productScanned of AllScanedProducts">
@@ -71,7 +79,7 @@
           <ion-col col-8 class="col-info">
             <p><ion-icon color="primaryDark" name="archive"></ion-icon> &nbsp;
               {{productScanned.item_name}} </p>
-            <p><ion-icon color="primaryDark" name="pricetags"></ion-icon> &nbsp; 
+            <p><ion-icon color="primaryDark" name="pricetags"></ion-icon> &nbsp;
               {{productScanned.item_price}}
               ريال
             </p>
@@ -90,9 +98,9 @@
       </ion-grid>
     </ion-card>
 
-    
 
-    <button  *ngIf="showData" class="bottom-btn" ion-button color="primary" full (click)="addBill()">
+
+    <button  *ngIf="showData && userLocal.level_id == 2" class="bottom-btn" ion-button color="primary" full (click)="addBill()">
       اضف فاتورة&nbsp;
       <hsa-loader *ngIf="sendshowLoader" Color="light"></hsa-loader>
     </button>

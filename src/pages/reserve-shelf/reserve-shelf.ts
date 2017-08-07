@@ -183,5 +183,7 @@ export class ReserveShelfPage {
     let id = this.pageData.user_id;
     this.navCtrl.push(page, {userData: [user_id, id]})
   }
-
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

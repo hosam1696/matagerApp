@@ -16,17 +16,17 @@ page-vprofile {
         border: 1px solid color($colors, primary);
         min-width: 77px;
     }*/
-    
+
     #page-segments {
       padding-top: 0 !important;
       direction: ltr;
 
         .segment-button {
           &:first-of-type {
-                 border-left-width: 1px; 
+                 border-left-width: 1px;
           }
         }
-      
+
     }
     .map-btn {
       display: inline-block;
@@ -180,6 +180,7 @@ page-vprofile {
                     color: color($colors, primary);
                     font-size: 13px;
                     padding-top: 5px;
+                    min-height: 48px;
                   }
                   /*&.price {
                       height: 30px;

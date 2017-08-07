@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators} from '@angular/forms'
-import {NavParams, ViewController, ToastController} from 'ionic-angular';
+import {NavParams, ViewController, ToastController, NavController} from 'ionic-angular';
 import { ShelfsProvider } from '../../../providers/shelfs';
 import { ArMonths } from '../../../app/service/interfaces';
 @Component({
@@ -19,7 +19,9 @@ export class ShelfModal {
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
         public toastCtrl: ToastController,
-                public fb: FormBuilder
+                public fb: FormBuilder,
+                public navCtrl: NavController
+
     ) {
         this.nowDateString = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
         this.modalInfo = params.get('shelfInfo');
@@ -47,13 +49,13 @@ export class ShelfModal {
     ionViewDidLoad() {
         if(!this.userLocal)
             this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-        
+
 
         this.reserveShelfForm.valueChanges.subscribe(form => {
             console.log(form);
         })
 
-        
+
     }
 
     closeModal() {
@@ -64,7 +66,10 @@ export class ShelfModal {
         console.log(reserveShelfForm);
     }
 
-    
+    navigateToPage(page, user_id) {
+      let id = this.userLocal?this.userLocal.id:0;
+      this.navCtrl.push(page, {pageData: [user_id, id]})
+    }
     requestBooking() {
         this.showLoader = true;
         let reserveShelfData = {
@@ -73,7 +78,7 @@ export class ShelfModal {
             name: this.modalInfo.name,
             matgr_id: this.modalInfo.user_id,
             start_date: this.reserveShelfForm.get('start_date').value,
-            
+
             end_date: this.reserveShelfForm.get('end_date').value
         };
 

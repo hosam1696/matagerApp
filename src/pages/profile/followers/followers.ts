@@ -48,7 +48,7 @@ export class FollowersPage {
         this.netErr = true;
       },
       () => {
-
+        this.showLoader = false;
       }
       )
 
@@ -80,6 +80,7 @@ export class FollowersPage {
       }
       )
     } else {
+      this.showLoader = false;
       event.complete();
       return false;
     }
@@ -103,6 +104,7 @@ export class FollowersPage {
         this.netErr = true;
       },
       () => {
+        this.showLoader = false;
         event.complete();
       }
       )

@@ -26,4 +26,23 @@ export class SalesProvider {
     return this.http.post(this.API_URL+'sales.php', body).map(res=>res.json());
   }
 
+  getSalesBillByUser(user_id: number, limit: number, start :number= 0) {
+    const action = 'getSalesBillByUser';
+
+    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action, user_id, limit, start})).map(res=>res.json())
+  }
+
+  getSalesProducts(user_id, limit: number, start :number= 0) {
+    const action = 'getSoldItemOfSupp';
+
+    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action, user_id})).map(res=>res.json())
+  }
+
+
+  getBillById(bill_id) {
+    const action = 'getSalesBillItems';
+
+    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action, id: bill_id})).map(res=>res.json());
+  }
+
 }
