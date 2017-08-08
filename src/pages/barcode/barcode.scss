@@ -2,6 +2,8 @@ $bgColor: color($colors, bgColor);
 page-barcode {
 
   ion-toolbar {
+    width: 96% !important;
+    margin: 6px auto !important;
     &:last-child {
       padding: 0;
       .toolbar-content {
@@ -10,7 +12,7 @@ page-barcode {
             width: 60%;
             border: none;
             padding: 5px 15px;
-            font-size: 20px;
+            font-size: 18px;
             color: #777;
             &::placeholder {
               color: #999
@@ -19,12 +21,12 @@ page-barcode {
           button {
             width: 40%;
             border-radius: 0;
-            background-color: #4791c3 !important;
+            background: linear-gradient(-45deg, #2e8bc9 18%, #2a82b7 18%) !important;
             position: relative;
             &:after {
               content: 'afas';
               position: absolute;
-              background-color: #4791c3 ;
+              //background-color: #4791c3 ;
               //transform: skew(5deg);
               width: 20%;
               height: 100%;

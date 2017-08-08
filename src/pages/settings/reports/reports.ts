@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IlocalUser} from "../../../app/service/interfaces";
 
 /**
  * Generated class for the ReportsPage page.
@@ -13,11 +14,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'reports.html',
 })
 export class ReportsPage {
-
+  userLocal:IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
+    if(!this.userLocal) {
+      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+    }
     console.log('ionViewDidLoad ReportsPage');
   }
 

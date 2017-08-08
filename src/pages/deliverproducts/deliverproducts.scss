@@ -12,12 +12,17 @@ page-deliverproducts {
             //padding-top: 0 !important;
         }
         .err-small {
-            font-size: 1.7rem;
+        font-size: 1.7rem;
         color: #666;
         text-shadow: 1px 1px #fff;
         position: absolute;
         top: 40%;
         width: 100%;
+          span {
+            font-size: 1.3rem;
+            color: #999;
+            text-shadow: none;
+          }
       }
         ion-list-header {
             ion-label {

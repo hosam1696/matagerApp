@@ -59,7 +59,7 @@ import {IlocalUser} from "../app/service/interfaces";
       ion-slides {
       direction: ltr;
     }
-    ion-slides img {
+     img {
       width: 100%;
       border: 2px solid #5f5a5a
     }

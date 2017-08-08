@@ -15,7 +15,14 @@ page-deliveryrequest {
                max-width: 600px;
     margin: auto;
         }
-
+      .err-small {
+        font-size: 1.7rem;
+        color: #666;
+        text-shadow: 1px 1px #fff;
+        position: absolute;
+        top: 40%;
+        width: 100%;
+      }
         #shelf-id {
             display: flex;
             background-color: #fff;

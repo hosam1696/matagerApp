@@ -1,4 +1,4 @@
-import { IlocalUser } from './../../app/service/interfaces';
+import {IlocalUser, IscannedProduct} from './../../app/service/interfaces';
 import { SalesProvider } from './../../providers/sales';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
@@ -15,10 +15,10 @@ export class BarcodePage {
   BarcodeResult: any[]=[] ;
   showData:boolean=false;
   itemBarcode: number| string;
-  AllScanedProducts: any[] = [];
+  AllScanedProducts: IscannedProduct[] = [];
   billTotal: any = 0;
   showLoader: boolean = false;
-sendshowLoader:boolean = false;
+  sendshowLoader:boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner,
   public salesProvider: SalesProvider,
     public toastCtrl: ToastController
@@ -32,7 +32,7 @@ sendshowLoader:boolean = false;
 
   }
 
-  scanBarcode() {
+  private scanBarcode():void {
     let scanOptions:BarcodeScannerOptions = {
       orientation: 'portrait',
       disableSuccessBeep: true,
@@ -59,7 +59,7 @@ sendshowLoader:boolean = false;
     });
   }
 
-  keepNumbers(event) {
+  private keepNumbers(event) {
     console.log(event);
     let targetVal:string = event.target.value;
     const val = parseInt(event.key);
@@ -72,19 +72,19 @@ sendshowLoader:boolean = false;
 
   }
 
-  scanEnteredBarcode(value) {
+  private scanEnteredBarcode(value):void {
     value = parseInt(value);
     console.log(value, typeof value);
 
     //console.log(barcodeData.text);
     this.showProductByCode(value);
   }
-  showProductByCode(itemCode) {
+  private showProductByCode(itemCode:number|string): void {
     this.showLoader = true;
     this.salesProvider.getItemByCode(itemCode)
       .subscribe(({status, data})=>{
           if (status === 'success') {
-            let founded = this.AllScanedProducts.find(x=>x.item_id == data.id);
+            let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
             console.log('finded match', founded);
             let isRepeated = (founded)? (founded.item_id == data.id): false;
             console.log(data, isRepeated);
@@ -93,7 +93,7 @@ sendshowLoader:boolean = false;
             console.log(status, data);
             delete  data.id;
             if (isRepeated) { // if the product scanned before increase itemNum to existed
-              this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity = this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity + 1
+              this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity = this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity +1;
             } else {
               this.AllScanedProducts.push(data);
             }
@@ -118,15 +118,16 @@ sendshowLoader:boolean = false;
       )
   }
 
-  increaseQuantity(product) {
+  private increaseQuantity(product:IscannedProduct): void {
     console.log(product);
     let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
     console.log(editedQuantity);
-    [product.item_quantity, this.billTotal] = [editedQuantity, this.countTotal];
+    product.item_quantity = editedQuantity;
+    this.billTotal = this.countTotal;
     //this.render.setAttribute(this.ele.nativeElement.id == 1, 'value', '')
   }
 
-  showToast(msg) {
+  public showToast(msg):void {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
@@ -136,20 +137,21 @@ sendshowLoader:boolean = false;
     toast.present();
   }
 
-  decreaseQuantity(product) {
+  private decreaseQuantity(product:IscannedProduct):void {
+
     let editedQuantity = Math.max(1, Math.min(product.item_quantity - 1, 100));
     console.log(editedQuantity);
-    [product.item_quantity, this.billTotal] = [editedQuantity, this.countTotal];
-
+    product.item_quantity = editedQuantity;
+    this.billTotal = this.countTotal;
   }
 
-  changeValue(event, product): void {
+  private changeValue(event, product:IscannedProduct): void {
     let targetValue = event.target.value;
     console.log(event, targetValue);
     console.log(product.item_quantity);
-    [product.item_quantity, this.billTotal] = [targetValue,this.countTotal];
+    product.item_quantity = targetValue;
+    this.billTotal = this.countTotal;
     console.log(product.item_quantity);
-
   }
 
   swipeEvent(event) {
@@ -157,9 +159,8 @@ sendshowLoader:boolean = false;
   }
 
   private get countTotal():number {
-    return this.AllScanedProducts.reduce((x, d)=>{return x+(parseInt(d.item_price)*parseInt(d.item_quantity))}, 0)
+    return this.AllScanedProducts.reduce((x:number, d:IscannedProduct)=>{return x+(parseInt(d.item_price)*parseInt(d.item_quantity))}, 0)
   }
-
 
   private addBill() {
 

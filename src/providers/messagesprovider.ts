@@ -28,6 +28,10 @@ export class MessagesProvider {
     return this.http.post(this.API_URL+'mails.php', body).map(res=>res.json());
   }
 
+  getMessageDetails(msg_id) {
+    return this.http.post(this.API_URL+ 'mails.php', JSON.stringify({action: "getMailDetails", id:msg_id})).map(res=>res.json());
+  }
+
   readMessage(MessageId, user_id) {
     return this.http.post(this.API_URL+'mails.php', JSON.stringify({action: 'readMail', id: MessageId, user_id})).map(res=>res.json());
   }

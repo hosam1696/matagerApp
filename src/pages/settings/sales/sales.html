@@ -2,7 +2,10 @@
 <ion-header>
 
   <ion-navbar color="primary">
-    <ion-title>المبيعات</ion-title>
+    <ion-title>
+      <span *ngIf="userLocal.level_id == 2">الفواتير</span>
+      <span *ngIf="userLocal.level_id == 3">المبيعات</span>
+    </ion-title>
   </ion-navbar>
   <ion-toolbar>
     <button type="button" id="modal-button" color="light">

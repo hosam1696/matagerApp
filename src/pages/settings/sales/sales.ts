@@ -67,9 +67,8 @@ export class SalesPage {
 
           } else {
             console.warn(errors);
-            if (errors == 'لم يتم اضافه فواتير حتي الان') {
-              this.noData = true;
-            }
+            this.noData = true;
+
             event&&event.complete();
 
           }
@@ -77,6 +76,8 @@ export class SalesPage {
           event&&event.complete();
       console.warn(err);
       this.netErr = true;
+
+
           this.showLoader = false;
     },
     () => {
@@ -188,9 +189,7 @@ export class SalesPage {
 
           } else {
             console.warn(errors);
-            if (errors == 'لم يتم اضافه فواتير حتي الان') {
               this.noData = true;
-            }
             event&&event.complete();
 
           }

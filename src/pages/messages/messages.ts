@@ -82,6 +82,7 @@ export class Messages {
         err => {
           event&&event.complete();
           this.netError = true;
+          this.showLoader = false;
           console.warn(err)
         },
         () =>{
@@ -114,6 +115,7 @@ export class Messages {
           (err) => {
             console.warn(err);
             this.netError = true;
+            this.showLoader = false;
           },
           () => {
             this.showLoader = false;

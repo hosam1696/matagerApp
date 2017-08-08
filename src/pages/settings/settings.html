@@ -84,7 +84,8 @@
        *ngIf="userLocalData['level_id'] != 4"
        (click)="navigateToPage('SalesPage')">
         <ion-icon name="stats-outline" color="primary"></ion-icon>
-        المبيعات
+        <span *ngIf="userLocalData.level_id == 2">الفواتير</span>
+        <span *ngIf="userLocalData.level_id == 3">المبيعات</span>
 
         <ion-icon name="arrow-back" item-right></ion-icon>
       </ion-item>
@@ -106,8 +107,8 @@
 
 
         <ion-item  padding-left  *ngIf="userLocalData['level_id'] == 3" ion-item (click)="navigateToPage('RequestsPage')">
-          <ion-icon name="git-branch" color="primary"></ion-icon>طلبات المستحقات
-
+          <ion-icon name="git-branch" color="primary"></ion-icon>
+          مستحقاتى
           <ion-icon name="arrow-back" item-right></ion-icon>
         </ion-item>
 

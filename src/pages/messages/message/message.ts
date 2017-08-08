@@ -47,7 +47,8 @@ export class MessagePage {
           user_id: this.localUser.id,
           mail_body: message,
           mail_title: title,
-          receive_user_id: this.reciever_id
+          receive_user_id: this.reciever_id,
+          parent_id: 0
         };
         this.messagesProvider.sendMessage(messageData)
           .subscribe(

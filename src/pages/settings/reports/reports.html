@@ -16,7 +16,9 @@
 
     <ion-item-group no-lines id="personal-info">
       <ion-item-divider color="bgColor">
-        تقارير المتجر
+        تقارير
+        <span *ngIf="userLocal.level_id == 2">المتجر</span>
+        <span *ngIf="userLocal.level_id == 3">المورد</span>
       </ion-item-divider>
 
       <ion-item padding-left ion-item (click)="navigateToPage('ShelfsreportsPage')">
@@ -32,11 +34,6 @@
         <ion-icon name="arrow-back" item-right></ion-icon>
       </ion-item>
 
-      <ion-item padding-left ion-item (click)="navigateToPage('ShelfsreportsPage')">
-        <ion-icon name="paper-outline" color="primary"></ion-icon>
-          مستحقات الموردين
-        <ion-icon name="arrow-back" item-right></ion-icon>
-      </ion-item>
 
     </ion-item-group>
   </ion-list>

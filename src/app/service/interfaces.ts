@@ -12,6 +12,15 @@ export interface IProduct {
 
 }
 
+export interface IscannedProduct {
+  id: number,
+  item_name: string,
+  item_price: string | number|any,
+  supplier_id: number,
+  item_id?:number,
+  item_quantity?: number|string|any,
+  item_code?: number| string
+}
 export interface Iplace {
   id: number,
   name: string,
