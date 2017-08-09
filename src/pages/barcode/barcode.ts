@@ -1,3 +1,4 @@
+import { ViewChild } from '@angular/core';
 import {IlocalUser, IscannedProduct} from './../../app/service/interfaces';
 import { SalesProvider } from './../../providers/sales';
 import { Component } from '@angular/core';
@@ -11,6 +12,7 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
   templateUrl: 'barcode.html',
 })
 export class BarcodePage {
+  @ViewChild('enetredcode') enteredCode: any;
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   BarcodeResult: any[]=[] ;
   showData:boolean=false;
@@ -48,7 +50,22 @@ export class BarcodePage {
 
       this.itemBarcode = barcodeData.text;
 
-      this.showProductByCode(this.itemBarcode);
+      if (this.AllScanedProducts.length > 0) {
+        let foundedIndex = this.AllScanedProducts.findIndex((product:IscannedProduct)=>{return product.item_code == this.itemBarcode});
+
+        console.log('Index of repeated Product', foundedIndex);
+
+        if(foundedIndex == -1){
+          this.showProductByCode(this.itemBarcode);
+        } else {
+          this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity +1;
+          this.billTotal = this.countTotal;
+        }
+
+      } else {
+        this.showProductByCode(this.itemBarcode);
+      }
+
       this.BarcodeResult.push( barcodeData );
 
 
@@ -59,15 +76,25 @@ export class BarcodePage {
     });
   }
 
-  private keepNumbers(event) {
-    console.log(event);
+  private keepItNumber(value) {
+
+
+
+    console.log(value);
+
+    value = value.split('');
+    let enteredKey = value[value.length - 1];
+    console.log(value, enteredKey);
+    /*
     let targetVal:string = event.target.value;
-    const val = parseInt(event.key);
-    if( isNaN(val) && event.key != 'Backspace') {
+    const val = parseInt(event.key);*/
+    if( isNaN(enteredKey) && enteredKey != ' ') {
       console.warn('rr');
-      event.target.value = event.target.value.substr(0, targetVal.length - 1)
+      value.pop();
+      this.enteredCode.nativeElement.value = value.join('');
+      //event.target.value = event.target.value.substr(0, targetVal.length - 1)
     } else {
-      console.log('number',val, typeof val, targetVal);
+      console.log('number',enteredKey, typeof enteredKey, value);
     }
 
   }
@@ -75,29 +102,46 @@ export class BarcodePage {
   private scanEnteredBarcode(value):void {
     value = parseInt(value);
     console.log(value, typeof value);
+    //TODO: check for repeated code before request the server for data
+    if (this.AllScanedProducts.length > 0) {
+      //let foundedBefore = this.AllScanedProducts.find((product:IscannedProduct)=>{return product.item_code == value});
+      let foundedIndex = this.AllScanedProducts.findIndex((product:IscannedProduct)=>{return product.item_code == value});
 
+      console.log('Index of repeated Product', foundedIndex);
+
+      if(foundedIndex == -1){
+        this.showProductByCode(value);
+      } else {
+        this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity +1;
+        this.billTotal = this.countTotal;
+      }
+
+    } else {
+      this.showProductByCode(value);
+    }
     //console.log(barcodeData.text);
-    this.showProductByCode(value);
+
   }
+
   private showProductByCode(itemCode:number|string): void {
     this.showLoader = true;
     this.salesProvider.getItemByCode(itemCode)
       .subscribe(({status, data})=>{
           if (status === 'success') {
-            let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
-            console.log('finded match', founded);
-            let isRepeated = (founded)? (founded.item_id == data.id): false;
-            console.log(data, isRepeated);
+           // let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
+            //console.log('finded match', founded);
+            //let isRepeated = (founded)? (founded.item_id == data.id): false;
+            //console.log(data, isRepeated);
 
             [data.item_id,data.item_quantity,data.item_code,this.showData ]= [data.id,1,itemCode, true];
             console.log(status, data);
             delete  data.id;
-            if (isRepeated) { // if the product scanned before increase itemNum to existed
+           /* if (isRepeated) { // if the product scanned before increase itemNum to existed
               this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity = this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity +1;
             } else {
               this.AllScanedProducts.push(data);
-            }
-
+            }*/
+            this.AllScanedProducts.push(data);
             console.log('All Products',this.AllScanedProducts);
             this.billTotal = this.countTotal;
 

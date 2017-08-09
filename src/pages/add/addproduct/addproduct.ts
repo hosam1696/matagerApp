@@ -8,6 +8,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import { IlocalUser } from '../../../app/service/inewUserData';
 import { IProduct, ArProductForm } from '../../../app/service/interfaces';
 import {ItemProvider} from '../../../providers/item';
+import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
 
 declare let cordova;
 
@@ -37,7 +38,8 @@ export class AddproductPage {
     private transfer: Transfer,
     private file: File,
     public camera: Camera,
-    public platform : Platform
+    public platform : Platform,
+    public imagePicker: ImagePicker
   ) {
 
     this.addProductForm = new FormGroup({
@@ -80,11 +82,7 @@ export class AddproductPage {
         console.log(values);
       })
   }
-/* Get Type of js objects
-  getDataType(val) {
-    return Object.prototype.toString.call(new Date(val)).slice(7,-1).trim()
-  }
-*/
+
   pickImage() {
 
     let actionSheetCtrl = this.actionCtrl.create({
@@ -95,14 +93,14 @@ export class AddproductPage {
           handler: () => {
             console.log('camera clicked');
             //this.openCamera();
-            this.openCamera('CAMERA');
+            this.openCamera();
           }
         },
         {
           text: 'البوم الصور',
           handler: () => {
             console.log('Photo Album');
-            //this.openPicker();
+            this.openPicker();
           }
         },
         {
@@ -230,7 +228,22 @@ export class AddproductPage {
     }
   }
 
-uploadImage(file, type, cameraImage) {
+  openPicker() {
+    let options: ImagePickerOptions = {
+      quality: 700,
+      outputType: 0
+    };
+    this.imagePicker.getPictures(options).then((results)=>{
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+      }
+    }, (err) => {
+      console.warn(err);
+
+    })
+  }
+
+ uploadImage(file, type, cameraImage) {
     const fto: TransferObject = this.transfer.create();
 
     let uploadFolder = 'templates/default/uploads';
@@ -269,7 +282,7 @@ uploadImage(file, type, cameraImage) {
 
   }
 
-  openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
+  openCamera() {
 
     const cameraOptions: CameraOptions = {
       quality: 70,
@@ -277,7 +290,7 @@ uploadImage(file, type, cameraImage) {
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       allowEdit: true,
-      sourceType: this.camera.PictureSourceType[type]
+      sourceType: this.camera.PictureSourceType.CAMERA
     };
 
 
@@ -289,9 +302,9 @@ uploadImage(file, type, cameraImage) {
       [0] => \n [1] => api\n [2] => uploadImage.php\n)\n/home/httpprim/rfapp.net<br>/api","objectId":""} */
 
     this.camera.getPicture(cameraOptions).then(imageData => {
-      
+
       /* If data
-      
+
       let base64Image = 'data:image/jpeg;base64,' + imageData;
 
       let compressed = LZString.compressToUTF16(base64Image);
@@ -328,7 +341,7 @@ uploadImage(file, type, cameraImage) {
       window.alert(imageData + "  && " + extension);
 
 
-      return Promise.resolve([imageData, extension, cameraImage])
+      return Promise.resolve([imageData, extension])
 
     }).then(data => {
 

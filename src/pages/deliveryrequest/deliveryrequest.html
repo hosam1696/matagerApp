@@ -27,7 +27,7 @@
     لم تتم اضافة اى منتجات حتى الان
   </p>
 
-  <p class="err-small" text-center>
+  <p class="err-small" text-center *ngIf="netErr">
     التطبيق يتطلب اتصال بالانترنت
   </p>
   <ion-grid padding-vertical>

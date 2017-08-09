@@ -8,7 +8,7 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar no-padding>
-     <button no-margin block color="primary" full ion-button (click)="scanBarcode()" >
+     <button no-margin block  full ion-button (click)="scanBarcode()" >
     افحص الباركود
     &nbsp; &nbsp;<ion-icon name="search"></ion-icon>
   </button>
@@ -17,7 +17,7 @@
 
   <ion-toolbar class="toolbar-btn">
     <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">ادخل الرقم  يدويا</button>
-    <input type="text" (keyup)="keepNumbers($event)" #enetredcode placeholder="ادخل رقم الباركود">
+    <input type="text" (keyup)="keepItNumber(enetredcode.value)" #enetredcode placeholder=" رقم الباركود">
 
 
   </ion-toolbar>
@@ -68,7 +68,7 @@
     </h6>
     <h6>
       اجمالى الفاتورة
-      <ion-badge color="lightDark">{{billTotal}} ريال</ion-badge>
+      <ion-badge color="lightDark"><span class="animate">{{billTotal}}</span> ريال</ion-badge>
 
     </h6>
     </div>

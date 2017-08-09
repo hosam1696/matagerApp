@@ -21,7 +21,7 @@ page-barcode {
           button {
             width: 40%;
             border-radius: 0;
-            background: linear-gradient(-45deg, #2e8bc9 18%, #2a82b7 18%) !important;
+            background: linear-gradient(135deg, #2e8bc9 18%, #2a82b7 18%) !important;
             position: relative;
             &:after {
               content: 'afas';
@@ -92,6 +92,17 @@ page-barcode {
         background-color: #9E9E9E !important;
         color: $light;
         margin: auto 5px;
+        span {
+          animation: animateTotal 1s linear;
+        }
+        @keyframes animateTotal {
+          0%,100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.5);
+          }
+        }
       }
     }
     .bottom-btn {

@@ -21,6 +21,7 @@ export class DeliveryrequestPage {
   showLoader: boolean = true;
   noAcceptedRequests: boolean = false;
   noProducts: boolean = false;
+  netErr: boolean = false;
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private itemProvider: ItemProvider,
@@ -68,6 +69,7 @@ export class DeliveryrequestPage {
       err => {
         console.warn(err);
         this.showLoader = false;
+        this.netErr = true
       },
       () => {
         this.showLoader = false;
@@ -111,7 +113,7 @@ export class DeliveryrequestPage {
       )
   }
 
-  chunk(arr, limit) {
+  private chunk(arr, limit) {
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -170,7 +172,10 @@ export class DeliveryrequestPage {
             console.warn(errors);
             this.showToast('حاول مجددا')
           }
-        })
+        },
+          err => {
+          this.showToast('التطبيق يتطلب اتصال بالانترنت')
+          })
       } else {
         this.showToast('يرجى تحديد منتجات لطلب تسليمها')
       }
