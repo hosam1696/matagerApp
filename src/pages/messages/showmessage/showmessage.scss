@@ -4,23 +4,40 @@ page-showmessage {
     &.content {
       background-color: $bgColor;
     }
-
+    ion-list {
+       margin-bottom: 80px !important
+      }
+ .msg-title {
+      
+      font-weight: bold;
+    }
+    .msg-date {
+          font-size: 1.2rem !important;
+          span {
+            &:last-child {
+                  display: inline-block;
+            }
+          }
+    }
+    .msg-body {
+         display: block;
+    width: 100%;
+    padding:  13px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+      &.sender-msg {
+        min-height: 100px;
+      }
+      p {
+        margin: 0
+      }
+    }
     .msg {
 
-
+      
       &.me {
         position: relative;
-        &:after {
-          content: '';
-          position: absolute;
-
-          right: -5px;
-          width: 10px;
-          transform: rotate(45deg);
-          top: 16px;
-          height: 10px;
-          background-color: #ccc;
-        }
+        
       }
     }
     .small {
@@ -32,14 +49,16 @@ page-showmessage {
        left:0;
        border-radius: 0;
        margin: 0;
-    height: 40px;
+    height: 50px;
     background-color: red;
     display: flex;
     width: 100%;
 
+      
+   
     button {
       width: 20%;
-      height: 40px;
+      height: 50px;
       margin: 0 !important;
     }
     input {
@@ -55,11 +74,12 @@ page-showmessage {
      }
      }
 
-     ion-item#hero {
-      background: color($colors, light);
+     ion-item {
+      background: linear-gradient(to top left,#fff,#fafafa) !important;
       height: auto;
       width: 100%;
       position: relative;
+      border-bottom: 1px solid #ddd !important;
 
         h3 {
           display: flex;
@@ -77,8 +97,10 @@ page-showmessage {
         }
         p {
           margin-top: 0;
-          font-size: 12px !important;
           white-space: normal;
+        }
+        ion-label {
+          margin: 0 !important
         }
         ion-avatar {
           display: flex;

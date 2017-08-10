@@ -14,9 +14,10 @@
   </button>
 
   </ion-toolbar>
-
+<span class="or-text">أو</span>
   <ion-toolbar class="toolbar-btn">
     <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">ادخل الرقم  يدويا</button>
+    
     <input type="text" (keyup)="keepItNumber(enetredcode.value)" #enetredcode placeholder=" رقم الباركود">
 
 

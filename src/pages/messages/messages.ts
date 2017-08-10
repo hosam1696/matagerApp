@@ -13,7 +13,7 @@ export class Messages {
   isOnline:boolean = true;
   initLimit: number = 10;
   initStart: number = 0;
-  AllMessages:INotificationMessage[] | any = [];
+  AllMessages:INotificationMessage[];
   netError: boolean = false;
   showLoader: boolean = true;
   moreData: boolean = true;

@@ -1,3 +1,4 @@
+import { ArabicDatePipeModule } from './../../../app/service/arabic-date/arabic-date.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ShowmessagePage } from './showmessage';
@@ -11,7 +12,8 @@ import {HsaloaderComponentModule} from "../../../components/hsa-loader/hsa-loade
   imports: [
     IonicPageModule.forChild(ShowmessagePage),
     HsaloaderComponentModule,
-    SinceDatePipeModule
+    SinceDatePipeModule,
+    ArabicDatePipeModule
   ],
 })
 export class ShowmessagePageModule {}

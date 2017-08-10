@@ -37,9 +37,9 @@
         </ng-template>
       </ion-avatar>
       <div class="message-sender">
-
-        <span>{{message.name}}</span>
-
+        
+        <span *ngIf="!message.incoming"><b >انا و </b>{{message.receiver_name}}</span>
+        <span *ngIf="message.incoming">{{message.sender_name}}</span>
         <div class="message-et">
           <ion-icon name="time-outline"></ion-icon>
           منذ

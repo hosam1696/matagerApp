@@ -1,6 +1,6 @@
 import {IlocalUser, INotificationMessage} from './../../../app/service/interfaces';
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import {MessagesProvider} from "../../../providers/messagesprovider";
 
 /**
@@ -21,7 +21,12 @@ export class ShowmessagePage {
   pageData: INotificationMessage;
   messageReplies: any[];
   localUser: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
-  constructor(public navCtrl: NavController, public navParams: NavParams,public messagesProvider: MessagesProvider) {
+  showLoader:boolean = false;
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams,
+     public messagesProvider: MessagesProvider,
+     public toastCtrl: ToastController
+    ) {
     //this.messageId = this.navParams.get('messageData');
     this.pageData  = this.navParams.get('messageData');
 
@@ -56,20 +61,35 @@ export class ShowmessagePage {
   reply(message) {
 
     if (message && message.trim() != '') {
-      let messageData = {
+      let messageData: INotificationMessage|any = {
         user_id: this.localUser.id,
         mail_body: message,
         mail_title: this.pageData.mail_title,
         receive_user_id: this.pageData.user_id,
         parent_id: this.pageData.id
       };
-
+      this.showLoader = true;
       this.messagesProvider.sendMessage(messageData)
         .subscribe(({status, data})=> {
-          if (status == 'sucess') {
+          if (status == 'success') {
+            this.showToast('تم ارسال ردك بنجاح');
+            messageData.name = this.localUser.name;
+            messageData.avatar = this.localUser.avatar;
+            messageData.showBody = true;
+            messageData.date_added = Date.now();
             this.messageReplies.push(messageData);
           }
-        })
+        },
+        err=> {
+          console.warn(err);
+          this.showLoader = false;
+          this.showToast('التطبيق يتطلب اتصال بالانترنت');
+        },
+        () => {
+          this.showLoader = false;
+
+        }
+      )
     }
   }
     getMessageDetails(id){
@@ -77,6 +97,7 @@ export class ShowmessagePage {
         .subscribe(({status, data}) => {
           console.log('message Details', data);
           if (status == 'success') {
+            data.replays.forEach((x,i,a)=>(i !=(a.length-1))? x.showBody = false:x.showBody=true);
             this.messageReplies = data.replays
           }
 
@@ -108,6 +129,13 @@ export class ShowmessagePage {
   openProfile() {
     let localUserId = JSON.parse(localStorage.getItem('userLocalData')).id;
     this.navCtrl.push('VprofilePage', {pageData: [this.pageData.user_id, localUserId]})
+  }
+
+  showToast(msg) {
+    this.toastCtrl.create({
+      message:msg,
+      duration: 2000
+    }).present();
   }
 
   imagePath(img) {

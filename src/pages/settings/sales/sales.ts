@@ -4,12 +4,7 @@ import {SalesProvider} from "../../../providers/sales";
 import {IlocalUser, IsalesBill} from "../../../app/service/interfaces";
 import {ViewBillModal} from "../../viewbill";
 
-/**
- * Generated class for the SalesPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @IonicPage()
 @Component({
   selector: 'page-sales',

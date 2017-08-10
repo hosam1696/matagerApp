@@ -254,14 +254,19 @@ export interface IMessage {
 export interface INotificationMessage {
   id: number,
   status: readStatus,
-  name: string,
+  name?: string,
+  sender_name?:string,
+  receiver_name?:string,
   gender: string,
   date_added: any,
   avatar: string,
   mail_body: string,
   url:number,
   mail_title: string,
-  user_id: number
+  user_id: number,
+  incoming: boolean,
+  parent_id?:number,
+  receive_user_id?: number
 }
 
 
