@@ -18,8 +18,8 @@
 
 <ion-content>
 
-<ion-list>
-<!--
+  <ion-list>
+    <!--
     <ion-item no-lines id="hero" (click)="openProfile()">
       <ion-avatar item-left>
         <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
@@ -37,52 +37,50 @@
     </ion-item>
 -->
 
-     <ion-item class="msg">
-       <ion-avatar item-left>
-         <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
-         <ng-template #altImages>
-           <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
-           <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
-         </ng-template>
-       </ion-avatar>
-         <p class="msg-title"> {{pageData.mail_title}} </p>
+    <ion-item class="msg">
+      <ion-avatar item-left>
+        <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
+        <ng-template #altImages>
+          <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
+          <img class="alt" *ngIf="pageData.gender == 'male'" src="assets/img/male-alt.png">
+        </ng-template>
+      </ion-avatar>
+      <p class="msg-title"> {{pageData.mail_title}} </p>
       <p class="msg-date"> {{pageData.date_added | date:'longDate' | arabicdate}} </p>
-        
+
     </ion-item>
     <div class='msg-body sender-msg'>
 
-          <p>{{pageData.mail_body}}</p>
+      <p>{{pageData.mail_body}}</p>
 
-        </div>
+    </div>
 
-        <div class="msg msg-left me" *ngFor="let reply of messageReplies">
-          <ion-item class="msg" (click)="reply.showBody = !reply.showBody">
-       <ion-avatar item-left>
-         <img *ngIf="reply.avatar != '' ;else altImages" [src]="imagePath(reply.avatar)" alt="profile image">
-         <ng-template #altImages>
-           <img class="alt" *ngIf="reply.gender == 'female'" src="assets/img/female-alt.png">
-           <img class="alt" *ngIf="reply.gender == 'male'" src="assets/img/male-alt.png">
-         </ng-template>
-       </ion-avatar>
-       <ion-icon item-right name="arrow-down" color="lightDark"></ion-icon>
-         <p class="msg-title" [innerText]="reply.name==localUser.name?'انا':reply.name"></p>
-      <p class="msg-date"><span>{{reply.date_added | date:'shortTime'}}</span>  <span>{{reply.date_added | date:'longDate' | arabicdate}}</span>  </p>
-        
-    </ion-item>
-    <div class='msg-body ' [hidden]='!reply.showBody'>
+    <div class="msg msg-left me" *ngFor="let reply of messageReplies">
+      <ion-item class="msg" (click)="reply.showBody = !reply.showBody">
+        <ion-avatar item-left>
+          <img *ngIf="reply.avatar != '' ;else altImages" [src]="imagePath(reply.avatar)" alt="profile image">
+          <ng-template #altImages>
+            <img class="alt" *ngIf="reply.gender == 'female'" src="assets/img/female-alt.png">
+            <img class="alt" *ngIf="reply.gender == 'male'" src="assets/img/male-alt.png">
+          </ng-template>
+        </ion-avatar>
+        <ion-icon item-right name="arrow-down" color="lightDark"></ion-icon>
+        <p class="msg-title" [innerText]="reply.name==localUser.name?'انا':reply.name"></p>
+        <p class="msg-date"><span>{{reply.date_added | date:'shortTime'}}</span> <span>{{reply.date_added | date:'longDate' | arabicdate}}</span>          </p>
 
-          <p>{{reply.mail_body}}</p>
+      </ion-item>
+      <div class='msg-body ' [innerHTML]='reply.mail_body' [hidden]='!reply.showBody'>
 
-        </div>
-        </div>
+      </div>
+    </div>
 
 
 
-</ion-list>
+  </ion-list>
 
   <section class="float-btn">
-    <input type="text" #mailbody placeholder="الرد على الرسالة">
-    <button ion-button block full  (click)="reply(mailbody.value);(mailbody.value)?mailbody.value='':false">رد</button>
+    <textarea #mailbody rows="1" (input)="watchHeight($event)" type="text" placeholder="الرد على الرسالة"></textarea>
+    <button ion-button block full (click)="reply(mailbody.value);(mailbody.value)?mailbody.value='':false">رد</button>
   </section>
 
 </ion-content>

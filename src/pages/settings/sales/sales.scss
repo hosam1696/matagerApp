@@ -149,13 +149,15 @@ page-sales {
               &:last-child {
                 padding-right: 10px;
 
-                h3 {
-                  color: color($colors, primary
-                  )
-                }
+               
                 .product-info {
                   p {
                     color: color($colors, primaryDark) !important;
+                  }
+                  .bill-info {
+
+                    display: flex;
+                    justify-content: space-between;
                   }
                   .info-detail {
                     display: flex;

@@ -7,84 +7,80 @@ page-barcode {
     height: 15px;
     font-weight: bold;
     line-height: 15px;
-    color: #fff;
-    //text-shadow: -1px 1px #fff;
+    color: #908f8f; //text-shadow: -1px 1px #fff;
     //overflow: hidden;
     &:before {
       content: '';
       position: absolute;
-          height: 305%;
-    width: 4px;
-    top: -120%;
+      height: 305%;
+      width: 4px;
+      top: -120%;
       transform: rotate(45deg);
-      background: #2e8bc9;
-      z-index: -1
+     // background: #ccc;
+      z-index: -1;
+      left: 50%;
     }
     &:after {
+      @extend :before;
+      //background: #dcdcdc;
+      left: calc(50% + 4px)
+    }
+    /*&:after {
       content: '';
       position: absolute;
-          height: 22px;
-    width: 22px;
-    top: calc(50% - 11px);
-    left: calc(50% - 11px);
-      border-radius: 50%;
-     // background: linear-gradient(45deg,#2e8bc9, #2e8bc9 50%,#fff 50%);
-      background: #2e8bc9;
+      height: 22px;
+      width: 22px;
+      top: calc(50% - 11px);
+      left: calc(50% - 11px);
+      border-radius: 50%; // background: linear-gradient(45deg,#2e8bc9, #2e8bc9 50%,#fff 50%);
+      background: #ccc;
       z-index: -1
-    }
+    }*/
   }
   ion-toolbar {
     width: 96% !important;
     margin: 6px auto !important;
+    background: transparent !important;
+    .toolbar-background-ios {
+      background: transparent !important;
+    }
     &:last-child {
       padding: 0;
       .toolbar-content {
-          display: inline-flex;
-          input {
-            width: 60%;
-            border: none;
-            padding: 5px 15px;
-            font-size: 18px;
-            color: #777;
-            &::placeholder {
-              color: #999
-            }
+        display: inline-flex;
+        flex-direction: row-reverse !important;
+        input {
+          width: 70%;
+          border: none;
+          padding: 5px 15px;
+          font-size: 18px;
+          color: #777;
+          &::placeholder {
+            color: #999
           }
-          button {
-            width: 40%;
-            border-radius: 0;
-            background: linear-gradient(135deg, #2e8bc9 18%, #2a82b7 18%) !important;
-            position: relative;
-            margin-bottom: 0;
-            &:after {
-              content: 'afas';
-              position: absolute;
-              //background-color: #4791c3 ;
-              //transform: skew(5deg);
-              width: 20%;
-              height: 100%;
-              top: 0;
-              z-index: 9888899;
-              left: -50%
-            }
-            //border-radius: 5px 0 0 5px;
-          }
-
+        }
+        button {
+          width: 30%;
+          border-radius: 0; //background: linear-gradient(135deg, #2e8bc9 18%, #2a82b7 18%) !important;
+          position: relative;
+          margin-bottom: 0;
+          &:first-child {
+            margin-right: 10px;
+          } //border-radius: 5px 0 0 5px;
+        }
       }
     }
   }
-
-
   ion-content {
     padding: 0 2px !important;
     &.content {
       background-color: $bgColor;
     }
     ion-spinner {
-        & > * {
-            width: 20px;
-            height: 20px;
-        }
+      &>* {
+        width: 20px;
+        height: 20px;
+      }
     }
     .err-small {
       font-size: 1.7rem;
@@ -94,9 +90,9 @@ page-barcode {
       top: 40%;
       width: 100%;
       span {
-          font-size: 1.3rem;
-          color: #888;
-          text-shadow:none;
+        font-size: 1.3rem;
+        color: #888;
+        text-shadow: none;
       }
     }
     .bill-title {
@@ -129,7 +125,8 @@ page-barcode {
           animation: animateTotal 1s linear;
         }
         @keyframes animateTotal {
-          0%,100% {
+          0%,
+          100% {
             transform: scale(1);
           }
           50% {

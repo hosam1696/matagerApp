@@ -73,25 +73,32 @@
             <img [src]="(product.item_image)?imagePath(product.item_image):'assets/img/product-mac.png'" alt="">
           </ion-col>
           <ion-col col-8>
-            <h3>
-            {{product.item_name}}
+            <div class="product-title">
+              <h3>
+            <ion-icon color="primary" name="archive"></ion-icon> &nbsp;{{product.item_name}}
 
             </h3>
+            <p><ion-icon color="primary" name="time"></ion-icon> &nbsp;{{product.date_added | date:'longDate' | arabicdate}}</p>
+            </div>
             <div class="product-info">
-              <p> رقم الرف
-                <span class="kilos">{{product.shelf_name}}</span> </p>
               <div class="info-detail">
                 <p>
-                  الكمية
-                  <span> {{product.item_quantity}}</span>
+                  <ion-icon color="primary" name="ios-albums"></ion-icon> &nbsp; <b> {{product.item_quantity}}</b>
                 </p>
-                <p>
-                  السعر
-                  <span>
+                <p><ion-icon color="primary" name="pricetags"></ion-icon> &nbsp;<b>
               {{fixed(product.item_price)}}
-            </span> ريال
+            </b> ريال
                 </p>
               </div>
+              <div class="bill-info">
+                <p> رقم الرف
+                <b class="kilos">{{product.shelf_name}}</b> </p>
+                <p>رقم الفاتورة
+                  &nbsp;
+                  :<b>{{product.sales_bill_id}}</b>
+                </p>
+              </div>
+              
             </div>
           </ion-col>
         </ion-row>

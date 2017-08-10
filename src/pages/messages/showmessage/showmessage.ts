@@ -1,5 +1,5 @@
 import {IlocalUser, INotificationMessage} from './../../../app/service/interfaces';
-import { Component, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import {MessagesProvider} from "../../../providers/messagesprovider";
 
@@ -16,7 +16,7 @@ import {MessagesProvider} from "../../../providers/messagesprovider";
   templateUrl: 'showmessage.html',
 })
 export class ShowmessagePage {
-  @Input('mailbody') mailbody:any;
+  @ViewChild('mailbody') mailbody:ElementRef;
   messageId:any;
   pageData: INotificationMessage;
   messageReplies: any[];
@@ -63,7 +63,7 @@ export class ShowmessagePage {
     if (message && message.trim() != '') {
       let messageData: INotificationMessage|any = {
         user_id: this.localUser.id,
-        mail_body: message,
+        mail_body: message.replace(/\n/g, '<br><br>'),
         mail_title: this.pageData.mail_title,
         receive_user_id: this.pageData.user_id,
         parent_id: this.pageData.id
@@ -78,6 +78,7 @@ export class ShowmessagePage {
             messageData.showBody = true;
             messageData.date_added = Date.now();
             this.messageReplies.push(messageData);
+            this.mailbody.nativeElement.style.height = '50px';   
           }
         },
         err=> {
@@ -138,6 +139,21 @@ export class ShowmessagePage {
     }).present();
   }
 
+  watchHeight(event) {
+
+    const textArea = this.mailbody.nativeElement;
+
+    console.log(this.mailbody);
+    
+
+    textArea.style.height = 'auto';
+
+    if (textArea.scrollHeight < 200) {
+      textArea.style.height = textArea.scrollHeight + 'px';    
+    } else {
+      textArea.style.height = '200px';
+    }
+  }
   imagePath(img) {
     return 'http://rfapp.net/templates/default/uploads/avatars/'+img
   }

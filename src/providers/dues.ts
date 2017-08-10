@@ -16,4 +16,35 @@ export class DuesProvider {
     return this.http.post(this.API_URL+'dues.php', JSON.stringify({action:'getDues', user_id})).map(res=>res.json())
   }
 
+  getDueDetails(due) {
+
+    const action = 'getDueDetails';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+  }
+
+  requestDue(due) {
+    const action = 'requestDue';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+  }
+
+  getRequestedDues(due) {
+
+    const action = 'getRequestedDues';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+    
+
+  }
+
 }

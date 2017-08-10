@@ -1,3 +1,4 @@
+import { PushProvider } from './../providers/push';
 
 // Default image path on server => http://rfapp.net/templates/default/uploads/users/
 
@@ -125,6 +126,7 @@ import {DuesProvider} from "../providers/dues";
     NativeGeocoder,
     InAppBrowser,
     ActionSheet,
+    PushProvider,
      Camera,
      File,
      FilePath,

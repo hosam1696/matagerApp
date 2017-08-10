@@ -82,19 +82,19 @@ ion-app._gmaps_cdv_ .nav-decor{
         //height: 40px !important;
         a {
 
-            &:nth-child(1){
+            &#tab-t0-1{
                 order: 1
             }
-            &:nth-child(2) {
+            &#tab-t0-2 {
                 order: 2
             }
-            &:nth-child(3) {
+            &#tab-t0-3 {
                 order: 3
             }
-            &:nth-child(4) {
+            &#tab-t0-4 {
                 order: 4
             }
-             &:nth-child(5) {
+             &#tab-t0-5 {
                 order: 5
             }
             //height: 40px !important;

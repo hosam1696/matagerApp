@@ -1,5 +1,5 @@
 import { ViewChild } from '@angular/core';
-import {IlocalUser, IscannedProduct} from './../../app/service/interfaces';
+import { IlocalUser, IscannedProduct } from './../../app/service/interfaces';
 import { SalesProvider } from './../../providers/sales';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
@@ -14,18 +14,18 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 export class BarcodePage {
   @ViewChild('enetredcode') enteredCode: any;
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
-  BarcodeResult: any[]=[] ;
-  showData:boolean=false;
-  itemBarcode: number| string;
+  BarcodeResult: any[] = [];
+  showData: boolean = false;
+  itemBarcode: number | string;
   AllScanedProducts: IscannedProduct[] = [];
   billTotal: any = 0;
   showLoader: boolean = false;
-  sendshowLoader:boolean = false;
+  sendshowLoader: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner,
-  public salesProvider: SalesProvider,
+    public salesProvider: SalesProvider,
     public toastCtrl: ToastController
 
-) {
+  ) {
   }
 
   ionViewDidLoad() {
@@ -34,11 +34,11 @@ export class BarcodePage {
 
   }
 
-  private scanBarcode():void {
-    let scanOptions:BarcodeScannerOptions = {
+  private scanBarcode(): void {
+    let scanOptions: BarcodeScannerOptions = {
       orientation: 'portrait',
       disableSuccessBeep: true,
-      showFlipCameraButton: true,resultDisplayDuration: 100
+      showFlipCameraButton: true, resultDisplayDuration: 100
     };
 
     let scanBarcode = this.barcodeScanner.scan(scanOptions);
@@ -51,14 +51,14 @@ export class BarcodePage {
       this.itemBarcode = barcodeData.text;
 
       if (this.AllScanedProducts.length > 0) {
-        let foundedIndex = this.AllScanedProducts.findIndex((product:IscannedProduct)=>{return product.item_code == this.itemBarcode});
+        let foundedIndex = this.AllScanedProducts.findIndex((product: IscannedProduct) => { return product.item_code == this.itemBarcode });
 
         console.log('Index of repeated Product', foundedIndex);
 
-        if(foundedIndex == -1){
+        if (foundedIndex == -1) {
           this.showProductByCode(this.itemBarcode);
         } else {
-          this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity +1;
+          this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity + 1;
           this.billTotal = this.countTotal;
         }
 
@@ -66,7 +66,7 @@ export class BarcodePage {
         this.showProductByCode(this.itemBarcode);
       }
 
-      this.BarcodeResult.push( barcodeData );
+      this.BarcodeResult.push(barcodeData);
 
 
     });
@@ -88,21 +88,21 @@ export class BarcodePage {
     /*
     let targetVal:string = event.target.value;
     const val = parseInt(event.key);*/
-    if( isNaN(enteredKey) && enteredKey != ' ') {
+    if (isNaN(enteredKey) && enteredKey != ' ') {
       console.warn('rr');
       value.pop();
       this.enteredCode.nativeElement.value = value.join('');
       //event.target.value = event.target.value.substr(0, targetVal.length - 1)
     } else {
-      console.log('number',enteredKey, typeof enteredKey, value);
+      console.log('number', enteredKey, typeof enteredKey, value);
     }
 
   }
 
-  private scanEnteredBarcode(value):void {
+  private scanEnteredBarcode(value): void {
     value = parseInt(value);
     console.log(value, typeof value);
-    //TODO: check for repeated code before request the server for data
+    /*//TODO: check for repeated code before request the server for data
     if (this.AllScanedProducts.length > 0) {
       //let foundedBefore = this.AllScanedProducts.find((product:IscannedProduct)=>{return product.item_code == value});
       let foundedIndex = this.AllScanedProducts.findIndex((product:IscannedProduct)=>{return product.item_code == value});
@@ -119,50 +119,57 @@ export class BarcodePage {
     } else {
       this.showProductByCode(value);
     }
-    //console.log(barcodeData.text);
+    //console.log(barcodeData.text);*/
 
+      if(value)
+        this.showProductByCode(value);
   }
 
-  private showProductByCode(itemCode:number|string): void {
+  private showProductByCode(itemCode: number | string): void {
     this.showLoader = true;
     this.salesProvider.getItemByCode(itemCode)
-      .subscribe(({status, data})=>{
-          if (status === 'success') {
-           // let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
-            //console.log('finded match', founded);
-            //let isRepeated = (founded)? (founded.item_id == data.id): false;
-            //console.log(data, isRepeated);
+      .subscribe(({ status, data }) => {
+        if (status === 'success') {
+          let foundedIndex = this.AllScanedProducts.findIndex((product: IscannedProduct) => { return product.id == data.id });
 
-            [data.item_id,data.item_quantity,data.item_code,this.showData ]= [data.id,1,itemCode, true];
+          console.log('Index of repeated Product', foundedIndex);
+          // let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
+          //console.log('finded match', founded);
+          //let isRepeated = (founded)? (founded.item_id == data.id): false;
+          //console.log(data, isRepeated);
+          if (foundedIndex == -1) {
+            [data.item_id, data.item_quantity, data.item_code, this.showData] = [data.id, 1, itemCode, true];
             console.log(status, data);
-            delete  data.id;
-           /* if (isRepeated) { // if the product scanned before increase itemNum to existed
-              this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity = this.AllScanedProducts[this.AllScanedProducts.indexOf(founded)].item_quantity +1;
-            } else {
-              this.AllScanedProducts.push(data);
-            }*/
+            this.enteredCode.nativeElement.value = '';
             this.AllScanedProducts.push(data);
-            console.log('All Products',this.AllScanedProducts);
-            this.billTotal = this.countTotal;
-
           } else {
-            this.showLoader = false;
-            this.showToast('لم يتم التعرف على الكود يرجى المحاولة مرة اخرى')
-          }
-        },
+            this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity + 1;
+            this.enteredCode.nativeElement.value = '';
 
-        err=> {
+          }
+
+
+          console.log('All Products', this.AllScanedProducts);
+          this.billTotal = this.countTotal;
+
+        } else {
           this.showLoader = false;
-          this.showToast('التطبيق يتطلب اتصال بالانترنت');
-          console.warn(err);
-        },
-        () => {
-          this.showLoader= false;
+          this.showToast('لم يتم التعرف على الكود يرجى المحاولة مرة اخرى')
         }
+      },
+
+      err => {
+        this.showLoader = false;
+        this.showToast('التطبيق يتطلب اتصال بالانترنت');
+        console.warn(err);
+      },
+      () => {
+        this.showLoader = false;
+      }
       )
   }
 
-  private increaseQuantity(product:IscannedProduct): void {
+  private increaseQuantity(product: IscannedProduct): void {
     console.log(product);
     let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
     console.log(editedQuantity);
@@ -171,17 +178,17 @@ export class BarcodePage {
     //this.render.setAttribute(this.ele.nativeElement.id == 1, 'value', '')
   }
 
-  public showToast(msg):void {
+  public showToast(msg): void {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      position:'top'
+      position: 'top'
     });
 
     toast.present();
   }
 
-  private decreaseQuantity(product:IscannedProduct):void {
+  private decreaseQuantity(product: IscannedProduct): void {
 
     let editedQuantity = Math.max(1, Math.min(product.item_quantity - 1, 100));
     console.log(editedQuantity);
@@ -189,7 +196,7 @@ export class BarcodePage {
     this.billTotal = this.countTotal;
   }
 
-  private changeValue(event, product:IscannedProduct): void {
+  private changeValue(event, product: IscannedProduct): void {
     let targetValue = event.target.value;
     console.log(event, targetValue);
     console.log(product.item_quantity);
@@ -202,14 +209,14 @@ export class BarcodePage {
     console.log(event);
   }
 
-  private get countTotal():number {
-    return this.AllScanedProducts.reduce((x:number, d:IscannedProduct)=>{return x+(parseInt(d.item_price)*parseInt(d.item_quantity))}, 0)
+  private get countTotal(): number {
+    return this.AllScanedProducts.reduce((x: number, d: IscannedProduct) => { return x + (parseInt(d.item_price) * parseInt(d.item_quantity)) }, 0)
   }
 
   private addBill() {
 
     if (this.userLocal && this.userLocal) {
-    this.sendshowLoader = true;
+      this.sendshowLoader = true;
 
       let billData = {
         user_id: this.userLocal.id,
@@ -217,27 +224,27 @@ export class BarcodePage {
         total_cost: this.billTotal
       };
 
-    console.log(this.AllScanedProducts);
+      console.log(this.AllScanedProducts);
 
-    this.salesProvider.addSalesBill(billData)
-      .subscribe(({status, data, errors})=> {
-        if (status == 'success') {
-           this.showToast('تم اضافة الفاتورة بنجاح');
+      this.salesProvider.addSalesBill(billData)
+        .subscribe(({ status, data, errors }) => {
+          if (status == 'success') {
+            this.showToast('تم اضافة الفاتورة بنجاح');
             this.showData = false;
             this.sendshowLoader = false;
             this.AllScanedProducts = [];
-        } else {
-          this.showToast(errors);
-        }
-      }, err => {
-        console.warn(err);
-        this.showToast('التطبيق يتطلب اتصال بالانترنت')
-      },()=>{
-        this.sendshowLoader = false;
-      })
+          } else {
+            this.showToast(errors);
+          }
+        }, err => {
+          console.warn(err);
+          this.showToast('التطبيق يتطلب اتصال بالانترنت')
+        }, () => {
+          this.sendshowLoader = false;
+        })
 
-  }
-     else {
+    }
+    else {
       console.warn('no user');
     }
 

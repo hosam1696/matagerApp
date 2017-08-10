@@ -1,3 +1,4 @@
+import { PushProvider } from './../../providers/push';
 import { Http } from '@angular/http';
 import {
   MapsModal
@@ -49,7 +50,8 @@ export class HomePage {
     public push: Push,
     public config: Config,
     public modalCrtl: ModalController,
-    public platform: Platform
+    public platform: Platform,
+    public pushProvider: PushProvider
   ) {
 
   }
@@ -100,7 +102,22 @@ export class HomePage {
     });
 
     push.on('registration').subscribe((registration: any) => {
-      console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios')
+
+      
+      let deviceData = {
+         regId : registration.registrationId,
+         platform:this.platform.is('android') ? 'android' : 'ios'
+      }
+
+      
+      console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
+
+
+      this.pushProvider.sendDeviceToken(deviceData)
+        .subscribe(res=> {
+          console.log(res);
+        })
+      
     });
 
     push.on('error').subscribe(error => console.error('Error with Push plugin', error));

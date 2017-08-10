@@ -25,8 +25,9 @@ page-showmessage {
     padding:  13px;
     background-color: #fff;
     border-bottom: 1px solid #eee;
+    min-height: 50px;
       &.sender-msg {
-        min-height: 100px;
+        min-height: 120px;
       }
       p {
         margin: 0
@@ -49,24 +50,32 @@ page-showmessage {
        left:0;
        border-radius: 0;
        margin: 0;
-    height: 50px;
-    background-color: red;
+    min-height: 50px;
+    height: auto;
+    background-color: #eaeaea;
     display: flex;
     width: 100%;
 
       
-   
+       //box-shadow: -2px -2px 5px #ccc;
+       border-top: 1px solid #ccc;
     button {
-      width: 20%;
-      height: 50px;
-      margin: 0 !important;
+          width: 20%;
+    height: 50px;
+    margin: 5px 10px!important;
+    border-radius: 35px;
     }
-    input {
+    textarea {
       flex: 1;
       border: 0;
       padding: 5px 10px;
-
+      height: 50px;
+      margin:5px;
+      resize: none;
+      border-radius: 5px 5px 5px 0;
+      
     }
+    
      }
      p {
      &.primary {
@@ -75,7 +84,7 @@ page-showmessage {
      }
 
      ion-item {
-      background: linear-gradient(to top left,#fff,#fafafa) !important;
+      background: linear-gradient(to top left,#fbfbfb,#fafafa) !important;
       height: auto;
       width: 100%;
       position: relative;
@@ -111,7 +120,7 @@ page-showmessage {
           height: 50px;
           background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);
           overflow: hidden;
-          border: 2px solid color($colors, primaryDark) ;
+          
           img {
             width: 100% !important;
             height: 100% !important;
