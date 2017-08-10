@@ -3,6 +3,11 @@ ion-content {
     &.content {
       background: #eee;
     }
+  ion-avatar {
+    img {
+      border-radius: 4px !important;
+    }
+  }
     ion-list {
      // margin-top: 5px !important;
       @each $index ,$color in (1,#ccc),(2,#557997),(3,#ebebeb),(4, #b7ddff),(5,#999),(6,#ebd5b0),(7, #ebebeb),(8,#999) {

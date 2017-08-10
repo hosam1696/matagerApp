@@ -35,7 +35,7 @@ export class SalesProvider {
   getSalesProducts(user_id, limit: number, start :number= 0) {
     const action = 'getSoldItemOfSupp';
 
-    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action, user_id})).map(res=>res.json())
+    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action, user_id,limit,start})).map(res=>res.json())
   }
 
 

@@ -16,13 +16,15 @@ export class RequestPage {
   storeInfo: any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 
-    this.storeInfo = this.navParams.get('StoreInfo');
+    this.storeInfo = this.navParams.get('pageData');
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RequestPage');
   }
 
-  
 
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
 }

@@ -28,6 +28,7 @@ export class AddproductPage {
   loadImage;
   uploadErr;
   lastImage;
+  productItems: any[];
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -243,7 +244,7 @@ export class AddproductPage {
     })
   }
 
- uploadImage(file, type, cameraImage) {
+ uploadImage(file, type) {
     const fto: TransferObject = this.transfer.create();
 
     let uploadFolder = 'templates/default/uploads';
@@ -261,11 +262,11 @@ export class AddproductPage {
         ImgName: fileName,
         uploadFolder: uploadFolder,
         userId: this.userLocal.id,
-        type: (cameraImage == 'avatar') ? 'avatars' : 'covers'
+        type: 'items'
       }
     };
 
-    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + fileName;
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id + '&ImgName=' + fileName;
 
     console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
 
@@ -312,7 +313,7 @@ export class AddproductPage {
       console.log(compressed);
       */
       console.log('line 171 on promise resolve function', imageData);
-
+      this.productItems.push(imageData);
       // Special handling for Android library
       /*if (this.platform.is('android') || type == 'PHOTOLIBRARY') {
         this.filePath.resolveNativePath(imageData)
@@ -345,7 +346,7 @@ export class AddproductPage {
 
     }).then(data => {
 
-      this.uploadImage(data[0], data[1], data[2]);
+      this.uploadImage(data[0], data[1]);
 
     }).catch(err => {
 

@@ -86,7 +86,7 @@ page-addproduct {
           }
         .form-control {
           width: 100%;
-
+          position: relative;
           background-color: rgba(255, 255, 255, 1);
           color: color($colors, primaryDark);
           padding: 7px 10px;
@@ -114,7 +114,7 @@ page-addproduct {
                 top: 5px;
                 box-sizing: border-box;
                 color: color($colors, primaryDark);
-                height: 40px !important;
+                height: 33px !important;
                 background-color: #f4f4f4;
                 width: 50px;
                 border-right: 1px solid #eee;
@@ -122,7 +122,7 @@ page-addproduct {
                  border-radius: 5px 0 0 5px;
                  border: 1px solid #ddd;
                 span {
-                    line-height: 40px;
+                    line-height: 32px;
 
                 }
             }

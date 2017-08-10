@@ -38,15 +38,19 @@
       </ion-avatar>
       <div class="message-sender">
 
-        <h4>{{message.name}}</h4>
+        <span>{{message.name}}</span>
 
         <div class="message-et">
-          <ion-icon name="timer-outline"></ion-icon>
+          <ion-icon name="time-outline"></ion-icon>
           منذ
           <span>{{message.date_added | sincedate}}</span>
         </div>
       </div>
-      <span>{{message.mail_title}}</span>
+      <div class="msg-details">
+
+        <span>{{message.mail_title}}</span>
+        <span>{{message.mail_body}}</span>
+      </div>
     </ion-item>
 
 

@@ -54,6 +54,7 @@ import {MapsModal} from "../pages/mapsmodal";
 import {ArabicDatePipeModule} from "./service/arabic-date/arabic-date.module";
 import {SalesProvider} from "../providers/sales";
 import {ViewBillModal} from "../pages/viewbill";
+import {DuesProvider} from "../providers/dues";
 
 
 //import { GenderPipe } from '../pipes/gender/gender';
@@ -117,6 +118,7 @@ import {ViewBillModal} from "../pages/viewbill";
     DeliveryProvider,
     MessagesProvider,
     SalesProvider,
+    DuesProvider,
     CommentProvider,
     NotificationsProvider,
     ImagePicker,
@@ -129,6 +131,7 @@ import {ViewBillModal} from "../pages/viewbill";
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
     Transfer,
+
     Push
   ]
 })

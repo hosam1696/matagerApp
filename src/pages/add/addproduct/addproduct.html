@@ -14,19 +14,14 @@
         (ngSubmit)="submitForm()">
 
     <div class="form-group prod-photo">
-      <!--
-      <ion-slides class="images-viewer">
-        <ion-slide class="image">
-          <img src="assets/img/adds_02.png" alt="fsfs">
+
+      <ion-slides class="images-viewer" *ngIf="productItems">
+        <ion-slide class="image" *ngFor="let image of productItems">
+          <img [src]="image" alt="fsfs">
         </ion-slide>
-        <ion-slide class="image">
-          <img src="assets/img/adds_02.png" alt="fsfs">
-        </ion-slide>
-        <ion-slide class="image">
-          <img src="assets/img/adds_02.png" alt="fsfs">
-        </ion-slide>
+
       </ion-slides>
-      -->
+
       <div class="image-btn" (click)="pickImage()">
         <ion-icon name="camera-outline"></ion-icon>
         <p>أضف صورة</p>

@@ -32,7 +32,7 @@ export class NotificationDeleveryReqPage {
 
   }
 
-  ionViewWillLoad() {
+  ionViewDidLoad() {
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
@@ -40,7 +40,9 @@ export class NotificationDeleveryReqPage {
 
     if (this.pageData.status == 0) {
       this.notificationProvider.updatereadNotify(this.pageData.id, this.pageData.user_id)
-
+        .subscribe(res=>{
+          console.log(res);
+        })
 
     } else {
       console.info('you have been read this notification')
@@ -77,10 +79,7 @@ export class NotificationDeleveryReqPage {
     let id = this.pageData.user_id;
     this.navCtrl.push(page, { userData: [user_id, id] })
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ');
-    //console.log('startDate', this.pageData.start_date, '\nendDate', this.pageData.end_date);
-  }
+
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

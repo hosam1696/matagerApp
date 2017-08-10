@@ -34,11 +34,11 @@
     </ion-item>
 -->
     <ion-item>
-      <ion-label class="primary">عنوان الرسالة</ion-label>
+
       <ion-label> {{pageData.mail_title}} </ion-label>
     </ion-item>
-     <ion-item margin-top margin-right class="msg">
-       <ion-avatar item-right>
+     <ion-item class="msg">
+       <ion-avatar item-left>
          <img *ngIf="pageData.avatar != '' ;else altImages" [src]="imagePath(pageData.avatar)" alt="profile image">
          <ng-template #altImages>
            <img class="alt" *ngIf="pageData.gender == 'female'" src="assets/img/female-alt.png">
@@ -48,7 +48,7 @@
       <p> {{pageData.mail_body}} </p>
 
     </ion-item>
-  <ion-item margin-top  margin-right class="msg msg-left me" *ngFor="let reply of messageReplies">
+  <ion-item  class="msg msg-left me" *ngFor="let reply of messageReplies">
     <p>{{reply.mail_body}}</p>
     <span item-right class="small">منذ {{reply.date_added | sincedate}}</span>
   </ion-item>

@@ -24,6 +24,17 @@ page-messages {
         .item-inner {
           border-bottom: none !important;
         }
+        .msg-details {
+          span {
+            display: block;
+            &:first-child {
+              font-weight: bold;
+            }
+            &:last-child {
+              color: #999
+            }
+          }
+        }
         ion-label {
           margin : 8px auto !important;
         }
@@ -46,13 +57,13 @@ page-messages {
         .message-sender {
           display: flex;
           justify-content: space-between;
-          h4 {
+          span {
             //margin-top: -5px !important;
-            color: color($colors, primary);
+          font-size: 1.4rem;
           }
           .message-et {
             font-size: 12px;
-            color: color($colors, lightDark)
+            //color: color($colors, lightDark)
           }
         }
         span {
@@ -67,7 +78,7 @@ page-messages {
       }
     }
   }
-  
+
   ion-content#offline {
     .scroll-content {
         text-align: center;

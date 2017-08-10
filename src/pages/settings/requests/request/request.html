@@ -17,13 +17,15 @@
 
   <ion-list>
     <ion-item>
-      <ion-avatar item-left>  </ion-avatar>
+      <ion-avatar item-left>
+        <img *ngIf="storeInfo.avatar" [src]="imagePath(storeInfo.avatar)" alt="">
+      </ion-avatar>
       <h2>
-        {{storeInfo}}
+        {{storeInfo.matger_name}}
       </h2>
       <p>
         اجمالى المستحقات:
-        1200 ريال
+        <b>{{storeInfo.totalDues}}</b> ريال
       </p>
     </ion-item>
 
