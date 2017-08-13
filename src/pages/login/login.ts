@@ -1,3 +1,4 @@
+import { PushProvider } from './../../providers/push';
 import { Component } from '@angular/core';
 import {Events, IonicPage, NavController, NavParams, Platform, ToastController} from 'ionic-angular';
 
@@ -5,7 +6,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Network } from '@ionic-native/network';
 
 import { UserProvider } from "../../providers/user";
-import {Push, PushOptions} from "@ionic-native/push";
+import {Push, PushOptions,PushObject} from "@ionic-native/push";
 
 
 @IonicPage()
@@ -23,7 +24,8 @@ export class Login {
     public network: Network,
     public push: Push,
     public platform: Platform,
-              public events: Events
+              public events: Events,
+              public pushProvider: PushProvider
   ) {
     this.LoginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
@@ -53,10 +55,10 @@ export class Login {
     } else {
       */
         if (this.LoginForm.valid) {
-
+          let deviceData ={};
           let pushOptios: PushOptions = {
             android: {
-              senderID: '81559743575'
+              senderID: '146464528118'
             },
             ios: {
               alert: 'true',
@@ -65,53 +67,65 @@ export class Login {
             },
             windows: {}
           };
+          let push: PushObject = this.push.init(pushOptios);
 
-          let push = this.push.init(pushOptios);
-
-          push.on('registration').subscribe(registration => {
-              console.log('Device registered', registration,  this.platform.is('android')?'android':'ios');
-
-              let pushData = {
-                device_token: registration,
-                type: this.platform.is('android')?'android':'ios'
+          this.showLoader = true;
+            
+          
+          push.on('registration').subscribe((registration: any) => {
+      
+            
+            deviceData = {
+                device_token_id : registration.registrationId,
+                platform:this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android')
+            }
+      
+            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
+            .subscribe(({status, message, data}) => {
+              console.log(status, message);
+              //TODO: if data is correct navigate to the home page
+              if (status == 'success') {
+  
+                let userLocalData = data;
+  
+                this.showLoader = false;
+  
+                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+  
+                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+  
+                // TODO: navigate to the home page
+                this.navCtrl.setRoot('HomePage');
+  
+                this.navCtrl.popToRoot();
+  
+                console.table(localStorage.getItem('userLocalData'));
+  
+              } else {
+                this.showLoader = false;
+                this.showToast(`${message}`)
               }
-
-
+            },
+            err => {
+              this.showToast('التطبيق يتطلب اتصال بالانترنت');
+              console.warn(err);
+              this.showLoader = false;
             }
           );
-        this.showLoader = true;
-        this.userLogin.LoginUser(this.LoginForm.value)
-          .subscribe(({status, message, data}) => {
-            console.log(status, message);
-            //TODO: if data is correct navigate to the home page
-            if (status == 'success') {
-
-              let userLocalData = data;
-
-              this.showLoader = false;
-
-              localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-
-              this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-
-              // TODO: navigate to the home page
-              this.navCtrl.setRoot('HomePage');
-
-              this.navCtrl.popToRoot();
-
-              console.table(localStorage.getItem('userLocalData'));
-
-            } else {
-              this.showLoader = false;
-              this.showToast(`${message}`)
-            }
-          },
-          err => {
-            this.showToast('التطبيق يتطلب اتصال بالانترنت');
-            console.warn(err);
-            this.showLoader = false;
-          }
-        );
+            console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
+      
+      
+            this.pushProvider.sendDeviceToken(deviceData)
+              .subscribe(res=> {
+                console.log(res);
+              })
+            
+          });
+          
+              push.on('error').subscribe(error => console.error('Error with Push plugin', error));
+          
+        
+        
         } else {
           let formKeys = Object.keys(this.LoginForm.value);
           this.showLoader = false;

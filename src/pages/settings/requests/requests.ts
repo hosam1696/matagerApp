@@ -42,7 +42,10 @@ export class RequestsPage {
           if(res.status == 'success') {
             this.AllDues= [];
             event&&event.complete();
-            let resKeys = Object.keys(res.data);
+
+            console.log(Array.prototype.slice.call(res.data));
+
+            let resKeys = Object.keys(res.data); // Array.from(res.data) || Array.prototype.slice.call(res.data)
             for (let key of resKeys) {
               this.AllDues.push(res.data[key]);
             }

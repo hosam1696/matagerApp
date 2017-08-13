@@ -83,7 +83,7 @@ export class HomePage {
        }*/
     let pushOptios: PushOptions = {
       android: {
-        senderID: '81559743575'
+        senderID: '146464528118'
       },
       ios: {
         alert: 'true',
@@ -106,7 +106,7 @@ export class HomePage {
       
       let deviceData = {
          regId : registration.registrationId,
-         platform:this.platform.is('android') ? 'android' : 'ios'
+         platform:this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android')
       }
 
       

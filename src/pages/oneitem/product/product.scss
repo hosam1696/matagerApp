@@ -169,7 +169,8 @@ page-product {
         }
 
         p {
-          height: 35px;
+          min-height: 35px;
+          max-height: 70px;
           white-space: pre-wrap;
           font-size: 14px;
         }
