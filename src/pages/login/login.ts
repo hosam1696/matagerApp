@@ -39,8 +39,11 @@ export class Login {
     /* this.LoginForm.valueChanges.subscribe((data)=>{
        console.log(data);
      })
-    */
+   
+    let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
 
+    this.showToast(type);
+ */
   }
 
 
@@ -73,11 +76,11 @@ export class Login {
             
           
           push.on('registration').subscribe((registration: any) => {
-      
+            let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
             
             deviceData = {
                 device_token_id : registration.registrationId,
-                platform:this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android')
+                type
             }
       
             this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
@@ -114,12 +117,12 @@ export class Login {
           );
             console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
       
-      
+            /*
             this.pushProvider.sendDeviceToken(deviceData)
               .subscribe(res=> {
                 console.log(res);
               })
-            
+            */
           });
           
               push.on('error').subscribe(error => console.error('Error with Push plugin', error));

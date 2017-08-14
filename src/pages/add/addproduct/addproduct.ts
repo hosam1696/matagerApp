@@ -231,7 +231,6 @@ export class AddproductPage {
 
   openPicker() {
     let options: ImagePickerOptions = {
-      quality: 700,
       outputType: 0
     };
     this.imagePicker.getPictures(options).then((results)=>{

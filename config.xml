@@ -3,7 +3,7 @@
     <name>رف</name>
     <description>تطبيق رف</description>
     <author email="info@it-plus.co" href="http://it-plus.co/">IT PLUS TEAM</author>
-    <content original-src="index.html" src="http://192.168.1.4:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="geo:*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -100,6 +100,13 @@
     <plugin name="cordova-plugin-camera" spec="2.4.1" />
     <plugin name="cordova-plugin-compat" spec="1.1.0" />
     <plugin name="cordova-plugin-console" spec="1.0.7" />
+    <plugin name="cordova-plugin-crosswalk-webview" spec="^2.3.0">
+        <variable name="XWALK_VERSION" value="23+" />
+        <variable name="XWALK_LITEVERSION" value="xwalk_core_library_canary:17+" />
+        <variable name="XWALK_COMMANDLINE" value="--disable-pull-to-refresh-effect" />
+        <variable name="XWALK_MODE" value="embedded" />
+        <variable name="XWALK_MULTIPLEAPK" value="true" />
+    </plugin>
     <plugin name="cordova-plugin-device" spec="1.1.6" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="1.6.3" />

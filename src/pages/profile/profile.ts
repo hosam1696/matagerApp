@@ -167,7 +167,7 @@ export class ProfilePage {
   openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
 
     const cameraOptions: CameraOptions = {
-      quality: 70,
+      quality: (type=='CAMERA')?70:40,
       destinationType: this.camera.DestinationType.FILE_URI,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
@@ -270,6 +270,8 @@ export class ProfilePage {
   }
 
   uploadImage(file, type, cameraImage) {
+    file = (file.indexOf('?') != -1)?file.split('?')[0]:file;
+
     const fto: TransferObject = this.transfer.create();
 
     let uploadFolder = 'templates/default/uploads';
@@ -310,10 +312,17 @@ export class ProfilePage {
         if (err.body) {
           //this.showToast('image name ' + err.body);
           console.log('%c%s', 'font-size:20px','Body message from the server', err.body);
-          console.log(JSON.parse(err.body),JSON.parse(err.body).name)
-          this.userLocal[cameraImage] = JSON.parse(err.body).name;
+          console.log(JSON.parse(err.body),JSON.parse(err.body).name);
 
-          localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+
+          //this.showToast(err.json().errorInfo());
+          this.showToast(JSON.parse(err.body).success)
+          if (JSON.parse(err.body).name) {
+            this.userLocal[cameraImage] = JSON.parse(err.body).name;
+            
+            localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+          }
+          
         }
       });
 

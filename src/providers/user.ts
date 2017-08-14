@@ -20,6 +20,12 @@ export class UserProvider {
     return this.http.post(this.API_URL +'users.php', data).map(res=>res.json());
   }
 
+  LogoutUser(user_id) {
+    let action = 'logoutUser';
+    
+    return this.http.post(this.API_URL +'users.php', JSON.stringify({action,user_id})).map(res=>res.json());
+  }
+
   addUser(newUserData) {
 
     let action = 'newUser';

@@ -1,3 +1,4 @@
+import { UserProvider } from './../../providers/user';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Component } from '@angular/core';
 import { NavController, AlertController, ViewController, Events, IonicPage } from 'ionic-angular';
@@ -19,7 +20,8 @@ export class SettingsPage {
     public navCtrl: NavController,
      public alertCtrl:AlertController,
      public events: Events, public network: Network,
-     public itb: InAppBrowser
+     public itb: InAppBrowser,
+     public userProvider: UserProvider
      ) {
     this.checkUserLogin();
 
@@ -73,10 +75,21 @@ export class SettingsPage {
         {
           text: 'متأكد',
           handler: data=> {
-            localStorage.removeItem('userLocalData');
-            localStorage.removeItem('currentLocation');
-            this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-            this.navCtrl.push('Login');
+            this.userProvider.LogoutUser(this.userLocalData.id)
+              .subscribe((res)=>{
+                if (res.status == 'success') {
+                  localStorage.removeItem('userLocalData');
+                  localStorage.removeItem('currentLocation');
+                  this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+                  this.navCtrl.push('Login');
+                } else {
+                  
+                }
+              }, err=> {
+                
+              })
+            
+            
           }
         }
       ]
