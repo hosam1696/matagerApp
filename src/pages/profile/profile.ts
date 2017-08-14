@@ -293,7 +293,7 @@ export class ProfilePage {
       }
     };
 
-    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + fileName;
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=' + ((cameraImage == 'avatar') ? 'avatars' : 'covers') + '&userId=' + this.userLocal.id + '&ImgName=' + this.userLocal[cameraImage];
 
     this.uploadLoader =true;
     console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
@@ -321,6 +321,8 @@ export class ProfilePage {
             this.userLocal[cameraImage] = JSON.parse(err.body).name;
             
             localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+          }else {
+            this.showToast(JSON.parse(err.body).errorInfo)
           }
           
         }

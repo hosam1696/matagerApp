@@ -28,7 +28,7 @@ export class AddproductPage {
   loadImage;
   uploadErr;
   lastImage;
-  productItems: any[];
+  productItems: any[]=[];
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -49,7 +49,7 @@ export class AddproductPage {
       item_production_date: new FormControl(''),
       item_expiry_date: new FormControl(''),
       item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)]),
-      item_image: new FormControl('')
+      item_images: new FormControl([])
     })
 
   }
@@ -234,8 +234,13 @@ export class AddproductPage {
       outputType: 0
     };
     this.imagePicker.getPictures(options).then((results)=>{
+     // this.addProductForm.get('item_images').setValue([...this.addProductForm.get('item_images').value, ...results]);
+     // this.productItems=[...results,...this.productItems];
+      console.log( this.productItems);
+      
       for (var i = 0; i < results.length; i++) {
         console.log('Image URI: ' + results[i]);
+        this.uploadImage(results[i]);
       }
     }, (err) => {
       console.warn(err);
@@ -243,31 +248,25 @@ export class AddproductPage {
     })
   }
 
- uploadImage(file, type) {
+ uploadImage(file) {
     const fto: TransferObject = this.transfer.create();
 
     let uploadFolder = 'templates/default/uploads';
 
-    let targetPath = this.pathForImage(this.lastImage);
-
-    let fileName = file.substr(file.lastIndexOf('/') + 1);
-
     let uploadOptions: FileUploadOptions = {
       fileKey: 'file',
-      fileName: fileName,
+      fileName: file.split('/').pop(),
       chunkedMode: false,
-      mimeType: "image/"+type,
+ 
       params: {
-        ImgName: fileName,
-        uploadFolder: uploadFolder,
-        userId: this.userLocal.id,
+
         type: 'items'
       }
     };
 
-    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id + '&ImgName=' + fileName;
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id;
 
-    console.log('file uri', file, 'target Path', targetPath, 'server file & path', serverFile, 'file name', fileName);
+    console.log('file uri', file, 'server file & path', serverFile);
 
     fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true)
       .then((res) => {
@@ -276,8 +275,24 @@ export class AddproductPage {
         console.log('uploaded', res);
       }, err => {
         this.uploadErr = JSON.stringify(err);
-        this.showToast('uploAD ERROR' + JSON.stringify(err));
+        //this.showToast('uploAD ERROR' + JSON.stringify(err));
         console.log(err);
+        if (err.body) {
+          //this.showToast('image name ' + err.body);
+          console.log('%c%s', 'font-size:20px','Body message from the server', err.body);
+          console.log(JSON.parse(err.body),JSON.parse(err.body).name);
+
+
+          //this.showToast(err.json().errorInfo());
+          //this.showToast(JSON.parse(err.body).success)
+          if (JSON.parse(err.body).name) {
+            this.productItems.push(JSON.parse(err.body).name);
+            
+           
+          }else {
+            this.showToast(JSON.parse(err.body).errorInfo)
+          }
+        }
       });
 
   }
@@ -345,7 +360,7 @@ export class AddproductPage {
 
     }).then(data => {
 
-      this.uploadImage(data[0], data[1]);
+      this.uploadImage(data);
 
     }).catch(err => {
 
@@ -382,9 +397,14 @@ export class AddproductPage {
   showToast(msg:string):void {
     const toast = this.toastCtrl.create({
       message: msg,
-      duration: 3000
+      duration: 3000,
+      showCloseButton:true
     });
 
     toast.present();
+  }
+
+  imagePath(img) {
+    return 'http://rfapp.net/templates/default/uploads/items/'+img
   }
 }

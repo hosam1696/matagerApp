@@ -70,7 +70,32 @@ export class Login {
             },
             windows: {}
           };
-          let push: PushObject = this.push.init(pushOptios);
+          this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
+          .subscribe(({status, message, data}) => {
+            console.log(status, message);
+            //TODO: if data is correct navigate to the home page
+            if (status == 'success') {
+
+              let userLocalData = data;
+
+              this.showLoader = false;
+
+              localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+              this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+
+              // TODO: navigate to the home page
+              this.navCtrl.setRoot('HomePage');
+
+              this.navCtrl.popToRoot();
+
+              console.table(localStorage.getItem('userLocalData'));
+
+            } else {
+              this.showLoader = false;
+              this.showToast(`${message}`)
+            }
+          /*let push: PushObject = this.push.init(pushOptios);
 
           this.showLoader = true;
             
@@ -125,7 +150,7 @@ export class Login {
             */
           });
           
-              push.on('error').subscribe(error => console.error('Error with Push plugin', error));
+             // push.on('error').subscribe(error => console.error('Error with Push plugin', error));
           
         
         

@@ -8,9 +8,10 @@ page-request {
             height: 40px;
             color: color($colors, primary) !important;
             ion-checkbox {
-                        margin: 4px 4px 4px 0 !important;      
+                margin: 4px 2px 4px 0 !important     
             }
         }
+        
         #form-button {
            position: fixed;
            bottom: 0;

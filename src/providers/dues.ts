@@ -18,7 +18,7 @@ export class DuesProvider {
 
   getDueDetails(due) {
 
-    const action = 'getDueDetails';
+    const action = 'getDuesShelf';
 
     let body = JSON.stringify(Object.assign({action}, due));
 

@@ -1,5 +1,9 @@
+
+import { ViewChild } from '@angular/core';
+import { DuesProvider } from './../../../../providers/dues';
+import { IlocalUser } from './../../../../app/service/InewUserData';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 
 /**
  * Generated class for the RequestPage page.
@@ -13,18 +17,106 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'request.html',
 })
 export class RequestPage {
+  @ViewChild('checkAll') checkAll:any;
   storeInfo: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  localUser: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
+  AllDuesShelfs: Array<{shelf_id: string, shelf_name: string|number, totalShelfDues: number, checked?:boolean}>;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public duesProvider: DuesProvider,
+    public toastController: ToastController
+  ) {
 
     this.storeInfo = this.navParams.get('pageData');
   }
 
   ionViewDidLoad() {
+    if(!this.localUser)
+      this.localUser = JSON.parse(localStorage.getItem('userLocalData'));
     console.log('ionViewDidLoad RequestPage');
+    console.log(this.storeInfo);
+
+    console.log('check all',this.checkAll);
+
+    this.duesProvider
+      .getDueDetails({
+        matger_id: this.storeInfo.matger_id,
+        user_id : this.localUser.id
+      })
+      .subscribe(({data, status, errors})=>{
+        if (status === 'success') {
+          (Object as any).values(data).forEach(due=>due.checked = false);
+          this.AllDuesShelfs = (Object as any).values(data);
+        } else {
+          this.showToast('الرجاء المحاولة مرة اخرة')
+        }
+      }, err=> {
+          this.showToast('التطبيق يتطلب اتصال بالانترنت')
+      })
+
   }
 
 
   imagePath(img) {
     return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+  }
+  detectChange(event) {
+    console.log(event);
+
+    if (event.value && this.AllDuesShelfs.length > 0) {
+      this.AllDuesShelfs.forEach(due=>due.checked = true);
+    } else {
+      this.AllDuesShelfs.forEach(due=>due.checked = false);
+    }
+
+    console.log(this.AllDuesShelfs, this.insuerChecked);
+  }
+
+
+  sendRequest() {
+    if(this.insuerChecked) {
+      console.log(this.AllDuesShelfs);
+      let data = this.AllDuesShelfs
+                    .filter(d=>d.checked)
+                    .map(d=>{return {totalShelfDues:d.totalShelfDues,shelf_id:d.shelf_id,shelf_name:d.shelf_name}});
+
+      console.log('Data',data);
+      let dueData = {
+        user_id: this.localUser.id,
+        matger_id: this.storeInfo.matger_id,
+        due_data:data
+      };
+
+      this.duesProvider.requestDue(dueData)
+        .subscribe(res=>{
+          console.log(res);
+        })
+    } else {
+      this.showToast('رجاء تحديد رف واحد على الاقل')
+    }
+  }
+  private check(due) {
+    due.checked = !due.checked;
+
+    console.log(this.AllDuesShelfs, this.checkAll.value);
+    if(this.AllChecked) this.checkAll.value = true;
+    if(this.AllNotChecked) this.checkAll.value = false;
+  }
+  private get insuerChecked() {
+    return this.AllDuesShelfs.some(due=>due.checked);
+  }
+  private get AllChecked() {
+    return this.AllDuesShelfs.every(due=>due.checked);
+  }
+  private get AllNotChecked() {
+    return this.AllDuesShelfs.every(due=>!due.checked);
+  }
+
+  showToast(msg:string): void {
+    this.toastController.create({
+      message: msg,
+      duration: 2500
+    }).present()
   }
 }

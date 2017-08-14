@@ -1,5 +1,14 @@
+<ion-header>
+    
+    <ion-buttons start>
+      <button ion-button clear color="light" (click)="backStep()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-header>    
+
 <ion-content padding-horizontal>
-  <section id="form-navigate">
+  <!--<section id="form-navigate">
 
     <ion-buttons start>
       <button ion-button (click)="backStep()">
@@ -7,16 +16,16 @@
       </button>
     </ion-buttons>
 
-  </section>
+  </section>-->
 
+  <section id="logo-hero">
+      <img src="assets/img/mainlogo.png" alt="logo">
+    </section>
 
   <section id="page-content">
 
 
-    <section id="logo-hero">
-      <img src="assets/img/mainlogo.png" alt="logo">
-    </section>
-
+   
 
     <form novalidate
           [formGroup]="LoginForm"

@@ -40,8 +40,9 @@ page-addproduct {
 
             .images-viewer {
               width: 100%;
+              border-left: 1px dotted #eee;
               //background-color: #abc;
-                  box-shadow: inset 17px 0 15px #dadada;
+                  //box-shadow: inset 17px 0 15px #dadada;
               word-wrap: initial;
               overflow-x: scroll;
               overflow-y: hidden;
@@ -50,7 +51,7 @@ page-addproduct {
               .image {
                 direction: ltr;
                 padding: 10px 20px;
-
+                width:60%
               }
             }
             /*

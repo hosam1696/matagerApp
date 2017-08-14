@@ -20,26 +20,6 @@ export class MyApp {
       
     });
 
-    platform.registerBackButtonAction((data)=>{
-      alertCtrl.create({
-        title:'الخروج من التطبيق',
-        message: 'هل انت متأكد من انك تريد غلق التطبيق',
-        buttons: [
-          {
-          text: 'الغاء',
-          handler: data=> {
-
-            //ContactPage.viewCtrl.dismiss();
-          }
-        },
-        {
-          text: 'خروج',
-          handler: data=> {
-            platform.exitApp();
-          }
-        }
-        ]
-      })
-    })
+    
   }
 }

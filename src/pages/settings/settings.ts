@@ -1,7 +1,7 @@
 import { UserProvider } from './../../providers/user';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Component } from '@angular/core';
-import { NavController, AlertController, ViewController, Events, IonicPage } from 'ionic-angular';
+import { NavController, AlertController, ViewController, Events, IonicPage, Platform } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import {IlocalUser} from '../../app/service/InewUserData';
 
@@ -21,7 +21,8 @@ export class SettingsPage {
      public alertCtrl:AlertController,
      public events: Events, public network: Network,
      public itb: InAppBrowser,
-     public userProvider: UserProvider
+     public userProvider: UserProvider,
+     public platform: Platform
      ) {
     this.checkUserLogin();
 
@@ -30,6 +31,28 @@ export class SettingsPage {
       console.log('%c%s', 'font-size: 30px', 'Your connection status is: ' + this.network.type);
       return this.network.type;
       });
+
+      this.platform.registerBackButtonAction((data)=>{
+        this.alertCtrl.create({
+          title:'الخروج من التطبيق',
+          message: 'هل انت متأكد من انك تريد غلق التطبيق',
+          buttons: [
+            {
+            text: 'الغاء',
+            handler: data=> {
+  
+              //ContactPage.viewCtrl.dismiss();
+            }
+          },
+          {
+            text: 'خروج',
+            handler: data=> {
+              this.platform.exitApp();
+            }
+          }
+          ]
+        })
+      })
 
   }
 

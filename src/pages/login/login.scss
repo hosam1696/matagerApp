@@ -58,14 +58,14 @@ page-login {
       }
     }
     #logo-hero {
-      height: 150px;
-      width: 100%;
+      //height: 150px;
+      //width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-bottom: 15px;
-
-      margin-top: -15px;
+      //margin-bottom: 15px;
+      position: relative;
+      //margin-top: -15px;
       img {
         width: 140px;
 

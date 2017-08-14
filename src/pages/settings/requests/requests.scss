@@ -2,8 +2,16 @@ page-requests {
 ion-content {
     &.content {
       background: #eee;
+    }.err-small {
+      font-size: 1.7rem;
+      color: #666;
+      text-shadow: 1px 1px #fff;
+      position: absolute;
+      top: 40%;
+      width: 100%;
     }
   ion-avatar {
+    border-radius: 4px !important;
     img {
       border-radius: 4px !important;
     }

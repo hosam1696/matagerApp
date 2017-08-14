@@ -15,9 +15,9 @@
 
     <div class="form-group prod-photo">
 
-      <ion-slides class="images-viewer" *ngIf="productItems">
+      <ion-slides class="images-viewer" >
         <ion-slide class="image" *ngFor="let image of productItems">
-          <img [src]="image" alt="fsfs">
+          <img [src]="imagePath(image)" alt="fsfs">
         </ion-slide>
 
       </ion-slides>
