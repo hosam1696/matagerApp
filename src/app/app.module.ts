@@ -1,3 +1,4 @@
+import { ProgressBarComponentModule } from './../components/progress-bar/progress-bar.module';
 import { PushProvider } from './../providers/push';
 
 // Default image path on server => http://rfapp.net/templates/default/uploads/users/
@@ -47,6 +48,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 import {File} from '@ionic-native/file';
 import {FilePath} from '@ionic-native/file-path';
+import {Base64} from '@ionic-native/base64'
 
 import { Transfer} from '@ionic-native/transfer';
 import { ActionSheet } from '@ionic-native/action-sheet';
@@ -89,6 +91,7 @@ import {DuesProvider} from "../providers/dues";
       activator: 'ripple'
     }),
     HsaloaderComponentModule,
+    ProgressBarComponentModule,
     changePropDirectiveModule,
     SinceDatePipeModule,
     ArabicDatePipeModule
@@ -129,6 +132,7 @@ import {DuesProvider} from "../providers/dues";
     PushProvider,
      Camera,
      File,
+     Base64,
      FilePath,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},

@@ -15,17 +15,31 @@
 
     <div class="form-group prod-photo">
 
-      <ion-slides class="images-viewer" >
+      <!--<ion-slides class="images-viewer" >
         <ion-slide class="image" *ngFor="let image of productItems">
           <img [src]="imagePath(image)" alt="fsfs">
         </ion-slide>
 
-      </ion-slides>
+      </ion-slides>-->
 
-      <div class="image-btn" (click)="openPicker()">
-        <ion-icon name="camera-outline"></ion-icon>
-        <p>أضف صورة</p>
-      </div>
+      <div class="images">
+          <div class="image"  *ngFor="let image of productItems" [ngClass]="{'uploaded':image.is_uploaded}" >
+              <!--<img [ngStyle]="{'background-image': 'url(' + image.file  + ')'}" [src]="image.file">-->
+             <!-- <div class="img" *ngIf="image.base"  [ngClass]="{'uploaded':image.is_uploaded}" [ngStyle]="{'background': 'url(' + image.base  + ')'}"></div> -->
+               <img     [src]="pathForImage(image.imgName)">
+              
+              <ion-icon class="close-icon" name="close" color="dark"></ion-icon>  
+              <p *ngIf="image.is_uploaded" class="progress">{{progress}} %</p>  
+          </div>
+
+          
+          <div class="image-btn" (click)="openPicker()">
+              <ion-icon name="camera-outline"></ion-icon>
+              <p>أضف صورة</p>
+            </div>
+      </div> 
+
+      
 
 
 

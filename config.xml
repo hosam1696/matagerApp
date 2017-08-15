@@ -3,7 +3,7 @@
     <name>رف</name>
     <description>تطبيق رف</description>
     <author email="info@it-plus.co" href="http://it-plus.co/">IT PLUS TEAM</author>
-    <content original-src="index.html" src="http://192.168.1.3:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="geo:*" />
     <allow-navigation href="http://ionic.local/*" />
@@ -96,6 +96,7 @@
     </platform>
     <allow-navigation href="http://192.168.1.4:8100" />
     <engine name="android" spec="^6.2.3" />
+    <plugin name="com-badrit-base64" spec="^0.2.0" />
     <plugin name="com.synconset.imagepicker" spec="~2.1.8">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="choose images" />
     </plugin>
@@ -113,7 +114,6 @@
     <plugin name="cordova-plugin-device" spec="1.1.6" />
     <plugin name="cordova-plugin-file" spec="^4.3.3" />
     <plugin name="cordova-plugin-file-transfer" spec="1.6.3" />
-    <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="1.7.1" />
     <plugin name="cordova-plugin-keyboard" spec="1.1.5" />
@@ -127,4 +127,5 @@
     <plugin name="phonegap-plugin-push" spec="^2.0.0">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
+    <plugin name="cordova-plugin-filepath" spec="^1.0.2" />
 </widget>

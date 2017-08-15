@@ -1,5 +1,18 @@
 page-request {
     ion-content {
+        ion-spinner {
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            svg {
+                top: 5px;
+            }
+            * {
+                width: 15px;
+                height: 15px;
+                fill: #fff
+            }
+        }
         &.content {
             background: #eee;
         }
@@ -19,6 +32,8 @@ page-request {
            height: 40px;
            font-size: 14px;
            margin: 0;
+           display: flex;
+           align-items: center;
          }
         ion-list {
 

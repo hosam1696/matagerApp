@@ -27,7 +27,7 @@ export class DuesProvider {
   }
 
   requestDue(due) {
-    const action = 'requestDue';
+    const action = 'addDueRequest';
 
     let body = JSON.stringify(Object.assign({action}, due));
 

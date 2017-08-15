@@ -20,6 +20,7 @@ export class RequestPage {
   @ViewChild('checkAll') checkAll:any;
   storeInfo: any;
   localUser: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
+  showLoader: boolean = false;
   AllDuesShelfs: Array<{shelf_id: string, shelf_name: string|number, totalShelfDues: number, checked?:boolean}>;
   constructor(
     public navCtrl: NavController,
@@ -79,7 +80,7 @@ export class RequestPage {
       console.log(this.AllDuesShelfs);
       let data = this.AllDuesShelfs
                     .filter(d=>d.checked)
-                    .map(d=>{return {totalShelfDues:d.totalShelfDues,shelf_id:d.shelf_id,shelf_name:d.shelf_name}});
+                    .map(d=>{return {amount:d.totalShelfDues,shelf_id:d.shelf_id}});
 
       console.log('Data',data);
       let dueData = {
@@ -87,10 +88,26 @@ export class RequestPage {
         matger_id: this.storeInfo.matger_id,
         due_data:data
       };
-
+      this.showLoader =true;
       this.duesProvider.requestDue(dueData)
-        .subscribe(res=>{
-          console.log(res);
+        .subscribe(({status, errors})=>{
+          console.log(status);
+          if (status === 'success') {
+            
+            this.showToast('تم ارسال طلبك بنجاح');
+            setTimeout(()=>{
+              this.navCtrl.pop();
+            },2000);
+
+          } else {
+            this.showToast('الرجاؤ المحاولة مرة اخرى')
+          }
+
+        },err => {
+          console.warn(err);
+          this.showLoader = false
+        },()=>{
+          this.showLoader = false
         })
     } else {
       this.showToast('رجاء تحديد رف واحد على الاقل')
@@ -116,7 +133,8 @@ export class RequestPage {
   showToast(msg:string): void {
     this.toastController.create({
       message: msg,
-      duration: 2500
+      duration: 2000,
+      position:'top'
     }).present()
   }
 }

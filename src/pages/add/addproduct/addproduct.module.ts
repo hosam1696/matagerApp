@@ -1,3 +1,4 @@
+import { ProgressBarComponentModule } from './../../../components/progress-bar/progress-bar.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AddproductPage } from './addproduct';
@@ -8,7 +9,8 @@ import { HsaloaderComponentModule } from '../../../components/hsa-loader/hsa-loa
   ],
   imports: [
     IonicPageModule.forChild(AddproductPage),
-    HsaloaderComponentModule
+    HsaloaderComponentModule,
+    ProgressBarComponentModule
   ],
   exports: [
     AddproductPage

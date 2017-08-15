@@ -64,6 +64,8 @@
 
   </ion-list>
 
-  <button *ngIf="AllDuesShelfs" id="form-button" ion-button full (click)="sendRequest()"> ارسل الطلب</button>
+  <button *ngIf="AllDuesShelfs" id="form-button" ion-button full (click)="sendRequest()"> ارسل الطلب
+    <ion-spinner name="crescent" *ngIf="showLoader"  color="light" small></ion-spinner>
+  </button>
 
 </ion-content>

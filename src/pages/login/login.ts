@@ -94,10 +94,10 @@ export class Login {
             } else {
               this.showLoader = false;
               this.showToast(`${message}`)
-            }
+            }this.showLoader = true;
           /*let push: PushObject = this.push.init(pushOptios);
 
-          this.showLoader = true;
+          
             
           
           push.on('registration').subscribe((registration: any) => {
