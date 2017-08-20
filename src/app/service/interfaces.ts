@@ -36,6 +36,25 @@ export enum Eclose {
   accepted,
   refused
 }
+
+export enum EDueStatus{
+  NotAnswered = 0,
+  RecievedDues,
+  RefuseDue,
+  AcceptDue
+}
+export interface IDueShelf {
+  shelf_id: number,
+  shelf_name: string,
+  amount: any
+}
+export interface DueDetails {
+  status: EDueStatus,
+  shelfs : IDueShelf[],
+  total_amount: string| number,
+  due_message:string
+}
+
 export interface INotification {
   id: number,
   user_id: number,

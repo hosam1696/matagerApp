@@ -1,10 +1,10 @@
 import { ProductModal } from '../productmodal';
-import { NotificationsProvider } from '../../providers/notifications';
+import { NotificationsProvider } from '../../../providers/notifications';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams, ModalController } from 'ionic-angular';
 
-import { INotification, IDeliveryNotifyInfo } from '../../app/service/interfaces';
-import { DeliveryProvider } from "../../providers/delivery";
+import { INotification, IDeliveryNotifyInfo } from './../../../app/service/interfaces';
+import { DeliveryProvider } from "../../../providers/delivery";
 
 @IonicPage()
 @Component({

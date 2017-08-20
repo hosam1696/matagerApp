@@ -1,6 +1,6 @@
+import { NotificationsProvider } from './../../../providers/notifications';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {NotificationsProvider} from "../../providers/notifications";
 
 /**
  * Generated class for the CommentNotificationPage page.

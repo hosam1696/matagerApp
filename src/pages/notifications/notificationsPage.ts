@@ -147,7 +147,9 @@ export class NotificationsPage {
       this.navCtrl.push('CommentNotificationPage', {pageData})
     } else if (pageData.type == 'salesBill') {
       this.navCtrl.push('SalesnotificationPage', {pageData})
-    } else {
+    } else if (pageData.type == 'duesRequest') {
+      this.navCtrl.push('NotificationDuePage', {pageData})
+    }else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
 
 

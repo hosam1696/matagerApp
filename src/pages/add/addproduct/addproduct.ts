@@ -1,3 +1,4 @@
+import { PluginService } from './../../../app/service/plugins.service';
 import { Base64 } from '@ionic-native/base64';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Inject, NgZone } from '@angular/core';
@@ -26,13 +27,18 @@ export class AddproductPage {
   actionText: string = 'اضافة';
   actionBtnTxt: any = null;
   camerError: boolean = false;
-  loadImage;
-  uploadErr;
+  loadImage:boolean = false;
   lastImage;
-  productItems: Array<{ imgName: string | any, is_uploaded: boolean, file: any ,base?:any}> = [];
+
+  productItems: Array<{ imgName: string | any, is_uploading: boolean, file: any ,base?:any}> = [];
+  current:number = 0;
+  total: number;
+  uploadErr:any = [];
   itemsNames: string[] = [];
   uploaded: boolean = false;
   progress: number = 20;
+  fto: TransferObject = this.transfer.create();
+
   constructor(
     @Inject('API_URL') private API_URL,
     public navCtrl: NavController,
@@ -45,9 +51,9 @@ export class AddproductPage {
     public camera: Camera,
     public platform: Platform,
     public imagePicker: ImagePicker,
-    public ng_zone: NgZone,
+    private ng_zone: NgZone,
     public filePath:FilePath,
-    public base: Base64
+    private plugin_service: PluginService
   ) {
 
     this.addProductForm = new FormGroup({
@@ -97,23 +103,25 @@ export class AddproductPage {
       title: 'اختر من',
       buttons: [
         {
-          text: 'الكاميرا',
+          text: '   الكاميرا',
           handler: () => {
             console.log('camera clicked');
             //this.openCamera();
-            this.openCamera();
+            this.opem_camera();
           }
         },
         {
-          text: 'البوم الصور',
+          text: `  البوم الصور`,
+          //icon: 'camera',
           handler: () => {
             console.log('Photo Album');
-            this.openPicker();
+            this.open_albums();
           }
         },
         {
           text: 'الغاء',
           role: 'cancel',
+          cssClass: 'dangerColor',
           handler: () => {
             console.log('Cancel clicked');
 
@@ -248,7 +256,24 @@ export class AddproductPage {
     }
   }
 
-  openPicker() {
+
+  public async open_albums() {
+
+    let choosenImages = await this.plugin_service.open_albums();
+
+    let imagesrequests = await choosenImages.map(file=>{
+      return {
+        imgName: file.split('/').pop(),
+        is_uploading: false,
+        file
+      }
+    });
+
+    this.productItems = [ ...imagesrequests, ...this.productItems];
+
+  }
+
+ /* openPicker() {
     let options: ImagePickerOptions = {
       outputType: 0
     };
@@ -263,7 +288,7 @@ export class AddproductPage {
         console.log('file',0,fileName,filePath);
         this.productItems.unshift({
           imgName: results[i].split('/').pop(),
-          is_uploaded: false,
+          is_uploading: false,
           file: results[i]
         });
         this.filePath.resolveNativePath(results[i])
@@ -275,12 +300,7 @@ export class AddproductPage {
         });
         this.copyFileToLocalDir(filePath,fileName,fileName);
         this.uploadImage(results[i]);
-        /*this.base.encodeFile(results[i])
-          .then(base64=>{
-            //console.log(base64);
-            this.productItems[0].base = base64;
-            console.log(this.productItems);
-          })*/
+
           console.log('Image URI: ' + results[i]);
         }
         console.log('After loop product items',this.productItems);
@@ -288,31 +308,36 @@ export class AddproductPage {
     console.warn(err);
 
   })
-}
+}*/
 
-uploadImage(file) {
-  const fto: TransferObject = this.transfer.create();
+uploadImage(data?:any) {
+  let file = this.productItems[this.current].file;
 
   let uploadFolder = 'templates/default/uploads';
 
   let uploadOptions: FileUploadOptions = {
-    fileKey: 'file',
-    fileName: file.split('/').pop(),
-    chunkedMode: false,
+      fileKey: 'file',
+      fileName: this.productItems[this.current].file.split('/').pop(),
+      chunkedMode: false,
 
-    params: {
+      headers: {
+        'Content-Type': undefined
+      },
+      params: {}
 
-      type: 'items'
-    }
   };
 
   let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id;
-  this.productItems.find(p => p.file == file).is_uploaded = true;
-  fto.onProgress(this.progress_event)
+  this.productItems.find(p => p.file == file).is_uploading = true;
+  this.fto.onProgress(this.progress_event)
 
   console.log('file uri', file, 'server file & path', serverFile);
 
-  fto.upload(encodeURI(file), encodeURI(serverFile), uploadOptions, true)
+  this.fto.upload(
+    encodeURI(file),
+    encodeURI(serverFile),
+     uploadOptions,
+      false)
     .then((res) => {
       this.loadImage = true;
       this.showToast('جارى رفع الصورة');
@@ -332,14 +357,28 @@ uploadImage(file) {
         if (JSON.parse(err.body).name) {
           this.itemsNames.push(JSON.parse(err.body).name);
           console.log(this.itemsNames);
-          this.productItems.find(p => p.file == file).is_uploaded = false;
-
+          this.productItems.find(p => p.file == file).is_uploading = false;
+          if (this.current + 1 < this.productItems.length) {
+            // Yes, we have. Up the current index
+            this.current++;
+            // reset the progress
+            this.progress = 0;
+            // and start the upload
+            this.uploadImage();
+        }
         } else {
           this.showToast(JSON.parse(err.body).errorInfo)
         }
       }
     });
 
+  }
+
+  private async opem_camera() {
+
+    let cameraImg = await this.plugin_service.open_camera();
+
+    console.log(cameraImg);
   }
 
   openCamera() {
@@ -350,6 +389,7 @@ uploadImage(file) {
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
       allowEdit: true,
+      encodingType: this.camera.EncodingType ? this.camera.EncodingType.JPEG : 0,
       sourceType: this.camera.PictureSourceType.CAMERA
     };
 
@@ -361,56 +401,44 @@ uploadImage(file) {
       php<pre>Array\n(\n
       [0] => \n [1] => api\n [2] => uploadImage.php\n)\n/home/httpprim/rfapp.net<br>/api","objectId":""} */
 
-    this.camera.getPicture(cameraOptions).then(imageData => {
+    this.camera
+      .getPicture(cameraOptions)
+      .then(imageData => {
 
-      /* If data
+        /* If data
 
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
+        let base64Image = 'data:image/jpeg;base64,' + imageData;
 
-      let compressed = LZString.compressToUTF16(base64Image);
+        let compressed = LZString.compressToUTF16(base64Image);
 
-      console.log(compressed);
-      */
-      console.log('line 171 on promise resolve function', imageData);
-      this.productItems.push(imageData);
-      // Special handling for Android library
-      /*if (this.platform.is('android') || type == 'PHOTOLIBRARY') {
-        this.filePath.resolveNativePath(imageData)
-          .then(filePath => {
-            console.log('file path from resolve native path', filePath);
-            let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-            let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
-            console.log('correctPath', correctPath, 'currentName', currentName);
-            this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-          });
-      } else {
-        console.log('line 197 image file path', imageData);
-        let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
-        let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
-        console.log('correctPath', correctPath, 'currentName', currentName);
-        this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-      }*/
-
-
-
-      // detect image extension
-      let extension: string = imageData.substring(imageData.lastIndexOf('.') + 1, imageData.lastIndexOf('?') != -1 ? imageData.lastIndexOf('?') : imageData.length);
-
-      console.log('file extension', extension);
-
-      window.alert(imageData + "  && " + extension);
+        console.log(compressed);
+        */
+        console.log('line 171 on promise resolve function', imageData);
+        this.productItems.push({
+          imgName: imageData.split('/').pop(),
+          is_uploading: false,
+          file: imageData
+        });
+        // Special handling for Android library
+        /*if (this.platform.is('android') || type == 'PHOTOLIBRARY') {
+          this.filePath.resolveNativePath(imageData)
+            .then(filePath => {
+              console.log('file path from resolve native path', filePath);
+              let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+              let currentName = imageData.substring(imageData.lastIndexOf('/') + 1, imageData.lastIndexOf('?'));
+              console.log('correctPath', correctPath, 'currentName', currentName);
+              this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+            });
+        } else {
+          console.log('line 197 image file path', imageData);
+          let currentName = imageData.substr(imageData.lastIndexOf('/') + 1);
+          let correctPath = imageData.substr(0, imageData.lastIndexOf('/') + 1);
+          console.log('correctPath', correctPath, 'currentName', currentName);
+          this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+        }*/
 
 
-      return Promise.resolve([imageData, extension])
-
-    }).then(data => {
-
-      this.uploadImage(data);
-
-    }).catch(err => {
-
-      console.error('getPicture Error ', err);
-    })
+      })
   }
 
   detectUnvalidFormErrors(form:FormGroup = this.addProductForm, formKeys: string[] = Object.keys(form.value)) {

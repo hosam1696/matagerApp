@@ -32,12 +32,24 @@ import {SalesProvider} from "../providers/sales";
           </ion-row>
         </ion-grid>
       </ion-item>
-      <h5 text-center > اجمالى الفاتورة <p class="total"><b>{{TotalCost}}</b> ريال </p></h5>
+      <ion-item margin-top class="total">
+        <ion-label>
+        اجمالى الفاتورة
+        </ion-label>
+        <ion-label>
+        <b>{{TotalCost}}</b> ريال 
+        </ion-label>
+      </ion-item>
+      
     </ion-list>
     
   </ion-content>  `,
   styles: [`
-
+    .total ion-label:first-child {
+      color: #2e8bc9
+    }.total ion-label:last-child {
+      color: #666
+    }
     .content {
       background-color: #eee
     }

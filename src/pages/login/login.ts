@@ -58,6 +58,7 @@ export class Login {
     } else {
       */
         if (this.LoginForm.valid) {
+          this.showLoader = true;
           let deviceData ={};
           let pushOptios: PushOptions = {
             android: {

@@ -29,11 +29,11 @@
                <img     [src]="pathForImage(image.imgName)">
               
               <ion-icon class="close-icon" name="close" color="dark"></ion-icon>  
-              <p *ngIf="image.is_uploaded" class="progress">{{progress}} %</p>  
+              <p *ngIf="image.is_uploading" class="progress">{{progress}} %</p>  
           </div>
 
           
-          <div class="image-btn" (click)="openPicker()">
+          <div class="image-btn" (click)="pickImage()">
               <ion-icon name="camera-outline"></ion-icon>
               <p>أضف صورة</p>
             </div>

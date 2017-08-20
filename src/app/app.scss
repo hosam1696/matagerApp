@@ -33,7 +33,9 @@ $bordered:#9E9E9E;
 .bold {
   font-weight: bold;
 }
-
+.dangerColor {
+    color: $danger
+}
 ion-app._gmaps_cdv_ .nav-decor{
   background-color: transparent !important;
 }

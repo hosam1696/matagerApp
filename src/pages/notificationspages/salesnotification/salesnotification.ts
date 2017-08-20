@@ -1,8 +1,8 @@
-import { NotificationsProvider } from './../../providers/notifications';
-import { INotification } from './../../app/service/interfaces';
+import { NotificationsProvider } from '../../../providers/notifications';
+import { INotification } from '../../../app/service/interfaces';
 import { Component } from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
-import {ViewBillModal} from "../viewbill";
+import {ViewBillModal} from "../../viewbill";
 
 /**
  * Generated class for the SalesnotificationPage page.

@@ -1,3 +1,4 @@
+import { PluginService } from './service/plugins.service';
 import { ProgressBarComponentModule } from './../components/progress-bar/progress-bar.module';
 import { PushProvider } from './../providers/push';
 
@@ -129,6 +130,7 @@ import {DuesProvider} from "../providers/dues";
     NativeGeocoder,
     InAppBrowser,
     ActionSheet,
+    PluginService,
     PushProvider,
      Camera,
      File,

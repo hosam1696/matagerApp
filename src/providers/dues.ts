@@ -26,6 +26,16 @@ export class DuesProvider {
 
   }
 
+  getDueById(due) {
+
+    const action = 'getDueById';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+    
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+  }
+
   requestDue(due) {
     const action = 'addDueRequest';
 
@@ -43,8 +53,34 @@ export class DuesProvider {
 
     return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
 
-    
+  }
 
+  acceptRequest(due) {
+    const action = 'acceptDueRequest';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+    
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+  }
+
+  refuseRequest(due) {
+
+    const action = 'refuseDueRequest';
+
+    let body = JSON.stringify(Object.assign({action}, due));
+    
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
+
+  }
+
+  recieveDues(due) {
+
+    const action = 'acceptDueRequest';
+    
+    let body = JSON.stringify(Object.assign({action}, due));
+    
+    return this.http.post(this.API_URL+'dues.php', body).map(res=>res.json());
   }
 
 }
