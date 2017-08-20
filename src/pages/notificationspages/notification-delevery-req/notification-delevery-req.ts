@@ -1,4 +1,4 @@
-import { ProductModal } from '../productmodal';
+import { ProductModal } from '../../productmodal';
 import { NotificationsProvider } from '../../../providers/notifications';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, ToastController, NavParams, ModalController } from 'ionic-angular';

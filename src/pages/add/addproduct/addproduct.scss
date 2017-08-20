@@ -30,7 +30,7 @@ page-addproduct {
               display: flex;
               flex-flow: wrap;
               //flex-direction: row;
-              justify-content: space-between;
+              justify-content: flex-start;
               min-width: 100%;
               
               .image {
@@ -41,9 +41,30 @@ page-addproduct {
                 height: 30vw;
                 border-radius: 2px;
                 overflow: hidden;
-                opacity: 0.75;
                 padding: 2px;;position: relative;
                 transition: opacity 0.2s ease-in;
+                &:last-of-type{
+                  order: 999;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  flex-direction: column;
+                  ion-icon {
+                    font-size: 35px;
+                  }
+                  p {
+                    margin: 0;
+                    color: #666
+                  }
+                }
+                progress-bar {
+                  position: absolute;
+                  bottom: 0;
+                  left: 0;
+                  width: 96%;
+                  transform: translateX(2%);
+                  
+                }
                 &.uploaded {
 
                   opacity: 1;
@@ -63,7 +84,7 @@ page-addproduct {
                     width: 40px;
                     position: absolute;
                     top: 30%;
-                    color: #ffffff;
+                    color: #666;
                     left: calc( 50% - 20px);
                     z-index: 999;
                   }

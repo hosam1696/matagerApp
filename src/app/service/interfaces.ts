@@ -8,8 +8,8 @@ export interface IProduct {
     item_price: string,
     item_production_date: string,
     item_images?: string[],
-    user_id?:number
-
+    user_id?:number,
+    showControls?:boolean
 }
 
 export interface IscannedProduct {

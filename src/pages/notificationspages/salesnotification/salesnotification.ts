@@ -1,15 +1,9 @@
 import { NotificationsProvider } from '../../../providers/notifications';
 import { INotification } from '../../../app/service/interfaces';
 import { Component } from '@angular/core';
-import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
-import {ViewBillModal} from "../../viewbill";
+import { IonicPage, ModalController, NavController, NavParams } from 'ionic-angular';
+import { ViewBillModal } from "../../viewbill";
 
-/**
- * Generated class for the SalesnotificationPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -19,9 +13,9 @@ import {ViewBillModal} from "../../viewbill";
 export class SalesnotificationPage {
   pageData: INotification;
   constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public notificationsProviders: NotificationsProvider,
-              public modalCtrl: ModalController) {
+    public navParams: NavParams,
+    public notificationsProviders: NotificationsProvider,
+    public modalCtrl: ModalController) {
     this.pageData = this.navParams.get('pageData');
   }
 
@@ -40,16 +34,16 @@ export class SalesnotificationPage {
   }
 
   imagePath(img) {
-    return 'http://rfapp.net/templates/default/uploads/avatars/'+img
+    return 'http://rfapp.net/templates/default/uploads/avatars/' + img
   }
 
   navigateToPage(page, user_id) {
     let id = this.pageData.user_id;
-    this.navCtrl.push(page, {userData:[user_id, id]})
+    this.navCtrl.push(page, { userData: [user_id, id] })
   }
 
   viewBill(billId) {
-    let modal = this.modalCtrl.create(ViewBillModal, {BillId:billId});
+    let modal = this.modalCtrl.create(ViewBillModal, { BillId: billId });
 
     modal.present()
   }

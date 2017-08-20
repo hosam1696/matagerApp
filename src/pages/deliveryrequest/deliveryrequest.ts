@@ -49,7 +49,9 @@ export class DeliveryrequestPage {
   }
 
   getProducts() {
-    this.itemProvider.getProductByUserId(this.userLocal.id).retry(3)
+    this.itemProvider
+      .getProductByUserId(this.userLocal.id)
+      .retry(3)
       .subscribe(
       ({ status, data, errors }) => {
         if (status == 'success' || status.message == 'success') {
@@ -76,6 +78,7 @@ export class DeliveryrequestPage {
       }
       )
   }
+
   triggerChecked(product): void {
 
     console.log(product);
@@ -84,6 +87,7 @@ export class DeliveryrequestPage {
 
     console.log(product);
   }
+
   getAcceptedShelfsRequests() {
     this.shelfsProvider.getAcceptedRequests(this.userLocal.id)
       .subscribe(
@@ -128,16 +132,17 @@ export class DeliveryrequestPage {
   navigateToPage(page, pageData = null) {
     this.navCtrl.push(page, { pageData });
   }
+
   increaseQuantity(product) {
     console.log(product);
-    let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
+    let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, Infinity));
     console.log(editedQuantity);
     product.item_quantity = editedQuantity;
     //this.render.setAttribute(this.ele.nativeElement.id == 1, 'value', '')
   }
 
   decreaseQuantity(product) {
-    let editedQuantity = Math.max(1, Math.min(product.item_quantity - 1, 100));
+    let editedQuantity = Math.max(1, Math.min(product.item_quantity - 1, Infinity));
     console.log(editedQuantity);
     product.item_quantity = editedQuantity;
   }
@@ -162,19 +167,23 @@ export class DeliveryrequestPage {
         };
         console.table(items, requestData);
 
-        this.deliveryProvider.addDeliveryRequest(requestData).subscribe(({ status, errors }) => {
-          if (status == 'success') {
-            this.showToast('تم ارسال طلب التسليم بنجاح');
-            setTimeout(() => {
-              this.navCtrl.pop();
-            }, 2000);
-          } else {
-            console.warn(errors);
-            this.showToast('حاول مجددا')
-          }
-        },
+        this.deliveryProvider
+          .addDeliveryRequest(requestData)
+          .retry(2)
+          .debounceTime(1500)
+          .subscribe(({ status, errors }) => {
+            if (status == 'success') {
+              this.showToast('تم ارسال طلب التسليم بنجاح');
+              setTimeout(() => {
+                this.navCtrl.pop();
+              }, 2000);
+            } else {
+              console.warn(errors);
+              this.showToast('حاول مجددا')
+            }
+          },
           err => {
-          this.showToast('التطبيق يتطلب اتصال بالانترنت')
+            this.showToast('التطبيق يتطلب اتصال بالانترنت')
           })
       } else {
         this.showToast('يرجى تحديد منتجات لطلب تسليمها')
@@ -199,6 +208,7 @@ export class DeliveryrequestPage {
     console.log(product.item_quantity);
 
   }
+
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

@@ -36,7 +36,7 @@ export class AddproductPage {
   uploadErr:any = [];
   itemsNames: string[] = [];
   uploaded: boolean = false;
-  progress: number = 20;
+  progress: number = 0;
   fto: TransferObject = this.transfer.create();
 
   constructor(
@@ -184,12 +184,20 @@ export class AddproductPage {
           }
           )
       } else {
-
-        let ProductForm = Object.assign({ 'user_id': this.userLocal.id, 'id': this.InitData.id }, this.addProductForm.value);
+        
+        
+        let item_images = this.productItems.map(item=>item.imgName);
+        console.log('images name that will be uploaded', item_images);
+        let ProductForm = Object.assign({ 
+          'user_id': this.userLocal.id,
+          'id': this.InitData.id,
+          item_images
+         }, this.addProductForm.value);
 
         console.log('trying to edit this product');
 
-        this.productProvider.editProduct(ProductForm)
+        this.productProvider
+          .editProduct(ProductForm)
           .subscribe(({ status, data, errors }) => {
             console.log(status, data);
             if (status.message == 'success') {
@@ -260,16 +268,22 @@ export class AddproductPage {
   public async open_albums() {
 
     let choosenImages = await this.plugin_service.open_albums();
-
-    let imagesrequests = await choosenImages.map(file=>{
-      return {
-        imgName: file.split('/').pop(),
-        is_uploading: false,
-        file
-      }
-    });
-
-    this.productItems = [ ...imagesrequests, ...this.productItems];
+    if (choosenImages.length > 0) {
+      let imagesrequests = await choosenImages.map(file=>{
+        return {
+          imgName: file.split('/').pop(),
+          is_uploading: false,
+          file
+        }
+      });
+  
+      this.productItems = [ ...this.productItems, ...imagesrequests];
+  
+      console.log('choosen images', choosenImages, 'products Items', this.productItems);
+  
+      this.uploadImage();
+    }
+    
 
   }
 
@@ -312,14 +326,16 @@ export class AddproductPage {
 
 uploadImage(data?:any) {
   let file = this.productItems[this.current].file;
+  
+  console.log('file path to upload', file);
 
   let uploadFolder = 'templates/default/uploads';
 
   let uploadOptions: FileUploadOptions = {
       fileKey: 'file',
-      fileName: this.productItems[this.current].file.split('/').pop(),
+      fileName: file.split('/').pop(),
       chunkedMode: false,
-
+      mimeType: 'image/'+file.substr(file.lastIndexOf('.')+1),
       headers: {
         'Content-Type': undefined
       },
@@ -328,7 +344,9 @@ uploadImage(data?:any) {
   };
 
   let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id;
+
   this.productItems.find(p => p.file == file).is_uploading = true;
+
   this.fto.onProgress(this.progress_event)
 
   console.log('file uri', file, 'server file & path', serverFile);
@@ -379,6 +397,18 @@ uploadImage(data?:any) {
     let cameraImg = await this.plugin_service.open_camera();
 
     console.log(cameraImg);
+
+    this.productItems.push({
+      imgName: cameraImg.split('/').pop(),
+      is_uploading: false,
+      file:cameraImg
+    });
+
+    this.uploadImage();
+  }
+
+  deleteImage(img) {
+
   }
 
   openCamera() {

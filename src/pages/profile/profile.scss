@@ -304,17 +304,27 @@ page-profile {
               }
             }
             .prodcut-controls {
+              background-color: rgba(255, 255, 255, 0.15);
+              border-radius: 50%;
+              width: 18px;
+              height: 18px;
               position: absolute;
               top: 5px;
               left: 5px;
               display: flex;
               flex-direction: column;
+              justify-content: center;
               span {
+                display: flex;
+                transform: translateX(-7px);
                 width: 4px;
                 height: 4px;
                 margin-bottom: 2px;
                 border-radius: 50%;
-                background-color: #999;
+                background-color: #666;
+                &:first-child {
+                  margin-top: 1px
+                }
               }
 
             }

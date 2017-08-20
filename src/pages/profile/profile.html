@@ -29,8 +29,7 @@
                <ion-icon name="camera-outline"></ion-icon>
               </button>
               <!--<img *ngIf="avatarBase64;else avatarIcon" [src]="avatarBase64" alt=""> -->
-              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="imagePath('avatars',userLocal.avatar)"
-                alt="">
+              <img *ngIf="userLocal.avatar;else avatarIcon" [src]="imagePath('avatars',userLocal.avatar)" alt="">
               <ng-template #avatarIcon>
                 <img class="avatar-alt" *ngIf="userLocal.gender == 'male'" width="70" src="assets/img/male-alt.png">
 
@@ -312,13 +311,13 @@
             <!--<a href="">ابلاغ عن مخالفة</a>-->
           </div>
 
-          <div class="prodcut-controls" (click)="showProductSettings($event, product, i)">
+          <div  class="prodcut-controls" (click)="showProductSettings($event, product, i)">
             <span></span>
             <span></span>
             <span></span>
           </div>
 
-          <ion-list no-lines class="product-settings" hidden [attr.id]='i'>
+          <ion-list no-lines class="product-settings" *ngIf="product.showControls" [attr.id]='i'>
             <ion-item (click)="editProduct(product)">
               <ion-icon color="primary" name="open-outline" item-left></ion-icon>
               <ion-label>تعديل المنتج</ion-label>

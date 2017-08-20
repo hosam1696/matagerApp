@@ -47,8 +47,14 @@ export class RequestPage {
       })
       .subscribe(({data, status, errors})=>{
         if (status === 'success') {
-          (Object as any).values(data).forEach(due=>due.checked = false);
-          this.AllDuesShelfs = (Object as any).values(data);
+          //(Object as any).values(data).forEach(due=>due.checked = false);
+
+          let mappedData=Object.keys(data).map(key=>{
+            let value = data[key];
+            value.checked = false;
+            return value;
+          });
+          this.AllDuesShelfs = mappedData;
         } else {
           this.showToast('الرجاء المحاولة مرة اخرة')
         }

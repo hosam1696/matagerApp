@@ -29,6 +29,7 @@ export class ProfilePage {
   noShelfs: string;
   noProducts: string;
   AllProducts: IProduct[] | null = null;
+  UnChunckedProducts: IProduct[];
   alertOptions: AlertOptions;
   showLoader: boolean = false;
   uploadLoader: boolean = false;
@@ -141,14 +142,14 @@ export class ProfilePage {
   showProductSettings(event, product, index) {
     //console.log(product);
     //let popOver = this.popover.create(PopSettings, {thePage: product})
-    const targetElement = document.getElementById(index);
-
-    console.log(targetElement);
+    //const targetElement = document.getElementById(index);
+    product.showControls = !product.showControls;
+    //console.log(targetElement);
     /*console.log(event);
     console.log(event.target.parentElement.nextElementSibling);
     event.target.parentElement.nextElementSibling.style.display = 'block';
     event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;*/
-    this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
+    //this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
     // popOver.present();
   }
 
@@ -488,6 +489,8 @@ export class ProfilePage {
       const prodService = this.productsProvider.getProductByUserId(id).retry(3);
       [this.showLoader, this.noProducts] = [true, null];
       prodService.subscribe(({ status, data }) => {
+        data.forEach(product=>product.showControls = false);
+        this.UnChunckedProducts = data;
         if (status.message == 'success') {
           if (data.length <= 0) {
             [this.showLoader, this.noProducts] = [false, 'empty'];
@@ -535,7 +538,7 @@ export class ProfilePage {
 
   deleteProduct(product: IProduct) {
 
-    let productIndex = this.AllProducts.indexOf(product);
+    let productIndex = this.UnChunckedProducts.indexOf(product);
     const alertOptions: AlertOptions = {
       title: 'حذف منتج',
       message: `هل انت متأكد من رغبتك فى حذف 
