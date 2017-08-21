@@ -85,10 +85,16 @@ export class Login {
 
               this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
 
+              this.navCtrl.pop();
+
+              this.events.publish('loginUser','userLog')
+
               // TODO: navigate to the home page
+              /*
               this.navCtrl.setRoot('HomePage');
 
               this.navCtrl.popToRoot();
+              */
 
               console.table(localStorage.getItem('userLocalData'));
 
@@ -156,6 +162,7 @@ export class Login {
         
         
         } else {
+          this.showLoader = false;
           let formKeys = Object.keys(this.LoginForm.value);
           this.showLoader = false;
           for (let value of formKeys) {

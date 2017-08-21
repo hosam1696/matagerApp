@@ -33,7 +33,7 @@ export class ItemProvider {
 
   deleteItem(itemData) {
 
-    const action = "deleteItem";
+    const action = "deleItmImgFolder";
 
     const body = Object.assign({}, { action }, itemData);
 

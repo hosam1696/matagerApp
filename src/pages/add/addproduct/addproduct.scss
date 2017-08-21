@@ -11,7 +11,7 @@ page-addproduct {
       }
     }
     form {
-
+      margin-bottom: 100px;
       .form-group {
         padding: 5px;
         position: relative;
@@ -36,7 +36,7 @@ page-addproduct {
               .image {
                 //margin-right: 8px;
                 min-width: 33%;
-                
+                background: radial-gradient(#eee,#ddd);
                 //width: 33%;
                 height: 30vw;
                 border-radius: 2px;
@@ -44,6 +44,7 @@ page-addproduct {
                 padding: 2px;;position: relative;
                 transition: opacity 0.2s ease-in;
                 &:last-of-type{
+                  background: transparent;
                   order: 999;
                   display: flex;
                   justify-content: center;

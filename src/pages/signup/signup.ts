@@ -1,5 +1,5 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ModalController, Events } from 'ionic-angular';
 import {FormControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import { Iplace, ArSignForm} from "../../app/service/interfaces";
 import {UserProvider} from "../../providers/user";
@@ -34,7 +34,8 @@ export class Signup implements AfterViewInit{
     public userProvider: UserProvider,
     public toastCont:ToastController,
     public modalCrtl: ModalController,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    public events : Events
   ) {
 
 
@@ -316,9 +317,13 @@ export class Signup implements AfterViewInit{
           localStorage.setItem('userLocalData', JSON.stringify(data)); //TODO: save the user data to local storage and navigate to the homepage
           this.showToast('تم اضافة حسابك بنجاح');
           // TODO: navigate to the home page
-          this.navCtrl.setRoot('HomePage');
-          this.navCtrl.popToRoot();
+          
+          this.navCtrl.pop();
 
+          this.events.publish('loginUser', 'userLog')
+          /*this.navCtrl.setRoot('HomePage');
+          this.navCtrl.popToRoot();
+          */
           console.table(JSON.parse(localStorage.getItem('userLocalData')));
 
           //this.navCtrl.push('Login');

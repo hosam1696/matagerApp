@@ -27,13 +27,13 @@ export class AddproductPage {
   actionText: string = 'اضافة';
   actionBtnTxt: any = null;
   camerError: boolean = false;
-  loadImage:boolean = false;
+  loadImage: boolean = false;
   lastImage;
 
-  productItems: Array<{ imgName: string | any, is_uploading: boolean, file: any ,base?:any}> = [];
-  current:number = 0;
+  productItems: Array<{ imgName: string | any, is_uploading: boolean, file: any, base?: any }> = [];
+  current: number = 0;
   total: number;
-  uploadErr:any = [];
+  uploadErr: any = [];
   itemsNames: string[] = [];
   uploaded: boolean = false;
   progress: number = 0;
@@ -52,7 +52,7 @@ export class AddproductPage {
     public platform: Platform,
     public imagePicker: ImagePicker,
     private ng_zone: NgZone,
-    public filePath:FilePath,
+    public filePath: FilePath,
     private plugin_service: PluginService
   ) {
 
@@ -139,6 +139,7 @@ export class AddproductPage {
   public progress_event = (progressEvent: ProgressEvent): void => {
     this.ng_zone.run(() => {
       if (progressEvent.lengthComputable) {
+
         let progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
         if (progress > 100) progress = 100;
         if (progress < 0) progress = 0;
@@ -159,10 +160,19 @@ export class AddproductPage {
 
       if (this.actionText != 'تعديل') {
 
-        let productForm = Object.assign(this.addProductForm.value, { 'user_id': this.userLocal.id });
+        /********** Add Item to DataBase **************/
+
+        let images = this.productItems.map(item => item.imgName);
+
+        console.log('images name that will be uploaded', images);
+
+        let productForm = Object.assign(this.addProductForm.value, { 'user_id': this.userLocal.id, images });
         console.log(productForm);
 
-        this.productProvider.addProduct(productForm)
+        this.productProvider
+          .addProduct(productForm)
+          .retry(3)
+          .debounceTime(2000)
           .subscribe(({ status, errors }) => {
             console.log(status);
             if (status.message == 'success') {
@@ -181,23 +191,29 @@ export class AddproductPage {
           },
           (err) => {
             console.warn(err);
+            this.showToast('التطبيق يتطلب اتصال بالانترنت')
           }
           )
       } else {
-        
-        
-        let item_images = this.productItems.map(item=>item.imgName);
-        console.log('images name that will be uploaded', item_images);
-        let ProductForm = Object.assign({ 
+
+
+
+        let images = this.productItems.map(item => item.imgName);
+
+        console.log('images name that will be uploaded', images);
+
+        let ProductForm = Object.assign({}, {
           'user_id': this.userLocal.id,
           'id': this.InitData.id,
-          item_images
-         }, this.addProductForm.value);
+          images
+        }, this.addProductForm.value);
 
         console.log('trying to edit this product');
 
         this.productProvider
           .editProduct(ProductForm)
+          .retry(3)
+          .debounceTime(2000)
           .subscribe(({ status, data, errors }) => {
             console.log(status, data);
             if (status.message == 'success') {
@@ -212,6 +228,10 @@ export class AddproductPage {
               this.showToast(errMsg);
 
             }
+
+          }, err => {
+            console.warn(err);
+            this.showToast('التطبيق يتطلب اتصال بالانترنت')
 
           })
 
@@ -237,7 +257,7 @@ export class AddproductPage {
 
   private copyFileToLocalDir(namePath, currentName, newFileName) {
     this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, "yutuy.jpg").then(success => {
-      console.info ('file copied successfully');
+      console.info('file copied successfully');
       this.lastImage = newFileName;
     }, error => {
       this.presentToast('Error while storing file.');
@@ -269,126 +289,126 @@ export class AddproductPage {
 
     let choosenImages = await this.plugin_service.open_albums();
     if (choosenImages.length > 0) {
-      let imagesrequests = await choosenImages.map(file=>{
+      let imagesrequests = await choosenImages.map(file => {
         return {
           imgName: file.split('/').pop(),
           is_uploading: false,
           file
         }
       });
-  
-      this.productItems = [ ...this.productItems, ...imagesrequests];
-  
+
+      this.productItems = [...this.productItems, ...imagesrequests];
+
       console.log('choosen images', choosenImages, 'products Items', this.productItems);
-  
+
       this.uploadImage();
     }
-    
+
 
   }
 
- /* openPicker() {
-    let options: ImagePickerOptions = {
-      outputType: 0
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      // this.addProductForm.get('item_images').setValue([...this.addProductForm.get('item_images').value, ...results]);
-      // this.productItems=[...results,...this.productItems];
-      console.log(this.productItems);
+  /* openPicker() {
+     let options: ImagePickerOptions = {
+       outputType: 0
+     };
+     this.imagePicker.getPictures(options).then((results) => {
+       // this.addProductForm.get('item_images').setValue([...this.addProductForm.get('item_images').value, ...results]);
+       // this.productItems=[...results,...this.productItems];
+       console.log(this.productItems);
+ 
+       for (let i = 0; i < results.length; i++) {
+         let fileName = results[i].split('/').pop();
+         let filePath = results[i].substr(0, results[i].lastIndexOf('/')+1);
+         console.log('file',0,fileName,filePath);
+         this.productItems.unshift({
+           imgName: results[i].split('/').pop(),
+           is_uploading: false,
+           file: results[i]
+         });
+         this.filePath.resolveNativePath(results[i])
+         .then(filePath => {
+           console.log('resolved Path', filePath);
+           let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+           let currentName = results[i].substring(results[i].lastIndexOf('/') + 1, results[i].lastIndexOf('?'));
+           this.copyFileToLocalDir(correctPath, currentName, currentName);
+         });
+         this.copyFileToLocalDir(filePath,fileName,fileName);
+         this.uploadImage(results[i]);
+ 
+           console.log('Image URI: ' + results[i]);
+         }
+         console.log('After loop product items',this.productItems);
+       }, (err) => {
+     console.warn(err);
+ 
+   })
+ }*/
 
-      for (let i = 0; i < results.length; i++) {
-        let fileName = results[i].split('/').pop();
-        let filePath = results[i].substr(0, results[i].lastIndexOf('/')+1);
-        console.log('file',0,fileName,filePath);
-        this.productItems.unshift({
-          imgName: results[i].split('/').pop(),
-          is_uploading: false,
-          file: results[i]
-        });
-        this.filePath.resolveNativePath(results[i])
-        .then(filePath => {
-          console.log('resolved Path', filePath);
-          let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-          let currentName = results[i].substring(results[i].lastIndexOf('/') + 1, results[i].lastIndexOf('?'));
-          this.copyFileToLocalDir(correctPath, currentName, currentName);
-        });
-        this.copyFileToLocalDir(filePath,fileName,fileName);
-        this.uploadImage(results[i]);
+  uploadImage(data?: any) {
+    let file = this.productItems[this.current].file;
 
-          console.log('Image URI: ' + results[i]);
-        }
-        console.log('After loop product items',this.productItems);
-      }, (err) => {
-    console.warn(err);
+    console.log('file path to upload', file);
 
-  })
-}*/
+    let uploadFolder = 'templates/default/uploads';
 
-uploadImage(data?:any) {
-  let file = this.productItems[this.current].file;
-  
-  console.log('file path to upload', file);
-
-  let uploadFolder = 'templates/default/uploads';
-
-  let uploadOptions: FileUploadOptions = {
+    let uploadOptions: FileUploadOptions = {
       fileKey: 'file',
       fileName: file.split('/').pop(),
       chunkedMode: false,
-      mimeType: 'image/'+file.substr(file.lastIndexOf('.')+1),
+      mimeType: 'image/' + file.substr(file.lastIndexOf('.') + 1),
       headers: {
         'Content-Type': undefined
       },
       params: {}
 
-  };
+    };
 
-  let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id;
+    let serverFile = this.API_URL + "uploadImage.php?uploadFolder=" + uploadFolder + '&type=items&userId=' + this.userLocal.id;
 
-  this.productItems.find(p => p.file == file).is_uploading = true;
+    this.productItems.find(p => p.file == file).is_uploading = true;
 
-  this.fto.onProgress(this.progress_event)
+    this.fto.onProgress(this.progress_event)
 
-  console.log('file uri', file, 'server file & path', serverFile);
+    console.log('file uri', file, 'server file & path', serverFile);
 
-  this.fto.upload(
-    encodeURI(file),
-    encodeURI(serverFile),
-     uploadOptions,
+    this.fto.upload(
+      encodeURI(file),
+      encodeURI(serverFile),
+      uploadOptions,
       false)
-    .then((res) => {
-      this.loadImage = true;
-      this.showToast('جارى رفع الصورة');
-      console.log('uploaded', res);
-    }, err => {
-      this.uploadErr = JSON.stringify(err);
-      //this.showToast('uploAD ERROR' + JSON.stringify(err));
-      console.log(err);
-      if (err.body) {
-        //this.showToast('image name ' + err.body);
-        console.log('%c%s', 'font-size:20px', 'Body message from the server', err.body);
-        console.log(JSON.parse(err.body), JSON.parse(err.body).name);
+      .then((res) => {
+        this.loadImage = true;
+        this.showToast('جارى رفع الصورة');
+        console.log('uploaded', res);
+      }, err => {
+        this.uploadErr = JSON.stringify(err);
+        //this.showToast('uploAD ERROR' + JSON.stringify(err));
+        console.log(err);
+        if (err.body) {
+          //this.showToast('image name ' + err.body);
+          console.log('%c%s', 'font-size:20px', 'Body message from the server', err.body);
+          console.log(JSON.parse(err.body), JSON.parse(err.body).name);
 
 
-        //this.showToast(err.json().errorInfo());
-        //this.showToast(JSON.parse(err.body).success)
-        if (JSON.parse(err.body).name) {
-          this.itemsNames.push(JSON.parse(err.body).name);
-          console.log(this.itemsNames);
-          this.productItems.find(p => p.file == file).is_uploading = false;
-          if (this.current + 1 < this.productItems.length) {
-            // Yes, we have. Up the current index
-            this.current++;
-            // reset the progress
-            this.progress = 0;
-            // and start the upload
-            this.uploadImage();
+          //this.showToast(err.json().errorInfo());
+          //this.showToast(JSON.parse(err.body).success)
+          if (JSON.parse(err.body).name) {
+            this.itemsNames.push(JSON.parse(err.body).name);
+            console.log(this.itemsNames);
+            this.productItems.find(p => p.file == file).is_uploading = false;
+            if (this.current + 1 < this.productItems.length) {
+              // Yes, we have. Up the current index
+              this.current++;
+              // reset the progress
+              this.progress = 0;
+              // and start the upload
+              this.uploadImage();
+            }
+          } else {
+            this.showToast(JSON.parse(err.body).errorInfo)
+          }
         }
-        } else {
-          this.showToast(JSON.parse(err.body).errorInfo)
-        }
-      }
-    });
+      });
 
   }
 
@@ -401,14 +421,30 @@ uploadImage(data?:any) {
     this.productItems.push({
       imgName: cameraImg.split('/').pop(),
       is_uploading: false,
-      file:cameraImg
+      file: cameraImg
     });
 
     this.uploadImage();
   }
 
   deleteImage(img) {
+    let imgData = {
+      "image": img
+    };
+    
+    this.productProvider
+      .deleteItem(imgData)
+      .subscribe(({ status })=> {
+        console.log(status);
+        if (status == 'success') {
+          let index = this.productItems.findIndex(x => x.imgName == img);
 
+          // split the image from products images
+
+          this.productItems.splice(index, 1);
+        }
+
+      })
   }
 
   openCamera() {
@@ -471,7 +507,7 @@ uploadImage(data?:any) {
       })
   }
 
-  detectUnvalidFormErrors(form:FormGroup = this.addProductForm, formKeys: string[] = Object.keys(form.value)) {
+  detectUnvalidFormErrors(form: FormGroup = this.addProductForm, formKeys: string[] = Object.keys(form.value)) {
 
 
     formKeys.every((value) => {
@@ -497,7 +533,7 @@ uploadImage(data?:any) {
     });
   }
 
-  showToast(msg:string):void {
+  showToast(msg: string): void {
     const toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,

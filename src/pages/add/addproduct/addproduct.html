@@ -22,11 +22,11 @@
       </ion-slides>-->
 
       <div class="images">
-          <div class="image"  *ngFor="let image of productItems" [ngClass]="{'uploaded':image.is_uploaded}" >
-            <progress-bar [progress]="progress"></progress-bar> 
+          <div class="image"  *ngFor="let image of productItems" [ngClass]="{'uploaded':!image.is_uploading}" >
+            <progress-bar *ngIf="image.is_uploading" [progress]="progress"></progress-bar> 
               <!--<img [ngStyle]="{'background-image': 'url(' + image.file  + ')'}" [src]="image.file">-->
              <!-- <div class="img" *ngIf="image.base"  [ngClass]="{'uploaded':image.is_uploaded}" [ngStyle]="{'background': 'url(' + image.base  + ')'}"></div> -->
-               <img     [ngClass]="{'uploaded':!image.is_uploading}" [src]="imagePath(image.imgName)">
+               <img   *ngIf="!image.is_uploading"   [src]="imagePath(image.imgName)">
               
               <ion-icon (click)="deleteImage(image.imgName)" class="close-icon" name="close" color="dark"></ion-icon>  
              <!-- <p *ngIf="image.is_uploading" class="progress">{{progress}} %</p> -->

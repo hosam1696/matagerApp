@@ -84,20 +84,21 @@ ion-app._gmaps_cdv_ .nav-decor{
         //height: 40px !important;
         a {
 
-            &#tab-t0-1{
+            &#tab-t0-0{
                 order: 1
             }
-            &#tab-t0-2 {
+            &#tab-t0-1 {
                 order: 2
             }
-            &#tab-t0-3 {
-                order: 3
-            }
-            &#tab-t0-4 {
+            &#tab-t0-2 {
                 order: 4
             }
-             &#tab-t0-5 {
-                order: 5
+            &#tab-t0-3 {
+                order: 5;
+               // background: red !important;
+            }
+             &#tab-t0-4 {
+                order: 3
             }
             //height: 40px !important;
             &.tab-button[aria-selected=true] {

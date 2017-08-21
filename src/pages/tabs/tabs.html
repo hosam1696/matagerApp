@@ -1,4 +1,4 @@
-<ion-tabs color="primary" id="main-tabs" color="light">
+<ion-tabs #appTabs color="primary" id="main-tabs" color="light">
   <ion-tab
   [root]="tab1Root"
    tabTitle="الرئيسية"
@@ -15,6 +15,7 @@
     icon-on="person-ios-outline"
     icon-off="person-ios-outline"
     *ngIf="!localUser||localUser||localUser.level_id == 2"
+     ionSelect="selectCamera()"
   ></ion-tab>
 
   <ion-tab
@@ -23,16 +24,14 @@
     tabIcon="camera-outline"
     icon-off="camera-ios-outline"
     icon-on="camera-ios-outline"
-    *ngIf="localUser&&localUser.level_id == 2"
-    class="camera-tab"
+    *ngIf="localUser?.level_id == 2"
+     ionSelect="selectCamera()"
   ></ion-tab>
 
   <ion-tab
     [root]="tab4Root"
     tabTitle="اشعارات"
     tabIcon="notifications-outline"
-    icon-on="notifications-ios-outline"
-    icon-off="notifications-ios-outline"
     *ngIf="!localUser||localUser||localUser.level_id == 2"
   ></ion-tab>
 
@@ -41,8 +40,6 @@
   [root]="tab5Root"
   tabTitle="اعدادات"
   tabIcon="settings-outline"
-  icon-on="settings-ios-outline"
-  icon-off="settings-ios-outline"
   *ngIf="!localUser||localUser||localUser.level_id == 2"
   ></ion-tab>
 </ion-tabs>

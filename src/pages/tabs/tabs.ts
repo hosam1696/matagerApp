@@ -1,12 +1,15 @@
+import { ViewChild } from '@angular/core';
 import {Component} from '@angular/core';
 import { Events, IonicPage, Platform, AlertController } from 'ionic-angular';
 import {IlocalUser} from "../../app/service/interfaces";
+import { Tabs } from "ionic-angular/navigation/nav-interfaces";
 
 @IonicPage()
 @Component({
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
+  @ViewChild('appTabs') appTabs: Tabs;
   localUser: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   tab1Root = 'HomePage';
   tab2Root = 'ProfilePage';
@@ -36,8 +39,17 @@ export class TabsPage {
         console.log('events subscribe successfully');
 
         this.localUser = localuser;
-      });
+
+    });
+    
+      this.events.subscribe('loginUser', (data) => {
+        this.appTabs.select(0, {isNavRoot:true}, true);
+    })
 
       
+  }
+
+  selectCamera() {
+    console.info('you have entered camera tab')
   }
 }

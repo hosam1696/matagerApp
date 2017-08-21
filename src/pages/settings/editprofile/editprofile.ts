@@ -260,7 +260,7 @@ console.log(form, form.valid);
         InsurePassword: [''],
 
         email: [this.EditUserForm.get('email').value],
-        mobile: [this.EditUserForm.get('mobile'), Validators.compose([Validators.minLength(9), Validators.maxLength(9)])], //Validators.pattern("(\+[0-9]*)?[0-9]*"),
+        mobile: [this.EditUserForm.get('mobile').value, Validators.compose([Validators.minLength(9), Validators.maxLength(9)])], //Validators.pattern("(\+[0-9]*)?[0-9]*"),
         gender: [this.EditUserForm.get('gender').value],
         address: [this.EditUserForm.get('address').value],
         map: [this.localUser.map],
