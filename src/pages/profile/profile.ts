@@ -46,6 +46,7 @@ export class ProfilePage {
 
   constructor(
     @Inject('API_URL') private API_URL,
+    @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
     public alert: AlertController,
     public shelfsProvider: ShelfsProvider,
@@ -354,7 +355,7 @@ export class ProfilePage {
           console.log(status, data);
           //console.table( res);
           if (status == 'success') {
-            [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+            [this.AllShelfs, this.showLoader, this.noShelfs, this.netErr] = [data.reverse(), true, null,false];
             if (this.AllShelfs.length <= 0) {
               this.noShelfs = 'empty';
               this.showLoader = false
@@ -381,7 +382,7 @@ export class ProfilePage {
           console.log(status, data);
           //console.table( res);
           if (status == 'success') {
-            [this.AllShelfs, this.showLoader, this.noShelfs] = [data.reverse(), true, null];
+            [this.AllShelfs, this.showLoader, this.noShelfs, this.netErr] = [data.reverse(), true, null, false];
             if (this.AllShelfs.length <= 0) {
               this.noShelfs = 'empty';
               this.showLoader = false
@@ -489,13 +490,14 @@ export class ProfilePage {
       const prodService = this.productsProvider.getProductByUserId(id).retry(3);
       [this.showLoader, this.noProducts] = [true, null];
       prodService.subscribe(({ status, data }) => {
-        data.forEach(product=>product.showControls = false);
-        this.UnChunckedProducts = data;
+        
         if (status.message == 'success') {
           if (data.length <= 0) {
-            [this.showLoader, this.noProducts] = [false, 'empty'];
+            [this.showLoader, this.noProducts, this.netErr] = [false, 'empty', false];
             return false;
           }
+          data.forEach(product=>product.showControls = false);
+          this.UnChunckedProducts = data;
           this.AllProducts = this.chunk(data, 2);
           console.log(this.AllProducts);
           [this.showLoader, this.noProducts] = [false, null];
@@ -519,6 +521,7 @@ export class ProfilePage {
           if (status === 'success') {
             this.ItemsDelivered = this.chunk(data, 2);
             console.log('success', this.ItemsDelivered);
+            this.netErr = false;
           } else if (status === 'failed' && errors === null) {
             this.noAcceptedItems = true;
             console.log('failed', this.noAcceptedItems);
@@ -606,11 +609,11 @@ export class ProfilePage {
   }
 
 
-  limitString(str: string) {
+  limitString(str: string):string {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
-  showToast(msg) {
+  showToast(msg:string):void {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
@@ -619,8 +622,8 @@ export class ProfilePage {
     toast.present();
   }
 
-  imagePath(type, img) {
-    return 'http://rfapp.net/templates/default/uploads/' + type + '/' + img
+  imagePath(type:string, img: string):string {
+    return this.UPLOAD_PATH + type + '/' + img
   }
 
 }

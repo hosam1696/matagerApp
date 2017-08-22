@@ -186,11 +186,17 @@ page-profile {
                   min-height: 100px;
                 }
                 p {
+                  &.prod_name {
+                    margin-top: 2px;
+                  }
+                  &:first-child {
+                    margin-top: 5px;
+                  }
                   &.prod-desc {
                     flex: 1;
                     color: color($colors, primary);
                     font-size: 13px;
-                    padding-top: 5px;
+                    padding-top: 3px;
                     min-height: 48px;
                   }
                   /*&.price {
@@ -425,6 +431,7 @@ page-profile {
     .float-button {
       position: fixed;
       bottom: 60px;
+      z-index: 999;
       left: 10px;
       padding: 20px;
       box-shadow: 2px 2px 15px #888;

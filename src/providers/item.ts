@@ -70,4 +70,9 @@ export class ItemProvider {
     return this.http.post(this.API_URL+'items.php', JSON.stringify(Object.assign(likesData,{action}))).map(res=>res.json());
   }
 
+  getItemRestInfo(itemInfo) {
+    const action = 'getItemForEdit';
+    return this.http.post(this.API_URL+'items.php', JSON.stringify(Object.assign(itemInfo,{action}))).map(res=>res.json());
+  }
+
 }

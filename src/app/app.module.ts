@@ -138,6 +138,7 @@ import {DuesProvider} from "../providers/dues";
      FilePath,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
+    { provide: 'UPLOAD_PATH', useValue: 'http://rfapp.net/templates/default/uploads/'},
     Transfer,
 
     Push

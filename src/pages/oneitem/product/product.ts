@@ -289,7 +289,9 @@ export class ProductPage {
     }
   }
 
-
+  imageItemsPath(img) {
+    return 'http://rfapp.net/templates/default/uploads/items/' + img
+  }
   imagePath(img) {
     return 'http://rfapp.net/templates/default/uploads/avatars/'+img
   }

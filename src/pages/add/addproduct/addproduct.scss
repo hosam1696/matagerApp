@@ -16,6 +16,7 @@ page-addproduct {
         padding: 5px;
         position: relative;
           &.prod-photo {
+            margin-top: 5px;
             background:color($colors, light);
             display: flex;
             justify-content: space-between;
@@ -36,13 +37,19 @@ page-addproduct {
               .image {
                 //margin-right: 8px;
                 min-width: 33%;
-                background: radial-gradient(#eee,#ddd);
+                max-width: 33%;
+                
                 //width: 33%;
                 height: 30vw;
                 border-radius: 2px;
                 overflow: hidden;
                 padding: 2px;;position: relative;
+                background-origin: content-box;
+                
                 transition: opacity 0.2s ease-in;
+                &.bg-rad {
+                  background: radial-gradient(#eee,#ddd);
+                }
                 &:last-of-type{
                   background: transparent;
                   order: 999;
@@ -96,7 +103,7 @@ page-addproduct {
                     height: 20px;
                     background-color: rgba(255, 255, 255, 0.8);
                     text-align: center;
-                    line-height: 20px;
+                    line-height: 23px;
                     border-radius: 50%;
                     z-index: 5;
                     position: absolute;

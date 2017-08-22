@@ -222,45 +222,7 @@
 
   <ion-card *ngIf="showContent == 'products' && userLocal " class="show-card products-card">
 
-    <!--
-    <ion-grid padding-horizontal>
-      <ion-row>
-        <ion-col col-6>
-          <div class="col-content"(click)="navigateToPage('ProductPage', 'I phone 5')">
-
-            <img src="assets/img/product-iphone.png" alt="product">
-
-            <p class="prod-desc">
-              ايفون 5 شاشة رام 1 جيجا وذاكرة داخلية 16 جيجا
-            </p>
-            <p class="price">
-              <span class="prod-price"><b>1,500</b></span> ريال
-            </p>
-
-
-          </div>
-
-
-        </ion-col>
-        <ion-col col-6>
-          <div class="col-content" (click)="navigateToPage('ProductPage', 'Mac Book Pro')">
-
-            <img src="assets/img/product-mac.png" alt="product">
-
-            <p class="prod-desc">
-              ماك بوك برو رامات 16جيجا هارد 1 تيرا وكات شاشة انفيديا
-            </p>
-            <p class="price">
-              <span class="prod-price"><b>3,500</b></span> ريال
-            </p>
-
-          </div>
-        </ion-col>
-
-
-      </ion-row>
-    </ion-grid>
-    -->
+  
     <p text-center *ngIf="noAcceptedItems">
       <br> لا يوجد منتجات تم قبول تسليمها حتى الان
     </p>
@@ -277,7 +239,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
 
-            <img [src]="(product.item_image)?imagePath('avatars',product.item_imag):'assets/img/adds_02.png'" alt="product">
+            <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="product">
 
             <p class="prod-desc" text-center>
               {{product.item_name}}
@@ -299,8 +261,9 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
-            <img src="assets/img/adds_02.png" alt="product">
-
+            <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="product">
+            
+            <p class="prod_name">{{product.item_name}}</p>
             <p class="prod-desc">
               {{limitString(product.item_desc)}}
             </p>
@@ -327,7 +290,7 @@
               <ion-label>حذف المنتج</ion-label>
             </ion-item>
 
-            <ion-item (click)="navigateToPage('ProductreportPage', product)">
+            <ion-item [hidden]="userLocal.level_id == 3" (click)="navigateToPage('ProductreportPage', product)">
               <ion-icon color="primary" name="warning-outline" item-left></ion-icon>
               <ion-label>ابلاغ عن المنتج</ion-label>
             </ion-item>
@@ -350,7 +313,6 @@
 
         -->
 
-    {{ cameraError | json}}
   </ion-card>
   <div *ngIf="userLocal">
 

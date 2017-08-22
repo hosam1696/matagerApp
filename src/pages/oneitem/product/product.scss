@@ -16,6 +16,11 @@ page-product {
       height: 50px;
     }
     #comments-wrapper {
+      ion-item-divider {
+        background-color: rgb(243, 243, 243) !important;
+        border-bottom: 1px solid #d2d1d1;
+        border-top: 1px solid #e2e0e0 ;
+      }
       .product-states {
         display: flex;
         justify-content: space-between;
@@ -32,6 +37,7 @@ page-product {
         }
       }
       #add-comment {
+        margin-top: 10px;
         padding: 0 13px 13px 13px;
             text-align: center;
         textarea {
@@ -104,7 +110,7 @@ page-product {
           margin-top: -5px;
         }
         &.description {
-          min-height: 50px;
+          //min-height: 50px;
           color: color($colors, primaryDark);
           font-size: 15px;
         }

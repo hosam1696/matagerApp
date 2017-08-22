@@ -30,17 +30,18 @@ export class AddproductPage {
   loadImage: boolean = false;
   lastImage;
 
-  productItems: Array<{ imgName: string | any, is_uploading: boolean, file: any, base?: any }> = [];
-  current: number = 0;
+  productItems: Array<{ imgName: string | any, is_uploading: boolean,uploaded: boolean, file: any, base?: any }> = [];
+  current: number = -1;
   total: number;
   uploadErr: any = [];
   itemsNames: string[] = [];
   uploaded: boolean = false;
   progress: number = 0;
   fto: TransferObject = this.transfer.create();
-
+  RestData: any;
   constructor(
     @Inject('API_URL') private API_URL,
+    @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
     public navParams: NavParams,
     private actionCtrl: ActionSheetController,
@@ -61,8 +62,7 @@ export class AddproductPage {
       item_price: new FormControl('', [Validators.required, Validators.pattern('[1-9]+(\.[0-9]+)?|[0]+(\.[0-9]+)+')]),
       item_production_date: new FormControl(''),
       item_expiry_date: new FormControl(''),
-      item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)]),
-      item_images: new FormControl([])
+      item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)])
     })
 
   }
@@ -78,6 +78,35 @@ export class AddproductPage {
       const formKeys = Object.keys(this.addProductForm.value);
       this.actionText = 'تعديل';
       this.actionBtnTxt = 'تعديل';
+
+      this.productProvider
+        .getItemRestInfo(
+          {
+            user_id: this.userLocal.id,
+            id: this.InitData.id
+          }
+        )
+        .subscribe(({status, data})=>{
+          console.log(status, data);
+          if(status === 'success') {
+            this.addProductForm.get('item_expiry_date').setValue(this.InitData['item_expiry_date']);
+            this.addProductForm.get('item_expiry_date').setValue(this.InitData['item_expiry_date']);
+            
+            let productItems = data.item_images.map(img=>{
+              return {
+                imgName: img.image,
+                is_uploading: false,
+                uploaded: false,
+                file: ''
+              }
+            });
+            this.productItems = productItems;
+            this.RestData = data;
+            console.log(this.RestData, this.productItems);
+          }
+        })
+
+
       formKeys.forEach((value) => {
         /* if (typeof value == "object") {
             console.log(value);
@@ -103,7 +132,7 @@ export class AddproductPage {
       title: 'اختر من',
       buttons: [
         {
-          text: '   الكاميرا',
+          text: 'الكاميرا',
           handler: () => {
             console.log('camera clicked');
             //this.openCamera();
@@ -111,7 +140,7 @@ export class AddproductPage {
           }
         },
         {
-          text: `  البوم الصور`,
+          text: `البوم الصور`,
           //icon: 'camera',
           handler: () => {
             console.log('Photo Album');
@@ -293,13 +322,14 @@ export class AddproductPage {
         return {
           imgName: file.split('/').pop(),
           is_uploading: false,
+          uploaded: false,
           file
         }
       });
 
       this.productItems = [...this.productItems, ...imagesrequests];
 
-      console.log('choosen images', choosenImages, 'products Items', this.productItems);
+      console.log('choosen images', choosenImages, 'products Items', this.productItems, 'current Index', this.current);
 
       this.uploadImage();
     }
@@ -345,9 +375,11 @@ export class AddproductPage {
  }*/
 
   uploadImage(data?: any) {
-    let file = this.productItems[this.current].file;
 
-    console.log('file path to upload', file);
+
+    let file = this.productItems[this.current+1].file;
+
+    console.log('file path to upload', file, 'current Index', this.current);
 
     let uploadFolder = 'templates/default/uploads';
 
@@ -393,9 +425,20 @@ export class AddproductPage {
           //this.showToast(err.json().errorInfo());
           //this.showToast(JSON.parse(err.body).success)
           if (JSON.parse(err.body).name) {
+
+            let currentImage = this.productItems.find(p => p.file == file);
+
             this.itemsNames.push(JSON.parse(err.body).name);
             console.log(this.itemsNames);
-            this.productItems.find(p => p.file == file).is_uploading = false;
+            
+            currentImage.imgName = JSON.parse(err.body).name;
+            
+            currentImage.is_uploading = false;
+
+            currentImage.uploaded = true;
+
+            console.log('product Items after Uploading', this.productItems);
+
             if (this.current + 1 < this.productItems.length) {
               // Yes, we have. Up the current index
               this.current++;
@@ -403,6 +446,8 @@ export class AddproductPage {
               this.progress = 0;
               // and start the upload
               this.uploadImage();
+
+              console.log('index after uploading ', this.current);
             }
           } else {
             this.showToast(JSON.parse(err.body).errorInfo)
@@ -416,14 +461,15 @@ export class AddproductPage {
 
     let cameraImg = await this.plugin_service.open_camera();
 
-    console.log(cameraImg);
-
+    
     this.productItems.push({
       imgName: cameraImg.split('/').pop(),
       is_uploading: false,
+      uploaded: false,
       file: cameraImg
     });
-
+    
+    console.log('product Items before uploading', this.productItems);
     this.uploadImage();
   }
 
@@ -442,6 +488,8 @@ export class AddproductPage {
           // split the image from products images
 
           this.productItems.splice(index, 1);
+
+          console.log('product images after deleting an image', this.productItems)
         }
 
       })
@@ -483,6 +531,7 @@ export class AddproductPage {
         this.productItems.push({
           imgName: imageData.split('/').pop(),
           is_uploading: false,
+          uploaded: false,
           file: imageData
         });
         // Special handling for Android library
@@ -543,7 +592,7 @@ export class AddproductPage {
     toast.present();
   }
 
-  imagePath(img) {
-    return 'http://rfapp.net/templates/default/uploads/items/' + img
+  imagePath(imgName) {
+    return this.UPLOAD_PATH+ 'items/' + imgName
   }
 }

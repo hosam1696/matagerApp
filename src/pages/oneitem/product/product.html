@@ -17,23 +17,26 @@
 
     <section id="hero">
       <!--<img src="/../../assets/img/adds_01.png" width="100%" height="100%"> -->
-      <ion-slides *ngIf="productData.item_images.length > 0">
-        <ion-slide *ngFor="let image of productData.item_images">
-          <img [src]="'templates/default/uploads/items'+image" alt="">
+      <ion-slides pager="true" autoplay="6000" loop="true" *ngIf="productData.item_images.length > 0;else noImages">
+        <ion-slide *ngFor="let img of productData.item_images">
+          <img [src]="imageItemsPath(img['image'])" alt="">
         </ion-slide>
       </ion-slides>
       <!-- for developing -->
-      <ion-slides pager="true">
-        <ion-slide>
-          <img src="assets/img/adds_02.png" width="100%" height="100%">
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/img/adds_02.png" width="100%" height="100%">
-        </ion-slide>
-        <ion-slide>
-          <img src="assets/img/adds_02.png" width="100%" height="100%">
-        </ion-slide>
-      </ion-slides>
+      <ng-template #noImages>
+        <ion-slides pager="true">
+          <ion-slide>
+            <img src="assets/img/adds_02.png" width="100%" height="100%">
+          </ion-slide>
+          <ion-slide>
+            <img src="assets/img/adds_02.png" width="100%" height="100%">
+          </ion-slide>
+          <ion-slide>
+            <img src="assets/img/adds_02.png" width="100%" height="100%">
+          </ion-slide>
+        </ion-slides>
+      </ng-template>
+      
     </section>
 
 
