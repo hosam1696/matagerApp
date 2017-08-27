@@ -49,14 +49,9 @@ export class Login {
 
   submitLogin() {
 
-    //TODO: chech the internet connection || works  on device only
+
     console.log(this.network.type);
-    /*if ( this.network.type == 'none') {
-      //if ('1' == '2') {
-      this.showToast('التطبيق يتطلب اتصال بالانترنت');
-      this.showLoader = false;
-    } else {
-      */
+
         if (this.LoginForm.valid) {
           this.showLoader = true;
           let deviceData ={};
@@ -71,42 +66,11 @@ export class Login {
             },
             windows: {}
           };
-          this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
-          .subscribe(({status, message, data}) => {
-            console.log(status, message);
-            //TODO: if data is correct navigate to the home page
-            if (status == 'success') {
-
-              let userLocalData = data;
-
-              this.showLoader = false;
-
-              localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-
-              this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-
-              this.navCtrl.pop();
-
-              this.events.publish('loginUser','userLog')
-
-              // TODO: navigate to the home page
-              /*
-              this.navCtrl.setRoot('HomePage');
-
-              this.navCtrl.popToRoot();
-              */
-
-              console.table(localStorage.getItem('userLocalData'));
-
-            } else {
-              this.showLoader = false;
-              this.showToast(`${message}`)
-            }this.showLoader = true;
-          /*let push: PushObject = this.push.init(pushOptios);
-
           
-            
-          
+
+          let push: PushObject = this.push.init(pushOptios);
+
+        
           push.on('registration').subscribe((registration: any) => {
             let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
             
@@ -114,7 +78,9 @@ export class Login {
                 device_token_id : registration.registrationId,
                 type
             }
-      
+            /*
+             Login USER form in Browser
+            
             this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
             .subscribe(({status, message, data}) => {
               console.log(status, message);
@@ -129,12 +95,37 @@ export class Login {
   
                 this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
   
-                // TODO: navigate to the home page
-                this.navCtrl.setRoot('HomePage');
+                this.navCtrl.pop();
   
-                this.navCtrl.popToRoot();
+                this.events.publish('loginUser','userLog')
   
                 console.table(localStorage.getItem('userLocalData'));
+  
+              } else {
+                this.showLoader = false;
+                this.showToast(`${message}`)
+              }*/
+              
+            this.showLoader = true;
+  
+            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
+            .subscribe(({status, message, data}) => {
+              console.log(status, message);
+              //TODO: if data is correct navigate to the home page
+              if (status == 'success') {
+  
+                let userLocalData = data;
+  
+                this.showLoader = false;
+  
+                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+                
+                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+  
+                this.navCtrl.pop();
+  
+                this.events.publish('loginUser','userLog')
   
               } else {
                 this.showLoader = false;
@@ -148,18 +139,9 @@ export class Login {
             }
           );
             console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
-      
-            /*
-            this.pushProvider.sendDeviceToken(deviceData)
-              .subscribe(res=> {
-                console.log(res);
-              })
-            */
+ 
           });
           
-             // push.on('error').subscribe(error => console.error('Error with Push plugin', error));
-          
-        
         
         } else {
           this.showLoader = false;
@@ -173,16 +155,8 @@ export class Login {
             }
           }
 
-          /*
-
-          if (this.LoginForm.value.Username == "")
-            this.showToast(' يرجى ادخال اسم  المستخدم');
-          else {
-            this.showToast('يرجى ادخال كلمة المرور')
-          }
-          */
       }
-   // }
+
 
   }
 

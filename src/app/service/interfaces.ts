@@ -187,7 +187,8 @@ export enum ArSignForm {
   dist='الحى',
   address='العنوان',
   cr_num='رقم السجل التجارى',
-  owner_name='اسم مدير المتجر'
+  owner_name='اسم مدير المتجر',
+  mobile= 'رقم الهاتف'
 }
 
 export enum IlevelId {

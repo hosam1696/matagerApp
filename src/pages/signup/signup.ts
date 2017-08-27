@@ -314,19 +314,15 @@ export class Signup implements AfterViewInit{
 
           this.SignUpFrom.reset();
 
-          localStorage.setItem('userLocalData', JSON.stringify(data)); //TODO: save the user data to local storage and navigate to the homepage
+          localStorage.setItem('userLocalData', JSON.stringify(data)); //TODO: save the user data to local storage //and navigate to the homepage
           this.showToast('تم اضافة حسابك بنجاح');
           // TODO: navigate to the home page
           
           this.navCtrl.pop();
 
           this.events.publish('loginUser', 'userLog')
-          /*this.navCtrl.setRoot('HomePage');
-          this.navCtrl.popToRoot();
-          */
-          console.table(JSON.parse(localStorage.getItem('userLocalData')));
-
-          //this.navCtrl.push('Login');
+         
+       
           this.showLoader = false; // stop the loader
         } else {
           this.showLoader = false;
@@ -396,6 +392,8 @@ export class Signup implements AfterViewInit{
     });
     modal.present();
   }
+
+  
   openModal(name: string, searchId: number) {
 
     if (name == 'Area') {
