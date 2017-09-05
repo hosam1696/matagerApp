@@ -16,6 +16,14 @@ page-signup {
       /*background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../../assets/img/logo.png);*/
       background: url(../assets/img/logo2.png)
     }
+    ion-spinner {
+      width:20px;
+      height: 20px;
+      margin: 0 10px;
+      &  * {
+        stroke : color($colors, primary) !important;
+      }
+    }
     #page-content {
      //background-color: red;
       max-width: 450px;

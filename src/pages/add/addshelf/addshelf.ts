@@ -28,7 +28,8 @@ export class AddshelfPage {
     this.addShelfForm = new FormBuilder().group({
       name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
       area: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'),Validators.required]),
-      cost: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'), Validators.required])
+      cost: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'), Validators.required]),
+      fridge: new FormControl(0,[Validators.required])
     });
   }
 
@@ -48,6 +49,8 @@ export class AddshelfPage {
       this.addShelfForm.controls.area.setValue(this.InitData.area);
 
       this.addShelfForm.controls.cost.setValue(this.InitData.cost);
+
+      this.addShelfForm.controls.fridge.setValue(this.InitData.fridge);
 
       this.formAction = 'edit';
     }
@@ -149,10 +152,10 @@ export class AddshelfPage {
         this.showToast(`${ArShelfForm[value]} يجب ان يكون ${form.get(value).getError('minlength').requiredLength} حروف على الاقل`);
 
         return false;
-      }else if (form.get(value).getError('pattern')){
+      } else if (form.get(value).getError('pattern')){
         this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArShelfForm[value]}`);
         return false;
-      }else {
+      } else {
 
         return true;
       }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 
 import { PlacesModal } from '../filtermodal';
 import { UserProvider } from '../../providers/user';
@@ -25,7 +25,8 @@ export class Exporter {
     public navCtrl: NavController,
     public navParams: NavParams,
     public modalCrtl: ModalController,
-    public userProvider: UserProvider
+    public userProvider: UserProvider,
+    public platform: Platform
   ) {
     this.initStart = 0;
   }
@@ -34,7 +35,9 @@ export class Exporter {
     //console.log('ionViewDidLoad Exporter');
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-
+    this.platform.registerBackButtonAction(()=>{
+      this.navCtrl.pop()
+    });
     this.getExporters()
       .subscribe(
       ({ status, data,errors }) => {

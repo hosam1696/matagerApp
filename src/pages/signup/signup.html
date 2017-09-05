@@ -234,6 +234,7 @@
         id="next-button"
       >{{lastPage || "التالى" }}
 
+      <ion-spinner *ngIf='nextLoader' name="crescent" color="primary"></ion-spinner> 
   </button>
 
   </section>

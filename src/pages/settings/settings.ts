@@ -32,7 +32,7 @@ export class SettingsPage {
       return this.network.type;
       });
 
-      this.platform.registerBackButtonAction((data)=>{
+      /*this.platform.registerBackButtonAction((data)=>{
         this.alertCtrl.create({
           title:'الخروج من التطبيق',
           message: 'هل انت متأكد من انك تريد غلق التطبيق',
@@ -52,7 +52,7 @@ export class SettingsPage {
           }
           ]
         })
-      })
+      }) */
 
   }
 
@@ -98,7 +98,7 @@ export class SettingsPage {
         {
           text: 'متأكد',
           handler: data=> {
-            this.userProvider.LogoutUser(this.userLocalData.id)
+            this.userProvider.LogoutUser(this.userLocalData.id, this.userLocalData.device_token_id)
               .subscribe((res)=>{
                 if (res.status == 'success') {
                   localStorage.removeItem('userLocalData');

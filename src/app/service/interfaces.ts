@@ -248,7 +248,8 @@ export interface  IProductData extends IProduct{
 export enum ArShelfForm {
   name= 'رقم الرف',
   area='مساحة الرف',
-  cost='سعر الرف'
+  cost='سعر الرف',
+  fridge= 'نوع الرف'
 }
 
 

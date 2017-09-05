@@ -123,7 +123,11 @@ export class Login {
                 
                 this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
   
-                this.navCtrl.pop();
+                //this.navCtrl.pop();
+
+                setTimeout(()=>{
+                  this.navCtrl.setRoot('TabsPage')
+                })
   
                 this.events.publish('loginUser','userLog')
   

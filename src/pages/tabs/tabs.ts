@@ -19,6 +19,8 @@ export class TabsPage {
 
   constructor(public events: Events) {
     this.localUser = JSON.parse(localStorage.getItem('userLocalData'));
+    console.log('Tabs user type', this.localUser);
+
     this.events.subscribe('updateLocalUser', (localuser)=>{
 
       console.log('FROM CONSTRUCTOR events subscribe successfully');

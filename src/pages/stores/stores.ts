@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform } from 'ionic-angular';
 import { UserProvider } from "../../providers/user";
 import { PlacesModal } from '../filtermodal';
 import { ImodalData } from "../../app/service/InewUserData";
@@ -19,14 +19,22 @@ export class StoresPage {
   moreData: boolean = true;
   netError: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    public modalCrtl: ModalController, private userProvider: UserProvider) {
+  constructor(public navCtrl: NavController,
+     public navParams: NavParams,
+     public modalCrtl: ModalController,
+      private userProvider: UserProvider,
+      public platform: Platform
+    ) {
   }
 
   ionViewDidLoad() {
 
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+
+    this.platform.registerBackButtonAction(()=>{
+      this.navCtrl.pop()
+    });
 
     console.log(this.userLocal);
     this.fetchStores();

@@ -112,7 +112,9 @@ export class MapsModal {
     console.log('params',params.get('pageData'));
 
     this.initMap = params.get('pageData');
+
     console.log('init Map',this.initMap);
+
   }
 
 
@@ -288,6 +290,7 @@ export class MapsModal {
   }
 
   loadMapWithoutplaces(latitude, longitude) {
+    
     let latLng = new google.maps.LatLng(latitude, longitude);
 
     let mapOptions = {

@@ -62,6 +62,8 @@
                 class="form-control"
                 displayFormat="YYYY / MMMM / DD"
                 pickerFormat="YYYY MMMM DD"
+                min="minDate"
+                max= "2027"
                 monthNames="يناير,
                 فبراير,
                 مارس,
@@ -83,7 +85,7 @@
             <ion-label>نهاية الحجز</ion-label>
             <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
             <ion-datetime
-
+                min="mintDate"
                 text-center
                 class="form-control"
                 displayFormat="YYYY / MMMM / DD"
@@ -99,7 +101,9 @@
                 سبتمبر,
                 اكتوبر,
                 نوفمبر,
-                ديسمبر" placeholder="تاريخ الانتهاء" formControlName="end_date">
+                ديسمبر" placeholder="تاريخ الانتهاء" formControlName="end_date"
+                
+                >
             </ion-datetime>
         </ion-item>
 

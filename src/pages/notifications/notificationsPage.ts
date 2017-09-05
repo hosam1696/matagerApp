@@ -44,7 +44,7 @@ export class NotificationsPage {
 
   ionViewDidLoad() {
 
-    this.ionViewWillEnter();
+  
 
       //this.getNotifications();
     console.log('ionViewDidLoad Messages');

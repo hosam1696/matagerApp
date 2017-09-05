@@ -65,7 +65,8 @@ export interface IlocalUser{
   map: string,
   followers?: number,
   followings?: number,
-  follow?: boolean | any
+  follow?: boolean | any,
+  device_token_id?:string
 }
 
 export interface Ishelf {

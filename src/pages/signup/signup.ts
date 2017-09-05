@@ -28,6 +28,7 @@ export class Signup implements AfterViewInit{
   PageFormcontrols: object;
   phoneErr: boolean = false;
   locationOnMap: string = 'الموقع على الخريطة';
+  nextLoader: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -158,83 +159,108 @@ export class Signup implements AfterViewInit{
 
     let num = Math.max(Math.min(3, this.csPage + 1), 1);
 
-    if (num >= 3) {
-    this.lastPage = 'أضف حساب جديد';
+    console.log('Increse num', num);
 
-    if (this.SignUpFrom.value.level_id == 2) {
+    if (num == 2) {
+      this.nextLoader = true;
+      this.userProvider
+        .checkUniqe(this.SignUpFrom.value.username, this.SignUpFrom.value.email)
+        .subscribe(({status, errors})=>{
+          if (status === 'success') {
+            this.csPage = num;
+            console.log('user name and password are unique');
+            
+          } else {
+            let errKey = Object.keys(errors);
+            for (let key of errKey) {
+              key == 'username'?this.showToast(errors[key][0]):this.showToast(errors[key]);
+              return false;
+            }
+          }
+        }, err=>{
+          console.log(err);
+          this.nextLoader = false;
+        }, ()=> {
+          this.nextLoader = false;
+        })
 
-      [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
-      console.log('store');
-          this.SignUpFrom = this.fb.group({
-          username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
-          password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
-          InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
-          name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
-          email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-          mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
-          gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-          latitude: new FormControl('', Validators.required),
-          longitude: new FormControl('', Validators.required),
-          area: new FormControl('' ,[Validators.required]),
-          city: new FormControl('', [Validators.required]),
-          dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
-          level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
-          address: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, Validators.minLength(3)]),
-          cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1),Validators.pattern("[0-9]*")]),
-
-
-          owner_name: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required:null,this.insureStoreUser,Validators.minLength(4)])
-        });
-    } else if (this.SignUpFrom.value.level_id == 3) {
-      [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
-      console.log('exporter');
-      this.SignUpFrom = this.fb.group({
-        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
-        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
-        InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
-        name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
-        email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
-        gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        latitude: new FormControl('', Validators.required),
-        longitude: new FormControl('', Validators.required),
-        area: new FormControl('' , [Validators.required]),
-        city: new FormControl('', [Validators.required]),
-        dist: new FormControl('' ),
-        level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
-        address: new FormControl('', [ Validators.required, Validators.minLength(3)]),
-        cr_num: new FormControl(''),
-        owner_name: new FormControl('')
-      });
-    } else {
-      console.log('client');
-
-      [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
-
-      this.SignUpFrom = this.fb.group({
-        username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
-        password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
-        InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
-        name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
-        email: new FormControl(this.SignUpFrom.value.email, Validators.required),
-        mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
-        gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
-        latitude: new FormControl('', Validators.required),
-        longitude: new FormControl('', Validators.required),
-        area: new FormControl('' , [Validators.required]),
-        city: new FormControl('' , [Validators.required]),
-        dist: new FormControl('' ),
-        level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
-        address: new FormControl(''),
-        cr_num: new FormControl(''),
-        owner_name: new FormControl('')
-      });
-
+    } else if (num >= 3) {
+      this.lastPage = 'أضف حساب جديد';
+      
+          if (this.SignUpFrom.value.level_id == 2) {
+      
+            [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
+            console.log('store');
+                this.SignUpFrom = this.fb.group({
+                username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+                password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
+                InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
+                name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
+                email: new FormControl(this.SignUpFrom.value.email, Validators.required),
+                mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
+                gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
+                latitude: new FormControl('', Validators.required),
+                longitude: new FormControl('', Validators.required),
+                area: new FormControl('' ,[Validators.required]),
+                city: new FormControl('', [Validators.required]),
+                dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
+                level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
+                address: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, Validators.minLength(3)]),
+                cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1),Validators.pattern("[0-9]*")]),
+      
+      
+                owner_name: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required:null,this.insureStoreUser,Validators.minLength(4)])
+              });
+          } else if (this.SignUpFrom.value.level_id == 3) {
+            [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
+            console.log('exporter');
+            this.SignUpFrom = this.fb.group({
+              username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+              password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
+              InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
+              name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
+              email: new FormControl(this.SignUpFrom.value.email, Validators.required),
+              mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
+              gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
+              latitude: new FormControl('', Validators.required),
+              longitude: new FormControl('', Validators.required),
+              area: new FormControl('' , [Validators.required]),
+              city: new FormControl('', [Validators.required]),
+              dist: new FormControl('' ),
+              level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
+              address: new FormControl('', [ Validators.required, Validators.minLength(3)]),
+              cr_num: new FormControl(''),
+              owner_name: new FormControl('')
+            });
+          } else {
+            console.log('client');
+      
+            [this.AreaName, this.CityName, this.DistName] = Array(3).fill(null);
+      
+            this.SignUpFrom = this.fb.group({
+              username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
+              password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
+              InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
+              name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
+              email: new FormControl(this.SignUpFrom.value.email, Validators.required),
+              mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
+              gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
+              latitude: new FormControl('', Validators.required),
+              longitude: new FormControl('', Validators.required),
+              area: new FormControl('' , [Validators.required]),
+              city: new FormControl('' , [Validators.required]),
+              dist: new FormControl('' ),
+              level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
+              address: new FormControl(''),
+              cr_num: new FormControl(''),
+              owner_name: new FormControl('')
+            });
+      
+          }
+          this.csPage = num;
     }
 
-    }
-
-    this.csPage = num;
+   
     console.log('current page', this.csPage, 'num', num);
     console.log(this.PageFormcontrols[this.csPage]);
     return this.csPage;
@@ -291,7 +317,12 @@ export class Signup implements AfterViewInit{
           } else if (this.SignUpFrom.get(value).getError('maxlength')) {
             this.showToast(`${ArSignForm[value]} يجب ان يكون ${this.SignUpFrom.get(value).getError('maxlength').requiredLength} ارقام`);
           } else if (this.SignUpFrom.get(value).getError('pattern')) {
-            this.showToast(`${ArSignForm[value]} غير صحيح`)
+            if(value == 'reg_num') {
+                this.showToast(ArSignForm[value]+ ' يجب ان يتكون من ارقام انجليزية')
+            } else {
+
+              this.showToast(`${ArSignForm[value]} غير صحيح`)
+            }
           }
         }
           //this.showToast('تأكد من ملىء جميع الحقول')
@@ -347,7 +378,7 @@ export class Signup implements AfterViewInit{
     let toast = this.toastCont.create({
       message: msg,
       duration: dur,
-      position: 'bottom',
+      position: 'top',
       showCloseButton: true,
       closeButtonText: 'x'
     });

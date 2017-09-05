@@ -15,6 +15,8 @@ export class ShelfModal {
     showLoader: boolean = false;
     reserveShelfForm: FormGroup;
     nowDateString: any;
+    minDate = new Date(Date.now()).toISOString();
+    mintDate = new Date(Date.now()+ 1000*60*60*24*12).toISOString();
     constructor(params: NavParams,
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
