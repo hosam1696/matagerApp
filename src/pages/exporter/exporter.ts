@@ -40,11 +40,11 @@ export class Exporter {
     });
     this.getExporters()
       .subscribe(
-      ({ status, data,errors }) => {
+      ({ status, data2,errors }) => {
 
         if (status == 'success') {
 
-          console.log('Data', data);
+          console.log('Data', data2);
           /*
           const selfIndex = data.findIndex(oneItem => {
             return oneItem.id == this.userLocal.id;
@@ -53,7 +53,7 @@ export class Exporter {
           
           data.splice(selfIndex, 1);
           */
-          this.allExporters = data;
+          this.allExporters = data2;
 
         } else {
           this.locationError = errors
@@ -74,16 +74,16 @@ export class Exporter {
     if (this.moreData) {
 
       this.getExporters(this.initLimit, this.initStart += this.initLimit)
-        .subscribe(({ status, data }) => {
+        .subscribe(({ status, data2 }) => {
           if (status = 'success') {
-            if (data.length < this.initLimit)
+            if (data2.length < this.initLimit)
               this.moreData = false;
             /*const selfIndex = data.findIndex(oneItem => {
               return oneItem.id == this.userLocal.id;
             }); // remove user himself from being listed
             selfIndex > 0 && data.splice(selfIndex, 1);
             */
-            this.allExporters = [...this.allExporters, ...data];//es6 destruction : concat data to the allExporter array
+            this.allExporters = [...this.allExporters, ...data2];//es6 destruction : concat data to the allExporter array
           }
 
 
@@ -109,7 +109,7 @@ export class Exporter {
     [this.initStart,this.netError] = [0, false];
     this.getExporters()
       .subscribe(
-      ({ status, data }) => {
+      ({ status, data2 }) => {
 
         if (status == 'success') {
           /*
@@ -118,7 +118,7 @@ export class Exporter {
           }); // remove user himself from being listed
           selfIndex > 0 && data.splice(selfIndex, 1);
           */
-          this.allExporters = data;
+          this.allExporters = data2;
 
         }
       },

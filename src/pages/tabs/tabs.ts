@@ -33,7 +33,7 @@ export class TabsPage {
 
 
 
-  ionViewWillEnter (){
+  ionViewDidLoad (){
     this.localUser = JSON.parse(localStorage.getItem('userLocalData'));
 
       this.events.subscribe('updateLocalUser', (localuser)=>{

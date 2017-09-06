@@ -29,7 +29,7 @@ page-deliverproducts {
     }
     ion-list {
       ion-item {
-        margin-bottom: 3px !important;
+        //margin-bottom: 3px !important;
         border-top: none !important;
         font-size: 14px !important;
         border-bottom: 0.5px solid color($colors, bgColor) !important;
@@ -42,12 +42,14 @@ page-deliverproducts {
         justify-content: space-between;
         flex-direction: column;
         p {
-          color: color($colors, primary) !important;
+          //color: color($colors, primary) !important;
           &:first-child {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            //justify-content: space-between;
             span {
+              margin: 0 15px;
+              color: color($colors, primary) !important ;
               &:last-child {
                 color: inherit !important
               }
@@ -55,7 +57,7 @@ page-deliverproducts {
           }
           &:last-child {
             display: flex;
-            justify-content: space-between;
+            //justify-content: space-between;
             align-items: center;
           }
           /*span {

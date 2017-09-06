@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavController, NavParams, IonicPage, ToastController } from 'ionic-angular';
 import { ItemProvider } from '../../providers/item';
 import { IlocalUser, IShelfRequest } from '../../app/service/interfaces';
@@ -22,7 +22,9 @@ export class DeliveryrequestPage {
   noAcceptedRequests: boolean = false;
   noProducts: boolean = false;
   netErr: boolean = false;
-  constructor(public navCtrl: NavController,
+  constructor(
+    @Inject('UPLOAD_PATH') private UPLOAD_PATH,
+    public navCtrl: NavController,
     public navParams: NavParams,
     private itemProvider: ItemProvider,
     private shelfsProvider: ShelfsProvider,
@@ -53,15 +55,15 @@ export class DeliveryrequestPage {
       .getProductByUserId(this.userLocal.id)
       .retry(3)
       .subscribe(
-      ({ status, data, errors }) => {
+      ({ status, data2, errors }) => {
         if (status == 'success' || status.message == 'success') {
-          data.forEach(product => {
+          data2.forEach(product => {
             product.item_quantity = 1;
             product.isChecked = false;
           });
-          this.allProducts = data; // to be used in delivery request API
-          console.log(data);
-          this.AllProducts = this.chunk(data, 2); // to be used in HTML projection
+          this.allProducts = data2; // to be used in delivery request API
+          console.log(data2);
+          this.AllProducts = this.chunk(data2, 2); // to be used in HTML projection
           console.log(this.AllProducts);
         } else {
           this.noProducts = true;
@@ -216,6 +218,10 @@ export class DeliveryrequestPage {
       position: 'top'
     });
     toast.present();
+  }
+
+  imagePath(type:string, img: string):string {
+    return this.UPLOAD_PATH + type + '/' + img
   }
 
 }

@@ -54,6 +54,42 @@ export class Login {
 
         if (this.LoginForm.valid) {
           this.showLoader = true;
+
+          this.userLogin.LoginUser({...{device_token_id : 'zssfzsfz',
+          type: 'ANDROID'},...this.LoginForm.value})
+        .subscribe(({status, message, data}) => {
+          console.log(status, message);
+          //TODO: if data is correct navigate to the home page
+          if (status == 'success') {
+
+            let userLocalData = data;
+
+            this.showLoader = false;
+
+            localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+            
+            this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+
+            //this.navCtrl.pop();
+
+            setTimeout(()=>{
+              this.navCtrl.setRoot('TabsPage')
+            })
+
+            this.events.publish('loginUser','userLog')
+
+          } else {
+            this.showLoader = false;
+            this.showToast(`${message}`)
+          }
+        },
+        err => {
+          this.showToast('التطبيق يتطلب اتصال بالانترنت');
+          console.warn(err);
+          this.showLoader = false;
+        }
+      );
           let deviceData ={};
           let pushOptios: PushOptions = {
             android: {
@@ -144,6 +180,8 @@ export class Login {
           );
             console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
  
+          }, err=> {
+           
           });
           
         

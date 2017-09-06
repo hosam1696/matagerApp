@@ -108,6 +108,7 @@ export class StoresPage {
 
   filterPlaces(placesData, limit = this.initLimit, start = 0) {
     this.showLoader =true;
+    this.moreData = true;
     this.userProvider.filterUsersByPlaces(placesData, limit, start)
       .subscribe(({ status, data, errors }) => {
         if (status == 'success') {
@@ -142,9 +143,9 @@ export class StoresPage {
     if (this.moreData) {
 
       this.getStores(this.initLimit, this.initStart += this.initLimit)
-        .subscribe(({ status, data }) => {
+        .subscribe(({ status, data2 }) => {
           if (status = 'success') {
-            if ((data.length - 1) < this.initLimit)
+            if ((data2.length - 1) < this.initLimit)
               this.moreData = false;
             /*if (this.userLocal) {
               const selfIndex = data.findIndex(oneItem => {
@@ -152,7 +153,7 @@ export class StoresPage {
               }); // remove user himself from being listed
               selfIndex > 0 && data.splice(selfIndex, 1);
             }*/
-            this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
+            this.allStores = [...this.allStores, ...data2]; //es6 destruction : concat data to the allStore array
           }
         },
         (err) => {
@@ -176,7 +177,7 @@ export class StoresPage {
     [this.initStart,this.netError] = [0, false];
     this.getStores()
       .subscribe(
-      ({ status, data }) => {
+      ({ status, data2 }) => {
         if (status == 'success') {
 
          /* if (this.userLocal) {
@@ -187,7 +188,7 @@ export class StoresPage {
           }*/
 
 
-          this.allStores = data;
+          this.allStores = data2;
 
         }
       },
@@ -218,10 +219,10 @@ export class StoresPage {
   fetchStores(limit?: number, start?: number) {
     this.getStores(limit, start)
       .subscribe(
-      ({ status, data, errors }) => {
+      ({ status, data1,data2, errors }) => {
         if (status == 'success') {
 
-          console.log('Data',data);
+          console.log('Data',data1,data2);
           /*if (this.userLocal) {
             const selfIndex = data.findIndex(oneItem => {
               return oneItem.id == this.userLocal.id;
@@ -229,7 +230,7 @@ export class StoresPage {
             selfIndex > 0 && data.splice(selfIndex, 1);
           } */
 
-          this.allStores = data;
+          this.allStores = data2;
           console.log(this.allStores)
         } else {
           this.locationError = errors;

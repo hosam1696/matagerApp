@@ -45,7 +45,7 @@
                [ngClass]="{'green': product.isChecked, 'lightDark': !product.isChecked}">
             <ion-icon name="checkmark"></ion-icon>
           </div>
-          <img [src]="(!product.item_image)?'assets/img/adds_02.png':product.item_image" alt="product">
+          <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="product">
 
           <p class="prod-desc">
             {{limitString(product.item_desc)}} </p>
