@@ -21,6 +21,11 @@ page-addshelf {
         .form-group {
           padding: 5px 0;
           position: relative;
+          &.fridge {
+                  display: flex;
+                  justify-content: space-between;
+
+          }
           .form-label {
               padding-right: 5px;
     color: #2e8bc9;

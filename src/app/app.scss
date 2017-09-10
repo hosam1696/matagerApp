@@ -79,6 +79,25 @@ ion-app._gmaps_cdv_ .nav-decor{
 .camera-tab {
     order: 3 !important
 }
+
+  .err-small {
+  font-size: 1.7rem;
+  color: #666;
+  text-shadow: 1px 1px #fff;
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  ion-icon {
+    font-size: 50px;
+    display: block;
+  }
+  span {
+    font-size: 1.3rem;
+    color: #888;
+    text-shadow: none;
+  }
+}
+
 #main-tabs {
     .tabbar {
         //height: 40px !important;

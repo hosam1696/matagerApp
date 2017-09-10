@@ -8,7 +8,7 @@
 
 
 <ion-content padding>
-  <ion-item id="shelf-id">
+  <ion-item [hidden]="netErr" id="shelf-id">
 
     <ion-label>رقم الرف</ion-label>
     <ion-select [(ngModel)]="shelfNumbers">
@@ -28,6 +28,7 @@
   </p>
 
   <p class="err-small" text-center *ngIf="netErr">
+    <ion-icon name="ios-wifi"></ion-icon>
     التطبيق يتطلب اتصال بالانترنت
   </p>
   <ion-grid padding-vertical>
@@ -65,7 +66,7 @@
   </ion-grid>
 
 
-  <button full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
+  <button [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
     ارسال طلب التسليم
   </button>
 </ion-content>

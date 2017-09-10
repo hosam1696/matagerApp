@@ -114,12 +114,6 @@ export class StoresPage {
         if (status == 'success') {
 
           console.log('Data', data);
-          /*if (this.userLocal) {
-            const selfIndex = data.findIndex(oneItem => {
-              return oneItem.id == this.userLocal.id;
-            }); // remove user himself from being listed
-            selfIndex > 0 && data.splice(selfIndex, 1);
-          } */
 
           this.allStores = data;
           console.log(this.allStores)
@@ -143,17 +137,12 @@ export class StoresPage {
     if (this.moreData) {
 
       this.getStores(this.initLimit, this.initStart += this.initLimit)
-        .subscribe(({ status, data2 }) => {
+        .subscribe(({ status, data }) => {
           if (status = 'success') {
-            if ((data2.length - 1) < this.initLimit)
+            if ((data.length - 1) < this.initLimit)
               this.moreData = false;
-            /*if (this.userLocal) {
-              const selfIndex = data.findIndex(oneItem => {
-                return oneItem.id == this.userLocal.id;
-              }); // remove user himself from being listed
-              selfIndex > 0 && data.splice(selfIndex, 1);
-            }*/
-            this.allStores = [...this.allStores, ...data2]; //es6 destruction : concat data to the allStore array
+
+            this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
           }
         },
         (err) => {
@@ -177,18 +166,10 @@ export class StoresPage {
     [this.initStart,this.netError] = [0, false];
     this.getStores()
       .subscribe(
-      ({ status, data2 }) => {
+      ({ status, data}) => {
         if (status == 'success') {
 
-         /* if (this.userLocal) {
-            const selfIndex = data.findIndex(oneItem => {
-              return oneItem.id == this.userLocal.id;
-            }); // remove user himself from being listed
-            selfIndex > 0 && data.splice(selfIndex, 1);
-          }*/
-
-
-          this.allStores = data2;
+          this.allStores = data;
 
         }
       },
@@ -219,18 +200,11 @@ export class StoresPage {
   fetchStores(limit?: number, start?: number) {
     this.getStores(limit, start)
       .subscribe(
-      ({ status, data1,data2, errors }) => {
+      ({ status, data, errors }) => {
         if (status == 'success') {
 
-          console.log('Data',data1,data2);
-          /*if (this.userLocal) {
-            const selfIndex = data.findIndex(oneItem => {
-              return oneItem.id == this.userLocal.id;
-            }); // remove user himself from being listed
-            selfIndex > 0 && data.splice(selfIndex, 1);
-          } */
-
-          this.allStores = data2;
+          console.log('Data',data);
+          this.allStores = data;
           console.log(this.allStores)
         } else {
           this.locationError = errors;

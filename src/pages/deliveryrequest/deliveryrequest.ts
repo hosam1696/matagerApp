@@ -55,15 +55,15 @@ export class DeliveryrequestPage {
       .getProductByUserId(this.userLocal.id)
       .retry(3)
       .subscribe(
-      ({ status, data2, errors }) => {
+      ({ status, data, errors }) => {
         if (status == 'success' || status.message == 'success') {
-          data2.forEach(product => {
+          data.forEach(product => {
             product.item_quantity = 1;
             product.isChecked = false;
           });
-          this.allProducts = data2; // to be used in delivery request API
-          console.log(data2);
-          this.AllProducts = this.chunk(data2, 2); // to be used in HTML projection
+          this.allProducts = data; // to be used in delivery request API
+          console.log(data);
+          this.AllProducts = this.chunk(data, 2); // to be used in HTML projection
           console.log(this.AllProducts);
         } else {
           this.noProducts = true;

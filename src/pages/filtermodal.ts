@@ -65,7 +65,7 @@ import 'rxjs/operator/filter';
 
       <p *ngIf="errorAccessDB" text-center wordcolor="blue" class="small">
         <br>
-        <ion-icon name="warning-outline" ></ion-icon>
+        <ion-icon name="ios-wifi" ></ion-icon>
         <br>
           التطبيق يتطلب اتصال بالانترنت
       </p>

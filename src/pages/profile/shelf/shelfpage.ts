@@ -16,7 +16,7 @@ export class ShelfModal {
     reserveShelfForm: FormGroup;
     nowDateString: any;
     minDate = new Date(Date.now()).toISOString();
-    mintDate = new Date(Date.now()+ 1000*60*60*24*12).toISOString();
+    endtDate = new Date(Date.now()+ 1000*60*60*24*30).toISOString();
     constructor(params: NavParams,
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
@@ -28,8 +28,8 @@ export class ShelfModal {
         this.nowDateString = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
         this.modalInfo = params.get('shelfInfo');
         this.reserveShelfForm = new FormGroup({
-            start_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.initDate(), Validators.required),
-            end_date: new FormControl(this.initDate(true), Validators.required)
+            start_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.minDate, Validators.required),
+            end_date: new FormControl(this.endtDate, Validators.required)
         });
         console.log(this.modalInfo);
         function ArMonthsFunc(one, two, third, four) {

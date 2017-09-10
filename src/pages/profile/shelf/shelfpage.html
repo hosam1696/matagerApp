@@ -30,6 +30,9 @@
         <ion-item>
              حالة الرف
 
+             <p *ngIf="modalInfo.fridge">
+                <ion-badge>رف تلاجة</ion-badge> 
+                        </p>
           <p *ngIf="modalInfo.reserver_name" (click)="navigateToPage('VprofilePage', modalInfo.reserver_id)">
               المورد المستأجر: &nbsp;
             <b>{{modalInfo.reserver_name}}</b>
@@ -59,10 +62,12 @@
                 <!-- [min]="modalInfo.end_date || nowDateString"-->
             <ion-datetime
                 text-center
+
+                 doneText="موافق" cancelText="الغاء"
                 class="form-control"
                 displayFormat="YYYY / MMMM / DD"
                 pickerFormat="YYYY MMMM DD"
-                min="minDate"
+                [min]="minDate"
                 max= "2027"
                 monthNames="يناير,
                 فبراير,
@@ -85,7 +90,9 @@
             <ion-label>نهاية الحجز</ion-label>
             <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
             <ion-datetime
-                min="mintDate"
+                 [min]="minDate"
+                 doneText="موافق"
+                 cancelText="الغاء"
                 text-center
                 class="form-control"
                 displayFormat="YYYY / MMMM / DD"

@@ -40,20 +40,13 @@ export class Exporter {
     });
     this.getExporters()
       .subscribe(
-      ({ status, data2,errors }) => {
+      ({ status, data,errors }) => {
 
         if (status == 'success') {
 
-          console.log('Data', data2);
-          /*
-          const selfIndex = data.findIndex(oneItem => {
-            return oneItem.id == this.userLocal.id;
-          }); // remove user himself from being listed
-          selfIndex > 0 && data.splice(selfIndex, 1);
+          console.log('Data', data);
           
-          data.splice(selfIndex, 1);
-          */
-          this.allExporters = data2;
+          this.allExporters = data;
 
         } else {
           this.locationError = errors
@@ -74,16 +67,12 @@ export class Exporter {
     if (this.moreData) {
 
       this.getExporters(this.initLimit, this.initStart += this.initLimit)
-        .subscribe(({ status, data2 }) => {
+        .subscribe(({ status, data }) => {
           if (status = 'success') {
-            if (data2.length < this.initLimit)
+            if (data.length < this.initLimit)
               this.moreData = false;
-            /*const selfIndex = data.findIndex(oneItem => {
-              return oneItem.id == this.userLocal.id;
-            }); // remove user himself from being listed
-            selfIndex > 0 && data.splice(selfIndex, 1);
-            */
-            this.allExporters = [...this.allExporters, ...data2];//es6 destruction : concat data to the allExporter array
+
+            this.allExporters = [...this.allExporters, ...data];//es6 destruction : concat data to the allExporter array
           }
 
 
@@ -109,16 +98,10 @@ export class Exporter {
     [this.initStart,this.netError] = [0, false];
     this.getExporters()
       .subscribe(
-      ({ status, data2 }) => {
+      ({ status, data }) => {
 
         if (status == 'success') {
-          /*
-          const selfIndex = data.findIndex(oneItem => {
-            return oneItem.id == this.userLocal.id;
-          }); // remove user himself from being listed
-          selfIndex > 0 && data.splice(selfIndex, 1);
-          */
-          this.allExporters = data2;
+          this.allExporters = data;
 
         }
       },
@@ -191,12 +174,6 @@ export class Exporter {
         if (status == 'success') {
 
           console.log('Data', data);
-          /*if (this.userLocal) {
-            const selfIndex = data.findIndex(oneItem => {
-              return oneItem.id == this.userLocal.id;
-            }); // remove user himself from being listed
-            selfIndex > 0 && data.splice(selfIndex, 1);
-          } */
 
           this.allExporters = data;
           console.log(this.allExporters)

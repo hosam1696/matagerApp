@@ -65,6 +65,7 @@ export class VprofilePage {
     } else { // navigation parameter is Array Type
       this.navigatedUserId = userData[1];
       this.userProvider.getUserById(userData[0], userData[1])
+      .retry(3)  
         .subscribe(({status, data}) => {
           if(status == 'success')
             this.userData = data;

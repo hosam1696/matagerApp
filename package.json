@@ -43,6 +43,7 @@
         "angular2-moment": "1.6.0",
         "build": "^0.1.4",
         "com-badrit-base64": "^0.2.0",
+        "com.synconset.imagepicker": "~2.1.8",
         "cordova-android": "^6.2.3",
         "cordova-plugin-actionsheet": "^2.3.3",
         "cordova-plugin-camera": "^2.4.1",
@@ -71,15 +72,14 @@
         "promise-polyfill": "6.0.2",
         "rxjs": "5.4.2",
         "sw-toolbox": "3.6.0",
-        "zone.js": "0.8.14",
-        "com.synconset.imagepicker": "~2.1.8"
+        "zone.js": "0.8.14"
     },
     "devDependencies": {
         "@angular/tsc-wrapped": "4.3.1",
         "@ionic/app-scripts": "2.1.4",
         "@ionic/cli-plugin-cordova": "1.6.2",
         "@ionic/cli-plugin-ionic-angular": "1.4.1",
-        "ionic": "3.7.0",
+        "ionic": "3.9.2",
         "typescript": "2.4.2"
     },
     "cordovaPlugins": [
@@ -117,7 +117,7 @@
             "com-badrit-base64": {},
             "cordova-plugin-compat": {},
             "com.synconset.imagepicker": {
-                "PHOTO_LIBRARY_USAGE_DESCRIPTION": "choose images"
+                "PHOTO_LIBRARY_USAGE_DESCRIPTION": "pick an image"
             }
         },
         "platforms": [

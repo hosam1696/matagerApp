@@ -61,6 +61,7 @@ export class AddshelfPage {
   submitForm() {
 
     if (this.addShelfForm.valid) {
+      this.addShelfForm.get('fridge').setValue(this.addShelfForm.get('fridge').value ? 1 : 0);
       this.showLoader = true;
       let shelfForm = Object.assign({}, this.addShelfForm.value, {
         "user_id": this.userLocal.id
