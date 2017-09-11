@@ -297,13 +297,13 @@ export class VprofilePage {
         {
           text: 'تسجيل الدخول',
           handler: ()=>{
-            this.navigateToPage('Login', null);
+            this.navCtrl.push('Login')
           }
         },
         {
           text: 'تسجيل حساب جديد',
-          handler: ()=>{
-            this.navigateToPage('Signup', null);
+          handler: () => {
+            this.navCtrl.push('Signup');
           }
         }
       ],

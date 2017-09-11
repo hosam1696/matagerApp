@@ -98,6 +98,9 @@
     <allow-navigation href="http://192.168.1.4:8100" />
     <engine name="android" spec="^6.2.3" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
+    <plugin name="com.synconset.imagepicker" spec="~2.1.8">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="pick an image" />
+    </plugin>
     <plugin name="cordova-plugin-actionsheet" spec="^2.3.3" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
     <plugin name="cordova-plugin-compat" spec="^1.1.0" />
@@ -118,8 +121,5 @@
     <plugin name="phonegap-plugin-barcodescanner" spec="^6.0.8" />
     <plugin name="phonegap-plugin-push" spec="^2.0.0">
         <variable name="SENDER_ID" value="85075801930" />
-    </plugin>
-    <plugin name="com.synconset.imagepicker" spec="~2.1.8">
-        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="pick an image" />
     </plugin>
 </widget>
