@@ -77,6 +77,14 @@ export interface IShlefStatus {
   shelf_status: number
 }
 
+export interface ISlider {
+  item_id: number,
+  slide_image: string,
+  sort?: string | number,
+  type: string,
+  url_link: string
+}
+
 export interface Ishelf {
   area: number,
   close: number,

@@ -2,8 +2,13 @@
 
   <ion-navbar color="primary">
     <ion-title>عرض المنتج</ion-title>
+    <ion-buttons *ngIf="isModal"  end>
+      <button ion-button class="close-btn" (click)="closeModal()">
+          <ion-icon name="md-close-circle" color="light"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
-
+  
 </ion-header>
 
 

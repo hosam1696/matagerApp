@@ -1,10 +1,14 @@
+import { ProductModal } from './../productmodal';
+import { ItemProvider } from './../../providers/item';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { ISlider } from './../../app/service/interfaces';
 import { PushProvider } from './../../providers/push';
 import { Http } from '@angular/http';
 import {
   MapsModal
 } from './../mapsmodal';
 import {
-  Component
+  Component,Inject
 } from '@angular/core';
 import {
   NavController,
@@ -40,9 +44,10 @@ declare let cordova: any;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  dataFromModal;
-  userLocalData: IlocalUser;
+  Sliders:ISlider[];
+  userLocalData: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   constructor(
+    @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
     public geolocation: Geolocation,
     public network: Network,
@@ -51,14 +56,25 @@ export class HomePage {
     public config: Config,
     public modalCrtl: ModalController,
     public platform: Platform,
-    public pushProvider: PushProvider
+    public pushProvider: PushProvider,
+    public iab: InAppBrowser,
+    public itemProvider: ItemProvider
   ) {
 
   }
 
   ionViewDidLoad() {
-
-
+    let userId: number = 0;
+    if (this.userLocalData && this.userLocalData.id) 
+      userId = this.userLocalData.id;
+    
+    this.pushProvider
+      .getHeaderSlider(userId)
+      .subscribe(({ data, status}) => {
+        if (status === 'success') {
+          this.Sliders = data;
+        }
+      })
 
     console.log('Config Object', this.config.get('caches'), this.config.get('iconMode'));
 
@@ -164,38 +180,22 @@ export class HomePage {
     this.navCtrl.push(page);
   }
 
-  navToAdv(addsLink): void {
-
-    // navigate to the advertise link or the advertise owner
-    console.log('You have to go to ' + addsLink);
-
-    //this.navCtrl.push(link)
+  navToAdv(slide:ISlider): void {
+    //console.log('slide Data', slide);
+    
+    if (slide.type === 'item') {
+      this.modalCrtl.create('ProductPage', {pageData: slide.item_id, isModal:true}).present();
+    } else if (slide.type === 'link') {
+      this.iab.create(slide.url_link).show();
+    } else {
+      console.log('slides have no action right now');
+    }
+   
   }
 
-  openMaps() {
-    let pageData: any = null;
-    /*if (this.SignUpFrom.get('latitude').value && this.SignUpFrom.get('latitude').value) {
 
-      pageData = { latitude: this.SignUpFrom.get('latitude').value, longitude: this.SignUpFrom.get('longitude').value };
-    }*/
-    let modal = this.modalCrtl.create(MapsModal, {
-      pageData
-    });
-    modal.onDidDismiss((data) => {
-      console.log('data from modal', data);
-      if (data && data.latitude && data.longitude) {
-        console.log(data);
-        /*this.SignUpFrom.get('latitude').setValue(data.latitude);
-        this.SignUpFrom.get('longitude').setValue(data.longitude);
-        if (data.address)
-          this.locationOnMap = data.address;
-
-  */ //this.SignUpFrom.get('latitude').setValue(data.latitude);
-        //this.loactionOnMap = 'تم تحديد الموقع'
-      }
-
-    });
-    modal.present();
+  imagePath(img: string): string {
+    return this.UPLOAD_PATH + 'headerslider/' + img
   }
 
 }

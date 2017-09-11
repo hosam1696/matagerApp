@@ -316,7 +316,7 @@ export class VprofilePage {
 
   navigateToPage(page, pageData , reciever?: string, reciever_id?:number) {
 
-
+    
     if(this.navigatedUserId != 0 || page == 'ProductPage')
       this.navCtrl.push(page, { pageData, reciever,reciever_id });
     else 

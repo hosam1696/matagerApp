@@ -129,7 +129,7 @@ export class ProductModal {
     getProduct(product_id:number) {
         if (!this.userLocal)
           this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-        this.productProvider.getProductById(product_id, this.userLocal.id)
+        this.productProvider.getProductById(product_id, this.userLocal?this.userLocal.id:0)
             .subscribe(({status, data})=>{
                 if(status == 'success') {
                   this.productData = data;

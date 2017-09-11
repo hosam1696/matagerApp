@@ -46,14 +46,7 @@
 
             <div id="profile-buttons">
 
-              <button
-                ion-button
-                color="primary"
-                small
-                class="follow-btn"
-                [outline]="!userData.follow"
-                (click)="follow(userData.id)"
-              >
+              <button ion-button color="primary" small class="follow-btn" [outline]="!userData.follow" (click)="follow(userData.id)">
               <ion-icon name="person"></ion-icon>
              <span *ngIf="!userData.follow;else followed">متابعة</span>
              <ng-template #followed>
@@ -98,7 +91,7 @@
           المكان على الخريطة
           </button>
       </div>
-      <div id="page-segments" padding [hidden]="!userLocal || userData.level_id == 3 || userLocal.level_id == 2||userLocal.level_id == 4|| userData.level_id == 4"> 
+      <div id="page-segments" padding [hidden]="!userLocal || userData.level_id == 3 || userLocal.level_id == 2||userLocal.level_id == 4|| userData.level_id == 4">
         <ion-segment [(ngModel)]="showContent">
 
           <ion-segment-button value="products" (click)="getProducts()">
@@ -121,10 +114,10 @@
   <ion-card class="show-card" *ngIf="showContent == 'products'">
 
     <p text-center *ngIf="noAcceptedItems">
-      <br> لا يوجد منتجات 
+      <br> لا يوجد منتجات
     </p>
     <p text-center *ngIf="noProducts== 'empty'">
-      <br> لا يوجد منتجات 
+      <br> لا يوجد منتجات
     </p>
 
     <!-- list for stores delivered products-->
@@ -155,7 +148,7 @@
       التطبيق يتطلب اتصال بالانترنت
     </p>
     <p text-center *ngIf="noProducts" class="small">
-      لا يوجد منتجات 
+      لا يوجد منتجات
     </p>
     <ion-grid padding-horizontal>
       <ion-row *ngFor="let products of allProducts">
@@ -208,7 +201,7 @@
 
 
 
-  
+
   <!-- products tab -->
 
 
@@ -217,12 +210,12 @@
       التطبيق يتطلب اتصال بالانترنت
     </p>
     <p text-center *ngIf="noShelfs" class="small">
-      لا يوجد رفوف 
+      لا يوجد رفوف
     </p>
     <ion-list>
 
       <ion-item (click)="showShelf(shelf)" *ngFor="let shelf of allShelfs; let i = index">
-        <div class="shelf-id" >
+        <div class="shelf-id">
           <p>رقم الرف <span>{{shelf.name}} </span></p>
           <ion-badge>المساحة : {{shelf.area}} متر</ion-badge>
         </div>
@@ -231,12 +224,12 @@
           <div class="reserved">
             <span *ngIf="shelf.shelf_status == 0">غير محجوز</span>
             <ion-badge *ngIf="shelf.shelf_status == 1">
-               محجوز حتى {{shelf.end_date | date:'longDate'|arabicdate}}</ion-badge>
+              محجوز حتى {{shelf.end_date | date:'longDate'|arabicdate}}</ion-badge>
           </div>
 
 
           <div class="shelf-controls">
-            <ion-badge >السعر : {{shelf.cost}} ريال</ion-badge>
+            <ion-badge>السعر : {{shelf.cost}} ريال</ion-badge>
 
             <!--  <ion-icon name="open-outline" (click)="editShelf('AddshelfPage', shelf)"></ion-icon>
         <ion-icon name="trash-outline" (click)="deleteShelf(shelf)"></ion-icon>-->

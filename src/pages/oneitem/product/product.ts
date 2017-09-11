@@ -2,7 +2,7 @@ import { IlocalUser } from './../../../app/service/interfaces';
 import { CommentProvider } from './../../../providers/comments';
 import { ItemProvider } from './../../../providers/item';
 import {Component, ViewChild} from '@angular/core';
-import {AlertController, AlertOptions, IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import { AlertController, AlertOptions, IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 
 import {IProductData, IproductComment} from '../../../app/service/interfaces';
 //import {Observable} from "rxjs/Observable";
@@ -22,13 +22,15 @@ export class ProductPage {
   showLoader: boolean = true;
   initLimit:number = 5;
   initStart: number = 0;
+  isModal: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public itemProvider: ItemProvider,
     public commentProvider: CommentProvider,
     public toastCtrl: ToastController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public viewCtrl: ViewController
 
   ) {
 
@@ -36,9 +38,13 @@ export class ProductPage {
 
     this.initId = this.navParams.get('pageData');
 
+    this.isModal = this.navParams.get('isModal');
+
 
   }
-
+  closeModal() {
+    this.viewCtrl.dismiss()
+  }
   ionViewWillLoad() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
