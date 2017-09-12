@@ -149,6 +149,8 @@ export class NotificationsPage {
       this.navCtrl.push('SalesnotificationPage', {pageData})
     } else if (pageData.type == 'duesRequest') {
       this.navCtrl.push('NotificationDuePage', {pageData})
+    } else if (pageData.type == 'ownerDues'){
+      this.navCtrl.push('OwnerduerequestPage', { pageData })
     }else {
       this.navCtrl.push('ReserveShelfPage', { pageData })
 

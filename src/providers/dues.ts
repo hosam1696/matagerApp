@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 
 
 import {Inject, Injectable} from "@angular/core";
@@ -36,6 +37,17 @@ export class DuesProvider {
 
   }
 
+  getOwnerDuesById(due: { user_id: number, url: number }): Observable<{data:any[],status:string,errors:any|null}> {
+    //{ "action":"getOwnerDueById", "user_id":"5", "url":"7" }
+
+    const action = 'getOwnerDueById';
+
+    let body = JSON.stringify({ action, ...due });
+
+    return this.http.post(this.API_URL + 'dues.php', body).map(res => res.json());
+
+  }
+
   requestDue(due) {
     const action = 'addDueRequest';
 
@@ -55,8 +67,8 @@ export class DuesProvider {
 
   }
 
-  acceptRequest(due) {
-    const action = 'acceptDueRequest';
+  acceptRequest(due, isAdmin:boolean = false) {
+    const action = isAdmin ?'acceptOwnerDue':'acceptDueRequest';
 
     let body = JSON.stringify(Object.assign({action}, due));
     
@@ -64,9 +76,9 @@ export class DuesProvider {
 
   }
 
-  refuseRequest(due) {
+  refuseRequest(due, isAdmin: boolean = false) {
 
-    const action = 'refuseDueRequest';
+    const action = isAdmin ? 'refuseOwnerDue' :'refuseDueRequest';
 
     let body = JSON.stringify(Object.assign({action}, due));
     

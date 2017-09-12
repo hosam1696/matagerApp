@@ -48,7 +48,10 @@
 
         </ion-avatar>
         <div class="message-sender">
-          <h4>{{ notification.name || 'محمد النبوى' }}</h4>
+          <h4 *ngIf="notification.send_user_id != 1;else AdminName">{{ notification.name || 'محمد النبوى' }}</h4>
+          <ng-template #AdminName>
+            <h4><ion-badge>* {{ notification.name}}</ion-badge></h4>  
+            </ng-template> 
           <div class="message-et" [ngClass]="{'unread': notification.status == 0}">
             <ion-icon name="time-outline"></ion-icon>
             منذ
