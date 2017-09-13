@@ -196,9 +196,10 @@ page-home {
         height: 170px;
         ion-slide {
          direction: ltr;
-          background-color: #ccc;
+          background-color: #eee;
+          position: relative;
           height: 170px;
-
+z-index: 999;
           img {
             width: 100% !important;
             height: 175px !important;

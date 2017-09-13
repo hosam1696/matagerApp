@@ -205,20 +205,21 @@ export class ProductPage {
       )
   }
 */
-  showToast(msg): void {
-    let toast = this.toastCtrl.create(
-      {
-        message: msg,
-        duration:2000
-      }
-    );
-
+  showToast(msg: string): void {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000
+    });
     toast.present();
   }
 
+  visitProfile(user_id) {
+    let id = this.userLocal ? this.userLocal.id : 0;
+  console.log('you are wanting to visiit user id ', user_id);
+  user_id == id ? this.navCtrl.push('ProfilePage') : this.navCtrl.push('VprofilePage', {pageData: [user_id, id]})
+  }
 
   likeProduct() {
-    //"user_id":"39","item_id":"7","item_name":"كرسي مكتب ","matger_id":"4"
 
     if (this.userLocal) {
       if (!this.productData.like) {

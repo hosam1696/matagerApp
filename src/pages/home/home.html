@@ -11,7 +11,10 @@
 <ion-content>
 
 
-  <ion-slides *ngIf="!Sliders;else sliders" pager="true" autoplay="3000" loop="true">
+<ion-slides *ngIf="SlidersErr||!Sliders" [pager]="SlidersErr">
+
+    <ion-slide [hidden]="SlidersErr"></ion-slide>
+
     <ion-slide (click)="navToAdv('advertiseLink')">
       <img src="assets/img/adds_01.png" height='170' width="100%">
     </ion-slide>
@@ -20,24 +23,19 @@
       <img src="assets/img/adds_02.png" height='170' width="100%">
 
     </ion-slide>
-    <ion-slide (click)="navToAdv('advertiseLink')">
-      <img src="assets/img/adds_01.png" height='170'>
-    </ion-slide>
+
   </ion-slides>
 
-<ng-template #sliders>
 
 
-<ion-slides pager="true" autoplay="4000" loop="true">
+  <ion-slides *ngIf='!SlidersErr&&Sliders' pager="true" autoplay="5000" loop="true">
+    
+    <ion-slide *ngFor="let slide of Sliders" (click)="navToAdv(slide)">
+      <img [src]="imagePath(slide.slide_image)" height='170'>
+    </ion-slide>
 
-      <ion-slide *ngFor="let slide of Sliders" (click)="navToAdv(slide)">
-<img [src]="imagePath(slide.slide_image)" height='170'>
-
-
-      </ion-slide>
-
-    </ion-slides>
-  </ng-template>
+  </ion-slides>
+  <!-- </ng-template> -->
 
   <ion-grid id="surf">
 
@@ -61,19 +59,5 @@
     </ion-row>
 
   </ion-grid>
-  <!--
-    <button ion-button (click)="showLocalData = !showLocalData">toggle localStorage Data</button>
-
-    <p *ngIf="showLocalData" item-left>
-      {{ userLocalData | json }}
-    </p>
-
-    <div id="map"></div>
-    -->
-  <!--
-      <button text-center  ion-button (click)="openMaps()">
-        open google maps
-      </button> -->
 
 </ion-content>
-

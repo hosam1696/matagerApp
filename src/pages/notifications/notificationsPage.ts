@@ -72,7 +72,8 @@ export class NotificationsPage {
   getMoreData(event) {
     if (this.moreData) {
       this.initStart += this.initLimit;
-      this.notificationProvider.getNotifications(this.userLocal.id, this.initLimit, this.initStart)
+      this.notificationProvider
+        .getNotifications(this.userLocal.id, this.initLimit, this.initStart)
         .subscribe(
         ({status, data}) => {
           if  (status == 'success') {

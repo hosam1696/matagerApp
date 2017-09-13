@@ -236,6 +236,7 @@ name
 "الحسام"
  */
 export interface IproductComment {
+  id?: number,
   avatar: string | any,
   comment_text:string | any,
   date_added: any,

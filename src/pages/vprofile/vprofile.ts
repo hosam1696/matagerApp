@@ -15,8 +15,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
   templateUrl: 'vprofile.html',
 })
 export class VprofilePage {
-  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
-  userData: IlocalUser;
+  userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData')); // user who use the app
+  userData: IlocalUser; // user who we visited his profile
   showLoader: boolean = true;
   allProducts: IProduct[];
   allShelfs: Ishelf[];
@@ -54,7 +54,7 @@ export class VprofilePage {
 
   ionViewDidLoad() {
     function type(data) {
-      return Object.prototype.toString.call(data).match(/\s+[a-zA-Z]+/)[0].trim()
+      return Object.prototype.toString.call(data).match(/\s(\w+)/g)[0].trim()
     }
     const userData = this.navParams.get('userData') || this.navParams.get('pageData'); // [user_id, localUserId]
     console.log(type(userData), userData);
@@ -104,7 +104,7 @@ export class VprofilePage {
 
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     if (this.userData.level_id == 2) {
-      (!this.userLocal ||this.userLocal.level_id == 2 || this.userLocal.level_id == 4) ? this.showContent = 'products' : this.showContent = 'shelfs';
+      (!this.userLocal ||this.userLocal.level_id == 2 || this.userLocal.level_id == 4) ? this.showContent = 'products' : this.showContent = 'shelfs'; // if the user who use the app  is transporter > 'products'
 
     } else if (this.userData.level_id == 3) {
 
@@ -115,7 +115,6 @@ export class VprofilePage {
 
     console.log('local User', this.userLocal, 'user Data', this.userData);
 
-    console.log('local User', this.userLocal, 'user Data', this.userData);
 
   }
 
@@ -125,7 +124,7 @@ export class VprofilePage {
     });
   }
 
-  chunk(arr, limit) {
+  private chunk(arr, limit):any[] {
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -137,58 +136,61 @@ export class VprofilePage {
   }
 
   getProducts() {
+
     this.showLoader = true;
 
-    if (this.userData.level_id == 3) {
+    if (this.userData.level_id == 3) { // IF the visited user is transporter
 
-      this.itemProvider.getProductByUserId(this.userData.id)
-      .subscribe(({ status, data }) => {
-        if (status.message == 'success') {
-          this.allProducts = this.chunk(data, 2);
-          console.log(this.allProducts);
-          if (data.length <= 0)
+      this.itemProvider
+        .getProductByUserId(this.userData.id)
+        .subscribe(({ status, data }) => {
+          if (status.message == 'success') {
+            this.allProducts = this.chunk(data, 2);
+            console.log(this.allProducts);
+            if (data.length <= 0)
+              this.noProducts = true;
+          } else {
             this.noProducts = true;
-        } else {
-          this.noProducts = true;
+          }
+        },
+        (err) => {
+          this.netError = true;
+          console.warn(err)
+        },
+        () => {
+          this.showLoader = false;
+          //this.getShelfs();
         }
-      },
-      (err) => {
-        this.netError = true;
-        console.warn(err)
-      },
-      () => {
-        this.showLoader = false;
-        //this.getShelfs();
-      }
       )
 
-    } else if (this.userData.level_id == 2) {
+    } else if (this.userData.level_id == 2) { // if the visited user is store
 
-        this.deliveryProvider.getAccDeliveryReqs(this.userData.id)
+      this.deliveryProvider
+        .getAccDeliveryReqs(this.userData.id)
           .subscribe(
-          ({ status, data, errors }) => {
-            if (status === 'success') {
-              this.ItemsDelivered = this.chunk(data, 2);
-              console.log('success', this.ItemsDelivered);
-            } else if (status === 'failed' && errors === null) {
-              this.noAcceptedItems = true;
-              console.log('failed', this.noAcceptedItems);
+            ({ status, data, errors }) => {
+              if (status === 'success') {
+                this.ItemsDelivered = this.chunk(data, 2);
+                console.log('success', this.ItemsDelivered);
+              } else if (status === 'failed' && errors === null) {
+                this.noAcceptedItems = true;
+                console.log('failed', this.noAcceptedItems);
+              }
+            },
+            err => {
+              console.warn(err);
+            },
+            () => {
+              this.showLoader = false;
             }
-          },
-          err => {
-            console.warn(err);
-          },
-          () => {
-            this.showLoader = false;
-          }
           )
-      
     } 
   }
 
   getShelfs() {
     this.showLoader = true;
-    this.shelfProvider.getShelfs(this.userData.id, this.userLocal.id)
+    this.shelfProvider
+      .getShelfs(this.userData.id, this.userLocal.id)
       .subscribe(({ status, data }) => {
         if (status == 'success') {
 
@@ -235,15 +237,15 @@ export class VprofilePage {
 
   follow(user_id: number) {
 
-    if (this.navigatedUserId != 0) {
-      let followData = {
-        user_id,
-        follower_id: this.userLocal.id
-      };
-      console.log(followData, this.userData.follow);
+    if (this.navigatedUserId != 0) { // if the user is not visitor
+
+      let followData = { user_id, follower_id: this.userLocal.id };
+
+      console.log('Follow data',followData,'Follow Or not', this.userData.follow);
 
       let FollowOrUnFollow = (followOrNot: boolean = true) => {
-        this.userProvider.follow(followData, followOrNot)
+        this.userProvider
+          .follow(followData, followOrNot)
           .subscribe(
             res => {
               if (res.status == 'success') {
@@ -277,17 +279,15 @@ export class VprofilePage {
             }
           );
 
-
       };
 
-
       (!this.userData.follow) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
+
     } else {
       this.showLoginAction()
     }
 
   }
-
 
   showLoginAction() {
     let alertOptions: AlertOptions = {
@@ -316,7 +316,6 @@ export class VprofilePage {
 
   navigateToPage(page, pageData , reciever?: string, reciever_id?:number) {
 
-    
     if(this.navigatedUserId != 0 || page == 'ProductPage')
       this.navCtrl.push(page, { pageData, reciever,reciever_id });
     else 

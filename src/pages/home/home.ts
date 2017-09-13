@@ -46,6 +46,7 @@ declare let cordova: any;
 export class HomePage {
   Sliders:ISlider[];
   userLocalData: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
+  SlidersErr: boolean = false;
   constructor(
     @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
@@ -64,6 +65,7 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    //this.SlidersErr = false;
     let userId: number = 0;
     if (this.userLocalData && this.userLocalData.id) 
       userId = this.userLocalData.id;
@@ -73,7 +75,13 @@ export class HomePage {
       .subscribe(({ data, status}) => {
         if (status === 'success') {
           this.Sliders = data;
+        } else {
+          this.SlidersErr = true;
+          this.Sliders = null
         }
+      }, err => {
+        console.warn(err);
+        this.SlidersErr = true;
       })
 
     console.log('Config Object', this.config.get('caches'), this.config.get('iconMode'));
