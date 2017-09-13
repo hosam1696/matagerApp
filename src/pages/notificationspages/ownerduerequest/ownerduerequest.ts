@@ -48,17 +48,24 @@ export class OwnerduerequestPage {
 
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OwnerduerequestPage');
+    
+    this.getDueDetails()
+    
+    this.updateNotificationStatus();
+    
+  }
+
+  private getDueDetails() {
     const due = { user_id: this.pageData.user_id, url: this.pageData.url }
     this.duesProvider
       .getOwnerDuesById(due)
       .subscribe(({ data, status, errors }) => {
         console.log(data, status, errors);
         this.dueDetails = data;
-
-        
       });
-    
+  }
+
+  private updateNotificationStatus() {
     if (this.pageData.status == 0) {
       this.notificationProvider.updatereadNotify(this.pageData.id, this.pageData.user_id)
         .subscribe(res => {
