@@ -15,7 +15,6 @@ import {IonicApp, IonicModule, IonicErrorHandler} from 'ionic-angular';
 import { MomentModule } from 'angular2-moment';
 
 import { MyApp } from './app.component';
-import {PopSettings} from '../pages/profile/popsetting';
 import { ShelfModal } from '../pages/profile/shelf/shelfpage';
 
 
@@ -26,7 +25,6 @@ import {ProductModal } from '../pages/productmodal';
 
 import { HsaloaderComponentModule } from '../components/hsa-loader/hsa-loader.module';
 import { SinceDatePipeModule } from './service/since-date/since-date.module';
-
 import { ShelfsProvider } from '../providers/shelfs';
 import { UserProvider } from "../providers/user";
 import { AreaProvider } from '../providers/area';
@@ -73,8 +71,7 @@ import {DuesProvider} from "../providers/dues";
     ShelfModal,
     ViewBillModal,
     DeliveryRequestInfo,
-    MapsModal,
-    PopSettings
+    MapsModal
 
   ],
   imports: [
@@ -107,8 +104,7 @@ import {DuesProvider} from "../providers/dues";
     ShelfModal,
     ViewBillModal,
     MapsModal,
-    DeliveryRequestInfo,
-    PopSettings
+    DeliveryRequestInfo
   ],
   providers: [
     StatusBar,

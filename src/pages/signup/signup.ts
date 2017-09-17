@@ -413,8 +413,10 @@ export class Signup implements AfterViewInit{
         console.log(data);
         this.SignUpFrom.get('latitude').setValue(data.latitude);
         this.SignUpFrom.get('longitude').setValue(data.longitude);
-        if (data.address)
+        if (data.address) {
+          this.SignUpFrom.get('address').setValue(data.address);
           this.locationOnMap = data.address;
+        }
 
       //this.SignUpFrom.get('latitude').setValue(data.latitude);
         //this.loactionOnMap = 'تم تحديد الموقع'

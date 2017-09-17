@@ -34,9 +34,9 @@ export class Editprofile {
     /*this.mobilecc = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[0] : this.localUser.mobile;
     this.mobilenum = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[1] : this.localUser.mobile;
     */
-
-    this.mobilecc = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[0] : this.localUser.mobile;
-    this.mobilenum = (this.localUser.mobile.indexOf('+') != -1) ? this.localUser.mobile.split('0')[1] : this.localUser.mobile;
+    this.localUser = JSON.parse(localStorage.getItem('userLocalData'));
+    this.mobilecc = (this.localUser.mobile.indexOf('0') == 3) ? this.localUser.mobile.split('0')[0] : this.localUser.mobile; // for Saudia Arabia Country code only
+    this.mobilenum = (this.localUser.mobile.indexOf('0') === 3) ? this.localUser.mobile.split('0')[1] : this.localUser.mobile;
 
     this.EditUserForm =fb.group( {
       name:  [ this.localUser.name, Validators.compose([Validators.required])],
@@ -135,7 +135,7 @@ console.log(form, form.valid);
         this.userprovider.editUser(form.value).subscribe(({ status, data, errors }) => {
           console.log(status, data);
           if (status.message == "success") {
-            localStorage.setItem('userLocalData', JSON.stringify(data));
+            localStorage.setItem('userLocalData', JSON.stringify(Object.assign({}, this.localUser, form.value)));
             this.showLoader = false;
             this.showToast('تم تعديل البيانات بنجاح', 3000, 'success-toast');
             setTimeout(() => {

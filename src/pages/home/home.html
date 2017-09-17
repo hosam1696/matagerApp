@@ -11,7 +11,8 @@
 <ion-content>
 
 
-<ion-slides *ngIf="SlidersErr||!Sliders" [pager]="SlidersErr">
+  <!-- PlaceHolder if there is no sliders added-->
+  <ion-slides *ngIf="SlidersErr||!Sliders" [pager]="SlidersErr"> 
 
     <ion-slide [hidden]="SlidersErr"></ion-slide>
 
@@ -19,9 +20,7 @@
       <img src="assets/img/adds_01.png" height='170' width="100%">
     </ion-slide>
     <ion-slide (click)="navToAdv('advertiseLink')">
-
       <img src="assets/img/adds_02.png" height='170' width="100%">
-
     </ion-slide>
 
   </ion-slides>
@@ -35,14 +34,13 @@
     </ion-slide>
 
   </ion-slides>
-  <!-- </ng-template> -->
+
 
   <ion-grid id="surf">
 
     <h2 id="hero-header">الأقسام الرئيسية</h2>
 
     <ion-row>
-
 
       <ion-col (click)="navigateTo('StoresPage')" class="animate">
         <h4>متاجر</h4>

@@ -67,7 +67,7 @@
         <ion-col>
         <input type="text" #phoneInput formControlName="mobile" class="input-as-text" >
 
-        <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
+        <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile.split(0)[1]"></ion-icon>
         </ion-col>
       </ion-row>
     </ion-grid>

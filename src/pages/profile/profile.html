@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content>
-  <span *ngIf="uploadErr">{{uploadErr | json}}</span>
+  
   <ion-card *ngIf="userLocal" id="user-info">
     <section id="hero">
       <img *ngIf="userLocal.cover" [src]="imagePath('covers',userLocal.cover)" alt="user background image">

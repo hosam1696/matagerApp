@@ -1,6 +1,6 @@
 import { DeliveryProvider } from './../../providers/delivery';
 import { Component, Inject, Renderer2 } from '@angular/core';
-import { NavController, IonicPage, AlertController, AlertOptions, PopoverController, ActionSheetController, ToastController, ModalController, Platform } from 'ionic-angular';
+import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController, ModalController, Platform } from 'ionic-angular';
 import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
 import { IProduct } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
@@ -12,8 +12,6 @@ import { File } from '@ionic-native/file';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
 import { InAppBrowser } from '@ionic-native/in-app-browser'
-//import {PopSettings} from './popsetting';
-import { LZString } from '../../app/service/lz-string';
 declare let cordova: any;
 
 @IonicPage()
@@ -55,7 +53,6 @@ export class ProfilePage {
     public toastCtrl: ToastController,
     public modalCtrl: ModalController,
     private productsProvider: ItemProvider,
-    public popover: PopoverController,
     private transfer: Transfer,
     private file: File,
     private filePath: FilePath,
@@ -68,36 +65,44 @@ export class ProfilePage {
 
   }
 
-  ionViewDidLoad() {
-    this.ionViewWillEnter();
-  }
-
   ionViewWillEnter(): void {
-    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-    if (this.userLocal) {
-      /*this.numbersOfFollowers = this.userProvider.getNumbersOfFollowings(this.userLocal.id);
 
-      this.numbersOfFollowings = this.userProvider.getNumbersOfFollowers(this.userLocal.id);
-      */
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData')); // insure we get user data from storage
+
+    if (this.userLocal) {
+
       if (this.userLocal.level_id == 2) {
 
-        this.showContent = 'shelfs';
+        this.showContent = 'shelfs'; // activate shelfs segment
 
-        this.getShelfs(this.userLocal.id);
+        this.getShelfs(this.userLocal.id); // get user shelfs
 
 
       } else if (this.userLocal.level_id == 3) {
 
-        this.showContent = 'products'
-        this.getProducts(this.userLocal.id);
+        this.showContent = 'products'; // activate products segment
+
+        this.getProducts(this.userLocal.id);  // get user products
+
       } else {
-        // client profile
+        // client profile no action right now
       }
     }
 
   }
 
-  pickImage(cameraImage: string): void {
+  ionViewDidLoad() {
+    this.ionViewWillEnter();
+  }
+
+  ionViewWillLeave() {
+    console.log('profile page leaves');
+    this.AllProducts = null;
+    this.AllShelfs = null;
+  }
+
+
+  private pickImage(cameraImage: string): void { // cameraImage defines we select to change (avatar | cover) image
 
     let actionSheetCtrl = this.actionCtrl.create({
       title: 'اختر من',
@@ -115,11 +120,11 @@ export class ProfilePage {
         {
           text: 'البوم الصور',
           handler: () => {
-            console.log('Photo Album');
+            console.log('Photo Album clicked');
+
+            /*   open camera photo Library */
             this.openCamera('PHOTOLIBRARY', cameraImage);
-            /* open photo album
-            this.openPicker();
-            */
+         
           }
         },
         {
@@ -136,15 +141,15 @@ export class ProfilePage {
 
     actionSheetCtrl.present();
 
-    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image');
+    console.log('%c%s', 'font-size:20px;color: #32db64', 'Picking up an image for', cameraImage);
 
   }
 
-  showProductSettings(event, product, index) {
+  private showProductSettings(event, product, index):void {
+    product.showControls = !product.showControls; // all code below replaced by this line 
     //console.log(product);
     //let popOver = this.popover.create(PopSettings, {thePage: product})
     //const targetElement = document.getElementById(index);
-    product.showControls = !product.showControls;
     //console.log(targetElement);
     /*console.log(event);
     console.log(event.target.parentElement.nextElementSibling);
@@ -154,19 +159,8 @@ export class ProfilePage {
     // popOver.present();
   }
 
-  ionViewWillLeave() {
-    console.log('profile leaves');
-    this.AllProducts = null;
-    this.AllShelfs = null;
-  }
 
-  popSettings() {
-    const popOver = this.popover.create('popped up');
-
-    popOver.present();
-  }
-
-  openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
+  private openCamera(type: string = 'CAMERA', cameraImage: string = 'avatar') {
 
     const cameraOptions: CameraOptions = {
       quality: (type=='CAMERA')?70:40,
@@ -271,7 +265,7 @@ export class ProfilePage {
     }
   }
 
-  uploadImage(file, type, cameraImage) {
+  private uploadImage(file, type, cameraImage) {
     file = (file.indexOf('?') != -1)?file.split('?')[0]:file;
 
     const fto: TransferObject = this.transfer.create();
@@ -332,25 +326,16 @@ export class ProfilePage {
 
   }
 
-  refreshShelfs(event) {
-    console.log(event);
-    this.getShelfs(this.userLocal['id']);
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.complete();
-    }, 2000);
-
-  }
-
-  getShelfs(userId: number): void {
+  private getShelfs(userId: number): void {
 
     [this.showLoader, this.noShelfs] = [true, null];
 
-    if (this.userLocal.level_id == 2) {
+    if (this.userLocal.level_id == 2) { // get the shelfs of the store 
 
 
-      this.shelfsProvider.getShelfs(userId).retry(3)
+      this.shelfsProvider
+        .getShelfs(userId)
+        .retry(3) 
         .subscribe(({ status, data }) => {
           console.log(status, data);
           //console.table( res);
@@ -368,40 +353,56 @@ export class ProfilePage {
 
         },
         err => {
+
+          
+          if (err.error instanceof Error) {
+            // A client-side or network error occurred. Handle it accordingly.
+            console.log('An error occurred:', err.error.message);
+          } else {
+            // The backend returned an unsuccessful response code.
+            // The response body may contain clues as to what went wrong,
+            console.log(`Backend returned code ${err.status}, body was: ${err.error}`);
+
+          }
           console.warn(err);
           [this.showLoader, this.noShelfs, this.AllShelfs] = [false, 'netErr', []];
         },
         () => {
           this.showLoader = false;
         }
-        );
+      );
+      
     } else if (this.userLocal.level_id == 3) {
 
-      this.shelfsProvider.getAcceptedRequests(userId).retry(3)
-        .subscribe(({ status, data }) => {
-          console.log(status, data);
-          //console.table( res);
-          if (status == 'success') {
-            [this.AllShelfs, this.showLoader, this.noShelfs, this.netErr] = [data.reverse(), true, null, false];
-            if (this.AllShelfs.length <= 0) {
+      this.shelfsProvider
+        .getAcceptedRequests(userId)
+        .retry(3)
+        .subscribe(
+          ({ status, data }) => {
+     
+            console.log(status, data);
+     
+            if (status == 'success') {
+              [this.AllShelfs, this.showLoader, this.noShelfs, this.netErr] = [data.reverse(), true, null, false];
+              if (this.AllShelfs.length <= 0) {
+                this.noShelfs = 'empty';
+                this.showLoader = false
+              }
+            } else {
               this.noShelfs = 'empty';
               this.showLoader = false
             }
-          } else {
-            this.noShelfs = 'empty';
-            this.showLoader = false
+
+
+         },
+          err => {
+            console.warn(err);
+
+            [this.netErr, this.showLoader, this.noShelfs, this.AllShelfs] = [true, false, 'netErr', []];
+          },
+          () => {
+            this.showLoader = false;
           }
-
-
-        },
-        err => {
-          console.warn(err);
-
-          [this.netErr, this.showLoader, this.noShelfs, this.AllShelfs] = [true, false, 'netErr', []];
-        },
-        () => {
-          this.showLoader = false;
-        }
         );
 
 
@@ -411,7 +412,7 @@ export class ProfilePage {
 
   }
 
-  deleteShelf(shelf: Ishelf): void {
+  private deleteShelf(shelf: Ishelf): void {
     //console.log(shelf);
     if (shelf.close == 1) {
       this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه')
@@ -436,27 +437,32 @@ export class ProfilePage {
           {
             text: 'حذف',
             handler: () => {
-              this.shelfsProvider.deleteShelf(shelfData).retry(3).subscribe(res => {
-                console.log(res);
-                if (res.status == 'success') {
+              this.shelfsProvider
+                .deleteShelf(shelfData)
+                .retry(3)
+                .subscribe(
+                  res => {
+                      console.log(res);
+                  if (res.status == 'success') {
 
                   let shelfIndex = this.AllShelfs.indexOf(shelf);
                   this.AllShelfs.splice(shelfIndex, 1);
                   //this.getShelfs(this.userLocal['id']);
                   this.showToast(`تم حذف الرف بنجاح`)
-                } else {
-                  this.showToast('لم يتم حذ الرف الرجاء المحاولة فى وقت لاحق')
-                }
-              },
-                err => {
-                  console.warn(err);
-                  this.showToast('التطبيق يتطلب اتصال بالانترنت')
-                }
-              );
+                  } else {
+                    this.showToast('لم يتم حذف الرف الرجاء المحاولة فى وقت لاحق')
+                  }
+                },
+                  err => {
+                    console.warn(err);
+                    this.showToast('التطبيق يتطلب اتصال بالانترنت')
+                  }
+                );                 
             }
           }
         ]
       };
+
       let alert = this.alert.create(this.alertOptions);
 
       alert.present();
@@ -465,15 +471,12 @@ export class ProfilePage {
 
   }
 
-  editShelf(page, pageParams) {
+  private editShelf(page:string, pageParams) {
 
-    if (pageParams.close == 1)
-      this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه');
-    else
-      this.navigateToPage(page, pageParams)
+     (pageParams.close == 1)?this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه'):this.navigateToPage(page, pageParams)
   }
 
-  private chunk(arr, limit) {
+  private chunk(arr:any[], limit:number):Array<any> {
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -484,21 +487,28 @@ export class ProfilePage {
     return chunked;
   }
 
-  getProducts(id: number) {
+  private getProducts(id: number):void {
+
     this.showLoader = true;
-    if (this.userLocal.level_id == 3) {
+    
+    if (this.userLocal.level_id == 3) {  // Get products of the user
+
       const prodService = this.productsProvider.getProductByUserId(id).retry(3);
+      
       [this.showLoader, this.noProducts] = [true, null];
+
       prodService.subscribe(({ status, data }) => {
         
         if (status.message == 'success') {
-          if (data.length <= 0) {
+
+          if (data.length <= 0) { // if there is no products added
             [this.showLoader, this.noProducts, this.netErr] = [false, 'empty', false];
             return false;
           }
-          data.forEach(product=>product.showControls = false);
-          this.UnChunckedProducts = data;
-          this.AllProducts = this.chunk(data, 2);
+
+          data.forEach(product=>product.showControls = false); // add showControls Property to all products array
+          this.UnChunckedProducts = data; // assign default data from data base to this class property
+          this.AllProducts = this.chunk(data, 2); // chunck every two products in array with each other to be rendered in html 
           console.log(this.AllProducts);
           [this.showLoader, this.noProducts] = [false, null];
           console.table(data);
@@ -513,33 +523,36 @@ export class ProfilePage {
 
         }
       )
-    } else if (this.userLocal.level_id == 2) {
 
-      this.deliveryProvider.getAccDeliveryReqs(id).retry(3)
+    } else if (this.userLocal.level_id == 2) { // Get store products who accepts to deliver
+
+      this.deliveryProvider
+        .getAccDeliveryReqs(id)
+        .retry(3)
         .subscribe(
-        ({ status, data, errors }) => {
-          if (status === 'success') {
-            this.ItemsDelivered = this.chunk(data, 2);
-            console.log('success', this.ItemsDelivered);
-            this.netErr = false;
-          } else if (status === 'failed' && errors === null) {
-            this.noAcceptedItems = true;
-            console.log('failed', this.noAcceptedItems);
+          ({ status, data, errors }) => {
+            if (status === 'success') {
+              this.ItemsDelivered = this.chunk(data, 2);
+              console.log('success', this.ItemsDelivered);
+              this.netErr = false;
+            } else if (status === 'failed' && errors === null) {
+              this.noAcceptedItems = true;
+              console.log('failed', this.noAcceptedItems);
+            }
+          },
+          err => {
+            [this.showLoader, this.netErr] = [false, true];
+            console.warn(err);
+          },
+          () => {
+            this.showLoader = false;
           }
-        },
-        err => {
-          [this.showLoader, this.netErr] = [false, true];
-          console.warn(err);
-        },
-        () => {
-          this.showLoader = false;
-        }
         )
     }
 
   }
 
-  deleteProduct(product: IProduct) {
+  private deleteProduct(product: IProduct):void {
 
     let productIndex = this.UnChunckedProducts.indexOf(product);
     const alertOptions: AlertOptions = {
@@ -581,7 +594,7 @@ export class ProfilePage {
   }
 
 
-  editProduct(pageParams) {
+  private editProduct(pageParams):void {
     this.navigateToPage('AddproductPage', pageParams, null)
   }
 
@@ -596,24 +609,24 @@ export class ProfilePage {
     tab.show();
   }
 
-  showShelf(shelfInfo) {
+  protected showShelf(shelfInfo):void {
     let shelf = this.modalCtrl.create(ShelfModal, { shelfInfo: shelfInfo });
 
     shelf.present();
   }
 
-  navigateToPage(page, pageData = "test", reciever = null): void {
+  public navigateToPage(page, pageData = "test", reciever = null): void {
 
     this.navCtrl.push(page, { pageData, reciever });
 
   }
 
 
-  limitString(str: string):string {
+  protected limitString(str: string):string {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
 
-  showToast(msg:string):void {
+  public showToast(msg:string):void {
     let toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
@@ -622,7 +635,7 @@ export class ProfilePage {
     toast.present();
   }
 
-  imagePath(type:string, img: string):string {
+  protected imagePath(type:string, img: string):string {
     return this.UPLOAD_PATH + type + '/' + img
   }
 
