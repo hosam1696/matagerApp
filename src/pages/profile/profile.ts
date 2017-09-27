@@ -26,7 +26,7 @@ export class ProfilePage {
   AllShelfs: Ishelf[] | null = null;
   noShelfs: string;
   noProducts: string;
-  AllProducts: IProduct[] | null = null;
+  AllProducts: IProduct[] | IProduct[][] = null;
   UnChunckedProducts: IProduct[];
   alertOptions: AlertOptions;
   showLoader: boolean = false;
@@ -476,7 +476,7 @@ export class ProfilePage {
      (pageParams.close == 1)?this.showToast('لا يمكن حذف أو تعديل الرف اثناء حجزه'):this.navigateToPage(page, pageParams)
   }
 
-  private chunk(arr:any[], limit:number):Array<any> {
+  private chunk<T>(arr: Array<T>, limit: number = 2): Array<Array<T>>{
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -497,7 +497,7 @@ export class ProfilePage {
       
       [this.showLoader, this.noProducts] = [true, null];
 
-      prodService.subscribe(({ status, data }) => {
+      prodService.subscribe(({ status, data }: {status: string|any, data: IProduct[]}) => {
         
         if (status.message == 'success') {
 
@@ -507,8 +507,11 @@ export class ProfilePage {
           }
 
           data.forEach(product=>product.showControls = false); // add showControls Property to all products array
+
           this.UnChunckedProducts = data; // assign default data from data base to this class property
-          this.AllProducts = this.chunk(data, 2); // chunck every two products in array with each other to be rendered in html 
+
+          this.AllProducts = this.chunk<IProduct>(data, 2); // chunck every two products in array with each other to be rendered in html 
+          
           console.log(this.AllProducts);
           [this.showLoader, this.noProducts] = [false, null];
           console.table(data);

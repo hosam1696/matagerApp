@@ -97,42 +97,21 @@ export class Editprofile {
   EditForm() {
 
     let form = this.EditUserForm;
+    
     this.showLoader = true;
 
-
-    /*
-    if(this.EditUserForm.get('Password').value != '') {
-      console.log('password');
-      this.EditUserForm.get('Password').setValidators([Validators.required, Validators.minLength(8)]);
-      this.EditUserForm.get('Password').setValidators(Validators.compose([Validators.required, Validators.minLength(8)]));
-      this.EditUserForm.get('InsurePassword').setValidators([Validators.required, this.insurePass]);
-    }
-
-    setTimeout(function() {
-console.log(form, form.valid);
-    }, 500)
-    if(!form.valid) {
-
-
-      console.log(form.get('Password').getError('minlength'))
-
-      console.log(form.get('Password').getError('required'));
-      console.log(form.get('InsurePassword').getError('required'));
-
-      console.log(form.get('InsurePassword').getError('uninsured'))
-
-    }*/
-
     if (form.valid) {
-
 
         this.EditUserForm.removeControl('InsurePassword');
         form.get('mobile').setValue(this.mobilecc+'0' + form.get('mobile').value);
         Object.assign(form.value, { id: this.localUser['id'] });
+        
         console.log('edited form', form.value);
         console.log(Object.keys(form.controls));
 
-        this.userprovider.editUser(form.value).subscribe(({ status, data, errors }) => {
+        this.userprovider
+          .editUser(form.value)
+            .subscribe(({ status, data, errors }) => {
           console.log(status, data);
           if (status.message == "success") {
             localStorage.setItem('userLocalData', JSON.stringify(Object.assign({}, this.localUser, form.value)));
