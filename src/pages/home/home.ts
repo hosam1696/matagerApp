@@ -1,15 +1,9 @@
-import { ProductModal } from './../productmodal';
 import { ItemProvider } from './../../providers/item';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { ISlider } from './../../app/service/interfaces';
 import { PushProvider } from './../../providers/push';
-import { Http } from '@angular/http';
-import {
-  MapsModal
-} from './../mapsmodal';
-import {
-  Component,Inject
-} from '@angular/core';
+import { Component,Inject } from '@angular/core';
+import {IlocalUser} from "../../app/service/InewUserData";
 import {
   NavController,
   ToastController,
@@ -23,21 +17,8 @@ import {
   PushObject,
   PushOptions
 } from '@ionic-native/push';
-import {
-  Geolocation
-} from '@ionic-native/geolocation';
-import {
-  Network
-} from '@ionic-native/network';
-import {
-  IlocalUser
-} from "../../app/service/InewUserData";
-import {
-  UserProvider
-} from "../../providers/user";
-//import {cordova} from "../profile/profile";
 
-declare let cordova: any;
+
 @IonicPage()
 @Component({
   selector: 'page-home',
@@ -50,11 +31,7 @@ export class HomePage {
   constructor(
     @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
-    public geolocation: Geolocation,
-    public network: Network,
-    public toastCont: ToastController,
     public push: Push,
-    public config: Config,
     public modalCrtl: ModalController,
     public platform: Platform,
     public pushProvider: PushProvider,
@@ -65,14 +42,15 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    //this.SlidersErr = false;
+
     let userId: number = 0;
+
     if (this.userLocalData && this.userLocalData.id) 
       userId = this.userLocalData.id;
     
     this.pushProvider
       .getHeaderSlider(userId)
-      .subscribe(({ data, status}) => {
+      .subscribe(({ data, status }) => {
         if (status === 'success') {
           this.Sliders = data;
         } else {
@@ -82,29 +60,10 @@ export class HomePage {
       }, err => {
         console.warn(err);
         this.SlidersErr = true;
-      })
-
-    console.log('Config Object', this.config.get('caches'), this.config.get('iconMode'));
+      });
 
 
-    /* Get the current location if user activates the location */
-    /*   this.geolocation.getCurrentPosition()
-      .then((res)=>{
-      let coords = res.coords.latitude+','+res.coords.longitude;
-      console.log(`User Location: ${coords}`);
-        localStorage.setItem('currentLocation', coords);
-    }).catch(err=> {
-      console.warn(err);
-      console.log('geolocation didn\'t get current location');
-    });
 
-*/
-    /* works only on devices
-       if (cordova&& this.platform.is('android')) {
-         console.log('Storage Directory', cordova.file.dataDirectory)
-       } else {
-         console.log('Storage Directory', cordova.file.documentsDirectory)
-       }*/
     let pushOptios: PushOptions = {
       android: {
         senderID: '146464528118'
@@ -146,7 +105,58 @@ export class HomePage {
 
     push.on('error').subscribe(error => console.error('Error with Push plugin', error));
 
-    // TODO: check connection
+    
+
+  }
+
+
+  public navigateTo(page):void {
+    this.navCtrl.push(page);
+  }
+
+  private navToAdv(slide:ISlider): void {
+    
+    if (slide.type === 'item') {
+      this.modalCrtl.create('ProductPage', {pageData: slide.item_id, isModal:true}).present();
+    } else if (slide.type === 'link') {
+      this.iab.create(slide.url_link).show();
+    } else {
+      console.log('this slide has no action right now');
+    }
+   
+  }
+
+
+  private imagePath(img: string): string {
+    return this.UPLOAD_PATH + 'headerslider/' + img
+  }
+
+}
+
+
+
+
+    /* Get the current location if user activates the location */
+    /*   this.geolocation.getCurrentPosition()
+      .then((res)=>{
+      let coords = res.coords.latitude+','+res.coords.longitude;
+      console.log(`User Location: ${coords}`);
+        localStorage.setItem('currentLocation', coords);
+    }).catch(err=> {
+      console.warn(err);
+      console.log('geolocation didn\'t get current location');
+    });
+
+    */
+    /* works only on devices
+       if (cordova&& this.platform.is('android')) {
+         console.log('Storage Directory', cordova.file.dataDirectory)
+       } else {
+         console.log('Storage Directory', cordova.file.documentsDirectory)
+       }*/
+
+
+       // TODO: check connection
     /*
      this.network.onConnect().subscribe(data=>{
        console.log(data, 'You are connected to the internet');
@@ -163,47 +173,3 @@ export class HomePage {
         });
 
     */
-
-  }
-
-  showToast(msg, dur = 3000) {
-    let toast = this.toastCont.create({
-      message: msg,
-      duration: dur,
-      position: 'bottom',
-      showCloseButton: true,
-      closeButtonText: 'x'
-    });
-
-    toast.onDidDismiss(() => {
-      //TODO: pop to the main page of the user
-      //console.log('moving to main page ..');
-
-    });
-
-    toast.present();
-  }
-
-  navigateTo(page) {
-    this.navCtrl.push(page);
-  }
-
-  navToAdv(slide:ISlider): void {
-    //console.log('slide Data', slide);
-    
-    if (slide.type === 'item') {
-      this.modalCrtl.create('ProductPage', {pageData: slide.item_id, isModal:true}).present();
-    } else if (slide.type === 'link') {
-      this.iab.create(slide.url_link).show();
-    } else {
-      console.log('slides have no action right now');
-    }
-   
-  }
-
-
-  imagePath(img: string): string {
-    return this.UPLOAD_PATH + 'headerslider/' + img
-  }
-
-}
