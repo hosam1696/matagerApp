@@ -49,52 +49,12 @@ export class Login {
 
   submitLogin() {
 
-
     console.log(this.network.type);
 
         if (this.LoginForm.valid) {
-          this.showLoader = true;
-
-          this.userLogin.LoginUser({...{device_token_id : 'zssfzsfz',
-          type: 'ANDROID'},...this.LoginForm.value})
-        .subscribe(({status, message, data}) => {
-          console.log(status, message);
-          //TODO: if data is correct navigate to the home page
-          if (status == 'success') {
-
-            let userLocalData = data;
-
-            this.showLoader = false;
-
-            localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-
-            
-            this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-
-            //this.navCtrl.pop();
-
-            setTimeout(()=>{
-              this.navCtrl.setRoot('TabsPage')
-            })
-
-            this.events.publish('loginUser','userLog')
-
-          } else {
-            this.showLoader = false;
-            this.showToast(`${message}`)
-          }
-        },
-        err => {
-          this.showToast('التطبيق يتطلب اتصال بالانترنت');
-          console.warn(err);
-          this.showLoader = false;
-        }
-      );
           let deviceData ={};
           let pushOptios: PushOptions = {
-            android: {
-              senderID: '146464528118'
-            },
+            android: {senderID: '146464528118'},
             ios: {
               alert: 'true',
               badge: true,
@@ -103,92 +63,105 @@ export class Login {
             windows: {}
           };
           
-
           let push: PushObject = this.push.init(pushOptios);
-
-        
-          push.on('registration').subscribe((registration: any) => {
-            let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
-            
-            deviceData = {
-                device_token_id : registration.registrationId,
-                type
-            }
-            /*
-             Login USER form in Browser
-            
-            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
-            .subscribe(({status, message, data}) => {
-              console.log(status, message);
-              //TODO: if data is correct navigate to the home page
-              if (status == 'success') {
-  
-                let userLocalData = data;
-  
-                this.showLoader = false;
-  
-                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-  
-                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-  
-                this.navCtrl.pop();
-  
-                this.events.publish('loginUser','userLog')
-  
-                console.table(localStorage.getItem('userLocalData'));
-  
-              } else {
-                this.showLoader = false;
-                this.showToast(`${message}`)
-              }*/
+          
+          this.showLoader = true;
+          try {
+            push.on('registration').subscribe((registration: any) => {
               
-            this.showLoader = true;
+              let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
+              
+              deviceData = {
+                  device_token_id : registration.registrationId,
+                  type
+              } 
+
+              this.userLogin
+                .LoginUser({...deviceData,...this.LoginForm.value})
+                .subscribe(({status, message, data}) => {
+                  console.log(status, message);
+                  //TODO: if data is correct navigate to the home page
+                  if (status == 'success') {
+      
+                    let userLocalData = data;
+      
+                    this.showLoader = false;
+      
+                    localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
   
-            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
+                    
+                    this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+      
+                    this.events.publish('loginUser','userLog')
+                    
+                    setTimeout(()=>{
+                      this.navCtrl.setRoot('TabsPage')
+                    })
+      
+      
+                  } else {
+                    this.showLoader = false;
+                    this.showToast(`${message}`)
+                  }
+                },
+                err => {
+                  this.showToast('التطبيق يتطلب اتصال بالانترنت');
+                  console.warn(err);
+                  this.showLoader = false;
+                }
+              );
+              console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
+   
+            }, err=> {
+             // maybe put the code of -> error ocured | push plugin didn't work properly | login form broswer
+            });
+          } catch(err) {
+            // error ocured | push plugin didn't work properly | login form broswer
+            this.userLogin
+            .LoginUser(
+              {device_token_id : 'maybeloginFromBrowser',
+                type: 'android',
+                ...this.LoginForm.value})
             .subscribe(({status, message, data}) => {
-              console.log(status, message);
-              //TODO: if data is correct navigate to the home page
-              if (status == 'success') {
-  
-                let userLocalData = data;
-  
-                this.showLoader = false;
-  
-                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+                console.log(status, message);
+                //TODO: if data is correct navigate to the home page
+                if (status == 'success') {
 
-                
-                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-  
-                //this.navCtrl.pop();
+                  let userLocalData = data;
 
-                setTimeout(()=>{
-                  this.navCtrl.setRoot('TabsPage')
-                })
-  
-                this.events.publish('loginUser','userLog')
-  
-              } else {
+                  this.showLoader = false;
+
+                  localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+                  
+                  this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+
+                  //this.navCtrl.pop();
+
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot('TabsPage')
+                  })
+
+                  this.events.publish('loginUser','userLog')
+
+                } else {
+                  this.showLoader = false;
+                  this.showToast(`${message}`)
+                }
+              },
+              err => {
+                this.showToast('التطبيق يتطلب اتصال بالانترنت');
+                console.warn(err);
                 this.showLoader = false;
-                this.showToast(`${message}`)
               }
-            },
-            err => {
-              this.showToast('التطبيق يتطلب اتصال بالانترنت');
-              console.warn(err);
-              this.showLoader = false;
-            }
-          );
-            console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
- 
-          }, err=> {
-           
-          });
+            );
+          }
+          
           
         
         } else {
           this.showLoader = false;
           let formKeys = Object.keys(this.LoginForm.value);
-          this.showLoader = false;
           for (let value of formKeys) {
             if (this.LoginForm.get(value).getError('required')) {
               value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
