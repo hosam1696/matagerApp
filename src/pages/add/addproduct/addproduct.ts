@@ -80,18 +80,13 @@ export class AddproductPage {
       this.actionBtnTxt = 'تعديل';
 
       this.productProvider
-        .getItemRestInfo(
-          {
+        .getItemRestInfo({
             user_id: this.userLocal.id,
             id: this.InitData.id
-          }
-        )
+          })
         .subscribe(({status, data})=>{
           console.log(status, data);
           if(status === 'success') {
-            this.addProductForm.get('item_expiry_date').setValue(this.InitData['item_expiry_date']);
-            this.addProductForm.get('item_expiry_date').setValue(this.InitData['item_expiry_date']);
-            
             let productItems = data.item_images.map(img=>{
               return {
                 imgName: img.image,
@@ -100,6 +95,9 @@ export class AddproductPage {
                 file: ''
               }
             });
+
+            this.addProductForm.get('item_production_date').setValue(this.InitData['item_production_date']);
+            this.addProductForm.get('item_expiry_date').setValue(this.InitData['item_expiry_date']);
             this.productItems = productItems;
             this.RestData = data;
             console.log(this.RestData, this.productItems);
@@ -108,11 +106,6 @@ export class AddproductPage {
 
 
       formKeys.forEach((value) => {
-        /* if (typeof value == "object") {
-            console.log(value);
-            //console.log(new Date(this.InitData[value]).toISOString());
-            this.addProductForm.get(value).setValue(this.InitData[value])
-         }else {*/
         this.addProductForm.get(value).setValue(this.InitData[value])
       });
     }
@@ -169,10 +162,9 @@ export class AddproductPage {
     this.ng_zone.run(() => {
       if (progressEvent.lengthComputable) {
 
-        let progress = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-        if (progress > 100) progress = 100;
-        if (progress < 0) progress = 0;
-        this.progress = progress;
+        let progress = Math.round((progressEvent.loaded / progressEvent.total) )* 100;
+        
+        this.progress = Math.min(100,Math.max(progress,0));
       }
     });
   }
@@ -263,7 +255,6 @@ export class AddproductPage {
             this.showToast('التطبيق يتطلب اتصال بالانترنت')
 
           })
-
 
       }
 
