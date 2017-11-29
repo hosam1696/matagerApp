@@ -66,6 +66,41 @@ export class Login {
           let push: PushObject = this.push.init(pushOptios);
           
           this.showLoader = true;
+
+           // error ocured | push plugin didn't work properly | login form broswer
+           this.userLogin
+           .LoginUser(
+             {device_token_id : 'maybeloginFromBrowser',
+               type: 'android',
+               ...this.LoginForm.value})
+           .subscribe(({status, message, data}) => {
+               console.log(status, message);
+               //TODO: if data is correct navigate to the home page
+               if (status == 'success') {
+
+                 let userLocalData = data;
+
+                 this.showLoader = false;
+
+                 localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+                 
+                 this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+
+                 //this.navCtrl.pop();
+
+                 setTimeout(()=>{
+                   this.navCtrl.setRoot('TabsPage')
+                 })
+
+                 this.events.publish('loginUser','userLog')
+
+               } else {
+                 this.showLoader = false;
+                 this.showToast(`${message}`)
+               }
+
+           });
           try {
             push.on('registration').subscribe((registration: any) => {
               
@@ -114,6 +149,47 @@ export class Login {
    
             }, err=> {
              // maybe put the code of -> error ocured | push plugin didn't work properly | login form broswer
+
+            
+             // error ocured | push plugin didn't work properly | login form broswer
+            this.userLogin
+            .LoginUser(
+              {device_token_id : 'maybeloginFromBrowser',
+                type: 'android',
+                ...this.LoginForm.value})
+            .subscribe(({status, message, data}) => {
+                console.log(status, message);
+                //TODO: if data is correct navigate to the home page
+                if (status == 'success') {
+
+                  let userLocalData = data;
+
+                  this.showLoader = false;
+
+                  localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+
+                  
+                  this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+
+                  //this.navCtrl.pop();
+
+                  setTimeout(()=>{
+                    this.navCtrl.setRoot('TabsPage')
+                  })
+
+                  this.events.publish('loginUser','userLog')
+
+                } else {
+                  this.showLoader = false;
+                  this.showToast(`${message}`)
+                }
+              },
+              err => {
+                this.showToast('التطبيق يتطلب اتصال بالانترنت');
+                console.warn(err);
+                this.showLoader = false;
+              }
+            );
             });
           } catch(err) {
             // error ocured | push plugin didn't work properly | login form broswer

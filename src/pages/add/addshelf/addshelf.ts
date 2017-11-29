@@ -34,6 +34,7 @@ export class AddshelfPage {
   }
 
   ionViewDidLoad() {
+    
     this.addShelfForm.valueChanges.subscribe(data => {
       console.log(data);
     });
@@ -72,9 +73,9 @@ export class AddshelfPage {
       if (this.formAction == 'add') {
 
 
-      this.shelfsProvider.addShelf(shelfForm)
-        .subscribe(
-          ({status, errors}) => {
+      this.shelfsProvider
+        .addShelf(shelfForm)
+        .subscribe(({status, errors}) => {
 
           if (status == 'success') {
             this.showToast('تم اضافة الرف بنجاح');
@@ -101,11 +102,10 @@ export class AddshelfPage {
 
         if (this.addShelfForm.dirty) {
           shelfForm['id'] = this.InitData.id;
-          this.shelfsProvider.editShelf(shelfForm).subscribe(
-            res => {
+          this.shelfsProvider
+            .editShelf(shelfForm)
+            .subscribe(res => {
               console.log(res);
-
-
               if (res.status == 'success') {
 
                 this.navCtrl.pop();
