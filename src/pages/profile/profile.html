@@ -6,7 +6,6 @@
     <ion-buttons start>
       <ion-spinner *ngIf="uploadLoader" small name="crescent" color="light"></ion-spinner>
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
@@ -174,7 +173,6 @@
         <br>
         <!-- <span [change]="{prop:'font-size', value: '30px'}" text-center><ion-icon name="refresh"></ion-icon></span>-->
       </p>
-
       <ion-item class="shelfRequest" *ngFor="let request of AllShelfs; let i = index" (click)="navigateToPage('VprofilePage', [request.matger_id, userLocal.id])">
         <p>
           رقم الرف :
@@ -261,7 +259,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
-            <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="product">
+            <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/adds_02.png'" alt="product">
             
             <p class="prod_name">{{product.item_name}}</p>
             <p class="prod-desc">

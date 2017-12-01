@@ -18,7 +18,7 @@ export class VprofilePage {
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData')); // user who use the app
   userData: IlocalUser; // user who we visited his profile
   showLoader: boolean = true;
-  allProducts: IProduct[];
+  allProducts: Array<Array<IProduct>> ;
   allShelfs: Ishelf[];
   noShelfs: boolean = false;
   noProducts: boolean = false;
@@ -65,7 +65,7 @@ export class VprofilePage {
     } else { // navigation parameter is Array Type
       this.navigatedUserId = userData[1];
       this.userProvider.getUserById(userData[0], userData[1])
-      .retry(3)  
+      .retry(3)
         .subscribe(({status, data}) => {
           if(status == 'success')
             this.userData = data;
@@ -124,7 +124,7 @@ export class VprofilePage {
     });
   }
 
-  private chunk(arr, limit):any[] {
+  private chunk<T>(arr:Array<T>, limit): Array<Array<T>>{
     let length = arr.length;
     let chunked = [];
     let start = 0;
@@ -145,7 +145,7 @@ export class VprofilePage {
         .getProductByUserId(this.userData.id)
         .subscribe(({ status, data }) => {
           if (status.message == 'success') {
-            this.allProducts = this.chunk(data, 2);
+            this.allProducts = this.chunk<IProduct>(data, 2);
             console.log(this.allProducts);
             if (data.length <= 0)
               this.noProducts = true;
@@ -184,7 +184,7 @@ export class VprofilePage {
               this.showLoader = false;
             }
           )
-    } 
+    }
   }
 
   getShelfs() {
@@ -255,7 +255,7 @@ export class VprofilePage {
                   console.log('numbers of followers', this.userData.followers, this.userData.followings, this.userLocal);
                   this.userLocal.followings++
                   localStorage.setItem('userLocalData',JSON.stringify(this.userLocal));
-                  
+
                 } else {
                   this.userData.followers -= 1;
                   console.log('numbers of followers', this.userData.followers);
@@ -318,8 +318,8 @@ export class VprofilePage {
 
     if(this.navigatedUserId != 0 || page == 'ProductPage')
       this.navCtrl.push(page, { pageData, reciever,reciever_id });
-    else 
-      this.showLoginAction(); 
+    else
+      this.showLoginAction();
   }
 
   showToast(msg) {
