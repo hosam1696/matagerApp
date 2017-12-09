@@ -280,27 +280,7 @@ export class Editprofile {
   navigateToPage(page) {
     this.navCtrl.push( page );
   }
-
-  /*getPlaceName(placeId: number) {
-    let result: string = "";
-    this.areaProvider
-      .getAreaById( placeId )
-      .subscribe(
-        (place : Iplace) => {
-          this.AreaName = place.name;
-          console.log( result, place.name );
-        },
-        err => {
-          result = "لم يحدد بعد";
-          console.warn(err);
-        },
-        () => {
-          return (result != "") ? result : 'لم يحدد بعد'
-        }
-      ).unsubscribe();
-
-  }*/
-
+  
   initModal(name, searchId) {
     let modal = this.modalCrtl.create( ChooseArea, {name, defineSearch: searchId} );
 

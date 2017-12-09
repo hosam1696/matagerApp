@@ -13,7 +13,7 @@
   
   <ion-card *ngIf="userLocal" id="user-info">
     <section id="hero">
-      <img *ngIf="userLocal.cover" [src]="imagePath('covers',userLocal.cover)" alt="user background image">
+      <img *ngIf="userLocal.cover" [src]="imagePath('covers',userLocal.cover)" alt="">
       <button type="button" class="pick-image" (click)="pickImage('cover')"><ion-icon name="camera-outline"></ion-icon></button>
     </section>
 
@@ -237,7 +237,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.item_id)">
 
-            <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="product">
+            <img [src]="(product.image)?imagePath('items',product.image):'assets/img/adds_02.png'" alt="">
 
             <p class="prod-desc" text-center>
               {{product.item_name}}
@@ -259,7 +259,7 @@
         <ion-col col-6 *ngFor="let product of products;let i = index">
           <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
 
-            <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/adds_02.png'" alt="product">
+            <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/adds_02.png'" alt="">
             
             <p class="prod_name">{{product.item_name}}</p>
             <p class="prod-desc">

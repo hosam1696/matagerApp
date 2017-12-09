@@ -32,77 +32,44 @@ export class StoresPage {
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
-    this.platform.registerBackButtonAction(()=>{
-      this.navCtrl.pop()
-    });
-
-    console.log(this.userLocal);
     this.fetchStores();
   }
 
   openFilterModal() {
-
     let modal = this.modalCrtl.create(PlacesModal, { pageName: 'اختر نوع البحث', User: 'Hosam' });
+    
     modal.onDidDismiss(data => {
       console.log('Data from Modal',data);
-
-
       this.searchData(data);
-
     });
+    
     modal.present();
-
   }
 
   searchData(modalData: ImodalData) {
     if (Object.keys(modalData).length != 0) {
       let filterPlaces = [modalData.areaName || null, modalData.cityName || null, modalData.distName || null];
-      this.dataFromModal = filterPlaces.filter(n => n);
-
-
+      this.dataFromModal = filterPlaces.filter(n => n); // remove undefined and null values from array
+      let placesData= {};
       if (this.userLocal) {
-        let placesData = Object.assign(modalData,
-          {
+        placesData = {...modalData, ...{
             user_id: this.userLocal.id,
             level_id: 2,
             latitude: this.userLocal.latitude,
-            longitude: this.userLocal.longitude
-          });
-        //console.log('Data from Modal', this.dataFromModal);
-
-        this.filterPlaces(placesData);
-
+            longitude: this.userLocal.longitude}
+          };
       } else {
-        let currentLocation: string = localStorage.getItem('currentLocation');
-        if (currentLocation) {
-          let placesData = Object.assign(modalData,
-            {
-              user_id: 0,
-              level_id: 2,
-              latitude: currentLocation.split(',')[0],
-              longitude: currentLocation.split(',')[1]
-            });
-
-          this.filterPlaces(placesData);
-        } else {
-          let placesData = Object.assign(modalData,
-            {
-              user_id: 0,
-              level_id: 2,
-              latitude: null,
-              longitude: null
-            });
-          console.log('%c%s', 'font-size: 30px', 'No locations provided');
-          this.filterPlaces(placesData);
-        }
-        
-      }
-      
+        let currentLocation: string[] = localStorage.getItem('currentLocation').split(',');
+        placesData = Object.assign(modalData,
+          {
+            user_id: 0,
+            level_id: 2,
+            latitude: currentLocation[0] || null,
+            longitude: currentLocation[1] || null
+          });
+      } 
+      this.filterPlaces(placesData);    
     }
-
-   
-    
-
   }
 
 

@@ -42,25 +42,17 @@ export class VprofilePage {
     public iab: InAppBrowser,
     public alertCtrl: AlertController,
     public deliveryProvider: DeliveryProvider
-  ) {
-
-
-  }
-
+  ) {}
 
   ionViewWillEnter() {
     this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   }
 
   ionViewDidLoad() {
-    function type(data) {
-      return Object.prototype.toString.call(data).match(/\s(\w+)/g)[0].trim()
-    }
     const userData = this.navParams.get('userData') || this.navParams.get('pageData'); // [user_id, localUserId]
-    console.log(type(userData), userData);
-    if (type(userData) == 'Object') { //navigation parameter is not given by user id
+    console.log(Array.isArray(userData));
+    if (!Array.isArray(userData)) { //navigation parameter is not given by user id
       this.userData = userData;
-      console.log(userData, typeof userData);
       this.configProfile();
     } else { // navigation parameter is Array Type
       this.navigatedUserId = userData[1];
@@ -76,26 +68,18 @@ export class VprofilePage {
           console.warn(err)
         },
         () => {
-
           this.configProfile();
-
         }
         )
     }
-    console.log('Show Content',this.showContent, 'navigated user Id',this.navigatedUserId);
-
-
-
   }
 
-  openBrowserMap(maps = '30.0371616,31.0033728') {
+  private openBrowserMap(maps = '30.0371616,31.0033728') {
     if (this.userData.latitude && this.userData.longitude) {
       maps = this.userData.latitude + ','+this.userData.longitude
     };
-
-    console.info(maps);
-    const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
-    const tab = this.iab.create(url);
+    const url = `https://www.google.com/maps?q=${maps}&z=17&hl=ar`,
+          tab = this.iab.create(url);
 
     tab.show();
   }
@@ -112,9 +96,6 @@ export class VprofilePage {
     }
 
     (this.showContent == 'shelfs') ? this.getShelfs() : this.getProducts();
-
-    console.log('local User', this.userLocal, 'user Data', this.userData);
-
 
   }
 
@@ -146,7 +127,6 @@ export class VprofilePage {
         .subscribe(({ status, data }) => {
           if (status.message == 'success') {
             this.allProducts = this.chunk<IProduct>(data, 2);
-            console.log(this.allProducts);
             if (data.length <= 0)
               this.noProducts = true;
           } else {
@@ -171,10 +151,8 @@ export class VprofilePage {
             ({ status, data, errors }) => {
               if (status === 'success') {
                 this.ItemsDelivered = this.chunk(data, 2);
-                console.log('success', this.ItemsDelivered);
               } else if (status === 'failed' && errors === null) {
                 this.noAcceptedItems = true;
-                console.log('failed', this.noAcceptedItems);
               }
             },
             err => {
@@ -222,52 +200,26 @@ export class VprofilePage {
   }
 
   showProductSettings(event, product, index) {
-    //console.log(product);
-    //let popOver = this.popover.create(PopSettings, {thePage: product})
     const targetElement = document.getElementById(index);
-
-    console.log(targetElement);
-    /*console.log(event);
-    console.log(event.target.parentElement.nextElementSibling);
-    event.target.parentElement.nextElementSibling.style.display = 'block';
-    event.target.parentElement.nextElementSibling.hidden = !event.target.parentElement.nextElementSibling.hidden;*/
     this.rendrer.setProperty(targetElement, 'hidden', !targetElement.hidden);
-    // popOver.present();
   }
 
   follow(user_id: number) {
 
     if (this.navigatedUserId != 0) { // if the user is not visitor
-
       let followData = { user_id, follower_id: this.userLocal.id };
-
-      console.log('Follow data',followData,'Follow Or not', this.userData.follow);
-
       let FollowOrUnFollow = (followOrNot: boolean = true) => {
         this.userProvider
           .follow(followData, followOrNot)
-          .subscribe(
-            res => {
-              if (res.status == 'success') {
-
+          .subscribe(res => {
+              if (res.status === 'success') {
                 if (followOrNot) {
-                  this.userData.followers += 1;
-                  console.log('numbers of followers', this.userData.followers, this.userData.followings, this.userLocal);
-                  this.userLocal.followings++
-                  localStorage.setItem('userLocalData',JSON.stringify(this.userLocal));
-
+                  this.userFollowCb();
                 } else {
-                  this.userData.followers -= 1;
-                  console.log('numbers of followers', this.userData.followers);
-                  this.userLocal.followings--;
-                  localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+                  this.userUnfollowCb();
                 }
-
-                console.log(res, this.isFollowed, 'isFollowed');
               } else {
                 this.showToast(res.errors);
-
-                console.log(res, this.isFollowed, 'isFollowed');
               }
             },
             err => {
@@ -275,18 +227,28 @@ export class VprofilePage {
             },
             () => {
               this.userData.follow = !this.userData.follow;
-              (this.userData.follow == false) ? this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بمتابعة ${this.userData.name}`);
+              (!this.userData.follow) ? this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بمتابعة ${this.userData.name}`);
             }
           );
 
       };
-
-      (!this.userData.follow) ? FollowOrUnFollow(true) : FollowOrUnFollow(false);
-
+      (!this.userData.follow) ? FollowOrUnFollow(true)/* if the user is not following him*/ : FollowOrUnFollow(false);
     } else {
       this.showLoginAction()
     }
 
+  }
+
+  private userUnfollowCb() {
+    this.userData.followers -= 1;
+    this.userLocal.followings--;
+    localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
+  }
+
+  private userFollowCb() {
+    this.userData.followers += 1;
+    this.userLocal.followings++;
+    localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
   }
 
   showLoginAction() {

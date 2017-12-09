@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card *ngIf="userData; else noUser" id="user-info">
     <section id="hero">
-      <img *ngIf="userData.cover" [src]="imagePath('covers',userData.cover)" alt="user background image">
+      <img *ngIf="userData.cover" [src]="imagePath('covers',userData.cover)" alt="">
     </section>
 
     <ion-card>
@@ -130,7 +130,7 @@
 
             <img
               [src]="product.item_image?'templates/default/uploads/items'+product.item_image:'assets/img/adds_02.png'"
-              alt="product">
+              alt="">
 
             <p class="prod-desc" text-center>
               {{product.item_name}}
@@ -156,8 +156,8 @@
     <ion-grid padding-horizontal>
       <ion-row *ngFor="let products of allProducts">
         <ion-col col-6 *ngFor="let product of products;let i = index">
-          <div class="col-content" (click)="navigateToPage('ProductPage', product.id)"
-            <img [src]="(product.item_image)?'templates/default/uploads/items'+product.item_image:'assets/img/adds_02.png'" alt="product">
+          <div class="col-content" (click)="navigateToPage('ProductPage', product.id)">
+            <img [src]="(product.item_image)?'templates/default/uploads/items'+product.item_image:'assets/img/adds_02.png'" alt="">
 
             <p class="prod-desc">
               {{limitString(product.item_desc)}}

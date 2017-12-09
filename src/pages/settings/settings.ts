@@ -23,58 +23,18 @@ export class SettingsPage {
      public itb: InAppBrowser,
      public userProvider: UserProvider,
      public platform: Platform
-     ) {
-    this.checkUserLogin();
-
-    this.events.subscribe('networkStatus', (data) => {
-
-      console.log('%c%s', 'font-size: 30px', 'Your connection status is: ' + this.network.type);
-      return this.network.type;
-      });
-
-      /*this.platform.registerBackButtonAction((data)=>{
-        this.alertCtrl.create({
-          title:'الخروج من التطبيق',
-          message: 'هل انت متأكد من انك تريد غلق التطبيق',
-          buttons: [
-            {
-            text: 'الغاء',
-            handler: data=> {
-  
-              //ContactPage.viewCtrl.dismiss();
-            }
-          },
-          {
-            text: 'خروج',
-            handler: data=> {
-              this.platform.exitApp();
-            }
-          }
-          ]
-        })
-      }) */
-
-  }
+     ) {}
 
   ionViewDidLoad() {
-
     this.ionViewWillEnter();
-    //console.log(this.userLocalData);
-
   }
 
 
   ionViewWillEnter() {
-    console.log('user has cached or not', this.userHasLog);
-
-
-
       this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
-
   }
   ionViewWilleave() {
     this.checkUserLogin();
-
   }
 
   checkUserLogin() {
