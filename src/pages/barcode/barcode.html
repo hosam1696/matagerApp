@@ -8,15 +8,15 @@
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar no-padding>
-     <button no-margin block  full ion-button (click)="scanBarcode()" >
+     <button no-margin block round full ion-button (click)="scanBarcode()" >
     افحص الباركود
     &nbsp; &nbsp;<ion-icon name="search"></ion-icon>
   </button>
 
   </ion-toolbar>
-<span class="or-text">ادخل الرقم  يدويا</span>
+<!--<span class="or-text">ادخل الرقم  يدويا</span>-->
   <ion-toolbar class="toolbar-btn">
-    <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">نفذ</button>
+    <button ion-button no-margin color="primary" style="border-radius:18px" (click)="scanEnteredBarcode(enetredcode.value)">نفذ</button>
     
     <input type="text" (keyup)="keepItNumber(enetredcode.value)" #enetredcode placeholder=" رقم الباركود">
 

@@ -44,8 +44,16 @@ page-barcode {
     .toolbar-background-ios {
       background: transparent !important;
     }
+    &:first-child {
+      button {
+        padding: 5px;
+      }
+    }
     &:last-child {
-      padding: 0;
+      
+      background-color: #fff !important;
+      border-radius: 26px;
+      padding: 5px !important;
       .toolbar-content {
         display: inline-flex;
         flex-direction: row-reverse !important;
@@ -61,7 +69,7 @@ page-barcode {
         }
         button {
           width: 30%;
-          border-radius: 0; //background: linear-gradient(135deg, #2e8bc9 18%, #2a82b7 18%) !important;
+          border-radius: 18px; //background: linear-gradient(135deg, #2e8bc9 18%, #2a82b7 18%) !important;
           position: relative;
           margin-bottom: 0;
           &:first-child {
@@ -137,7 +145,8 @@ page-barcode {
     }
     .bottom-btn {
       position: fixed;
-      bottom: 45px;
+      bottom: 0;
+      z-index: 99999;
       left: 0;
       margin: 0 !important;
     }
