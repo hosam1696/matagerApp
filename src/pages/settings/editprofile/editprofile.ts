@@ -6,7 +6,7 @@ import {AreaProvider} from '../../../providers/area';
 import {ChooseArea} from '../../chooselocmodal';
 import { UserProvider } from '../../../providers/user';
 import {MapsModal} from "../../mapsmodal";
-import {ArEditForm, Iplace,IlocalUser} from "../../../app/service/interfaces";
+import {ArEditForm ,IlocalUser} from "../../../app/service/interfaces";
 @IonicPage()
 @Component( {
   selector: 'page-editprofile',

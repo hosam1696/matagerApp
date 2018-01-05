@@ -20,6 +20,7 @@ export class VprofilePage {
   showLoader: boolean = true;
   allProducts: Array<Array<IProduct>> ;
   allShelfs: Ishelf[];
+  rendrer: Renderer2;
   noShelfs: boolean = false;
   noProducts: boolean = false;
   isFollowed: boolean = false;
@@ -36,7 +37,6 @@ export class VprofilePage {
     public itemProvider: ItemProvider,
     public shelfProvider: ShelfsProvider,
     public modalCtrl: ModalController,
-    public rendrer: Renderer2,
     public toastCtrl: ToastController,
     public userProvider: UserProvider,
     public iab: InAppBrowser,

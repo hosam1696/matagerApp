@@ -96,7 +96,6 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://192.168.1.4:8100" />
-    <engine name="android" spec="^6.2.3" />
     <plugin name="com-badrit-base64" spec="^0.2.0" />
     <plugin name="com.synconset.imagepicker" spec="~2.1.8">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="pick an image" />
@@ -122,4 +121,5 @@
     <plugin name="phonegap-plugin-push" spec="^2.0.0">
         <variable name="SENDER_ID" value="85075801930" />
     </plugin>
+    <engine name="android" spec="^6.2.3" />
 </widget>

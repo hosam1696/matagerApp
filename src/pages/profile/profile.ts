@@ -1,5 +1,5 @@
 import { DeliveryProvider } from './../../providers/delivery';
-import { Component, Inject, Renderer2 } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { NavController, IonicPage, AlertController, AlertOptions, ActionSheetController, ToastController, ModalController, Platform } from 'ionic-angular';
 import { IlocalUser, Ishelf } from '../../app/service/InewUserData';
 import { IProduct } from '../../app/service/interfaces';
@@ -56,7 +56,6 @@ export class ProfilePage {
     private transfer: Transfer,
     private file: File,
     private filePath: FilePath,
-    public rendrer: Renderer2,
     public userProvider: UserProvider,
     public iab: InAppBrowser,
     public deliveryProvider: DeliveryProvider,

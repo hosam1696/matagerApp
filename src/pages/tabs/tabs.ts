@@ -1,6 +1,6 @@
 import { ViewChild } from '@angular/core';
 import {Component} from '@angular/core';
-import { Events, IonicPage, Platform, AlertController } from 'ionic-angular';
+import { Events, IonicPage, Platform } from 'ionic-angular';
 import {IlocalUser} from "../../app/service/interfaces";
 import { Tabs } from "ionic-angular/navigation/nav-interfaces";
 

@@ -54,7 +54,7 @@ export class StoresPage {
       if (this.userLocal) {
         placesData = {...modalData, ...{
             user_id: this.userLocal.id,
-            level_id: 2,
+            level_id: this.userLocal.level_id,
             latitude: this.userLocal.latitude,
             longitude: this.userLocal.longitude}
           };
@@ -79,9 +79,6 @@ export class StoresPage {
     this.userProvider.filterUsersByPlaces(placesData, limit, start)
       .subscribe(({ status, data, errors }) => {
         if (status == 'success') {
-
-          console.log('Data', data);
-
           this.allStores = data;
           console.log(this.allStores)
         } else {
@@ -90,25 +87,21 @@ export class StoresPage {
         }
       },
       err => {
-        //this.showLoader = false;
         console.warn(err)
       },
       () => {
         this.showLoader = false;
-
       }
       )
   }
 
   fetchMoreData(event) {
     if (this.moreData) {
-
       this.getStores(this.initLimit, this.initStart += this.initLimit)
         .subscribe(({ status, data }) => {
           if (status = 'success') {
             if ((data.length - 1) < this.initLimit)
               this.moreData = false;
-
             this.allStores = [...this.allStores, ...data]; //es6 destruction : concat data to the allStore array
           }
         },
@@ -119,13 +112,11 @@ export class StoresPage {
         () => {
           event.complete();
         }
-
         );
 
     } else {
       event.complete();
-      console.log('there is no data');
-      return false;
+      return false; // nodata
     }
   }
 
@@ -135,9 +126,7 @@ export class StoresPage {
       .subscribe(
       ({ status, data}) => {
         if (status == 'success') {
-
           this.allStores = data;
-
         }
       },
       err => {
@@ -151,16 +140,11 @@ export class StoresPage {
         [this.moreData, this.showLoader] = [true, false]
       }
       )
-    console.log('fetched ');
   }
 
   getStores(limit: number = this.initLimit, start: number = this.initStart) {
-
-    let id = (this.userLocal&&this.userLocal.id) ? this.userLocal.id : 0;
+    let id = this.userLocal ? this.userLocal.id : 0;
     let map = (localStorage.getItem('currentLocation'))?localStorage.getItem('currentLocation'):(this.userLocal&&this.userLocal.latitude && this.userLocal.longitude)?this.userLocal.latitude+','+this.userLocal.longitude:'';
-
-    //console.log(map);
-
     return this.userProvider.getUsersByLevel(2, limit, start, id, map);
   }
 
@@ -169,8 +153,6 @@ export class StoresPage {
       .subscribe(
       ({ status, data, errors }) => {
         if (status == 'success') {
-
-          console.log('Data',data);
           this.allStores = data;
           console.log(this.allStores)
         } else {
@@ -184,7 +166,6 @@ export class StoresPage {
       },
       () => {
         this.showLoader = false;
-
       }
       )
   }

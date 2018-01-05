@@ -6,9 +6,7 @@ import { Component,Inject } from '@angular/core';
 import {IlocalUser} from "../../app/service/InewUserData";
 import {
   NavController,
-  ToastController,
   IonicPage,
-  Config,
   ModalController,
   Platform
 } from 'ionic-angular';
