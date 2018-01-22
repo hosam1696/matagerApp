@@ -1,0 +1,267 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>تعديل البيانات الشخصية</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+
+<form
+  novalidate
+  (ngSubmit)="EditForm()"
+  [formGroup]="EditUserForm"
+>
+
+    <ion-list>
+
+
+<ion-item-group no-lines id="personal-info">
+  <ion-item-divider color="bgColor">البيانات الشخصية</ion-item-divider>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        اسم المستخدم
+      </ion-col>
+      <ion-col col-8>
+        <input type="text" #usernameInput formControlName="username" class="input-as-text" [value]="localUser.username">
+
+        <ion-icon name="refresh" color="lightDark" (click)="usernameInput.value = localUser.username;EditUserForm.value.Username = localUser.username">
+
+        </ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          الاسم التجارى
+        </ion-col>
+        <ion-col col-8>
+<input type="text" #nameInput formControlName="name" class="input-as-text" [value]="localUser.name">
+
+<ion-icon name="refresh" color="lightDark" (click)="nameInput.value =localUser.name;EditUserForm.value.Name = localUser.name">
+
+          </ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+          رقم الجوال
+        </ion-col>
+        <ion-col>
+        <input type="text" #phoneInput formControlName="mobile" class="input-as-text" >
+
+        <ion-icon name="refresh" color="lightDark" (click)="phoneInput.value =localUser.mobile"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-item padding-left ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4>
+كلمة المرور
+        </ion-col>
+        <ion-col>
+          <input type="password" (focus)="passFocus()" (blur)="passBlur()" formControlName="password" class="input-as-text">
+
+       </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+<ion-item padding-left ion-item [hidden]="hidepass">
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        تأكيد كلمة المرور
+      </ion-col>
+      <ion-col>
+      <input type="password" formControlName="InsurePassword" class="input-as-text">
+
+
+       </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        البريد الالكترونى
+      </ion-col>
+      <ion-col>
+        <input type="email" #emailInput email formControlName="email" class="input-as-text" [value]="localUser.email">
+
+        <ion-icon name="refresh" color="lightDark" (click)="emailInput.value= localUser.email"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+<ion-item padding-left ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        الجنس
+      </ion-col>
+      <ion-col>
+        <!--<input type="text" formControlName="Gender" class="input-as-text" [value]="localUser.gender | gender"> -->
+
+        <select formControlName="gender" id="">
+          <option value="male">ذكر</option>
+          <option value="female">
+            انثى</option>
+        </select>
+        <!--<ion-select formControlName="Gender">
+            <ion-option value="male">ذكر</ion-option>
+            <ion-option value="female">
+              انثى</ion-option>
+        </ion-select> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+</ion-item-group>
+
+
+    <ion-item-group no-lines>
+      <ion-item-divider color="bgColor">بيانات الموقع</ion-item-divider>
+
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4 class="location-title">
+الموقع على الخريطة
+            </ion-col>
+            <ion-col col-8 class="location-place" (click)="openMaps()">
+
+              <span>
+                 {{loactionOnMap}}
+              </span>
+              <ion-icon name="pin-outline" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+            العنوان
+            </ion-col>
+            <ion-col>
+              <input type="text" formControlName="address" class="input-as-text" [value]="localUser.address">
+
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4>
+              المنطقة
+            </ion-col>
+            <ion-col class="modal" (click)="openModal('Area',0)">
+              <span [textContent]="AreaName"></span>
+              <ion-icon name="arrow-down" color="primary"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4 >
+المدينة            </ion-col>
+            <ion-col class="modal" (click)="openModal('City',EditUserForm.getRawValue()['Area'])">
+
+              <span [textContent]="CityName"></span>
+<ion-icon name="arrow-down" color="primary"></ion-icon>
+             </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-4 >
+الحى
+            </ion-col>
+            <ion-col class="modal" (click)="openModal('Dist',EditUserForm.getRawValue()['City'])">
+
+                <span [textContent]="DistName"></span>
+                <ion-icon name="arrow-down" color="primary"></ion-icon>
+               </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group no-lines *ngIf="localUser.level_id == 2">
+      <ion-item-divider color="bgColor">بيانات المتجر</ion-item-divider>
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+            <ion-row>
+              <ion-col col-4 style="font-size:14px">
+                رقم السجل التجارى
+              </ion-col>
+              <ion-col>
+                <input type="text" formControlName="cr_num" class="input-as-text" [value]="localUser.cr_num">
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item padding-left ion-item>
+        <ion-grid>
+          <ion-row>
+            
+            <ion-col col-4>
+              اسم مدير المتجر
+            </ion-col>
+            <ion-col>
+                <input type="text" formControlName="owner_name" class="input-as-text" [value]="localUser.owner_name">
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-item-group>
+<br><br>
+</ion-list>
+
+
+
+<button id="form-button" ion-button full> حفظ التعديلات
+  <div id="loader" *ngIf="showLoader">
+    <div class="loader-circle"></div>
+  </div>
+</button>
+</form>
+
+</ion-content>

@@ -1,0 +1,67 @@
+$bgColor: color($colors, bgColor);
+$primary: color($colors, primary);
+page-reservedshelfs {
+  ion-content {
+    &.content {
+      background-color: $bgColor
+    }
+    .err-small {
+      font-size: 1.7rem;
+      color: #666;
+      text-shadow: 1px 1px #fff;
+      position: absolute;
+      top: 40%;
+      width: 100%;
+    }
+    p {
+      &.small {
+        color: #666 !important
+      }
+    }
+    * {
+      .prim {
+        color: $primary
+      }
+    }
+    ion-list {
+        ion-list-header {
+            .list-header-ios {
+
+            }
+            border-bottom:none !important;
+        }
+      ion-item {
+          //margin-bottom: 3px !important;
+            border-bottom: 0.5px solid color($colors, bgColor) !important;
+      }
+      .item-block:first-child {
+        border-top: none !important;
+      }
+      ion-label {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        p {
+          color: color($colors, primary) !important;
+          &:first-child {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+              &:last-child {
+                color: inherit !important
+              }
+            }
+          }
+          &:last-child {
+            display: flex;
+            justify-content: space-between;
+          }
+          span {
+            color: #666
+          }
+        }
+      }
+    }
+  }
+}

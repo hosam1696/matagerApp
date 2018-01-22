@@ -1,0 +1,33 @@
+
+page-places{
+  ion-content.content {
+    background-color: #eee;
+  }
+  
+  
+  ion-item {
+    border-bottom: 1px solid #eee !important;
+  }
+
+  ion-item .item-inner {
+    background-image: none !important;
+   // border-bottom: 1px solid red !important
+  }
+  ion-content ion-refresher ion-refresher-content {
+    font-size: 12px !important;
+    margin-top: 15px;
+    color: #ccc !important
+  }
+  ion-item p {
+    margin-top: 0 !important;
+  color: #666;
+
+  }
+  .small {
+    margin-top: 0 !important;
+    font-size: 12px;
+    color: #666;
+    background-color: #eee 
+  }
+
+}

@@ -1,0 +1,95 @@
+page-messages {
+  ion-navbar {
+    ion-title {
+      .toolbar-title {
+        color: color($colors, light) !important;
+      }
+    }
+  }
+  ion-content {
+    &.content {
+      background-color: #eee;
+    }
+    .err-small {
+      font-size: 1.7rem;
+      color: #666;
+      text-shadow: 1px 1px #fff;
+      position: absolute;
+      top: 40%;
+      width: 100%;
+    }
+    ion-list {
+      ion-item {
+        border-bottom: 1px solid #eee !important;
+        .item-inner {
+          border-bottom: none !important;
+        }
+        .msg-details {
+          span {
+            display: block;
+            &:first-child {
+              font-weight: bold;
+            }
+            &:last-child {
+              color: #999
+            }
+          }
+        }
+        ion-label {
+          margin : 8px auto !important;
+        }
+        ion-avatar {
+          border-radius: 5px;
+         // border: 1px dashed color($colors, primary);
+         background-color: #eee;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          img {
+            width: 50px !important;
+            height: 50px !important;
+            border-radius: 0 !important
+          }
+        }
+        .message-sender {
+          display: flex;
+          justify-content: space-between;
+          span {
+            //margin-top: -5px !important;
+          font-size: 1.4rem;
+          }
+          .message-et {
+            font-size: 12px;
+            //color: color($colors, lightDark)
+          }
+        }
+        span {
+          color: $primaryDark;
+          font-size: 1.2rem
+        }
+      p {
+            height: 45px;
+        white-space: pre-wrap;
+        //line-height: 15px;
+      }
+      }
+    }
+  }
+
+  ion-content#offline {
+    .scroll-content {
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    ion-icon {
+      font-size: 60px;
+      color: #ccc
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>عرض الرف</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="closeModal()" class="close-btn">
+                <ion-icon name="md-close-circle" ></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item>
+            رقم الرف
+            <p>{{modalInfo.name}} </p>
+        </ion-item>
+        <ion-item>
+
+            سعر الرف
+            <p>{{modalInfo.cost}} ريال </p>
+        </ion-item>
+        <ion-item>
+            مساحة الرف
+            <p>
+                {{modalInfo.area}}
+                 متر
+            </p>
+        </ion-item>
+        <ion-item>
+             حالة الرف
+
+             <p *ngIf="modalInfo.fridge == 1">
+                <ion-badge>رف ثلاجة</ion-badge> 
+                        </p>
+          <p *ngIf="modalInfo.reserver_name" (click)="navigateToPage('VprofilePage', modalInfo.reserver_id)">
+              المورد المستأجر: &nbsp;
+            <b>{{modalInfo.reserver_name}}</b>
+          </p>
+            <p>
+                <span *ngIf="modalInfo.shelf_status == 0 || modalInfo.shelf_status == 2">غير محجوز</span>
+                <span *ngIf="modalInfo.shelf_status == 1">
+                  محجوز حتى
+                  {{modalInfo.end_date}}
+                  <!-- {{modalInfo.end_date | date:'longDate'|arabicdate}} -->
+                </span>
+            </p>
+        </ion-item>
+        <ion-item *ngIf="userLocal&&userLocal.id == modalInfo.user_id">
+            تاريخ اضافة الرف
+            <p>
+                {{modalInfo.date_added}}
+                <!-- {{modalInfo.date_added | date:'longDate'|arabicdate}} -->
+            </p>
+        </ion-item>
+    </ion-list>
+    <form *ngIf="userLocal.level_id == 3" [formGroup]="reserveShelfForm" novalidate (ngSubmit)="submitForm(reserveShelfForm)">
+
+        <ion-list >
+
+        <ion-item>
+            <ion-label>بداية الحجز</ion-label>
+            <input hidden type="text" placeholder="تاريخ البداية" formControlName="start_date" class="form-control">
+                <!-- [min]="modalInfo.end_date || nowDateString"-->
+            <ion-datetime
+                text-center
+
+                doneText="موافق" cancelText="الغاء"
+                class="form-control"
+                displayFormat="YYYY / MMMM / DD"
+                pickerFormat="YYYY MMMM DD"
+                [min]="minDate"
+                max= "2027"
+                monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر"
+                placeholder="تاريخ البدء"
+                formControlName="start_date">
+            </ion-datetime>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>نهاية الحجز</ion-label>
+            <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
+            <ion-datetime
+                [min]="minDate"
+                max= "2027"
+                doneText="موافق"
+                cancelText="الغاء"
+                text-center
+                class="form-control"
+                displayFormat="YYYY / MMMM / DD"
+                pickerFormat="YYYY MMMM DD"
+                monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر" placeholder="تاريخ الانتهاء" formControlName="end_date"
+                
+                >
+            </ion-datetime>
+        </ion-item>
+
+        </ion-list>
+
+    </form>
+    <button *ngIf="userLocal.level_id == 3" ion-button full (click)="requestBooking()" class="float-btn">
+        <hsa-loader *ngIf="showLoader"></hsa-loader>
+        طلب حجز الرف</button>
+    <!-- <section >
+            <div class="shelf-id">
+
+
+              <p>{{modalInfo.cost}} ريال  |
+                 {{modalInfo.area}}
+                 متر
+                </p>
+
+            </div>
+
+            <hr>
+            <div class="shelf-status">
+              <div class="reserved">
+                <span *ngIf="modalInfo.close == 0">غير محجوز</span>
+                <span *ngIf="modalInfo.close == 1"> محجوز</span>
+                </div>
+              <div class="shelf-controls">
+                <ion-icon name="open-outline"
+
+                ></ion-icon>
+                <ion-icon
+                  name="trash-outline"
+
+                  ></ion-icon>
+              </div>
+            </div>
+(click)="deleteShelf(shelf)"
+(click)="editShelf('AddshelfPage', shelf)"
+
+
+     </section>-->
+</ion-content>

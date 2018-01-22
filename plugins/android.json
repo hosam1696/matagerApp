@@ -1,0 +1,55 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "com.synconset.imagepicker": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-actionsheet": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-filepath": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-geolocation": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-inappbrowser": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-keyboard": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-statusbar": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "phonegap-plugin-barcodescanner": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
+    }
+  }
+}

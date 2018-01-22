@@ -1,0 +1,100 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "cordova-plugin-keyboard@^1.1.5",
+        "scope": null,
+        "escapedName": "cordova-plugin-keyboard",
+        "name": "cordova-plugin-keyboard",
+        "rawSpec": "^1.1.5",
+        "spec": ">=1.1.5 <2.0.0",
+        "type": "range"
+      },
+      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+    ]
+  ],
+  "_from": "cordova-plugin-keyboard@>=1.1.5 <2.0.0",
+  "_id": "cordova-plugin-keyboard@1.1.5",
+  "_inCache": true,
+  "_location": "/cordova-plugin-keyboard",
+  "_nodeVersion": "7.1.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/cordova-plugin-keyboard-1.1.5.tgz_1488399638319_0.7420670816209167"
+  },
+  "_npmUser": {
+    "name": "cjpearson",
+    "email": "cjp822@gmail.com"
+  },
+  "_npmVersion": "3.10.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "cordova-plugin-keyboard@^1.1.5",
+    "scope": null,
+    "escapedName": "cordova-plugin-keyboard",
+    "name": "cordova-plugin-keyboard",
+    "rawSpec": "^1.1.5",
+    "spec": ">=1.1.5 <2.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.1.5.tgz",
+  "_shasum": "5e04b5205d195622caaadddb2f34adb52a1c96c4",
+  "_shrinkwrap": null,
+  "_spec": "cordova-plugin-keyboard@^1.1.5",
+  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "author": {
+    "name": "Apache Software Foundation"
+  },
+  "bugs": {
+    "url": "https://github.com/cjpearson/cordova-plugin-keyboard/issues"
+  },
+  "cordova": {
+    "id": "cordova-plugin-keyboard",
+    "platforms": [
+      "ios"
+    ]
+  },
+  "dependencies": {},
+  "description": "Cordova Keyboard Plugin",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "5e04b5205d195622caaadddb2f34adb52a1c96c4",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.1.5.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.2.0"
+    }
+  ],
+  "gitHead": "f08f8c57a4f2125fa3cf4ecc117e40b3753145ff",
+  "homepage": "https://github.com/cjpearson/cordova-plugin-keyboard#readme",
+  "keywords": [
+    "cordova",
+    "keyboard",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "Apache 2.0",
+  "maintainers": [
+    {
+      "name": "cjpearson",
+      "email": "cjp822@gmail.com"
+    }
+  ],
+  "name": "cordova-plugin-keyboard",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cjpearson/cordova-plugin-keyboard.git"
+  },
+  "scripts": {},
+  "version": "1.1.5"
+}

@@ -1,0 +1,87 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title *ngIf="!DeliverData">طلب تسليم منتج</ion-title>
+    <ion-title *ngIf="DeliverData"> تعديل طلب تسليم منتج</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-item [hidden]="netErr" id="shelf-id">
+
+    <ion-label>رقم الرف</ion-label>
+    <ion-select [(ngModel)]="shelfNumbers">
+      <ng-container *ngIf="!DeliverData">
+        <ion-option  value="" selected>{{(noAcceptedRequests?'لا يوجد رفوف محجوزة':'قم بتحديد رف')}}</ion-option>
+          
+        <ion-option text-center *ngFor="let shelf of Shelfs"
+                [value]="shelf.matger_id+','+ shelf.shelf_id+','+shelf.shelf_name">{{shelf.shelf_name}} &gt;{{shelf.matger_name}}
+        </ion-option>
+      </ng-container>
+      <ng-container *ngIf="DeliverData">
+        <ion-option  value="" selected>قم بتحديد رف</ion-option>
+        <ion-option value="{{DeliverData.matger_id}},{{DeliverData.shelf_id}},{{DeliverData.name}}">
+          {{InitData.shelf_name}} &gt;{{InitData.name}}
+        </ion-option>
+        <!-- <ion-option text-center
+                [value]="DeliverData.matger_id+','+ DeliverData.shelf_id+','+DeliverData.shelf_name">{{InitData.shelf_name}} &gt;{{InitData.matger_name}}
+        </ion-option> -->
+      </ng-container>
+    </ion-select>
+  </ion-item>
+
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
+  <p text-center *ngIf="noProducts">
+    لم تتم اضافة اى منتجات حتى الان
+  </p>
+
+  <p class="err-small" text-center *ngIf="netErr">
+    <ion-icon name="ios-wifi"></ion-icon>
+    التطبيق يتطلب اتصال بالانترنت
+  </p>
+  <ion-grid padding-vertical>
+    <!--
+    <section id="products-controls">
+      <div class="control">
+        <ion-checkbox></ion-checkbox>
+        تحديد الكل
+      </div>
+    </section> -->
+    <ion-row *ngFor="let products of AllProducts">
+      <ion-col col-6 *ngFor="let product of products;let i = index">
+        <div class="col-content" [ngClass]="{'border-primary': product.isChecked}">
+          <div class="checked" (click)="triggerChecked(product)"
+               [ngClass]="{'green': product.isChecked, 'lightDark': !product.isChecked}">
+            <ion-icon name="checkmark"></ion-icon>
+          </div>
+          <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/no_image.png'" alt="product">
+
+          <p class="prod-desc">
+            {{limitString(product.item_desc)}} </p>
+
+          <div class="quantity-controls">
+            <button class="decreaseQuantity" color="primary" ion-button small (click)="increaseQuantity(product)"><ion-icon name="add" color="light"></ion-icon></button>
+            <!-- <ion-datetime class="quantity-value" displayFormat="s" pickerFormat="s" [(ngModel)]="timeStarts"></ion-datetime> -->
+            <input (input)="changeValue($event, product)" [value]="product.item_quantity" type="number"
+                   class="quantity-value">
+            <button class="increaseQuantity" color="primary" ion-button small (click)="decreaseQuantity(product)"><ion-icon name="remove" color="light"></ion-icon></button>
+          </div>
+
+          <!--<a href="">ابلاغ عن مخالفة</a>-->
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <button *ngIf="!DeliverData" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
+    ارسال طلب التسليم
+  </button>
+  <button *ngIf="DeliverData" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="editDeliveryRequest()">
+      تعديل طلب التسليم
+    </button>
+</ion-content>

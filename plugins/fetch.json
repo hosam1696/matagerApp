@@ -1,0 +1,131 @@
+{
+  "cordova-plugin-splashscreen": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-splashscreen@^4.0.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-actionsheet": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-actionsheet@^2.3.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-camera": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-camera@^2.4.1"
+    },
+    "is_top_level": true,
+    "variables": {
+      "CAMERA_USAGE_DESCRIPTION": " ",
+      "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+    }
+  },
+  "cordova-plugin-compat": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-compat@^1.1.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-statusbar": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-statusbar@^2.2.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-whitelist": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-whitelist@^1.3.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-file-transfer": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-file-transfer@^1.6.3"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-file": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-file@^5.0.0"
+    },
+    "is_top_level": false,
+    "variables": {}
+  },
+  "cordova-plugin-filepath": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-filepath@^1.0.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "phonegap-plugin-barcodescanner": {
+    "source": {
+      "type": "registry",
+      "id": "phonegap-plugin-barcodescanner@^6.0.8"
+    },
+    "is_top_level": true,
+    "variables": {
+      "CAMERA_USAGE_DESCRIPTION": " "
+    }
+  },
+  "cordova-plugin-geolocation": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-geolocation@^2.4.3"
+    },
+    "is_top_level": true,
+    "variables": {
+      "GEOLOCATION_USAGE_DESCRIPTION": " "
+    }
+  },
+  "com.synconset.imagepicker": {
+    "source": {
+      "type": "registry",
+      "id": "com.synconset.imagepicker@~2.1.8"
+    },
+    "is_top_level": true,
+    "variables": {
+      "PHOTO_LIBRARY_USAGE_DESCRIPTION": "pick an image"
+    }
+  },
+  "cordova-plugin-inappbrowser": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-inappbrowser@^1.7.2"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-network-information": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-network-information@^1.3.4"
+    },
+    "is_top_level": true,
+    "variables": {}
+  },
+  "cordova-plugin-keyboard": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-keyboard@^1.1.5"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}

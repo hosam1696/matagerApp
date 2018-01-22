@@ -1,0 +1,50 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title> المتابعون</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+
+    <ion-refresher (ionRefresh)="refreshUsers($event)">
+      <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+    </ion-refresher>
+    <p class="small" text-center *ngIf="netErr">
+      تفقد الاتصال وحاول مجددا
+    </p>
+    <p class="err-small" text-center *ngIf="noFollowers">
+      لا يوجد متابعون حتى الان
+    </p>
+    <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+    </p>
+  <ion-list>
+    <ion-item
+      *ngFor="let follower of userFollowers"
+      (click)="navigateToProfile(follower.id)"
+      >
+      <ion-avatar item-left>
+        <!-- To be replaced if the data from server is inistansiated -->
+            <img *ngIf = "follower.avatar;else altImages" [src]="imagePath(follower.avatar)" alt="profile image">
+        <ng-template #altImages>
+          <img *ngIf="follower.gender == 'female'" src="assets/img/female-alt.png" >
+          <img *ngIf="follower.gender == 'male'" src="assets/img/male-alt.png" >
+        </ng-template>
+      </ion-avatar>
+      <p>{{follower.name}}</p>
+    </ion-item>
+
+  </ion-list>
+  <p text-center *ngIf="!moreData" class="small">
+      لا يوجد مزيد من المتابعين
+  </p>
+  <ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+      ></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

@@ -1,0 +1,132 @@
+page-report {
+  ion-content {
+    &.content {
+      background-color: color($colors, bgColor);
+    }
+    #modal-button{
+      background-color: #fff;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 15px 2px 5px;
+
+      height: 42px;
+      .btn-icon {
+        width: 30px;
+        height:40px;
+        border-left: 1px solid color($colors, bgColor);
+        text-align: right;
+        ion-icon {
+          font-size: 20px;
+          line-height: 42px;
+          font-weight: bold;
+          color: color($colors, primary)
+        }
+
+      }
+      #search-result{
+        min-width: 100px;
+        display: flex;
+        width: 100%;
+        //margin: 10px;
+        flex-direction: row-reverse ;
+        height: 42px;
+        align-items: center;
+        div.no-data {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          height:100%;
+          align-items: center;
+          box-sizing: border-box;
+          padding: 0 15px 0 10px;
+          color: color($colors, primary)
+        }
+        div.found-data {
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          display: flex;
+          //margin: 10px;
+          flex-direction: row ;
+
+          span {
+            text-align: right;
+            min-width: 50px;
+            font-size: 10px;
+
+            //background-color: blue;
+            margin: 5px;
+            color: #777;
+            position: relative;
+
+            &:after {
+              content: '';
+              position: absolute;
+              left: -2px;
+              top: -2px;
+              width: 12px;
+              border-radius: 2px;
+              height: 12px;
+              border: 1px solid transparent;
+              // box-shadow: 1px -1px #ececec;
+              transform: rotate(45deg);
+              // background-color: #888;
+              //border-top-color: #ddd;
+              border-bottom-color: color($colors, primary);
+              border-left-color: color($colors, primary);
+              //border-right-color: #ddd
+
+            }
+            &:last-child {
+              &:after {
+                content : '';
+                display: none;
+              }
+            }
+          }
+
+        }
+      }
+    }
+    ion-list {
+      margin-top: 5px !important;
+      ion-item {
+        &:first-child {
+          border-top-color: transparent !important;
+          border-bottom-width: 2px !important;
+          p {
+            font-size: 18px;
+          }
+        }
+        border-bottom: 1px solid #eee !important;
+        .item-inner {
+          border-bottom: none !important;
+        }
+        ion-avatar {
+          border-radius: 5px;
+          // border: 1px dashed color($colors, primary);
+          background-color: #eee;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          img {
+            width: 50px !important;
+            height: 50px !important
+          }
+
+        }
+        p {
+          margin-bottom:5px !important;
+          &:first-child {
+            color:color($colors, primary) !important;
+          }
+        }
+      }
+    }
+  }
+}

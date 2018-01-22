@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-navbar color="primary">
+
+    <ion-title>
+      الصفحة الرئيسية
+    </ion-title>
+
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+<ion-slides *ngIf="SlidersErr||!Sliders" [pager]="SlidersErr">
+
+    <ion-slide [hidden]="SlidersErr"></ion-slide>
+
+    <ion-slide (click)="navToAdv('advertiseLink')">
+      <img src="assets/img/adds_01.png" height='170' width="100%">
+    </ion-slide>
+   
+  </ion-slides>
+  <ion-slides *ngIf='!SlidersErr&&Sliders'  (click)="handleClick()" pager="true" autoplay="5000" loop="true">
+    
+    <ion-slide *ngFor="let slide of Sliders" >
+      <img [src]="imagePath(slide.slide_image)" height='170'>
+    </ion-slide>
+
+  </ion-slides>
+  <!-- </ng-template> -->
+
+  <ion-grid id="surf">
+
+    <h2 id="hero-header">الأقسام الرئيسية</h2>
+
+    <ion-row>
+
+
+      <ion-col (click)="navigateTo('StoresPage','0')" class="animate">
+        <h4>متاجر</h4>
+        <img src="assets/img/store-icon.png" alt="">
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </ion-col>
+
+      <ion-col (click)="navigateTo('Exporter','0')" class="animate">
+        <h4>موردين</h4>
+        <img src="assets/img/exporter-icon.png" alt="">
+        <ion-icon name="arrow-dropleft-circle"></ion-icon>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

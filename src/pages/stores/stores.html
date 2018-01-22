@@ -1,0 +1,86 @@
+
+<ion-header>
+
+    <ion-navbar color="primary">
+        <!-- ahmed ouda edit -->
+        <ion-title *ngIf="!showSearchBar">المتاجر</ion-title>
+        <ion-searchbar *ngIf="showSearchBar" #searchbar [(ngModel)]="searchVal" (click)="filterStores($event)" placeholder="البحث باسم المتجر .." (ionCancel)="onCancel($event)">
+        </ion-searchbar>
+        <ion-buttons end >
+            <button ion-button  icon-only (click)="clickedSearchIcon()">
+                    <ion-icon name="search" *ngIf="!showSearchBar"></ion-icon>
+                <ion-icon name="close" *ngIf="showSearchBar"></ion-icon>
+            </button>
+        </ion-buttons>
+        <!-- ahmed ouda end edit -->
+    </ion-navbar>
+    <ion-toolbar>
+        <button type="button" id="modal-button" color="light" (click)="navigateToPlacesPage('placesPage','stores',0)">
+            <div class="btn-icon">
+                <ion-icon item-right id="search-icon"  name="funnel-outline"></ion-icon>
+            </div>
+            <div id="search-result" >
+                <div *ngIf="dataFromModal" class="found-data">
+                    <span *ngFor="let searched of dataFromModal"> {{searched.name}}</span>
+                </div>
+                <div *ngIf="!dataFromModal" class="no-data">
+                    <span color="primary">المدينة</span>
+                    <ion-icon name="arrow-back"></ion-icon>
+                </div>
+            </div>
+        </button>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+
+    <p text-center *ngIf="locationError" class="small">
+       {{locationError}}
+</p>
+<p text-center *ngIf="!showLoader && allStores.length == 0 && !netError">
+   لا توجد نتائج لهذا البحث
+</p>
+
+<p text-center *ngIf="netError" class="err-small">
+<ion-icon name="ios-wifi"></ion-icon>  
+التطبيق يتطلب اتصال بالانترنت<span><br> تفقد الاتصال وحاول مجددا</span>
+</p>
+
+<p text-center *ngIf="showLoader">
+<hsa-loader></hsa-loader>
+</p>
+<ion-refresher (ionRefresh)="refreshStores($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+</ion-refresher>
+
+<ion-list no-lines >
+    <ion-item *ngFor="let store of allStores" (click)="navigateToPage('VprofilePage', store.id)" no-padding margin-bottom="4px" text-start>
+        <div class="item-avatar" item-left>
+            <img *ngIf="!store.avatar" src="assets/img/store_col.png" alt="">
+            <img *ngIf="store.avatar" src="{{UPLOAD_PATH}}avatars/{{store.avatar}}" width="52" height="51" alt="">
+        </div>
+        <h2>
+            {{ store.name }}
+
+        </h2>
+        <div class="exporter-info" *ngIf="store.distance">
+            <p><span class="kilos">
+                    {{twoDigitsFloats(store.distance)}}
+                </span>
+                ك.م        </p>
+
+        </div>
+    </ion-item>
+
+</ion-list>
+<p class="small" padding text-center *ngIf="!moreData">
+   لا يوجد محتوى آخر
+</p>
+<ion-infinite-scroll *ngIf="moreData" (ionInfinite)="fetchMoreData($event)" position="200">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="جلب مزيد من المحتوى...">
+        ></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+
+</ion-content>

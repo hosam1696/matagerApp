@@ -1,0 +1,125 @@
+page-ownerduerequest {
+
+    ion-content {
+        &.content {
+          background-color: $bgColor
+        }
+
+        p {
+            &.highlight {
+              font-weight: bold;
+              text-shadow: 1px 1px #fff;
+              color: color($colors, primary);
+              span {
+                  color: #666
+              }
+            }
+
+        }
+        ion-item#hero {
+          background: color($colors, light);
+          height: auto;
+          width: 100%;
+          position: relative;
+          h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center; //font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 2px;
+            color: color($colors, primary);
+            .since-time {
+              color: #666;
+              font-size: 12px;
+            }
+          }
+          p {
+            margin-top: 0;
+            font-size: 12px !important;
+            white-space: normal;
+          }
+          ion-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(to right, #fff 0%, #fff 50%, #ddd 50%);
+            overflow: hidden;
+            border: 2px solid color($colors, primaryDark);
+            img {
+              width: 100% !important;
+              height: 100% !important; //height: auto;
+              &.alt {
+                width: 45px !important;
+              }
+            }
+          }
+        }
+        textarea {
+            display: block;
+            width: 96%;
+            padding: 8px;
+            margin: 13px auto;
+            resize: none;
+            border-radius: 5px;
+            border: 1px solid #eee;
+        }
+        ion-list {
+            
+                margin-bottom: 0 !important;
+            span {
+                    padding: 0 14px;
+                    color: #666;
+
+            }
+
+            ion-item {
+                display: flex;
+                &:last-child {
+                    border-bottom: none !important;
+                }
+                ion-label {
+                    flex: initial;
+                    display: block;
+                    span {
+                        padding : 0
+                    }
+                    &:first-child {
+                        width: 35% !important;
+                        color: color($colors, primary)
+                    }
+                    &:last-child {
+                          white-space: normal;
+                          color: #666;
+                          font-size: 14px;
+
+                    }
+
+
+
+                }
+            }
+        }
+
+#float-btn {
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  button {
+    width: 50%;
+    flex: 1;
+    color: #fff;
+    padding: 15px;
+    background-color: color($colors, danger);
+    &:first-child {
+      background-color: color($colors, primary);
+    }
+  }
+}
+
+    }
+}

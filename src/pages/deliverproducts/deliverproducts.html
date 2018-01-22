@@ -1,0 +1,63 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>التسليمات</ion-title>
+    <ion-buttons end (click)="navigateToPage('DeliveryrequestPage')">
+      <button ion-button class="small">
+
+        <ion-icon name="add"></ion-icon>&nbsp;
+        اضف طلب تسليم
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+<ion-refresher (ionRefresh)="refresh($event)">
+  <ion-refresher-content margin-top pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى"></ion-refresher-content>
+</ion-refresher>
+  <p text-center *ngIf="showLoader">
+    <hsa-loader></hsa-loader>
+  </p>
+  <p text-center *ngIf="noRequests" class="err-small">
+    لا يوجد طلبات حتى الان..
+    <span><br>
+      اضف طلب تسليم جديد
+    </span>
+  </p>
+
+  <ion-list *ngIf="AllRequests">
+    <ion-list-header>
+      كل التسليمات
+    </ion-list-header>
+    <ion-item *ngFor="let request of AllRequests">
+
+
+      <p color="primaryDark" (click)="showInfo(request)">رقم الرف
+        <span>{{request.shelf_name}} &nbsp; &nbsp; &gt; <b>{{request.name}}</b></span>
+      </p>
+      <p>حالة التسليم
+        <ion-badge
+          [color]="(request.delivery_status == 1)?'primary':((request.delivery_status == 2)?'danger':'bgColor')"
+          item-left>
+          <span *ngIf="request.delivery_status == 0">معلق</span>
+          <span *ngIf="request.delivery_status == 1">تم القبول</span>
+          <span *ngIf="request.delivery_status == 2">تم الرفض</span>
+        </ion-badge>
+        <!-- <ion-badge *ngIf="request.delivery_status == 0" [color]="primary" item-left>
+          <span (click)="navigateToPage('DeliveryrequestPage')">  تعديل  </span>
+        </ion-badge> -->
+        <ion-buttons *ngIf="request.delivery_status == 0" end (click)="navigateToPage('DeliveryrequestPage', request)">
+          <button ion-button class="small">
+    
+            <ion-icon name="edit"></ion-icon>&nbsp;
+            تعديل
+          </button>
+        </ion-buttons>
+      </p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

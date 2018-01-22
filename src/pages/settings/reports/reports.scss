@@ -1,0 +1,51 @@
+page-reports {
+
+ion-item-divider {
+      padding-right: 10px !important;
+      height: 40px;
+      color: color($colors, primaryDark) !important;
+      font-size: 15px !important;
+  }
+ ion-content {
+
+     .scroll-content {
+         background-color: #eee;
+     }
+     ion-list {
+        margin-top: 20px;
+        .item-inner {
+          border-bottom:0.5px solid color($colors, bgColor) !important
+          }
+
+
+
+      ion-item {
+        color: color($colors, primaryDark) !important;
+        font-size: 15px !important;
+        padding-left: 13px;
+        &.item-md:first-of-type {
+
+        }
+        &.item-ios {
+          padding-left: 0;
+        }
+        ion-icon {
+          margin: 0 0 0 15px ;
+          font-size: 15px;
+          &:last-of-type {
+            font-size: 18px;
+            line-height:28px;
+
+          }
+        }
+        .item-block {
+          .item-inner {
+            border-bottom:0
+          }
+        }
+
+      }
+    }
+
+ }
+}

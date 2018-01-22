@@ -1,0 +1,212 @@
+page-message {
+    ion-content {
+        #messages-container {
+            height: 100%;
+            background: #eee;
+            padding-bottom: 50px;
+            padding-top: 5px;
+            .messages {
+                //background-color: cyan;
+                height: 100%;
+            }
+            h3 {
+                margin-top: 0
+            }
+            .float-btn {
+                position: fixed;
+                bottom: 0;
+                left:0;
+                border-radius: 0;
+                margin: 0;
+            }
+            .msg-subject {
+                display: flex;
+                //height: 100px;
+                align-items: center;
+
+                flex: 1;
+
+                height: 36px;
+               // border-bottom: 1px solid #eee;
+                span {
+                        font-size: 12px;
+                        color: #999;
+                        position: relative;
+                        height: 100%;
+                        background-color: #f5f3f3;
+                        line-height: 36px;
+                        z-index: 22;
+                        padding-right: 8px;
+
+                    &:after {
+                        content: '';
+                        position: absolute;
+                        top: 5px;
+                        left: -13px;
+                        height: 24px;
+                        width: 24px;
+                        z-index: -1;
+                        background-color: #f5f3f3;
+                        border: 1px solid transparent;
+                        border-bottom-color: #eee;
+                        border-left-color: #eee;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+                }
+                input {
+                    height: 100%;
+                    flex:1;
+                    //margin-right: 10px;
+                    border: none;
+                    background-color: #fff;
+                    color: #333;
+                    padding: 2px 8px 2px 4px;
+                    font-size: 13px;
+                    &::-webkit-input-placeholder {
+                    color: #999
+                    }
+                }
+            }
+            ion-textarea {
+                background-color: #fff;
+            }
+            .msg-body {
+                margin-top: 5px;
+                width: 100%;
+                border: none;
+                padding: 5px;
+                resize: none;
+                &::-webkit-input-placeholder {
+                    color: #999
+                }
+            }
+        }
+.messages {
+    ion-list {
+
+        ion-item {
+            border: none !important;
+            background-color: transparent !important;
+            align-items: flex-start ;
+            &:first-child {
+                padding-top:10px;
+            }
+            &.item-inner {
+                min-height: 65px;
+                //height: 65px;
+            }
+            .label {
+                margin-top: 0 !important;
+                overflow: visible !important;
+            }
+            .label-ios {
+                margin: 2px 8px  !important;
+            }
+            ion-avatar {
+                margin: 1px 8px 8px 0 !important;
+                background-color: #fff;
+                border-radius: 4px;
+            }
+
+            .message-body {
+
+                p {
+                    background-color: #fff;
+                    border-radius: 5px;
+                    padding: 4px 6px;
+                    min-height: 20px;
+                    font-size: 12px;
+                    white-space: initial;
+                    position: relative;
+                    &:after {
+                        position: absolute;
+                        content: "";
+
+                        top: 10px;
+                        right: -10px;
+                        border: 5px solid transparent;
+                        border-left-color: #fff;
+                    }
+                }
+                .msg-time {
+                    font-size: 10px;
+                    text-align: left;
+                    direction: ltr;
+                    margin-top: -2px;
+                }
+                &.msg-left {
+                    width: 80%;
+                    float: left;
+                    p {
+                        &:after {
+                            left: -10px;
+                            border-left-color: transparent;
+                            border-right-color: #fff;
+                            right: 100%;
+                        }
+                    }
+                    .msg-time {
+                        text-align: right;
+                        padding-right:2px;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+        #message-controls {
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 -2px 4px #dedcdc;
+            padding: 8px;
+            align-items: center;
+            background-color: color($colors, light);
+            height: 50px;
+            width: 100%;
+            button {
+                padding: 5px;
+                border: none;
+                ion-icon {
+                    font-size: 30px;
+                transform: rotate(-135deg)
+                }
+            }
+            .input-controls {
+                flex:1;
+                position: relative;
+
+                input {
+                border: none;
+                width: 100%;
+                padding: 5px 35px 5px 8px;
+                font-size: 18px;
+                color: #777;
+                border-radius: 4px;
+                border: 1px solid #eee;
+                }
+                .controls-icon {
+                    top: 0;
+                    right: 0;
+                    position: absolute;
+                    font-size: 20px;
+                    width: 30px;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    //background-color: cyan;
+                    line-height: 32px;
+                    text-align: center;
+                    border-left: 1px solid #eee;
+                }
+            }
+
+        }
+    }
+}

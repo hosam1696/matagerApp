@@ -1,0 +1,119 @@
+{
+  "name": "rfapp",
+  "version": "0.0.0",
+  "author": "IT PLUS TEAM",
+  "homepage": "http://it-plus.co/",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "build:www": "rd /s /q www && ionic-app-scripts build --prod",
+    "run:browser": "ionic cordova run browser"
+  },
+  "dependencies": {
+    "@angular/common": "4.1.3",
+    "@angular/compiler": "4.1.3",
+    "@angular/compiler-cli": "4.1.3",
+    "@angular/core": "4.1.3",
+    "@angular/forms": "4.1.3",
+    "@angular/http": "4.1.3",
+    "@angular/platform-browser": "4.1.3",
+    "@angular/platform-browser-dynamic": "4.1.3",
+    "@ionic-native/action-sheet": "4.1.0",
+    "@ionic-native/barcode-scanner": "4.1.0",
+    "@ionic-native/base64": "^4.1.0",
+    "@ionic-native/camera": "4.1.0",
+    "@ionic-native/core": "4.1.0",
+    "@ionic-native/file": "^4.1.0",
+    "@ionic-native/file-path": "^4.1.0",
+    "@ionic-native/geolocation": "4.1.0",
+    "@ionic-native/image-picker": "^4.1.0",
+    "@ionic-native/in-app-browser": "4.1.0",
+    "@ionic-native/native-geocoder": "4.1.0",
+    "@ionic-native/network": "4.1.0",
+    "@ionic-native/photo-library": "^4.1.0",
+    "@ionic-native/push": "4.1.0",
+    "@ionic-native/splash-screen": "4.1.0",
+    "@ionic-native/status-bar": "4.1.0",
+    "@ionic-native/transfer": "3.14.0",
+    "@ionic/storage": "2.0.1",
+    "angular2-moment": "^1.6.0",
+    "build": "^0.1.4",
+    "com.synconset.imagepicker": "~2.1.8",
+    "cordova-android": "6.3.0",
+    "cordova-ios": "^4.5.3",
+    "cordova-plugin-actionsheet": "^2.3.3",
+    "cordova-plugin-camera": "^2.4.1",
+    "cordova-plugin-compat": "^1.1.0",
+    "cordova-plugin-device": "^1.1.6",
+    "cordova-plugin-file": "^4.3.3",
+    "cordova-plugin-file-transfer": "^1.6.3",
+    "cordova-plugin-filepath": "^1.0.2",
+    "cordova-plugin-geolocation": "^2.4.3",
+    "cordova-plugin-inappbrowser": "^1.7.2",
+    "cordova-plugin-keyboard": "^1.1.5",
+    "cordova-plugin-network-information": "^1.3.4",
+    "cordova-plugin-photo-library": "^2.0.4",
+    "cordova-plugin-splashscreen": "^4.0.3",
+    "cordova-plugin-statusbar": "^2.2.3",
+    "cordova-plugin-telerik-imagepicker": "^2.1.8",
+    "cordova-plugin-whitelist": "^1.3.2",
+    "ionic-angular": "3.6.0",
+    "ionicons": "3.0.0",
+    "node-sass": "4.5.3",
+    "phonegap-plugin-barcodescanner": "^6.0.8",
+    "promise-polyfill": "6.0.2",
+    "rxjs": "5.4.2",
+    "sw-toolbox": "3.6.0",
+    "zone.js": "0.8.14"
+  },
+  "devDependencies": {
+    "@angular/tsc-wrapped": "4.3.1",
+    "@ionic/app-scripts": "2.1.4",
+    "ionic": "3.19.0",
+    "typescript": "2.4.2"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "cordova-plugin-splashscreen",
+    "ionic-plugin-keyboard"
+  ],
+  "cordovaPlatforms": [],
+  "description": "تطبيق رف",
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-actionsheet": {},
+      "cordova-plugin-camera": {
+        "CAMERA_USAGE_DESCRIPTION": " ",
+        "PHOTOLIBRARY_USAGE_DESCRIPTION": " "
+      },
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-filepath": {},
+      "cordova-plugin-file": {},
+      "phonegap-plugin-barcodescanner": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": " "
+      },
+      "cordova-plugin-compat": {},
+      "com.synconset.imagepicker": {
+        "PHOTO_LIBRARY_USAGE_DESCRIPTION": "pick an image"
+      },
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-network-information": {},
+      "cordova-plugin-keyboard": {}
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}

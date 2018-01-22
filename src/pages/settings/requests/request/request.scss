@@ -1,0 +1,91 @@
+page-request {
+    ion-content {
+        ion-spinner {
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            svg {
+                top: 5px;
+            }
+            * {
+                width: 15px;
+                height: 15px;
+                fill: #fff
+            }
+        }
+        &.content {
+            background: #eee;
+        }
+         ion-item-divider {
+            padding-right: 10px !important;
+            height: 40px;
+            color: color($colors, primary) !important;
+            ion-checkbox {
+                margin: 4px 2px 4px 0 !important     
+            }
+        }
+        
+        #form-button {
+           position: fixed;
+           bottom: 0;
+           left: 0;
+           height: 40px;
+           font-size: 14px;
+           margin: 0;
+           display: flex;
+           align-items: center;
+         }
+        ion-list {
+
+
+            ion-item-group {
+                ion-item {
+                    &:first-child {
+                        border-top-color: transparent !important;
+                        }
+                        border-bottom: 1px solid #eee !important;
+                    ion-checkbox {
+                        margin: 4px 12px 4px 0 !important;
+                    }
+                    p {
+                        &:first-child {
+                            color: color($colors, primary);
+                        }
+                    }
+                }
+            }
+
+
+            ion-item {
+
+
+                &:first-child {
+
+                    h2 {
+                        color: color($colors, primary)
+                    }
+                    p {
+                        //font-weight: bold;
+                    }
+                }
+                ion-avatar {
+                    //border-radius: 5px;
+                    // border: 1px dashed color($colors, primary);
+                    background-color: #eee;
+                    width: 50px;
+                    height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    overflow: hidden;
+                    img {
+                        width: 50px !important;
+                        height: 50px !important
+                    }
+
+             }
+
+            }
+        }
+    }
+}

@@ -1,0 +1,41 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>اتصل بنا</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form novalidate
+    [formGroup]="contactForm"
+    (ngSubmit)="submitForm()">
+
+
+    <div class="form-group">
+      <input type="text" placeholder="الاسم" formControlName="Name" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <input type="email"
+      placeholder="البريد الالكترونى"
+      email
+      formControlName="Email" class="form-control">
+    </div>
+    <div class="form-group">
+      <input type="text" placeholder="العنوان" class="form-control" formControlName="Address">
+    </div>
+    <div class="form-group message">
+      <textarea class="form-control"
+        placeholder="رسالتك"
+       formControlName="Message" rows="8"
+       >
+
+      </textarea>
+    </div>
+    <!--<button ion-button (click)="makeItNull()"> make form null validate </button>-->
+    <button id="form-button" ion-button full> ارسل رسالتك</button>
+  </form>
+</ion-content>

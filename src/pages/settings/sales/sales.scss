@@ -1,0 +1,173 @@
+page-sales {
+  ion-header {
+    ion-toolbar {
+      .toolbar-background-ios {
+        background-color: #fff !important;
+      }
+      #modal-button{
+        background-color: color($colors, light);
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2px 15px 2px 5px;
+        height: 42px;
+        //line-height: 40px;
+        .btn-icon {
+          width: 30px;
+          height:40px;
+          border-left: 1px solid color($colors, bgColor);
+          text-align: right;
+
+          ion-icon {
+            font-size: 20px;
+            line-height: 42px;
+            font-weight: bold;
+            color: color($colors, primary);
+          }
+        }
+      }
+      #search-result {
+        min-width: 100px;
+        display: flex;
+        width: 100%;
+        //margin: 10px;
+        flex-direction: row-reverse ;
+        height: 42px;
+        align-items: center;
+        div.no-data {
+          display: flex;
+          justify-content: space-between;
+          flex-direction: flex-end;
+          width: 100%;
+          height:100%;
+          align-items: center;
+          box-sizing: border-box;
+          padding: 0 15px 0 10px;
+          color: color($colors, primary)
+        }
+        div.found-data {
+          width: 100%;
+          height: 100%;
+          align-items: center;
+          display: flex;
+          //margin: 10px;
+          flex-direction: row ;
+
+          span {
+            text-align: right;
+            min-width: 50px;
+            font-size: 10px;
+
+            //background-color: blue;
+            margin: 5px;
+            color: #777;
+            position: relative;
+
+            &:after {
+              content: '';
+              position: absolute;
+              left: -2px;
+              top: -2px;
+              width: 12px;
+              border-radius: 2px;
+              height: 12px;
+              border: 1px solid transparent;
+              // box-shadow: 1px -1px #ececec;
+              transform: rotate(45deg);
+              // background-color: #888;
+              //border-top-color: #ddd;
+              border-bottom-color: color($colors, primary);
+              border-left-color: color($colors, primary);
+              //border-right-color: #ddd
+
+            }
+            &:last-child {
+              &:after {
+                content : '';
+                display: none;
+              }
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  ion-content {
+    &.content {
+      background-color: #eee
+    }
+
+
+    .err-small {
+      font-size: 1.7rem;
+      color: #666;
+      text-shadow: 1px 1px #fff;
+      position: absolute;
+      top: 40%;
+      width: 100%;
+    }
+
+
+      ion-item {
+        .item-inner {
+          padding-right: 0 !important
+        }
+        ion-label {
+          margin: 0 !important;
+        }
+        .bill-info {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 10px;
+        }
+
+        .bill-products {
+          display: flex;
+          justify-content: space-between;
+        }
+        ion-grid {
+          padding: 0 !important;
+          color: #111 !important;
+          ion-row {
+            ion-col {
+              min-height: 90px;
+              padding-right: 10px;
+              padding-bottom: 0 !important;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              &:first-child {
+                padding: 0;
+                img {
+                  width: 100%;
+                  height: 130px;
+                }
+              }
+              &:last-child {
+                padding-right: 10px;
+
+               
+                .product-info {
+                  p {
+                    color: color($colors, primaryDark) !important;
+                  }
+                  .bill-info {
+
+                    display: flex;
+                    justify-content: space-between;
+                  }
+                  .info-detail {
+                    display: flex;
+                    justify-content: space-between;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+  }
+}

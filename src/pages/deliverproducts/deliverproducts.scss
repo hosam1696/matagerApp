@@ -1,0 +1,83 @@
+$primaryDark: color($colors, primaryDark);
+$primary: color($colors, primary);
+page-deliverproducts {
+  .small {
+    font-size: 12px !important;
+  }
+  ion-content {
+    &.content {
+      background-color: color($colors, bgColor); //padding-top: 0 !important;
+    }
+    .err-small {
+      font-size: 1.7rem;
+      color: #666;
+      text-shadow: 1px 1px #fff;
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      span {
+        font-size: 1.3rem;
+        color: #999;
+        text-shadow: none;
+      }
+    }
+    ion-list-header {
+      ion-label {
+        text-align: right !important
+      }
+      border-bottom:none !important;
+    }
+    ion-list {
+      ion-item {
+        //margin-bottom: 3px !important;
+        border-top: none !important;
+        font-size: 14px !important;
+        border-bottom: 0.5px solid color($colors, bgColor) !important;
+      }
+      .item-block:first-child {
+        border-top: none !important;
+      }
+      ion-label {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        p {
+          //color: color($colors, primary) !important;
+          &:first-child {
+            display: flex;
+            align-items: center;
+            //justify-content: space-between;
+            span {
+              margin: 0 15px;
+              color: color($colors, primary) !important ;
+              &:last-child {
+                color: inherit !important
+              }
+            }
+          }
+          &:last-child {
+            display: flex;
+            //justify-content: space-between;
+            align-items: center;
+          }
+          /*span {
+                                color: #666
+                            }
+                    */
+        }
+      }
+      /*ion-label {
+            flex: initial;
+            display: block;
+            &:first-child {
+              width: 30%;
+            }
+            &:last-child {
+              width: 70%;
+              text-align: center
+            }
+          }*/
+    }
+  }
+}
+

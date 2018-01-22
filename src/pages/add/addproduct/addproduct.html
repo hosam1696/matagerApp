@@ -1,0 +1,143 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{actionText}} منتج</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form novalidate [formGroup]="addProductForm"
+        (ngSubmit)="submitForm()">
+
+    <div class="form-group prod-photo">
+
+      <!--<ion-slides class="images-viewer" >
+        <ion-slide class="image" *ngFor="let image of productItems">
+          <img [src]="imagePath(image)" alt="fsfs">
+        </ion-slide>
+
+      </ion-slides>-->
+
+      <div class="images">
+          <div class="image"  *ngFor="let image of productItems" [ngClass]="{'uploaded':!image.is_uploading, 'bg-rad': !image.uploaded}" >           
+            <progress-bar *ngIf="image.is_uploading" [progress]="progress"></progress-bar> 
+              <!-- <img [ngStyle]="{'background-image': 'url(' + image.file  + ')'}" [src]="image.file"> -->
+             <!-- <div class="img" *ngIf="image.base"  [ngClass]="{'uploaded':image.is_uploaded}" [ngStyle]="{'background': 'url(' + image.base  + ')'}"></div> -->
+               <img   *ngIf="!image.is_uploading || image.uploaded"   [src]="imagePath(image.imgName)">
+              
+              <ion-icon (click)="deleteImage(image.imgName)" class="close-icon" name="close" color="dark"></ion-icon>  
+             <!-- <p *ngIf="image.is_uploading" class="progress">{{progress}} %</p> -->
+             
+          </div>
+          <div class="image " (click)="pickImage()">
+            <ion-icon name="camera-outline"></ion-icon>
+            <p>أضف صورة</p>
+          </div>
+      </div> 
+    </div>
+
+    <div class="form-group">
+      <input
+             placeholder="اسم المنتج"
+             formControlName = "item_name"
+             class="form-control">
+    </div>
+
+    <div class="form-group">
+      <input
+             placeholder="سعر المنتج"
+             formControlName = "item_price"
+
+             class="form-control">
+            <div class="identify-value">
+              <span>ريال</span>
+            </div>
+    </div>
+    <div class="form-group">
+      <input hidden placeholder="تاريخ الانتاج"
+             formControlName="item_production_date"
+             class="form-control">
+      <ion-label>تاريخ الانتاج</ion-label>
+      <ion-datetime
+        text-center
+        class="form-control"
+        cancelText = "الغاء"
+        doneText="موافق"
+        [min]="minDate"
+        [max]="maxDate"
+        [ngModel] = "proDate"
+        displayFormat="YYYY / MMMM / DD"
+        pickerFormat="YYYY MMMM DD"
+        monthNames="يناير,
+                فبراير,
+                مارس,
+                ابريل,
+                مايو,
+                يونيو,
+                يوليو,
+                اغسطس,
+                سبتمبر,
+                اكتوبر,
+                نوفمبر,
+                ديسمبر"
+        placeholder="تاريخ الانتاج"
+        class="form-control"
+        formControlName="item_production_date">
+      </ion-datetime>
+
+      
+        <input
+        hidden
+        placeholder="تاريخ الانتهاء"
+        formControlName="item_expiry_date"
+        class="form-control">
+      <ion-label>تاريخ الانتهاء</ion-label>
+      <ion-datetime
+        text-center
+        class="form-control"
+        cancelText = "الغاء"
+        doneText="موافق"
+        [min]="eminDate"
+        [max]="emaxDate"
+        [ngModel] = "expDate"
+        displayFormat="YYYY / MMMM / DD"
+        pickerFormat="YYYY MMMM DD"
+        class="form-control"
+        monthNames="يناير,
+            فبراير,
+            مارس,
+            ابريل,
+            مايو,
+            يونيو,
+            يوليو,
+            اغسطس,
+            سبتمبر,
+            اكتوبر,
+            نوفمبر,
+            ديسمبر"
+        placeholder="تاريخ الانتهاء"
+        formControlName="item_expiry_date">
+      </ion-datetime>
+
+    </div>
+
+
+    <div class="form-group">
+      <textarea placeholder="الوصف" class="form-control"
+                rows="5"
+             formControlName ="item_desc"
+      ></textarea>
+    </div>
+
+
+    <button id="form-button" ion-button full>
+       {{actionBtnTxt || 'اضف منتج'}}
+
+       &nbsp;<hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+      </button>
+  </form>
+
+</ion-content>

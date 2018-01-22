@@ -1,0 +1,178 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+$primary:    color($colors, primary);
+$bgPrimary: color($colors, bgPrimary);
+$secondary:  color($colors, secondary);
+$danger:     color($colors, danger);
+$warning: color($colors,warning );
+$yellow: color($colors, yellow);
+$light:      color($colors, light);
+$highlight: color($colors, highlight);
+$dark:       color($colors, dark);
+$primaryDark: color($colors, primaryDark);
+$lightDark : color($colors, lightDark);
+$bgColor: color($colors, bgColor);
+$bordered:#9E9E9E;
+
+
+.bold {
+  font-weight: bold;
+}
+.dangerColor {
+    color: $danger
+}
+ion-app._gmaps_cdv_ .nav-decor{
+  background-color: transparent !important;
+}
+.danger-toast {
+    .toast-container {
+
+    background-color: color($colors, danger)
+    }
+}
+
+
+.success-toast {
+  .toast-container {
+
+    background-color: color($colors, secondary)
+  }
+}
+.tabs-ios-primary .tab-button[aria-selected=true] {
+    box-shadow: inset 0 1px color($colors, primary);
+}
+.ios #page-segments {
+  padding-bottom: 8px;
+  padding-top: 8px;
+
+}
+.ios #profile-follow {
+  margin: -6px auto ;
+}
+.md #page-segments {
+  padding: 13px 0 0 0 ;
+
+  margin-bottom: 5px;
+}
+
+.md .card h4 {
+  color: color($colors, light);
+}
+.md .toolbar .toolbar-title {
+  text-align: center;
+}
+.camera-tab {
+    order: 3 !important
+}
+
+  .err-small {
+  font-size: 1.7rem;
+  color: #666;
+  text-shadow: 1px 1px #fff;
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  ion-icon {
+    font-size: 50px;
+    display: block;
+  }
+  span {
+    font-size: 1.3rem;
+    color: #888;
+    text-shadow: none;
+  }
+}
+
+#main-tabs {
+    .tabbar {
+        //height: 40px !important;
+       /* a {
+
+            &#tab-t0-0{
+                order: 1
+            }
+            &#tab-t0-1 {
+                order: 2
+            }
+            &#tab-t0-2 {
+                order: 4
+            }
+            &#tab-t0-3 {
+                order: 5;
+               // background: red !important;
+            }
+             &#tab-t0-4 {
+                order: 3
+            }
+            //height: 40px !important;
+            &.tab-button[aria-selected=true] {
+                box-shadow: 0 -2px color($colors, primary);
+            }
+
+            ion-icon {
+                margin-top: -2px !important;
+                font-size: 28px;
+
+            }
+            span {
+                margin-top: -2px
+            }
+        }*/
+    }
+
+}
+
+ion-infinite-scroll {
+    font-size: 12px !important;
+}
+/*
+.tabs-ios-primary .tab-button[aria-selected=true] {
+   // box-shadow: inset 0 -3px #fff;;
+   color: color($colors, primary) ;
+   background: radial-gradient(#fff, #eee);
+    ion-icon   {
+       color: color($colors, primary) !important;
+   }
+
+}
+*/
+ion-item {
+  .item-inner {
+      background-image:none !important;
+         border-bottom: none !important;
+  }
+}
+
+ion-header {
+    &.header {
+      &:after {
+        background-position: 0 -4px;
+        content: ''
+      }
+      box-shadow: none !important;
+    }
+    ion-navbar {
+        .toolbar-background-ios {
+            border-color: rgba(0,0,0,0.06) !important;
+        }
+         .toolbar-md {
+             border-color: rgba(0,0,0,0.06) !important;
+         }
+
+    }
+}

@@ -1,0 +1,71 @@
+<!--
+  صفحة طلب استلام مبلغ
+  صفحة الطلب
+-->
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>
+       طلب مستحقات
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content fullscreen>
+
+  <ion-list>
+    <ion-item>
+      
+      <ion-avatar item-left *ngIf="storeInfo.avatar;else altImages" class="client-img">
+          <img  [src]="imagePath(storeInfo.avatar)" alt="sss">
+        </ion-avatar>
+          <ng-template #altImages>
+              <ion-avatar item-left>
+            <img *ngIf="storeInfo.gender == 'female'" src="assets/img/female-alt.png">
+            <img *ngIf="storeInfo.gender == 'male'" src="assets/img/male-alt.png">
+          </ion-avatar>
+          </ng-template>
+      <h2>
+        {{storeInfo.matger_name}}
+      </h2>
+      <p>
+        اجمالى المستحقات:
+        <b>{{storeInfo.totalMatgerDues}}</b> ريال
+      </p>
+    </ion-item>
+
+    <ion-item-group [hidden]="!AllDuesShelfs">
+      <ion-item-divider >
+        <ion-label>
+          كافة الرفوف
+        </ion-label>
+        <ion-checkbox #checkAll item-left  (ionChange)="detectChange($event)">
+
+        </ion-checkbox>
+      </ion-item-divider>
+      <ion-item *ngFor="let due of AllDuesShelfs">
+
+          <ion-checkbox [checked]="due.checked" (click)="check(due)" item-left></ion-checkbox>
+          <ion-label>
+            <p>رف رقم:
+             {{due.shelf_name}}
+          </p>
+          <p>
+            المستحقات :
+             {{due.totalShelfDues}}
+             ريال
+          </p>
+          </ion-label>
+      </ion-item>
+      
+    </ion-item-group>
+
+  </ion-list>
+
+  <button *ngIf="AllDuesShelfs" id="form-button" ion-button full (click)="sendRequest()"> ارسل الطلب
+    <ion-spinner name="crescent" *ngIf="showLoader"  color="light" small></ion-spinner>
+  </button>
+
+</ion-content>

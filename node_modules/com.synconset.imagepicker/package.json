@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "com.synconset.imagepicker@~2.1.8",
+        "scope": null,
+        "escapedName": "com.synconset.imagepicker",
+        "name": "com.synconset.imagepicker",
+        "rawSpec": "~2.1.8",
+        "spec": ">=2.1.8 <2.2.0",
+        "type": "range"
+      },
+      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+    ]
+  ],
+  "_from": "com.synconset.imagepicker@>=2.1.8 <2.2.0",
+  "_id": "com.synconset.imagepicker@2.1.10",
+  "_inBundle": false,
+  "_inCache": true,
+  "_integrity": "sha512-8SVKQoMcib6EJKX5QXuNwyJhF8FW25TNyRYsRKWRUE1/uf6ElQmTbz7qgrqG2Qk6ItMtaTf0IfJCeGvDq/1Fjg==",
+  "_location": "/com.synconset.imagepicker",
+  "_nodeVersion": "8.1.3",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/com.synconset.imagepicker-2.1.10.tgz_1505587505574_0.7973623112775385"
+  },
+  "_npmUser": {
+    "name": "ottunger",
+    "email": "greg.mathonet@gmail.com"
+  },
+  "_npmVersion": "5.4.2",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "com.synconset.imagepicker@~2.1.9",
+    "name": "com.synconset.imagepicker",
+    "escapedName": "com.synconset.imagepicker",
+    "rawSpec": "~2.1.9",
+    "saveSpec": null,
+    "fetchSpec": "~2.1.9"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/com.synconset.imagepicker/-/com.synconset.imagepicker-2.1.10.tgz",
+  "_shasum": "6f4ff163f43a203b1f22306a483b7281b5486515",
+  "_shrinkwrap": null,
+  "_spec": "com.synconset.imagepicker@~2.1.9",
+  "_where": "D:\\Projects\\Quatremille\\node_modules",
+  "bundleDependencies": false,
+  "cordova_name": "ImagePicker",
+  "dependencies": {},
+  "deprecated": false,
+  "description": "This plugin allows selection of multiple images from the camera roll / gallery in a phonegap app",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "integrity": "sha512-96p2A/P4/KRbg6rowl0vq1QMhIQh89f6xQ9gkRPMFyrUmgFTlgF7vSEZP6DLqcS1pgJDPcE+ctYLYsWSPpuPYg==",
+    "shasum": "685e67374fd28541ab442adf484e539e29b51608",
+    "tarball": "https://registry.npmjs.org/com.synconset.imagepicker/-/com.synconset.imagepicker-2.1.10.tgz"
+  },
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.5.0"
+    }
+  ],
+  "issue": "",
+  "keywords": [],
+  "license": "MIT",
+  "maintainers": [
+    {
+      "name": "ottunger",
+      "email": "greg.mathonet@gmail.com"
+    }
+  ],
+  "name": "com.synconset.imagepicker",
+  "optionalDependencies": {},
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "readme": "ERROR: No README data found!",
+  "repo": "https://github.com/Telerik-Verified-Plugins/ImagePicker",
+  "version": "2.1.10"
+}

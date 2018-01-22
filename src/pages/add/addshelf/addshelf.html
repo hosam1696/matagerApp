@@ -1,0 +1,75 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{actionText}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <h3 text-center class="h3" *ngIf=" actionText=='اضافة رف';else editthisshelf">
+    اضافة رف جديد
+  </h3>
+
+  <ng-template #editthisshelf class="h3">
+    <h3 text-center>تعديل بيانات الرف</h3>
+  </ng-template>
+
+  <form novalidate [formGroup]="addShelfForm"
+        (ngSubmit)="submitForm()">
+    <div class="form-group">
+      <label class="form-label" *ngIf=" actionText!='اضافة رف'">
+        رقم الرف</label>
+      <input
+        placeholder="رقم الرف"
+        formControlName="name"
+        class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" *ngIf=" actionText!='اضافة رف'">
+        مساحة الرف</label>
+      <input
+        placeholder="مساحة الرف"
+        formControlName="area"
+        class="form-control">
+      <div class="identify-value">
+        <span>متر</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" *ngIf=" actionText!='اضافة رف'">
+        ايجار الرف</label>
+      <input
+        placeholder="ايجار الرف"
+        class="form-control"
+        formControlName="cost"
+      >
+      <div class="identify-value">
+        <span>ريال</span>
+      </div>
+    </div>
+
+    <div class="form-group fridge">
+      <label class="form-label" for="frige">
+    رف ثلاجة</label>
+      <ion-toggle formControlName="fridge"></ion-toggle>
+      
+    </div>
+
+    <!--<div class="form-group">
+      <input type="text" placeholder="نسبة على البيع" class="form-control" formControlName="salePercentage">
+      <div class="identify-value">
+        <span>%</span>
+      </div>
+    </div>-->
+    <button id="form-button" ion-button full>
+      {{actionText}}
+      &nbsp;
+      <hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+    </button>
+  </form>
+
+</ion-content>

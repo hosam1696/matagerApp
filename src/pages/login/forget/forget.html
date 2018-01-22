@@ -1,0 +1,45 @@
+<!-- <ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>ارجاع كلمة المرور</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content no-padding>
+
+  <section id="form-navigate">
+    <ion-buttons start>
+      <button ion-button (click)="backStep()">
+      <ion-icon name="arrow-forward"></ion-icon>
+    </button>
+    </ion-buttons>
+  </section>
+
+    <section id="logo-hero">
+      <img src="assets/img/mainlogo.png" width="40%">
+    </section>
+
+    <ion-card no-padding id="no-padd-h">
+      <form novalidate [formGroup]="ForgetPassForm" (ngSubmit)="onSubmit(ForgetPassForm.value)">
+
+        <div class="form-group">
+          <input placeholder="البريد الالكترونى" type="email" class="form-control" formControlName="email" required>
+        </div>
+        <button type="submit" color="primary" block id="login-button">ارسال كلمة المرور
+          &nbsp; <hsa-loader *ngIf="showLoader"></hsa-loader>
+      </button>
+
+      </form>
+
+      <!-- 
+      <div class="navigatelinks">
+        <button (click)="navigateTo('Login')">تسجيل الدخول</button>
+        <button (click)="navigateTo('Signup')">تسجيل حساب جديد</button>
+      </div>
+-->    </ion-card>
+
+
+
+</ion-content>

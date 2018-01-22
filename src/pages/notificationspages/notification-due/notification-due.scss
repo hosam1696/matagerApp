@@ -1,0 +1,122 @@
+page-notification-due {
+    ion-content {
+        &.content {
+            background-color: $bgColor
+        }
+        .refuse-msg {
+          margin-bottom: 100px
+        }
+        textarea {
+            resize: none;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+            width: 89%;
+            padding: 10px;
+        }
+        ion-item {
+          ion-row {
+            ion-col {
+              &:first-child {
+                p {
+                  color: $primary;
+                }
+              }
+            }
+          }
+        }
+        ion-item#hero {
+            background: color($colors, light);
+            height: auto;
+            width: 100%;
+            position: relative;
+
+            h3 {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              //font-weight: bold;
+              font-size: 16px;
+              margin-bottom: 2px;
+              color: color($colors, primary);
+
+              .since-time {
+                color: #666;
+                font-size: 12px;
+              }
+            }
+            p {
+              margin-top: 0;
+              font-size: 12px !important;
+              white-space: normal;
+            }
+            ion-avatar {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              width: 60px;
+              height: 60px;
+              background: linear-gradient(to right, #fff 0%, #fff 50%, #ddd 50%);
+              overflow: hidden;
+              border: 2px solid color($colors, primaryDark);
+              img {
+                width: 100% !important;
+                height: 100% !important;
+                //height: auto;
+                &.alt {
+                  width: 45px !important;
+                }
+              }
+
+            }
+          }
+      .request-status {
+        ion-label {
+          flex: auto;
+          &:first-child {
+            color: $primary;
+            width: 25% !important;
+          }
+          &:last-child {
+            width: 75% !important;
+            font-size: 1.4rem;
+            color: $primaryDark;
+            line-height: 1;
+          }
+        }
+      }
+      .request-status-total {
+        ion-label {
+          flex: auto;
+          &:first-child {
+            color: $primary;
+            //width: 25% !important;
+          }
+          &:last-child {
+            //width: 75% !important;
+            font-size: 1.5rem;
+            color: $primaryDark
+          }
+        }
+      }
+        #float-btn {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            button {
+              width: 50%;
+              flex:1;
+              color: #fff;
+              padding: 15px;
+              background-color: color($colors, danger);
+              &:first-child {
+                background-color: color($colors, primary);
+              }
+            }
+          }
+    }
+}

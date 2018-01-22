@@ -1,0 +1,195 @@
+
+
+page-login {
+
+  ion-tabs {
+    #main-tabs {
+        div.tabbar.show-tabbar {
+        opacity: 0;
+      }
+    }
+
+      .tabbar {
+        display: none;
+      }
+      .tabs-md .tabbar
+      {
+       display: none
+      }
+    }
+  ion-content {
+
+    &.content {
+      background-color: #028cff;
+      /*background: linear-gradient(to bottom, hsla(207, 100%, 50%, 0.8), hsla(207, 100%, 50%, 0.8)), url(../../assets/img/logo.png);*/
+
+      background:url('../assets/img/logo2.png');
+      background-position: 100%;
+
+    }
+    form {
+      margin-top: 40px;
+    }
+    #page-content {
+     //background-color: red;
+     max-width: 450px;
+    margin: 0 auto;
+      transform: translateY( -50px);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      form {
+        width: 100%;
+      }
+
+    }
+    #form-navigate {
+      height: 30px;
+      position: relative;
+      z-index: 100;
+
+        margin-top: 0;
+        margin-right: -5px;
+      button {
+        background: transparent;
+        margin-top: -5px;
+        margin-right: -10px;
+        box-shadow: none;
+      }
+    }
+    #logo-hero {
+      //height: 150px;
+      //width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      //margin-bottom: 15px;
+      position: relative;
+      //margin-top: -15px;
+      img {
+        width: 140px;
+
+      }
+    }
+    .scroll-content {
+
+      ion-list {
+        #login-button {
+          
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          padding: 6px;
+          border-radius: 4px;
+          background-color: color($colors, light);
+          color: #008bff;
+          min-height: 32px;
+
+        }
+      }
+
+
+        ion-input {
+          border-bottom: 1px solid #ccc;
+
+        }
+        .form-group {
+
+          padding: 5px 0;
+
+         /* animate login buttons
+          &.animate-input {
+            transform: translateY(20px) rotateX(-90deg);
+            animation: animateInput 0.5s ease-out forwards ;
+            &:last-of-type {
+              animation-delay: 0.2s;
+            }
+          }
+          */
+          @keyframes animateInput {
+            0% {
+              transform: translateY(15px) rotateX(-90deg)
+            }
+            100% {
+              transform: translateY(0) rotateX(0);
+            }
+          }
+        .form-control {
+          width: 100%;
+          background-color: rgba(255, 255, 255, 0.3);
+          color: #fff;
+          padding: 10px ;
+          border-radius: 5px;
+          border: none;
+          font-size: 16px;
+          height: 44px;
+          &::-webkit-input-placeholder {
+            color: #d6ecff !important;
+          }
+        }
+
+
+        }
+
+        direction: rtl;
+        border-radius: 10px;
+        padding: 15px;
+        #login-button {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+          padding: 6px;
+          height: 44px;
+          border-radius: 4px;
+          background-color: color($colors, light);
+          color: #008bff;
+          min-height: 32px;
+          font-size: 16px;
+          #loader {
+            position: relative;
+            z-index: 5999;
+            width: 20px;
+            height: 20px;
+            //background-color: red;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            .loader-circle {
+              width: 80%;
+              height: 80%;
+              border-radius: 50%;
+              border:2px solid transparent;
+              border-top-color: color($colors, primary);
+              animation: loader 0.6s linear infinite;
+
+            }
+            @keyframes loader {
+              to {
+                transform: rotate(360deg);
+              }
+            }
+          }
+        }
+        button {
+          margin-top: 15px
+        }
+        p {
+          margin: 0 auto;
+          button {
+            background-color: transparent;
+            color: #fff
+          }
+          color: #93c9ff;
+          text-align: center;
+        }
+
+      }
+    }
+
+}

@@ -1,0 +1,138 @@
+page-showmessage {
+
+  ion-content {
+    &.content {
+      background-color: $bgColor;
+    }
+    ion-list {
+       margin-bottom: 80px !important
+      }
+ .msg-title {
+      
+      font-weight: bold;
+    }
+    .msg-date {
+          font-size: 1.2rem !important;
+          span {
+            &:last-child {
+                  display: inline-block;
+            }
+          }
+    }
+    .msg-body {
+      line-height: 1;
+         display: block;
+    width: 100%;
+    padding:  13px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    min-height: 50px;
+      &.sender-msg {
+        min-height: 120px;
+      }
+      p {
+        margin: 0
+      }
+    }
+    .msg {
+
+      
+      &.me {
+        position: relative;
+        
+      }
+    }
+    .small {
+      font-size: 10px;
+    }
+    .float-btn {
+       position: fixed;
+       bottom: 0;
+       left:0;
+       border-radius: 0;
+       margin: 0;
+    min-height: 50px;
+    height: auto;
+    background-color: #eaeaea;
+    display: flex;
+    width: 100%;
+
+      
+       //box-shadow: -2px -2px 5px #ccc;
+       border-top: 1px solid #ccc;
+    button {
+          width: 20%;
+    height: 50px;
+    margin: 5px 10px!important;
+    border-radius: 35px;
+    }
+    textarea {
+      flex: 1;
+      border: 0;
+      padding: 5px 10px;
+      height: 50px;
+      margin:5px;
+      resize: none;
+      border-radius: 5px 5px 5px 0;
+      
+    }
+    
+     }
+     p {
+     &.primary {
+       color: color($colors, primary) !important
+     }
+     }
+
+     ion-item {
+      background: linear-gradient(to top left,#fbfbfb,#fafafa) !important;
+      height: auto;
+      width: 100%;
+      position: relative;
+      border-bottom: 1px solid #ddd !important;
+
+        h3 {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          //font-weight: bold;
+          font-size: 16px;
+          margin-bottom: 2px;
+          color: color($colors, primary);
+
+          .since-time {
+            color: #666;
+            font-size: 12px;
+          }
+        }
+        p {
+          margin-top: 0;
+          white-space: normal;
+        }
+        ion-label {
+          margin: 0 !important
+        }
+        ion-avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          width: 50px;
+          height: 50px;
+          background: linear-gradient(to right,#fff 0%, #fff 50% , #ddd 50%);
+          overflow: hidden;
+          
+          img {
+            width: 100% !important;
+            height: 100% !important;
+            //height: auto;
+            &.alt {
+              width: 45px !important;
+            }
+          }
+
+        }
+
+    }
+  }
+}

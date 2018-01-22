@@ -1,0 +1,127 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>
+      راسل
+      {{reciever}}
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content no-padding>
+  <section id="messages-container">
+
+      <div class="msg-subject">
+        <!--<span>
+          عنوان الرسالة
+        </span>-->
+        <input #messsageTitle type="text" placeholder="عنوان الرسالة">
+      </div>
+
+     <textarea  #messageBody class="msg-body" placeholder="محتوى الرسالة" rows="5" (input)="watchHeight($event)"></textarea>
+
+
+     <button ion-button block full class="float-btn" (click)="sendMessage(messsageTitle.value, messageBody.value)">ارسل رسالتك</button>
+
+    <!--
+    <div class="messages">
+
+      <ion-list>
+        <ion-item class="message">
+          <ion-avatar item-left>
+            <img src="assets/img/male-alt.png" alt="ddd">
+          </ion-avatar>
+          <div class="message-body">
+            <p>
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+            </p>
+              <div class="msg-time">
+                3:75 am
+              </div>
+          </div>
+
+        </ion-item>
+
+        <ion-item class="message">
+          <ion-avatar item-left>
+            <img src="assets/img/male-alt.png" alt="ddd">
+          </ion-avatar>
+          <div class="message-body">
+            <p>
+              بسم الله الرحمن الرحيم
+            </p>
+              <div class="msg-time">
+                3:75 am
+              </div>
+          </div>
+
+        </ion-item>
+
+        <ion-item class="message sender">
+          <ion-avatar item-left>
+            <img src="assets/img/male-alt.png" alt="ddd">
+          </ion-avatar>
+          <div class="message-body">
+            <p>
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+            </p>
+              <div class="msg-time">
+                3:75 am
+              </div>
+          </div>
+
+        </ion-item>
+
+        <ion-item class="message reciever">
+
+          <div class="message-body msg-left">
+            <p>
+              بسم الله الرحمن الرحيم وعليه نتوكل المرجو العلم من الرسالة
+            </p>
+              <div class="msg-time">
+                3:75 am
+              </div>
+          </div>
+
+        </ion-item>
+        <ion-item class="message reciever">
+
+          <div class="message-body msg-left">
+            <p>
+              بسم الله الرحمن الرحيم
+            </p>
+              <div class="msg-time">
+                3:75 am
+              </div>
+          </div>
+
+        </ion-item>
+
+      </ion-list>
+
+    </div>
+-->
+
+    <!--<section id="message-controls">
+      <div class="input-controls">
+        <input type="text">
+        <div class="controls-icon">
+          <ion-icon name="camera-outline" color="primaryDark"></ion-icon>
+
+        </div>
+      </div>
+
+      <button ion-button small outline color="primary">
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </section>-->
+  </section>
+
+
+</ion-content>

@@ -1,0 +1,67 @@
+<ion-header>
+    
+    <ion-buttons start>
+      <button ion-button clear color="light" (click)="backStep()">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-buttons>
+</ion-header>    
+
+<ion-content padding-horizontal>
+  <!--<section id="form-navigate">
+
+    <ion-buttons start>
+      <button ion-button (click)="backStep()">
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+
+  </section>-->
+
+  <section id="logo-hero">
+      <img src="assets/img/mainlogo.png" alt="logo">
+    </section>
+
+
+
+   
+
+    <form novalidate
+          [formGroup]="LoginForm"
+          (ngSubmit)="submitLogin()"
+    >
+
+      <div class="form-group animate-input">
+        <input
+          placeholder="اسم المستخدم"
+          class="form-control"
+          formControlName="username"
+          required>
+      </div>
+      <div class="form-group animate-input">
+        <input
+          placeholder="كلمة المرور"
+          type="password"
+          class="form-control"
+          formControlName="password"
+          required>
+      </div>
+      <button
+
+        type="submit"
+        color="primary"
+        block
+        id="login-button"
+      >تسجيل الدخول
+        <hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+      </button>
+    </form>
+    <br>
+    <p style="color:#fff" (click)="toForgetPass()">نسيت كلمة المرور؟</p>
+    <p>ليس لديك حساب ؟
+      <button (click)="toRegisterPage()">تسجيل حساب جديد</button>
+    </p>
+    <!--<pre>{{ LoginForm.value | json}}</pre>-->
+
+
+</ion-content>
