@@ -34,17 +34,17 @@
 
           {{request.shelf_name}}
         </span>
-        <span>
+        <span (click)="navigateToPage('VprofilePage', request.matger_id)">
           &nbsp; &gt; &nbsp;
           <b>{{request.matger_name}}</b>
         </span>
         <span>
-<ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
-  <span *ngIf="request.shelf_status == 1">قبول</span>
-  <span *ngIf="request.shelf_status == 2">رفض</span>
-  <span *ngIf="request.shelf_status == 0">معلق</span>
+          <ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
+            <span *ngIf="request.shelf_status == 1">قبول</span>
+            <span *ngIf="request.shelf_status == 2">رفض</span>
+            <span *ngIf="request.shelf_status == 0">معلق</span>
 
-</ion-badge>
+          </ion-badge>
         </span>
 
       </p>

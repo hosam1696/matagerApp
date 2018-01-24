@@ -94,8 +94,9 @@
           
         </ion-item>
         <section id="float-btn" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status == 0)||shelfData.shelf_status == 0&&userLocal.level_id==2">
-          <button color="primary" (click)="sendReplyRequest()">موافقة</button>
+          
           <button color="danger" (click)="sendReplyRequest(false)">رفض</button>
+          <button color="primary" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status != 2)" (click)="sendReplyRequest()">موافقة</button>
         </section>
 
         <ion-card id="sales-percentage" *ngIf="shelfData.shelf_status == 0&&shelfData.percentage_status == 0&&userLocal.level_id == 2">

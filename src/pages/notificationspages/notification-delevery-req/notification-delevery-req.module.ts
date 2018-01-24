@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { NotificationDeleveryReqPage } from './notification-delevery-req';
 import { SinceDatePipeModule } from '../../../app/service/since-date/since-date.module';
+import { MomentModule } from 'angular2-moment';
 @NgModule({
   declarations: [
     NotificationDeleveryReqPage,
@@ -10,7 +11,8 @@ import { SinceDatePipeModule } from '../../../app/service/since-date/since-date.
   imports: [
     IonicPageModule.forChild(NotificationDeleveryReqPage),
     SinceDatePipeModule,
-    HsaloaderComponentModule
+    HsaloaderComponentModule,
+    MomentModule
   ],
   exports: [
     NotificationDeleveryReqPage

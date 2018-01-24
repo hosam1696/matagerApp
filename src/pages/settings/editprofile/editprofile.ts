@@ -54,7 +54,7 @@ export class Editprofile {
       area: [this.localUser.area, Validators.compose([Validators.required]) ],
       city: [this.localUser.city, Validators.compose([Validators.required]) ],
       dist:[ this.localUser.dist ],
-      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]+"), Validators.minLength(1)] : null)],
+      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [ Validators.minLength(1)] : null)],
       owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ?[Validators.minLength(3)]:null )]
     } )
 
@@ -287,7 +287,7 @@ console.log(form, form.valid);
       area: [this.EditUserForm.get('area').value ],
       city:[this.EditUserForm.get('city').value ],
       dist: [this.EditUserForm.get('dist').value ],
-      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.pattern("[0-9]^"), Validators.minLength(1)] : null)],
+      cr_num: [this.localUser.cr_num || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.minLength(1)] : null)],
       owner_name: [this.localUser.owner_name || '', Validators.compose((this.localUser.level_id == 2) ? [Validators.minLength(3)] : null)]
       })
 

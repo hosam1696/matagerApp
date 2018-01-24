@@ -10,7 +10,7 @@
         "spec": ">=4.0.3 <5.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-splashscreen@>=4.0.3 <5.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "81028ab7643e615593d27f2ad02445611f1946b6",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-splashscreen@^4.0.3",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },

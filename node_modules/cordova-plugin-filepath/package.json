@@ -10,7 +10,7 @@
         "spec": ">=1.0.2 <2.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-filepath@>=1.0.2 <2.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "e417a0a395b9712916cd762d1c7cc38408c3a05b",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-filepath@^1.0.2",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Ramesh Nair",
     "email": "ram@hiddentao.com"

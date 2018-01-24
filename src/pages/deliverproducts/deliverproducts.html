@@ -28,6 +28,11 @@
     </span>
   </p>
 
+  <p class="err-small" text-center *ngIf="netErr">
+    <ion-icon name="ios-wifi"></ion-icon>
+    التطبيق يتطلب اتصال بالانترنت
+  </p>
+
   <ion-list *ngIf="AllRequests">
     <ion-list-header>
       كل التسليمات
@@ -36,7 +41,8 @@
 
 
       <p color="primaryDark" (click)="showInfo(request)">رقم الرف
-        <span>{{request.shelf_name}} &nbsp; &nbsp; &gt; <b>{{request.name}}</b></span>
+        <!-- <span>{{request.name}} &nbsp; &nbsp; &gt; <b>{{request.shelf_name}}</b></span> -->
+        <span>{{request.shelf_name}}</span><span>&nbsp; &gt; &nbsp;<b>{{request.name}}</b></span>
       </p>
       <p>حالة التسليم
         <ion-badge

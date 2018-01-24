@@ -186,8 +186,8 @@
           {{request.matger_name}}
         </span>
           <span>
-<ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
-  <span *ngIf="request.shelf_status == 1">مقبول</span>
+        <ion-badge [color]="(request.shelf_status == 1)?'primary':((request.shelf_status == 2)?'danger':'bgColor')" item-left>
+          <span *ngIf="request.shelf_status == 1">مقبول</span>
           <span *ngIf="request.shelf_status == 2">رفض</span>
           <span *ngIf="request.shelf_status == 0">معلق</span>
 
@@ -240,13 +240,17 @@
 
             <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/no_image.png'" alt="product">
 
-            <p class="prod-desc" text-center>
+            <p class="prod_name" text-center>
               {{product.item_name}}
             </p>
+            <!-- <p class="price" text-center>
+              الكود : &nbsp;
+              <span class="prod-price"><b>{{product.item_code}}</b></span>
+            </p> -->
             <p class="price" text-center>
-              الكمية : &nbsp;
-              <span class="prod-price"><b>{{product.item_quantity}}</b></span>
-            </p>
+                الكمية : &nbsp;
+                <span class="prod-price"><b>{{product.item_quantity}}</b></span>
+              </p>
 
             <!--<a href="">ابلاغ عن مخالفة</a>-->
           </div>
@@ -263,9 +267,9 @@
             <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/no_image.png'" alt="product">
             
             <p class="prod_name">{{product.item_name}}</p>
-            <p class="prod-desc">
-              {{limitString(product.item_desc)}}
-            </p>
+            <!-- <p class="prod-desc">
+              {{(product.item_desc)? limitString(product.item_desc) : 'لا يوجد وصف للمنتج' }}
+            </p> -->
             <p class="price">
               <span class="prod-price"><b>{{product.item_price}}</b></span> ريال
             </p>

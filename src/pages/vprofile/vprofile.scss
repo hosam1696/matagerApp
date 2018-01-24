@@ -49,8 +49,9 @@ page-vprofile {
     ion-badge {
       font-size: 12px !important;
       color: #2e8bc9 !important;
-      background-color: #eaeaea !important;
-      min-width: 115px
+      background-color: #dddddd !important;
+      min-width: 70px;
+      padding: 4px 11px;
     }
     &.content {
       background-color: color($colors, bgColor);
@@ -107,7 +108,7 @@ page-vprofile {
               border-top: none !important;
             }
             border-bottom: 2px solid #eee !important;
-            height: 80px !important;
+            height: 90px !important;
             p {
               color: color($colors, primary)
             }
@@ -126,8 +127,21 @@ page-vprofile {
                 /* &:last-of-type {
                      font-size: 12px;
                  }*/
+                span{
+                  color: #4a4a4a;
+                 }
               }
+              button{
+                color: #2e8bc9;
+                padding: 4px 15px;
+                font-size: 15px;
+                font-weight: bold;
+                border-radius: 2px;
+                min-width: 70px
+              }
+              
             }
+            
             .shelf-status {
               display: flex;
               justify-content: space-between;

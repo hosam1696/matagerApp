@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { NavController, NavParams, IonicPage, ToastController } from 'ionic-angular';
+import { NavController, NavParams, IonicPage, ToastController, Events } from 'ionic-angular';
 import { ItemProvider } from '../../providers/item';
 import { IlocalUser, IShelfRequest, IDeliveryNotifyInfo } from '../../app/service/interfaces';
 import { ShelfsProvider } from '../../providers/shelfs';
@@ -25,9 +25,12 @@ export class DeliveryrequestPage {
   noProducts: boolean = false;
   netErr: boolean = false;
   InitData: any;
+  callback: any;  
   showDeliveryInfo: boolean = false;
   noDeliveryData: boolean = false;
   DeliverData:IDeliveryNotifyInfo;
+  addLoader: boolean = false;
+  isDisabled: boolean = false;
   constructor(
     @Inject('UPLOAD_PATH') private UPLOAD_PATH,
     public navCtrl: NavController,
@@ -35,7 +38,8 @@ export class DeliveryrequestPage {
     private itemProvider: ItemProvider,
     private shelfsProvider: ShelfsProvider,
     private deliveryProvider: DeliveryProvider,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public events: Events
   ) {
   }
 
@@ -52,8 +56,15 @@ export class DeliveryrequestPage {
     }
     //TODO: get details of request to edit delivery request
     this.InitData = this.navParams.get('requestData');
-    //console.info('requestData', this.InitData);
-    this.getRequestInfo();
+    console.info('requestData', this.InitData);
+
+    //TODO: get callback
+    /* this.callback = this.navParams.get('callback');
+    console.info('callback', this.callback); */
+    
+    if (this.InitData.id) {
+      this.getRequestInfo();
+    }
     //setTimeout(this.getRequestInfo(), 3000);
     //TODO: if i have time i will use observable.merge in both functions blew
     this.getAcceptedShelfsRequests();
@@ -205,16 +216,21 @@ export class DeliveryrequestPage {
   }
 
   addDeliveryRequest() {
-
+    
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
     if (this.shelfNumbers) {
       console.log('shelfNumbers is', this.shelfNumbers);
-      let [matger_id, shelf_id, shelf_name] = this.shelfNumbers.split(',');
+      let [matger_id, shelf_id, shelf_name, matger_name] = this.shelfNumbers.split(',');
 
-      console.log(matger_id, shelf_id, shelf_name);
+      console.log(matger_id, shelf_id, shelf_name,matger_name);
 
       let items = this.allProducts.filter(product => product.isChecked == true).map((product) => { return { 'item_id': product.id, item_quantity: product.item_quantity } });
 
       if (items.length > 0) {
+        this.addLoader = true; // show loade icon on button
+        this.isDisabled = true; // to disable send button for 5 second
         let requestData = {
           items,
           shelf_id,
@@ -229,18 +245,35 @@ export class DeliveryrequestPage {
           .addDeliveryRequest(requestData)
           .retry(2)
           .debounceTime(1500)
-          .subscribe(({ status, errors }) => {
+          .subscribe(({ data,status, errors }) => {
             if (status == 'success') {
+              this.addLoader = false;
+              this.isDisabled = false;
               this.showToast('تم ارسال طلب التسليم بنجاح');
+              let backData = {
+                "delivery_status":'0',
+                "id":data,
+                "name":matger_name,
+                "shelf_name":shelf_name
+              };
               setTimeout(() => {
-                this.navCtrl.pop();
+                this.navCtrl.pop().then(() => {
+                    // Trigger custom event and pass data to be send back
+                    this.events.publish('deliveryRequestEvent', backData);
+                });
+                /* this.callback(backData).then(()=>{
+                  this.navCtrl.pop();
+                 }); */
+                 //this.navCtrl.pop();
               }, 2000);
             } else {
+              this.addLoader = false;
               console.warn(errors);
               this.showToast('حاول مجددا')
             }
           },
           err => {
+            this.addLoader = false;            
             this.showToast('التطبيق يتطلب اتصال بالانترنت')
           })
       } else {
@@ -255,6 +288,9 @@ export class DeliveryrequestPage {
   }
 
   editDeliveryRequest() {
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
     if (this.shelfNumbers) {
       console.log('shelfNumbers is', this.shelfNumbers);
       let [matger_id, shelf_id, shelf_name] = this.shelfNumbers.split(',');
@@ -264,6 +300,8 @@ export class DeliveryrequestPage {
       let items = this.allProducts.filter(product => product.isChecked == true).map((product) => { return { 'item_id': product.id, item_quantity: product.item_quantity } });
 
       if (items.length > 0) {
+        this.addLoader = true; // show loade icon on button
+        this.isDisabled = true; // to disable send button for 5 second
         let requestData = {
           items,
           shelf_id,
@@ -279,6 +317,8 @@ export class DeliveryrequestPage {
           .editDeliveryRequest(requestData)
           .subscribe(({ status }) => {
             if (status == 'success') {
+              this.addLoader = false;
+              this.isDisabled = false;
               this.showToast('تم تعديل طلب التسليم بنجاح');
               setTimeout(() => {
                 this.navCtrl.pop();
@@ -286,9 +326,11 @@ export class DeliveryrequestPage {
             } else {
               //console.warn(errors);
               this.showToast('حاول مجددا')
+              this.addLoader = false;
             }
           },
           err => {
+            this.addLoader = false;
             this.showToast('التطبيق يتطلب اتصال بالانترنت')
           })
       } else {
@@ -303,7 +345,7 @@ export class DeliveryrequestPage {
   }
 
   limitString(str: string): string {
-    return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
+    return (str.length > 40) ? str.slice(0, 40) + '.....' : str;
   }
 
   changeValue(event, product): void {

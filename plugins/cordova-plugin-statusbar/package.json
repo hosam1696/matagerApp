@@ -10,21 +10,21 @@
         "spec": ">=2.2.3 <3.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-statusbar@>=2.2.3 <3.0.0",
-  "_id": "cordova-plugin-statusbar@2.3.0",
+  "_id": "cordova-plugin-statusbar@2.4.1",
   "_inCache": true,
   "_location": "/cordova-plugin-statusbar",
-  "_nodeVersion": "6.6.0",
+  "_nodeVersion": "8.2.1",
   "_npmOperationalInternal": {
     "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-statusbar-2.3.0.tgz_1510361678182_0.03884611721150577"
+    "tmp": "tmp/cordova-plugin-statusbar-2.4.1.tgz_1514690818610_0.9176097090821713"
   },
   "_npmUser": {
-    "name": "stevegill",
-    "email": "stevengill97@gmail.com"
+    "name": "macdonst",
+    "email": "simon.macdonald@gmail.com"
   },
   "_npmVersion": "4.6.1",
   "_phantomChildren": {},
@@ -41,11 +41,11 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.3.0.tgz",
-  "_shasum": "314e1d009c65910cdfde034bfca13bd502c9e5e0",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.4.1.tgz",
+  "_shasum": "222628a78aa54d34d4c927990020d0a3bace5545",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-statusbar@^2.2.3",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },
@@ -69,8 +69,8 @@
   },
   "directories": {},
   "dist": {
-    "shasum": "314e1d009c65910cdfde034bfca13bd502c9e5e0",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.3.0.tgz"
+    "shasum": "222628a78aa54d34d4c927990020d0a3bace5545",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-statusbar/-/cordova-plugin-statusbar-2.4.1.tgz"
   },
   "engines": {
     "cordovaDependencies": {
@@ -96,28 +96,32 @@
   "license": "Apache-2.0",
   "maintainers": [
     {
+      "name": "macdonst",
+      "email": "simon.macdonald@gmail.com"
+    },
+    {
       "name": "bowserj",
       "email": "bowserj@apache.org"
-    },
-    {
-      "name": "csantanapr",
-      "email": "csantana23@gmail.com"
-    },
-    {
-      "name": "filmaj",
-      "email": "maj.fil@gmail.com"
-    },
-    {
-      "name": "kotikov.vladimir",
-      "email": "kotikov.vladimir@gmail.com"
     },
     {
       "name": "purplecabbage",
       "email": "purplecabbage@gmail.com"
     },
     {
+      "name": "filmaj",
+      "email": "maj.fil@gmail.com"
+    },
+    {
       "name": "shazron",
       "email": "shazron@gmail.com"
+    },
+    {
+      "name": "csantanapr",
+      "email": "csantana23@gmail.com"
+    },
+    {
+      "name": "kotikov.vladimir",
+      "email": "kotikov.vladimir@gmail.com"
     },
     {
       "name": "stevegill",
@@ -136,5 +140,5 @@
     "test": "npm run jshint"
   },
   "types": "./types/index.d.ts",
-  "version": "2.3.0"
+  "version": "2.4.1"
 }

@@ -10,7 +10,7 @@
         "spec": ">=6.0.8 <7.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "phonegap-plugin-barcodescanner@>=6.0.8 <7.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "d95c72b8aae1683f630fbc0c16dd51ede7ee44eb",
   "_shrinkwrap": null,
   "_spec": "phonegap-plugin-barcodescanner@^6.0.8",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Adobe PhoneGap Team"
   },

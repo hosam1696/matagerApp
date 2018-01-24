@@ -15,8 +15,13 @@ export class ShelfModal {
     showLoader: boolean = false;
     reserveShelfForm: FormGroup;
     nowDateString: any;
-    minDate = new Date(Date.now()).toISOString();
-    endtDate = new Date(Date.now()+ 1000*60*60*24*30).toISOString();
+    startDate:any = new Date(Date.now()).toISOString();
+    startMinDate:any = new Date(Date.now()).toISOString();
+    startMaxDate:any = new Date(Date.now()+ 1000*60*60*24*365*5).toISOString();
+    endDate:any = new Date(Date.now()).toISOString();
+    endMinDate:any = new Date(Date.now()).toISOString();
+    endMaxDate:any = new Date(Date.now()+ 1000*60*60*24*365*5).toISOString();
+    
     constructor(params: NavParams,
         public viewCtrl: ViewController,
         public shelfsProvider: ShelfsProvider,
@@ -27,16 +32,24 @@ export class ShelfModal {
     ) {
         this.nowDateString = new Date(Date.now()).toLocaleDateString().replace(/\//g, '-');
         this.modalInfo = params.get('shelfInfo');
+        console.log('modalInfo',this.modalInfo);
+        console.log('start date',this.startDate);
+        console.log('end date',this.endDate);
         this.reserveShelfForm = new FormGroup({
-            start_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.minDate, Validators.required),
-            end_date: new FormControl(this.endtDate, Validators.required)
+            start_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.startDate, Validators.required),
+            end_date: new FormControl(this.modalInfo.end_date?this.modalInfo.end_date:this.endDate, Validators.required)
         });
-        console.log(this.modalInfo);
+        if (this.modalInfo.end_date) {
+            this.startMinDate = this.modalInfo.end_date;
+            this.endMinDate = this.modalInfo.end_date;
+        }
+        //console.log(this.modalInfo);
         function ArMonthsFunc(one, two, third, four) {
             return third.concat(ArMonths[two]).concat(four) ;
         }
         console.log('August 25, 2017'.replace(/([A-z]*) +([0-9]*),+ ?([0-9]*)/g, ArMonthsFunc))
     }
+
     initDate(end:boolean = false) {
         let timeNow = new Date(Date.now());
         let month = (timeNow.getMonth().toString().length < 2) ? '0' + (timeNow.getMonth() + 1).toString() : (timeNow.getMonth() + 1).toString();
@@ -49,6 +62,7 @@ export class ShelfModal {
     }
 
     ionViewDidLoad() {
+        console.log('*************** shelfPage in profile folder ************')
         if(!this.userLocal)
             this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
@@ -58,6 +72,10 @@ export class ShelfModal {
         })
 
 
+    }
+    changeStartDate(){        
+        this.endMinDate = this.reserveShelfForm.value['start_date'];
+        this.reserveShelfForm.value['end_date'] = this.reserveShelfForm.value['start_date'];
     }
 
     closeModal() {

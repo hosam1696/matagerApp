@@ -1,7 +1,7 @@
 import { DeliveryRequestInfo } from '../deliveryrequestmodal';
 
 import { Component} from '@angular/core';
-import { NavController, NavParams,ModalController, IonicPage, ToastController } from 'ionic-angular';
+import { NavController, NavParams,ModalController, IonicPage, ToastController, Events } from 'ionic-angular';
 import {  IlocalUser } from '../../app/service/interfaces';
 import { DeliveryProvider } from '../../providers/delivery';
 
@@ -11,6 +11,7 @@ import { DeliveryProvider } from '../../providers/delivery';
   templateUrl: 'deliverproducts.html',
 })
 export class DeliverproductsPage {
+  InitData: any;
   AllRequests: any[];
   userLocal: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   showLoader: boolean = true;
@@ -20,8 +21,12 @@ export class DeliverproductsPage {
     public navParams: NavParams,
     private deliveryProvider: DeliveryProvider,
     public toastCtrl: ToastController,
-    public modal: ModalController
+    public modal: ModalController,
+    public events: Events
   ) {
+    //TODO: get details of request to edit delivery request
+    this.InitData = this.navParams.get('pageData');
+    console.log('initData', this.InitData);
   }
 
   ionViewWillEnter() {
@@ -64,8 +69,8 @@ export class DeliverproductsPage {
       err => {
         console.warn(err);
 
-        [this.noRequests, this.showLoader] = [true, false];
-        event && event.complete();
+        [this.netErr, this.showLoader] = [true, false];
+        //event && event.complete();
       },
       () => {
         event && event.complete();
@@ -76,11 +81,32 @@ export class DeliverproductsPage {
   limitString(str: string) {
     return (str.length > 55) ? str.slice(0, 50) + '.....' : str;
   }
-
+   // callback...
+ /* myCallbackFunction = function(_params) {
+    return new Promise((resolve, reject) => {
+          console.log('_params',_params);
+          console.log('AllRequests',this.AllRequests);
+          //let index = this.AllRequests.findIndex(e => e.id === _params['id']);
+          //let lastEdit = this.AllRequests[index];
+          //this.AllRequests.splice(index,1);
+          this.AllRequests.unshift(_params);
+          resolve();
+      });
+  } */
   navigateToPage(page, requestData ='') {
-    //console.log('page to nav ',page)
-    //console.log('request to edit', requestData)
+    this.events.subscribe('deliveryRequestEvent', (_paramsVar) => {
+        // Do stuff with "_paramsVar"
+        console.log('AllRequests',this.AllRequests);
+        this.AllRequests    = (this.AllRequests instanceof Array) ? this.AllRequests : [];
+        this.AllRequests.unshift(_paramsVar);
+        this.events.unsubscribe('deliveryRequestEvent'); // unsubscribe this event
+    })
     this.navCtrl.push(page,{ requestData });
+     // push page...
+     /* this.navCtrl.push(page, {
+      callback: this.myCallbackFunction,
+      requestData:requestData,
+    }); */
   }
 
   showToast(msg) {

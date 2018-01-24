@@ -10,7 +10,7 @@
         "spec": ">=1.7.2 <2.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-inappbrowser@>=1.7.2 <2.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "64763495be87eb2e7adb1a08f0209b96ea5ceee0",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-inappbrowser@^1.7.2",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },

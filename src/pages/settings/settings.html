@@ -118,7 +118,14 @@
           <ion-icon name="arrow-back" item-right></ion-icon>
         </ion-item>
 
+        <!-- for matger -->
+        <ion-item padding-left *ngIf="userLocalData['level_id'] == 2 " ion-item (click)="navigateToPage('DeliveryrequestmatgerPage')">
+          <ion-icon name="md-clipboard" color="primary"></ion-icon>
+         طلبات تسليم منتجات
+          <ion-icon name="arrow-back" item-right></ion-icon>
+        </ion-item>
 
+        <!-- for supplier -->
         <ion-item padding-left *ngIf="userLocalData['level_id'] == 3 " ion-item (click)="navigateToPage('DeliverproductsPage')">
           <ion-icon name="md-clipboard" color="primary"></ion-icon>
          طلبات تسليم منتجات

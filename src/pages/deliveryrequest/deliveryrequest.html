@@ -12,12 +12,12 @@
   <ion-item [hidden]="netErr" id="shelf-id">
 
     <ion-label>رقم الرف</ion-label>
-    <ion-select [(ngModel)]="shelfNumbers">
+    <ion-select [(ngModel)]="shelfNumbers" okText="تم" cancelText="إلغاء">
       <ng-container *ngIf="!DeliverData">
         <ion-option  value="" selected>{{(noAcceptedRequests?'لا يوجد رفوف محجوزة':'قم بتحديد رف')}}</ion-option>
           
         <ion-option text-center *ngFor="let shelf of Shelfs"
-                [value]="shelf.matger_id+','+ shelf.shelf_id+','+shelf.shelf_name">{{shelf.shelf_name}} &gt;{{shelf.matger_name}}
+                [value]="shelf.matger_id+','+ shelf.shelf_id+','+shelf.shelf_name+','+shelf.matger_name">{{shelf.shelf_name}} &gt;{{shelf.matger_name}}
         </ion-option>
       </ng-container>
       <ng-container *ngIf="DeliverData">
@@ -60,8 +60,7 @@
           </div>
           <img [src]="(product.item_image)?imagePath('items',product.item_image):'assets/img/no_image.png'" alt="product">
 
-          <p class="prod-desc">
-            {{limitString(product.item_desc)}} </p>
+          <p class="prod-desc">{{limitString(product.item_name)}} </p>
 
           <div class="quantity-controls">
             <button class="decreaseQuantity" color="primary" ion-button small (click)="increaseQuantity(product)"><ion-icon name="add" color="light"></ion-icon></button>
@@ -78,10 +77,12 @@
   </ion-grid>
 
 
-  <button *ngIf="!DeliverData" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
+  <button *ngIf="!DeliverData" [disabled]="isDisabled" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="addDeliveryRequest()">
     ارسال طلب التسليم
+    <ion-spinner *ngIf="addLoader" name="bubbles"></ion-spinner>
   </button>
-  <button *ngIf="DeliverData" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="editDeliveryRequest()">
+  <button *ngIf="DeliverData" [disabled]="isDisabled" [hidden]="netErr" full color="primary" class="float-btn" ion-button (click)="editDeliveryRequest()">
       تعديل طلب التسليم
+      <ion-spinner *ngIf="addLoader" name="bubbles"></ion-spinner>
     </button>
 </ion-content>

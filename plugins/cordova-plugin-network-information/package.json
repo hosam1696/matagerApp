@@ -10,7 +10,7 @@
         "spec": ">=1.3.4 <2.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-network-information@>=1.3.4 <2.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "28f426cc2659174dc622a07180f9ba0d855f7383",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-network-information@^1.3.4",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },

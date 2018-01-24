@@ -63,26 +63,14 @@
             <input hidden type="text" placeholder="تاريخ البداية" formControlName="start_date" class="form-control">
                 <!-- [min]="modalInfo.end_date || nowDateString"-->
             <ion-datetime
+                [min]="startMinDate"
+                [max]= "startMaxDate"
+                (ionChange) = "changeStartDate()"
                 text-center
-
                 doneText="موافق" cancelText="الغاء"
                 class="form-control"
-                displayFormat="YYYY / MMMM / DD"
-                pickerFormat="YYYY MMMM DD"
-                [min]="minDate"
-                max= "2027"
-                monthNames="يناير,
-                فبراير,
-                مارس,
-                ابريل,
-                مايو,
-                يونيو,
-                يوليو,
-                اغسطس,
-                سبتمبر,
-                اكتوبر,
-                نوفمبر,
-                ديسمبر"
+                displayFormat="YYYY / MM / DD"
+                pickerFormat="YYYY MM DD"
                 placeholder="تاريخ البدء"
                 formControlName="start_date">
             </ion-datetime>
@@ -92,27 +80,16 @@
             <ion-label>نهاية الحجز</ion-label>
             <input hidden type="text" placeholder="تاريخ الانتهاء" formControlName="end_date" class="form-control">
             <ion-datetime
-                [min]="minDate"
-                max= "2027"
+                [min]="endMinDate"
+                [max]= "endMaxDate"
                 doneText="موافق"
                 cancelText="الغاء"
                 text-center
                 class="form-control"
-                displayFormat="YYYY / MMMM / DD"
-                pickerFormat="YYYY MMMM DD"
-                monthNames="يناير,
-                فبراير,
-                مارس,
-                ابريل,
-                مايو,
-                يونيو,
-                يوليو,
-                اغسطس,
-                سبتمبر,
-                اكتوبر,
-                نوفمبر,
-                ديسمبر" placeholder="تاريخ الانتهاء" formControlName="end_date"
-                
+                displayFormat="YYYY / MM / DD"
+                pickerFormat="YYYY MM DD"
+                placeholder="تاريخ الانتهاء"
+                formControlName="end_date"
                 >
             </ion-datetime>
         </ion-item>

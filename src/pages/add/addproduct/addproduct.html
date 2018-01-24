@@ -69,20 +69,9 @@
         [min]="minDate"
         [max]="maxDate"
         [ngModel] = "proDate"
-        displayFormat="YYYY / MMMM / DD"
-        pickerFormat="YYYY MMMM DD"
-        monthNames="يناير,
-                فبراير,
-                مارس,
-                ابريل,
-                مايو,
-                يونيو,
-                يوليو,
-                اغسطس,
-                سبتمبر,
-                اكتوبر,
-                نوفمبر,
-                ديسمبر"
+        (ionChange) = "changeProdDate()"
+        displayFormat="YYYY / MM / DD"
+        pickerFormat="YYYY MM DD"
         placeholder="تاريخ الانتاج"
         class="form-control"
         formControlName="item_production_date">
@@ -103,21 +92,9 @@
         [min]="eminDate"
         [max]="emaxDate"
         [ngModel] = "expDate"
-        displayFormat="YYYY / MMMM / DD"
-        pickerFormat="YYYY MMMM DD"
+        displayFormat="YYYY / MM / DD"
+        pickerFormat="YYYY MM DD"
         class="form-control"
-        monthNames="يناير,
-            فبراير,
-            مارس,
-            ابريل,
-            مايو,
-            يونيو,
-            يوليو,
-            اغسطس,
-            سبتمبر,
-            اكتوبر,
-            نوفمبر,
-            ديسمبر"
         placeholder="تاريخ الانتهاء"
         formControlName="item_expiry_date">
       </ion-datetime>
@@ -133,10 +110,11 @@
     </div>
 
 
-    <button id="form-button" ion-button full>
+    <button id="form-button" ion-button full [disabled]="isDisabled">
        {{actionBtnTxt || 'اضف منتج'}}
 
        &nbsp;<hsa-loader *ngIf="showLoader" Color="light"></hsa-loader>
+       <ion-spinner *ngIf="addLoader" name="bubbles"></ion-spinner>
       </button>
   </form>
 

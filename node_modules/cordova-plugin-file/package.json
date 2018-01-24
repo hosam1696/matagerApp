@@ -10,7 +10,7 @@
         "spec": ">=5.0.0 <6.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-file@>=5.0.0 <6.0.0",
@@ -38,13 +38,14 @@
     "type": "range"
   },
   "_requiredBy": [
-    "#USER"
+    "#USER",
+    "/"
   ],
   "_resolved": "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-5.0.0.tgz",
   "_shasum": "d397682321669c000be8c71f8ef4438aae8f925d",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-file@^5.0.0",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },

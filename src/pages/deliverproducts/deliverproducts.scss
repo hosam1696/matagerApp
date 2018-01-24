@@ -41,18 +41,23 @@ page-deliverproducts {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
+        /* p {
+          color: #2e8bc9 !important;
+        } */
         p {
           //color: color($colors, primary) !important;
+          color: #2e8bc9 !important;
           &:first-child {
             display: flex;
             align-items: center;
             //justify-content: space-between;
             span {
               margin: 0 15px;
-              color: color($colors, primary) !important ;
-              &:last-child {
+              // color: color($colors, primary) !important ;
+              color: #666666 !important;
+              /* &:last-child {
                 color: inherit !important
-              }
+              } */
             }
           }
           &:last-child {

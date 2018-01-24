@@ -70,4 +70,9 @@ export class ReservedshelfsPage {
       )
   }
 
+  navigateToPage(page, user_id) {
+    let id = (this.userLocal && this.userLocal.id) ? this.userLocal.id : 0;
+    this.navCtrl.push(page, { userData: [user_id, id] }) // [id of the user i will enter his profile page, id of the user who is on the app]
+  }
+
 }

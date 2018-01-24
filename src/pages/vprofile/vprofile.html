@@ -204,7 +204,7 @@
 
 
 
-  <!-- products tab -->
+  <!-- shelfs tab -->
 
 
   <ion-card class="show-card" *ngIf="showContent == 'shelfs'">
@@ -216,29 +216,26 @@
     </p>
     <ion-list>
 
-      <ion-item (click)="showShelf(shelf)" *ngFor="let shelf of allShelfs; let i = index">
+      <ion-item *ngFor="let shelf of allShelfs; let i = index">
         <div class="shelf-id">
-          <p>رقم الرف <span>{{shelf.name}} </span></p>
-          <ion-badge *ngIf="shelf.shelf_status == 0" >المساحة : {{shelf.area}} متر</ion-badge>
+          <p>رقم الرف : <span> {{shelf.name}} </span></p>
+          <button (click)="showShelf(shelf)" *ngIf="shelf.shelf_status == 0" >حجز </button>
+          <ion-badge *ngIf="shelf.shelf_status == 1"> محجوز حتى {{shelf.end_date}}</ion-badge>
         </div>
-        <hr>
-        <div class="shelf-status">
+        <div class="shelf-id">
+          <p> السعر : <span> {{shelf.cost}} ريال</span>  </p>
+        </div>
+        <div class="shelf-id">
+          <p> المساحة : <span> {{shelf.area}} متر</span>  </p>
+          <p *ngIf="shelf.fridge == 1" item-end> النوع : <span>رف ثلاجه</span>  </p>
+          <!-- <ion-badge *ngIf="shelf.fridge == 1">رف ثلاجة</ion-badge>  -->
+        </div>
+        <!-- <div *ngIf="shelf.shelf_status == 1" class="shelf-status">
           <div class="reserved">
-            <span *ngIf="shelf.shelf_status == 0">غير محجوز</span>
-            <!-- <ion-badge *ngIf="shelf.shelf_status == 1">
-              محجوز حتى {{shelf.end_date | date:'longDate'|arabicdate}}</ion-badge> -->
-              <ion-badge *ngIf="shelf.shelf_status == 1">
-                  محجوز حتى {{shelf.end_date}}</ion-badge>
+            <ion-badge>
+              محجوز حتى {{shelf.end_date}}</ion-badge>
           </div>
-
-
-          <div class="shelf-controls">
-            <ion-badge *ngIf="shelf.shelf_status == 0" >السعر : {{shelf.cost}} ريال</ion-badge>
-
-            <!--  <ion-icon name="open-outline" (click)="editShelf('AddshelfPage', shelf)"></ion-icon>
-        <ion-icon name="trash-outline" (click)="deleteShelf(shelf)"></ion-icon>-->
-          </div>
-        </div>
+        </div> -->
       </ion-item>
 
       <p text-center *ngIf="showLoader">

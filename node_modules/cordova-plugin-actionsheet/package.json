@@ -10,7 +10,7 @@
         "spec": ">=2.3.3 <3.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-actionsheet@>=2.3.3 <3.0.0",
@@ -45,7 +45,7 @@
   "_shasum": "e9261b2d004a8da407388d60df534c156c52ff11",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-actionsheet@^2.3.3",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Eddy Verbruggen - @EddyVerbruggen"
   },

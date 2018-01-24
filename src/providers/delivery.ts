@@ -38,6 +38,13 @@ export class DeliveryProvider {
         return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
     }
 
+    getDeliveryRequestsByMatger(requestData) {
+        const action = 'getDeliveryRequestsByMatger';
+        let body = JSON.stringify(Object.assign({ action }, requestData));
+
+        return this.http.post(this.API_URL + 'delivery.php', body).map(res=>res.json());
+    }
+
     getRequestDeliveryInfo(requestData) {
         const action = 'getDeliveryRequestInfo';
         let body = JSON.stringify(Object.assign({ action }, requestData));

@@ -18,6 +18,8 @@ export class AddshelfPage {
   actionText: string = 'اضافة رف';
   formAction: string = 'add';
   showLoader: boolean = false;
+  addLoader: boolean = false;
+  isDisabled: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -26,7 +28,8 @@ export class AddshelfPage {
   ) {
 
     this.addShelfForm = new FormBuilder().group({
-      name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
+      //name: new FormControl('',[Validators.pattern('[0-9A-z]+'), Validators.required]),
+      name: new FormControl('',[Validators.required]),      
       area: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'),Validators.required]),
       cost: new FormControl('',[Validators.pattern('([1-9]+(\.[0-9]+)?)|(0{1,2}(\.[0-9]+)+)'), Validators.required]),
       fridge: new FormControl(0,[Validators.required])
@@ -70,36 +73,46 @@ export class AddshelfPage {
       console.log(shelfForm);
 
       if (this.formAction == 'add') {
-
-
-      this.shelfsProvider.addShelf(shelfForm)
-        .subscribe(
-          ({status, errors}) => {
-
-          if (status == 'success') {
-            this.showToast('تم اضافة الرف بنجاح');
-
-            this.navCtrl.pop();
-          } else {
-
-            let errorsKeys = Object.keys(errors);
-            let msg = errors[errorsKeys[0]][0];
-            this.showToast(msg);
+        setTimeout(() => {
+          this.isDisabled = false; // enable button after 5 second
+        }, 5000);
+        this.addLoader = true; // show loade icon on button
+        this.isDisabled = true; // to disable send button for 5 second
+        this.shelfsProvider.addShelf(shelfForm)
+          .subscribe(
+            ({status, errors}) => {
+  
+            if (status == 'success') {
+              this.isDisabled = false;
+              this.showToast('تم اضافة الرف بنجاح');
+  
+              this.navCtrl.pop();
+            } else {
+  
+              let errorsKeys = Object.keys(errors);
+              let msg = errors[errorsKeys[0]][0];
+              this.showToast(msg);
+            }
+  
+          },
+          err => {
+            console.warn(err);
+            this.showToast('تفقد الاتصال وحاول مجددا');
+            this.showLoader = false
+          }, () => {
+            this.showLoader = false;
+            this.addLoader = false;
           }
-
-        },
-        err => {
-          console.warn(err);
-          this.showToast('تفقد الاتصال وحاول مجددا');
-          this.showLoader = false
-        }, () => {
-          this.showLoader = false;
-        }
-        );
+          );
 
       } else {
 
         if (this.addShelfForm.dirty) {
+          setTimeout(() => {
+            this.isDisabled = false; // enable button after 5 second
+          }, 5000);
+          this.addLoader = true; // show loade icon on button
+          this.isDisabled = true; // to disable send button for 5 second
           shelfForm['id'] = this.InitData.id;
           this.shelfsProvider.editShelf(shelfForm).subscribe(
             res => {
@@ -107,19 +120,22 @@ export class AddshelfPage {
 
 
               if (res.status == 'success') {
-
+                this.addLoader = false;
+                this.isDisabled = false;
                 this.navCtrl.pop();
               } else {
 
                 let errorsKeys = Object.keys(res.errors);
                 let msg = res.errors[errorsKeys[0]][0];
                 this.showToast(msg);
+                this.addLoader = false;
               }
             },
             err => {
               console.warn(err);
               this.showToast(`تفقد الاتصال وحاول مجددا`);
               this.showLoader = false
+              this.addLoader = false;
             }
           )
         } else {
@@ -154,7 +170,14 @@ export class AddshelfPage {
 
         return false;
       } else if (form.get(value).getError('pattern')){
-        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArShelfForm[value]}`);
+        if(value == 'name') {
+          this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ ArShelfForm[value]}`);
+        } else if(value == 'area'){
+          this.showToast(ArShelfForm[value]+ ' يجب ان تتكون من ارقام انجليزية')
+        }
+        else {
+          this.showToast(ArShelfForm[value]+ ' يجب ان يتكون من ارقام انجليزية')
+        }
         return false;
       } else {
 

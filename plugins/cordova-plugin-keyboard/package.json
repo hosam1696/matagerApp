@@ -10,23 +10,23 @@
         "spec": ">=1.1.5 <2.0.0",
         "type": "range"
       },
-      "/Volumes/Macintosh HD 2/work/ionic/rfApp"
+      "D:\\MobileApps\\rfapp"
     ]
   ],
   "_from": "cordova-plugin-keyboard@>=1.1.5 <2.0.0",
-  "_id": "cordova-plugin-keyboard@1.1.5",
+  "_id": "cordova-plugin-keyboard@1.2.0",
   "_inCache": true,
   "_location": "/cordova-plugin-keyboard",
-  "_nodeVersion": "7.1.0",
+  "_nodeVersion": "6.7.0",
   "_npmOperationalInternal": {
-    "host": "packages-18-east.internal.npmjs.com",
-    "tmp": "tmp/cordova-plugin-keyboard-1.1.5.tgz_1488399638319_0.7420670816209167"
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/cordova-plugin-keyboard-1.2.0.tgz_1510790620127_0.5471679724287242"
   },
   "_npmUser": {
     "name": "cjpearson",
     "email": "cjp822@gmail.com"
   },
-  "_npmVersion": "3.10.9",
+  "_npmVersion": "5.5.1",
   "_phantomChildren": {},
   "_requested": {
     "raw": "cordova-plugin-keyboard@^1.1.5",
@@ -41,11 +41,11 @@
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.1.5.tgz",
-  "_shasum": "5e04b5205d195622caaadddb2f34adb52a1c96c4",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.2.0.tgz",
+  "_shasum": "8445812643e4763e7beffed39d279f151bb89aeb",
   "_shrinkwrap": null,
   "_spec": "cordova-plugin-keyboard@^1.1.5",
-  "_where": "/Volumes/Macintosh HD 2/work/ionic/rfApp",
+  "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
   },
@@ -63,8 +63,9 @@
   "devDependencies": {},
   "directories": {},
   "dist": {
-    "shasum": "5e04b5205d195622caaadddb2f34adb52a1c96c4",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.1.5.tgz"
+    "integrity": "sha512-Zng4SgDQQ2BCqeDOvrsgNlM9tcjnxmJoh0Qhex0KltMsoR0g/ONbMTpaVvI8EhNKVO8HJPnhFxxzHxrCPLQ7sQ==",
+    "shasum": "8445812643e4763e7beffed39d279f151bb89aeb",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.2.0.tgz"
   },
   "engines": [
     {
@@ -72,7 +73,7 @@
       "version": ">=3.2.0"
     }
   ],
-  "gitHead": "f08f8c57a4f2125fa3cf4ecc117e40b3753145ff",
+  "gitHead": "7897856fc9df9ae3d017c824e2ba59079aff44bd",
   "homepage": "https://github.com/cjpearson/cordova-plugin-keyboard#readme",
   "keywords": [
     "cordova",
@@ -95,6 +96,5 @@
     "type": "git",
     "url": "git+https://github.com/cjpearson/cordova-plugin-keyboard.git"
   },
-  "scripts": {},
-  "version": "1.1.5"
+  "version": "1.2.0"
 }

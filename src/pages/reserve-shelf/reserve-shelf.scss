@@ -58,9 +58,9 @@ page-reserve-shelf {
             flex:1;
             color: #fff;
             padding: 15px;
-            background-color: color($colors, danger);
+            background-color: color($colors, primary);
             &:first-child {
-              background-color: color($colors, primary);
+              background-color: color($colors, danger);
             }
           }
         }

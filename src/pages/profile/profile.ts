@@ -383,6 +383,7 @@ export class ProfilePage {
               this.noShelfs = 'empty';
               this.showLoader = false
             }
+            console.table(this.AllShelfs);
           } else {
             this.noShelfs = 'empty';
             this.showLoader = false

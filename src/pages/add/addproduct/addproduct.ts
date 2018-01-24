@@ -29,7 +29,8 @@ export class AddproductPage {
   camerError: boolean = false;
   loadImage: boolean = false;
   lastImage;
-
+  addLoader: boolean = false;
+  isDisabled: boolean = false;
   productItems: Array<{ imgName: string | any, is_uploading: boolean,uploaded: boolean, file: any, base?: any }> = [];
   current: number = -1;
   total: number;
@@ -42,9 +43,10 @@ export class AddproductPage {
   proDate:any = new Date(Date.now()).toISOString();
   minDate:any = new Date(Date.now()- 1000*60*60*24*365*10).toISOString();
   maxDate:any = new Date(Date.now()+ 1000*60*60*24*365*10).toISOString();
-  eminDate:any = new Date(Date.now()- 1000*60*60*24*365*10).toISOString();
+  expDate:any = new Date(Date.now()).toISOString();
+  eminDate:any = new Date(Date.now()).toISOString();
   emaxDate:any = new Date(Date.now()+ 1000*60*60*24*365*10).toISOString();
-  expDate:any = new Date(Date.now()+ 1000*60*60*24*30).toISOString();
+  
   constructor(
     @Inject('API_URL') private API_URL,
     @Inject('UPLOAD_PATH') private UPLOAD_PATH,
@@ -68,12 +70,20 @@ export class AddproductPage {
       item_price: new FormControl('', [Validators.required, Validators.pattern('[1-9]+(\.[0-9]+)?|[0]+(\.[0-9]+)+')]),
       item_production_date: new FormControl(''),
       item_expiry_date: new FormControl(''),
-      item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)])
+      item_desc: new FormControl('')
+      
+      // item_desc: new FormControl('', [Validators.required, Validators.minLength(20), Validators.maxLength(254)])
     })
 
   }
 
   ionViewDidLoad() {
+    /* this.proDate = new Date(Date.now()).toISOString();
+    this.minDate = new Date(Date.now()- 1000*60*60*24*365*10).toISOString();
+    this.maxDate = new Date(Date.now()+ 1000*60*60*24*365*10).toISOString();
+    this.eminDate = new Date(Date.now()- 1000*60*60*24*365*10).toISOString();
+    this.emaxDate = new Date(Date.now()+ 1000*60*60*24*365*10).toISOString();
+    this.expDate = new Date(Date.now()+ 1000*60*60*24*30).toISOString(); */
 
     this.InitData = this.navParams.get('pageData');
     console.info('initial data geted when click edit item', this.InitData);
@@ -93,6 +103,7 @@ export class AddproductPage {
           //console.log(status, data);
           if(status === 'success') {
            // console.log('datesssssssssss',data['item_expiry_date']);
+            this.eminDate = data['item_production_date'];
             this.addProductForm.get('item_expiry_date').setValue(data['item_expiry_date']);
             this.addProductForm.get('item_production_date').setValue(data['item_production_date']);
             
@@ -130,6 +141,15 @@ export class AddproductPage {
         //this.eminDate = values.item_production_date;
         //this.expDate = values.item_production_date;
       })
+  }
+
+  changeProdDate(){
+    console.log('selected pro date',this.addProductForm.value['item_production_date']);
+    console.log('date now',new Date(Date.now()).toISOString());
+    
+    this.eminDate = this.addProductForm.value['item_production_date'];
+    //this.emaxDate = new Date(Date.now()+ 1000*60*60*24*365*10).toISOString();
+    this.expDate = this.addProductForm.value['item_production_date'];
   }
   pickImage() {
 
@@ -208,6 +228,11 @@ export class AddproductPage {
           this.showToast(`تاريخ انتهاء الصلاحيه يجب ان يكون اكبر من تاريخ الانتاج`);
           this.showLoader = false;
         }else{
+          setTimeout(() => {
+            this.isDisabled = false; // enable button after 5 second
+          }, 5000);
+          this.addLoader = true; // show loade icon on button
+          this.isDisabled = true; // to disable send button for 5 second
           this.productProvider
             .addProduct(productForm)
             .retry(3)
@@ -215,7 +240,8 @@ export class AddproductPage {
             .subscribe(({ status, errors }) => {
               console.log(status);
               if (status.message == 'success') {
-  
+                this.addLoader = false;
+                this.isDisabled = false;
                 this.addProductForm.reset();
                 this.navCtrl.pop();
   
@@ -224,11 +250,13 @@ export class AddproductPage {
                 let keys = Object.keys(errors);
                 const errMsg: string = errors[keys[0]][0];
                 this.showToast(errMsg);
+                this.addLoader = false;
   
               }
   
             },
             (err) => {
+              this.addLoader = false;
               console.warn(err);
               this.showToast('التطبيق يتطلب اتصال بالانترنت')
             }
@@ -250,6 +278,11 @@ export class AddproductPage {
           this.showToast(`تاريخ انتهاء الصلاحيه يجب ان يكون اكبر من تاريخ الانتاج`);
           this.showLoader = false;
         }else{
+          setTimeout(() => {
+            this.isDisabled = false; // enable button after 5 second
+          }, 5000);
+          this.addLoader = true; // show loade icon on button
+          this.isDisabled = true; // to disable send button for 5 second
           this.productProvider
             .editProduct(ProductForm)
             .retry(3)
@@ -257,7 +290,8 @@ export class AddproductPage {
             .subscribe(({ status, data, errors }) => {
               console.log(status, data);
               if (status.message == 'success') {
-  
+                this.addLoader = false;
+                this.isDisabled = false;
                 this.addProductForm.reset();
                 this.navCtrl.pop();
                 this.presentToast('تم التعديل بنجاح')
@@ -267,10 +301,12 @@ export class AddproductPage {
                 let keys = Object.keys(errors);
                 const errMsg: string = errors[keys[0]][0];
                 this.showToast(errMsg);
+                this.addLoader = false;
   
               }
   
             }, err => {
+              this.addLoader = false;
               console.warn(err);
               this.showToast('التطبيق يتطلب اتصال بالانترنت')
   
@@ -593,7 +629,8 @@ export class AddproductPage {
     const toast = this.toastCtrl.create({
       message: msg,
       duration: 3000,
-      showCloseButton: true
+      showCloseButton: true,
+      closeButtonText: 'اغلاق'
     });
 
     toast.present();

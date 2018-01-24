@@ -24,7 +24,7 @@ export class Signup implements AfterViewInit{
   CityName: string;
   DistName: string;
   showLoader:boolean = false;
-  Name: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)]);
+  Name: FormControl = new FormControl('', [Validators.required]);
   PageFormcontrols: object;
   phoneErr: boolean = false;
   locationOnMap: string = 'الموقع على الخريطة';
@@ -82,7 +82,7 @@ export class Signup implements AfterViewInit{
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       password: new FormControl('', [Validators.required, Validators.minLength(4)]),
       InsurePassword: new FormControl('', [Validators.required, this.insurePass]),
-      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      name: new FormControl('', [Validators.required]),
       email: new FormControl('', Validators.required),
       mobile: new FormControl('', [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
       gender: new FormControl('male', Validators.required),
@@ -93,7 +93,8 @@ export class Signup implements AfterViewInit{
       dist: new FormControl('', this.insureStoreUser),
       level_id: new FormControl('4', [Validators.required]),
       address: new FormControl('', Validators.minLength(3)),
-      cr_num: new FormControl('', [Validators.pattern("[0-9]^"),Validators.minLength(1)]),
+      // cr_num: new FormControl('', [Validators.pattern("[0-9]^"),Validators.minLength(1)]),
+      cr_num: new FormControl('', [Validators.minLength(1)]),
       owner_name: new FormControl('', Validators.minLength(3))
     });
   }
@@ -141,8 +142,13 @@ export class Signup implements AfterViewInit{
       this.showToast(`يرجى ادخال  ${control[0]}`)
     }
     else if (control[1].errors['minlength']) {
-
-      this.showToast(`${control[0]} يجب ان يكون ${control[1].errors.minlength.requiredLength} حروف على الاقل`);
+      if(control[0] == 'اسم المستخدم') {
+        this.showToast(`${control[0]} يجب ان يكون ${control[1].errors.minlength.requiredLength} حروف على الاقل`);
+      } else {
+  
+        this.showToast(`${control[0]} يجب ان يكون ${control[1].errors.minlength.requiredLength} ارقام على الاقل`);
+      }
+      
     }
     else if (control[1].errors['maxlength']) {
 
@@ -206,8 +212,8 @@ export class Signup implements AfterViewInit{
                 dist: new FormControl('', [this.insureStoreUser,(this.SignUpFrom.value.level_id == 2) ? Validators.required : null]),
                 level_id: new FormControl(this.SignUpFrom.value.level_id, [Validators.required]),
                 address: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, Validators.minLength(3)]),
-                cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1),Validators.pattern("[0-9]*")]),
-      
+                // cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1),Validators.pattern("[0-9]*")]),
+                cr_num: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required : null, this.insureStoreUser, Validators.minLength(1)]),
       
                 owner_name: new FormControl('', [(this.SignUpFrom.value.level_id == 2) ? Validators.required:null,this.insureStoreUser,Validators.minLength(4)])
               });
@@ -218,7 +224,7 @@ export class Signup implements AfterViewInit{
               username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
               password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
               InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
-              name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
+              name: new FormControl(this.SignUpFrom.value.name, [Validators.required]),
               email: new FormControl(this.SignUpFrom.value.email, Validators.required),
               mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
               gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
@@ -241,7 +247,7 @@ export class Signup implements AfterViewInit{
               username: new FormControl(this.SignUpFrom.value.username, [Validators.required, Validators.minLength(3)]),
               password: new FormControl(this.SignUpFrom.value.password, [Validators.required, Validators.minLength(4)]),
               InsurePassword: new FormControl(this.SignUpFrom.value.InsurePassword, [Validators.required, this.insurePass]),
-              name: new FormControl(this.SignUpFrom.value.name, [Validators.required, Validators.minLength(5)]),
+              name: new FormControl(this.SignUpFrom.value.name, [Validators.required]),
               email: new FormControl(this.SignUpFrom.value.email, Validators.required),
               mobile: new FormControl(this.SignUpFrom.value.mobile, [Validators.required, Validators.pattern("[0-9]+"), Validators.minLength(9), Validators.maxLength(9)]),
               gender: new FormControl(this.SignUpFrom.value.gender, Validators.required),
@@ -317,10 +323,9 @@ export class Signup implements AfterViewInit{
           } else if (this.SignUpFrom.get(value).getError('maxlength')) {
             this.showToast(`${ArSignForm[value]} يجب ان يكون ${this.SignUpFrom.get(value).getError('maxlength').requiredLength} ارقام`);
           } else if (this.SignUpFrom.get(value).getError('pattern')) {
-            if(value == 'reg_num') {
+            if(value == 'cr_num') {
                 this.showToast(ArSignForm[value]+ ' يجب ان يتكون من ارقام انجليزية')
             } else {
-
               this.showToast(`${ArSignForm[value]} غير صحيح`)
             }
           }
