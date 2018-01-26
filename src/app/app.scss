@@ -46,7 +46,35 @@ ion-app._gmaps_cdv_ .nav-decor{
     }
 }
 
+.item-placeholder-head {
+    background-color: #ddd;
+    border-radius: 4px;
+    height: 10px;
+    width: 0;
+    margin: 10px 0 !important;
+    animation: fillWidthHead 0.4s 0.1s linear forwards 
+}
 
+.item-placeholder-para {
+    background-color: #ddd;
+    border-radius: 4px;
+    height: 10px;
+    width: 0;
+    animation: fillWidthPara 0.4s 0.1s linear forwards;
+}
+.margin-bottom {
+    margin-bottom: 10px !important
+}
+@keyframes fillWidthHead {
+    to {
+        width: 25%
+    }
+}
+@keyframes fillWidthPara {
+    to {
+        width: 20%
+    }
+}
 .success-toast {
   .toast-container {
 

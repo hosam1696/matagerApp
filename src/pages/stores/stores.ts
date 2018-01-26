@@ -14,7 +14,8 @@ export class StoresPage {
   dataFromModal: ImodalData| any;
   initLimit: number = 10;
   initStart: number = 0;
-  showLoader: boolean = true;
+  showLoader: boolean = false;
+  firstShowLoader: boolean = true;
   allStores: any[] = [];
   moreData: boolean = true;
   netError: boolean = false;
@@ -161,11 +162,13 @@ export class StoresPage {
         }
       },
       err => {
-        [this.showLoader, this.netError] = [false, true];
+        [this.showLoader, this.netError, this.firstShowLoader] = [false, true, false];
         console.warn(err)
       },
       () => {
         this.showLoader = false;
+        this.firstShowLoader = false;
+        
       }
       )
   }

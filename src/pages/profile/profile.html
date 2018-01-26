@@ -220,7 +220,31 @@
 
   <ion-card *ngIf="showContent == 'products' && userLocal " class="show-card products-card">
 
+  <ion-grid padding-horizontal *ngIf="showLoader">
+    <ion-row >
+      <ion-col col-6>
+        <div class="col-content">
   
+          <img src="assets/img/adds_02.png" alt="">
+  
+          <p class=" item-placeholder-head"></p>
+          <p class=" item-placeholder-para margin-bottom"></p>
+        </div>
+  
+      </ion-col>
+      <ion-col col-6>
+        <div class="col-content">
+  
+          <img src="assets/img/adds_02.png" alt="">
+  
+           <p class=" item-placeholder-head"></p>
+           <p class=" item-placeholder-para margin-bottom"></p>
+ 
+        </div>
+  
+      </ion-col>
+    </ion-row>
+  </ion-grid>
     <p text-center *ngIf="noAcceptedItems">
       <br> لا يوجد منتجات تم قبول تسليمها حتى الان
     </p>
@@ -297,9 +321,11 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <p text-center *ngIf="showLoader">
-      <hsa-loader></hsa-loader>
-    </p>
+
+
+
+      
+
 
     <!--
           <ion-infinite-scroll (ionInfinite)="fetchMoreProducts($event)">

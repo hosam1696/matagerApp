@@ -33,14 +33,8 @@ export class ProductPage {
     public viewCtrl: ViewController
 
   ) {
-
-    console.log(this.navParams.data);
-
     this.initId = this.navParams.get('pageData');
-
     this.isModal = this.navParams.get('isModal');
-
-
   }
   closeModal() {
     this.viewCtrl.dismiss()
@@ -53,24 +47,7 @@ export class ProductPage {
     if (!this.userLocal) {
       this.userLocal= JSON.parse(localStorage.getItem('userLocalData'));
     }
-    console.log('ionViewDidLoad ProductPage');
     this.getProductById(this.initId);
-
-    //this.getComments();
-    /*let commentDate = {
-      user_id: this.userLocal.id,
-      item_id: this.initId
-    };
-    let productId = this.itemProvider.getProductById(this.initId);
-    let getComment =this.commentProvider.getComments(commentDate, this.initLimit)
-
-    Observable.merge(getComment, productId)
-      .subscribe(res=>{
-        console.log('%c%s', 'font-size: 30px; color: #555','merged response');
-        console.log(res.data);
-
-      })*/
-
   }
 
   getProductById(id) {
@@ -121,24 +98,14 @@ export class ProductPage {
   }
 
   watchHeight(event) {
-
     const textArea = this.commentInput.nativeElement;
-
     // testing >> console.log(textArea.scrollHeight, textArea.scrollHeight);
-
     textArea.style.height = 'auto';
-
     textArea.style.height  = textArea.scrollHeight + 'px';
-
   }
 
   addComment(comment_text) {
-
-    //console.log(this.commentInput, this.eleRef.nativeElement(this.commentInput));
-    console.log(comment_text);
-
-    console.log(this.initId, this.productData, this.userLocal);
-
+    console.log(comment_text, this.initId, this.productData, this.userLocal);
     if (comment_text && comment_text.trim() != '') {
       let commentInfo = {
         user_id: this.userLocal.id,

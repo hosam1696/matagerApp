@@ -17,7 +17,8 @@ export class Exporter {
   locationError: any = null;
   initLimit: number = 10;
   initStart: number = 0;
-  showLoader: boolean = true;
+  showLoader: boolean = false;
+  firstShowLoader: boolean = true;
   allExporters: any[] = [];
   moreData: boolean = true;
   netError:boolean = false;
@@ -53,11 +54,12 @@ export class Exporter {
         }
       },
       err => {
-         [this.showLoader, this.netError] = [false, true];
+        [this.showLoader, this.netError, this.firstShowLoader] = [false, true, false];
         console.warn(err)
       },
       () => {
-        this.showLoader = false
+        this.showLoader = false;
+        this.firstShowLoader = false;
       }
       )
 

@@ -31,25 +31,85 @@
   </p>
 
   <ion-refresher (ionRefresh)="refreshExporter($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles"
-                           refreshingText="جلب المحتوى">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="اسحب لتحديث المحتوى" refreshingSpinner="circles" refreshingText="جلب المحتوى">
 
     </ion-refresher-content>
   </ion-refresher>
   <p text-center *ngIf="netError" class="err-small">
     <ion-icon name="ios-wifi"></ion-icon>
-    التطبيق يتطلب اتصال بالانترنت. <span><br> تفقد الاتصال وحاول مجددا</span>
+    التطبيق يتطلب اتصال بالانترنت.
+    <span>
+      <br> تفقد الاتصال وحاول مجددا</span>
   </p>
-  <p text-center *ngIf="showLoader == true">
+  <p text-center *ngIf="showLoader">
     <hsa-loader></hsa-loader>
   </p>
+  <ion-list padding no-lines *ngIf="firstShowLoader">
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+
+    <ion-item no-padding margin-bottom="4px" text-start>
+      <div class="item-avatar" item-left>
+        <img src="assets/img/store_col.png" alt="">
+      </div>
+      <h2 class="item-placeholder-head"></h2>
+      <div class="exporter-info">
+        <p class="item-placeholder-para"></p>
+      </div>
+    </ion-item>
+  </ion-list>
 
 
   <ion-list padding no-lines>
-    <ion-item
-      *ngFor="let exporter of allExporters"
-      (click)="navigateToPage('VprofilePage', exporter.id)"
-      no-padding margin-bottom="4px" text-start>
+    <ion-item *ngFor="let exporter of allExporters" (click)="navigateToPage('VprofilePage', exporter.id)" no-padding margin-bottom="4px"
+      text-start>
       <div class="item-avatar" item-left>
         <img src="assets/img/store_col.png" alt="">
       </div>
@@ -59,7 +119,8 @@
         <!-- <ion-icon name="pin"></ion-icon> -->
       </h2>
       <div class="exporter-info" *ngIf="exporter.distance">
-        <p><span class="kilos">{{twoDigitsFloats(exporter.distance)}}</span> ك.م</p>
+        <p>
+          <span class="kilos">{{twoDigitsFloats(exporter.distance)}}</span> ك.م</p>
         <!--
         <p><span class="stars">5</span> نجوم</p>
         -->
