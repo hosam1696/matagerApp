@@ -21,6 +21,9 @@ export class RequestPage {
   storeInfo: any;
   localUser: IlocalUser = JSON.parse(localStorage.getItem('userLocalData'));
   showLoader: boolean = false;
+  addLoader: boolean = false;
+  isDisabled: boolean = false;
+
   AllDuesShelfs: Array<{shelf_id: string, shelf_name: string|number, totalShelfDues: number, checked?:boolean}>;
   constructor(
     public navCtrl: NavController,
@@ -68,6 +71,7 @@ export class RequestPage {
   imagePath(img) {
     return 'http://rfapp.net/templates/default/uploads/avatars/'+img
   }
+
   detectChange(event) {
     console.log(event);
 
@@ -82,7 +86,16 @@ export class RequestPage {
 
 
   sendRequest() {
+
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
+
+
     if(this.insuerChecked) {
+
+      this.addLoader = true; // show loade icon on button
+      this.isDisabled = true; // to disable send button for 5 second
       console.log(this.AllDuesShelfs);
       let data = this.AllDuesShelfs
                     .filter(d=>d.checked)
@@ -99,7 +112,6 @@ export class RequestPage {
         .subscribe(({status, errors})=>{
           console.log(status);
           if (status === 'success') {
-            
             this.showToast('تم ارسال طلبك بنجاح');
             setTimeout(()=>{
               this.navCtrl.pop();
@@ -111,9 +123,12 @@ export class RequestPage {
 
         },err => {
           console.warn(err);
+          this.addLoader = false
           this.showLoader = false
         },()=>{
           this.showLoader = false
+          this.addLoader = false
+          this.isDisabled = false;
         })
     } else {
       this.showToast('رجاء تحديد رف واحد على الاقل')

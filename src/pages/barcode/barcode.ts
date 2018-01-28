@@ -21,6 +21,7 @@ export class BarcodePage {
   billTotal: any = 0;
   showLoader: boolean = false;
   sendshowLoader: boolean = false;
+  isDisabled: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner,
     public salesProvider: SalesProvider,
     public toastCtrl: ToastController
@@ -214,8 +215,12 @@ export class BarcodePage {
   }
 
   private addBill() {
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
 
     if (this.userLocal && this.userLocal) {
+      this.isDisabled = true; // to disable send button for 5 second
       this.sendshowLoader = true;
 
       let billData = {
@@ -237,10 +242,12 @@ export class BarcodePage {
             this.showToast(errors);
           }
         }, err => {
+          this.isDisabled = false; // to disable send button for 5 second
           console.warn(err);
           this.showToast('التطبيق يتطلب اتصال بالانترنت')
         }, () => {
           this.sendshowLoader = false;
+          this.isDisabled = false; // to disable send button for 5 second
         })
 
     }

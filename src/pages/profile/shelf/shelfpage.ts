@@ -13,6 +13,8 @@ export class ShelfModal {
     modalInfo: any;
     userLocal = JSON.parse(localStorage.getItem('userLocalData'));
     showLoader: boolean = false;
+    isDisabled: boolean = false;
+    addLoader: boolean = false;
     reserveShelfForm: FormGroup;
     nowDateString: any;
     startDate:any = new Date(Date.now()).toISOString();
@@ -90,8 +92,16 @@ export class ShelfModal {
       let id = this.userLocal?this.userLocal.id:0;
       this.navCtrl.push(page, {pageData: [user_id, id]})
     }
+
     requestBooking() {
         this.showLoader = true;
+        this.addLoader = true; // show loade icon on button
+        this.isDisabled = true; // to disable send button for 5 second
+
+        setTimeout(() => {
+            this.isDisabled = false; // enable button after 5 second
+          }, 5000);
+
         let reserveShelfData = {
             shelf_id: this.modalInfo.id,
             user_id : this.userLocal.id,
@@ -103,14 +113,18 @@ export class ShelfModal {
             // or use this also to cnvert date from from 2017-11-18T09:21:54.728Z to 2017-11-18
             //new Date("2017-11-18T09:21:54.728Z").toLocaleDateString().replace(/\//g,'-')
         };
-
+        
         this.shelfsProvider.reserveShelf(reserveShelfData)
           .subscribe(({status, errors, data})=>{
             if(status === 'success' && data == true) {
+                this.isDisabled = false;
+                this.addLoader = false; 
                 this.showToast(`لقد تم ارسال طلب حجزك الى ${this.modalInfo.username}`);
                 this.viewCtrl.dismiss();
             }else if(status === 'failed'){
                 this.showToast(errors);
+                this.isDisabled = false;
+                this.addLoader = false;
             }
           })
 

@@ -27,8 +27,8 @@
       </ion-avatar>
       <h3 >
         <span>{{ pageData.name }}</span>
-        <span class="since-time">منذ
-        {{pageData.date_added | sincedate}}
+        <span class="since-time">
+        {{pageData.date_added | amTimeAgo}}
       </span>
       </h3>
       <p>{{ pageData.notifiy_message}}</p>

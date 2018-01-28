@@ -1,4 +1,4 @@
-import { SinceDatePipeModule } from '../../../app/service/since-date/since-date.module';
+import { MomentModule } from 'angular2-moment';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { SalesnotificationPage } from './salesnotification';
@@ -9,7 +9,7 @@ import { SalesnotificationPage } from './salesnotification';
   ],
   imports: [
     IonicPageModule.forChild(SalesnotificationPage),
-    SinceDatePipeModule
+    MomentModule
   ],
 })
 export class SalesnotificationPageModule {}

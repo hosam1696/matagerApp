@@ -4,7 +4,7 @@
   <ion-navbar color="primary">
     <ion-title>فحص المنتج</ion-title>
     <ion-buttons start >
-      <ion-spinner *ngIf="showLoader" small name="crescent" color="light"></ion-spinner>
+      
     </ion-buttons>
   </ion-navbar>
   <ion-toolbar no-padding>
@@ -16,7 +16,9 @@
   </ion-toolbar>
 <span class="or-text">ادخل الرقم  يدويا</span>
   <ion-toolbar class="toolbar-btn">
-    <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">نفذ</button>
+    <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">نفذ 
+      <ion-spinner *ngIf="showLoader" small name="crescent" color="light"></ion-spinner>
+    </button>
     
     <input type="number" (keyup)="keepItNumber(enetredcode.value)" #enetredcode placeholder=" رقم الباركود">
 
@@ -101,7 +103,7 @@
 
 
 
-    <button  *ngIf="showData && userLocal.level_id == 2" class="bottom-btn" ion-button color="primary" full (click)="addBill()">
+    <button  *ngIf="showData && userLocal.level_id == 2" [disabled]="isDisabled" class="bottom-btn" ion-button color="primary" full (click)="addBill()">
       اضف فاتورة&nbsp;
       <hsa-loader *ngIf="sendshowLoader" Color="light"></hsa-loader>
     </button>
