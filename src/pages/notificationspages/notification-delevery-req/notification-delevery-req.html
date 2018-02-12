@@ -82,8 +82,12 @@
 
 
     <section id="float-btn" *ngIf="DeliverData.delivery_status == 0&&userLocal.level_id==2">
-      <button color="primary" (click)="sendReplyRequest()">موافقة</button>
-      <button color="danger" (click)="sendReplyRequest(false)">رفض</button>
+      <button color="primary" [disabled]="isDisabled" (click)="sendReplyRequest()">موافقة
+          <ion-spinner *ngIf="acceptLoader" name="bubbles"></ion-spinner>
+      </button>
+      <button color="danger" [disabled]="isDisabled" (click)="sendReplyRequest(false)">رفض
+          <ion-spinner *ngIf="refuseLoader" small name="bubbles"></ion-spinner>
+      </button>
     </section>
 
   </ion-item-group>

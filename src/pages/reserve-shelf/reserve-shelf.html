@@ -95,8 +95,12 @@
         </ion-item>
         <section id="float-btn" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status == 0)||shelfData.shelf_status == 0&&userLocal.level_id==2">
           
-          <button color="danger" (click)="sendReplyRequest(false)">رفض</button>
-          <button color="primary" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status != 2)" (click)="sendReplyRequest()">موافقة</button>
+          <button [disabled]="isDisabled" color="danger" (click)="sendReplyRequest(false)">رفض
+            <ion-spinner *ngIf="refuseLoader" name="bubbles"></ion-spinner>
+          </button>
+          <button [disabled]="isDisabled" color="primary" *ngIf="(shelfData.shelf_status == 0 && shelfData.percentage_status != 2)" (click)="sendReplyRequest()">موافقة
+            <ion-spinner *ngIf="acceptLoader" name="bubbles"></ion-spinner>
+          </button>
         </section>
 
         <ion-card id="sales-percentage" *ngIf="shelfData.shelf_status == 0&&shelfData.percentage_status == 0&&userLocal.level_id == 2">
@@ -112,8 +116,10 @@
           text-align:center;">
           <!-- <ion-range min="0" max="100" step=".5" pin="true" value="0" [(ngModel)]="salesPercentage"></ion-range> -->
           <p text-center>
-            <button ion-button small (click)="sendPercentage()">
-        ارسال للحصول على الموافقة
+            <button ion-button small [disabled]="isDisabled" (click)="sendPercentage()">
+        
+              ارسال للحصول على الموافقة
+              <ion-spinner *ngIf="addLoader" name="bubbles"></ion-spinner>
       </button>
           </p>
         </ion-card>

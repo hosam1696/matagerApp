@@ -16,6 +16,9 @@ export class NotificationDuePage {
   showMsg: boolean = false;
   DueDetails: DueDetails;
   netErr: boolean = false;
+  acceptLoader: boolean = false;
+  refuseLoader: boolean = false;
+  isDisabled: boolean = false;
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      private dueProvider: DuesProvider,
@@ -62,7 +65,12 @@ export class NotificationDuePage {
   }
 
   acceptRequest() {
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+      }, 5000);
 
+    this.isDisabled = true; // to disable send button for 5 second
+    this.acceptLoader = true;
     let duedata = {
       user_id: this.pageData.user_id,
       recieve_user_id: this.pageData.send_user_id,
@@ -81,45 +89,70 @@ export class NotificationDuePage {
         } else {
           this.showToast('الرجاء المحاولة مرة اخرى')
         }
+      },err => {
+        this.acceptLoader = false
+        this.isDisabled = false;
+        console.warn(err);
+        this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
+      },() => {
+        this.acceptLoader = false
+        this.isDisabled = false;
       })
   }
   refuseRequest() {
-      this.showMsg = true;
-       if (this.dueMsg && this.dueMsg.trim() != '') {
-        let duedata = {
-          user_id: this.pageData.user_id,
-          recieve_user_id: this.pageData.send_user_id,
-          url: this.pageData.url,
-          due_message: this.dueMsg.replace(/\n/g,'<br><br>')
-        }
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+      }, 5000);
 
-        this.dueProvider
-          .refuseRequest(duedata)
-          .debounceTime(1500)
-          .subscribe(({status})=>{
-            if (status === 'success') {
-              this.showToast('تم ارسال ردك بنجاح');
-              setTimeout(()=>{
-                this.navCtrl.pop();
-              }, 1500);
-            } else {
-              this.showToast('الرجاء المحاولة مرة اخرى')
-            }
-          })
-       } else {
-         this.showToast('يرجى ادخال رسالة الرفض')
-       }
+    this.isDisabled = true; // to disable send button for 5 second
+    this.refuseLoader = true;
+    this.showMsg = true;
+      if (this.dueMsg && this.dueMsg.trim() != '') {
+      let duedata = {
+        user_id: this.pageData.user_id,
+        recieve_user_id: this.pageData.send_user_id,
+        url: this.pageData.url,
+        due_message: this.dueMsg.replace(/\n/g,'<br><br>')
       }
 
-
-      showToast(msg) {
-        let toast = this.toastCtrl.create({
-          message: msg,
-          duration: 2000,
-          position:'top'
-        });
-        toast.present();
+      this.dueProvider
+        .refuseRequest(duedata)
+        .debounceTime(1500)
+        .subscribe(({status})=>{
+          if (status === 'success') {
+            this.showToast('تم ارسال ردك بنجاح');
+            setTimeout(()=>{
+              this.navCtrl.pop();
+            }, 1500);
+          } else {
+            this.showToast('الرجاء المحاولة مرة اخرى')
+          }
+        },
+        err => {
+          this.refuseLoader = false
+          this.isDisabled = false;
+          console.warn(err);
+          this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
+        },() => {
+          this.refuseLoader = false
+          this.isDisabled = false;
+        })
+      } else {
+        this.refuseLoader = false
+        this.isDisabled = false;
+        this.showToast('يرجى ادخال رسالة الرفض')
       }
+  }
+
+
+  showToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      position:'top'
+    });
+    toast.present();
+  }
 
   imagePath(img) {
     return 'http://rfapp.net/templates/default/uploads/avatars/'+img

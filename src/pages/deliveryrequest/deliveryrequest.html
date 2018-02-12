@@ -21,13 +21,9 @@
         </ion-option>
       </ng-container>
       <ng-container *ngIf="DeliverData">
-        <ion-option  value="" selected>قم بتحديد رف</ion-option>
         <ion-option value="{{DeliverData.matger_id}},{{DeliverData.shelf_id}},{{DeliverData.name}}">
           {{InitData.shelf_name}} &gt;{{InitData.name}}
         </ion-option>
-        <!-- <ion-option text-center
-                [value]="DeliverData.matger_id+','+ DeliverData.shelf_id+','+DeliverData.shelf_name">{{InitData.shelf_name}} &gt;{{InitData.matger_name}}
-        </ion-option> -->
       </ng-container>
     </ion-select>
   </ion-item>

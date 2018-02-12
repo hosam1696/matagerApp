@@ -592,10 +592,11 @@ export class ProfilePage {
     if (this.userLocal.latitude && this.userLocal.longitude) {
       maps = this.userLocal.latitude + ',' + this.userLocal.longitude; // this.userLocal.latitude.concat(',',this.userLocal.longitude)
     }
-    console.info(maps);
+    //console.info(maps);
     const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
-    const tab = this.iab.create(url);
-
+    //console.info(url);
+    const tab = this.iab.create(url,'_blank');
+    //console.info(tab);
     tab.show();
   }
 

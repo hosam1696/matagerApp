@@ -16,7 +16,7 @@
   </ion-toolbar>
 <span class="or-text">ادخل الرقم  يدويا</span>
   <ion-toolbar class="toolbar-btn">
-    <button ion-button no-margin color="primary" (click)="scanEnteredBarcode(enetredcode.value)">نفذ 
+    <button ion-button no-margin color="primary" [disabled]="isDisabled" (click)="scanEnteredBarcode(enetredcode.value)">نفذ 
       <ion-spinner *ngIf="showLoader" small name="crescent" color="light"></ion-spinner>
     </button>
     

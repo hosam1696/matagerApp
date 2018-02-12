@@ -95,7 +95,8 @@ export class VprofilePage {
 
     console.info(maps);
     const url = 'https://www.google.com/maps?q=' + maps + '&z=17&hl=ar';
-    const tab = this.iab.create(url);
+    console.info(url);
+    const tab = this.iab.create(url,'_blank');
 
     tab.show();
   }

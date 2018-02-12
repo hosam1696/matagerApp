@@ -16,7 +16,7 @@ export class Contactus {
       Name: new FormControl('', [Validators.required, Validators.minLength(8)]),
       Email: new FormControl('', [Validators.required,Validators.minLength(10)]),
       Address: new FormControl(''),
-      Message: new FormControl('', [Validators.required, Validators.minLength(20)]),
+      Message: new FormControl('', [Validators.required, Validators.minLength(5)]),
     });
 
     console.log(this.contactForm.value)

@@ -45,7 +45,7 @@
         <span>{{request.shelf_name}}</span><span>&nbsp; &gt; &nbsp;<b>{{request.name}}</b></span>
       </p>
       <p>حالة التسليم
-        <ion-badge
+        <ion-badge (click)="showInfo(request)" 
           [color]="(request.delivery_status == 1)?'primary':((request.delivery_status == 2)?'danger':'bgColor')"
           item-left>
           <span *ngIf="request.delivery_status == 0">معلق</span>

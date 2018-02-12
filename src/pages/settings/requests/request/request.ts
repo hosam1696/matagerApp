@@ -51,7 +51,6 @@ export class RequestPage {
       .subscribe(({data, status, errors})=>{
         if (status === 'success') {
           //(Object as any).values(data).forEach(due=>due.checked = false);
-
           let mappedData=Object.keys(data).map(key=>{
             let value = data[key];
             value.checked = false;
@@ -118,7 +117,7 @@ export class RequestPage {
             },2000);
 
           } else {
-            this.showToast('الرجاؤ المحاولة مرة اخرى')
+            this.showToast('الرجاء المحاولة مرة اخرى')
           }
 
         },err => {

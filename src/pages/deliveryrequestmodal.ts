@@ -33,7 +33,7 @@ import { NavParams, ViewController } from 'ionic-angular';
           <img [src]="(product.item_image)?'templates/default/uploads/items/thumbs/'+product.item_image:'assets/img/no_image.png'" alt="product alternative image">
         </ion-thumbnail>
         <h2 >{{product.item_name}}</h2>
-        <p ><b>الكود:</b> {{product.item_code}}</p>
+        <p *ngIf="product.item_code != '0' "><b>الكود:</b> {{product.item_code}}</p>
         <p ><b>الكمية:</b> {{product.item_quantity}}</p>
     </ion-item>
 

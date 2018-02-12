@@ -20,6 +20,9 @@ export class NotificationDeleveryReqPage {
   showLoader: boolean = true;
   showRefuseMsg: boolean = false;
   refuseMsg: any = '';
+  acceptLoader: boolean = false;
+  refuseLoader: boolean = false;
+  isDisabled: boolean = false;
   constructor(public navCtrl: NavController,
     public toastCtrl: ToastController,
     public navParams: NavParams,
@@ -95,7 +98,14 @@ export class NotificationDeleveryReqPage {
   sendReplyRequest(accept: boolean = true) {
     if (this.userLocal.level_id == 2) {
 
+      setTimeout(() => {
+        this.isDisabled = false; // enable button after 5 second
+        }, 5000);
+
+      this.isDisabled = true; // to disable send button for 5 second
+
       if (accept) {
+        this.acceptLoader = true;
         let requestData = {
           'receive_user_id': this.pageData.send_user_id,
           'user_id': this.pageData.user_id,
@@ -115,15 +125,18 @@ export class NotificationDeleveryReqPage {
             }
           },
           err => {
-
+            this.acceptLoader = false
+            this.isDisabled = false;
             console.warn(err);
             this.showToast('التطبيق يتطلب اتصال بالانترنت. تفقد الاتصال وحاول مجددا')
-          }
-        )
+          },() => {
+            this.acceptLoader = false
+            this.isDisabled = false;
+          })
       } else {
-
+        this.refuseLoader = true;
         this.showRefuseMsg = true;
-        console.log('refuse message', this.refuseMsg);
+        console.log('refuse message', this.refuseLoader);
         if (this.refuseMsg && this.refuseMsg.trim() != '') {
           let requestData = {
             'receive_user_id': this.pageData.send_user_id,
@@ -145,12 +158,18 @@ export class NotificationDeleveryReqPage {
               }
             },
             err => {
+              this.refuseLoader = false
+              this.isDisabled = false;
               console.warn(err);
               this.showToast('التطبيق يتطلب اتصال بالانترنت')
-            }
-          )
+            },()=>{
+              this.refuseLoader = false;
+              this.isDisabled = false;
+            })
 
         } else {
+          this.refuseLoader = false;
+          this.isDisabled = false;
           this.showToast('يرجى ادخال سبب للرفض ليتم ارساله الى المورد')
         }
 

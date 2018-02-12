@@ -95,7 +95,11 @@
 
 
       <section id="float-btn" *ngIf="DueDetails?.status==0">
-        <button color="primary" (click)="acceptRequest()">موافقة</button>
-        <button color="danger" (click)="refuseRequest()">رفض</button>
+        <button color="primary" [disabled]="isDisabled" (click)="acceptRequest()">موافقة
+            <ion-spinner *ngIf="acceptLoader" name="bubbles"></ion-spinner>
+        </button>
+        <button color="danger" [disabled]="isDisabled" (click)="refuseRequest()">رفض
+            <ion-spinner *ngIf="refuseLoader" name="bubbles"></ion-spinner>
+        </button>
       </section>
 </ion-content>

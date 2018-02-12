@@ -43,7 +43,7 @@ export class RequestsPage {
             this.AllDues= [];
             event&&event.complete();
 
-            console.log(Array.prototype.slice.call(res.data));
+            console.log('sssssssssssssssssssss',Array.prototype.slice.call(res.data));
 
             let resKeys = Object.keys(res.data); // Array.from(res.data) || Array.prototype.slice.call(res.data)
             for (let key of resKeys) {
@@ -69,6 +69,7 @@ export class RequestsPage {
   refreshData(event) {
     this.getDues(this.localUser.id,event)
   }
+  
   toRequestPage(pageData) {
     this.navCtrl.push('RequestPage', {pageData});
   }

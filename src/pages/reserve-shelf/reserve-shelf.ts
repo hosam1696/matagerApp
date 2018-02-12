@@ -17,6 +17,11 @@ export class ReserveShelfPage {
   showLoader: boolean = false;
   salesPercentage: any;
   noShelf: boolean = false;
+  addLoader: boolean = false;
+  acceptLoader: boolean = false;
+  refuseLoader: boolean = false;
+  isDisabled: boolean = false;
+
   userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
   constructor(public navCtrl: NavController,
@@ -82,6 +87,13 @@ export class ReserveShelfPage {
   }
 
   sendPercentage() {
+
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
+
+    this.addLoader = true; // show loade icon on button
+    this.isDisabled = true; // to disable send button for 5 second
     // the case when the store will ask for a sale percentage
     const salesPercentage = (this.salesPercentage) ? this.salesPercentage : 0;
     let percentageData = {
@@ -96,7 +108,7 @@ export class ReserveShelfPage {
     this.shelfProvider.addShelfPercentage(percentageData)
       .subscribe(({status, errors}) => {
           if (status == 'success') {
-
+            
             this.showToast(`لقد تم ارسال طلب  نسبة المبيعات الى ${this.pageData.name}`);
             this.navCtrl.pop();
           } else {
@@ -106,17 +118,26 @@ export class ReserveShelfPage {
 
         },
         err => {
-
+          this.addLoader = false;
+          this.isDisabled = false;
           this.showToast('التطبيق يتطلب اتصال بالانترنت');
           console.warn(err);
 
+        },() => {
+          this.addLoader = false;
+          this.isDisabled = false;
         })
 
   }
 
   sendReplyRequest(accept: boolean = true): void {
+    setTimeout(() => {
+      this.isDisabled = false; // enable button after 5 second
+    }, 5000);
+    (accept) ? (this.acceptLoader = true) : (this.refuseLoader = true)
+    this.isDisabled = true; // to disable send button for 5 second
 
-    if (this.userLocal.level_id == 2) { // this case when the store will reply directly to the shelf reserve request either accept or refuse
+    if (this.userLocal.level_id == 2) { // this case when the store will reply directly to the shelf reserve request    either accept or refuse
 
       if (this.shelfData) {
         let requestData = {
@@ -133,13 +154,19 @@ export class ReserveShelfPage {
               this.navCtrl.pop();
             }
           }, err => {
+            (accept) ? (this.acceptLoader = false) : (this.refuseLoader = false)
+            this.isDisabled = false;
             console.warn(err);
             this.showToast('التطبيق يتطلب اتصال بالانترنت');
-          }
-        )
+          },() => {
+            (accept) ? (this.acceptLoader = false) : (this.refuseLoader = false)
+            this.isDisabled = false;
+          })
+        
 
       } else {
-        console.log('%c%s', 'font-size: 22px;color: cyan', 'لا يوجد رفوف من قاعدة البيانات خاصة بهذا العضو')
+        console.log('%c%s', 'font-size: 22px;color: cyan', 'لا يوجد رفوف من قاعدة البيانات خاصة بهذا العضو');
+        (accept) ? (this.acceptLoader = false) : (this.refuseLoader = false)
       }
 
 
@@ -162,8 +189,13 @@ export class ReserveShelfPage {
           }
 
         }, err => {
+          (accept) ? (this.acceptLoader = false) : (this.refuseLoader = false)
+          this.isDisabled = false;
           console.warn(err);
           this.showToast('التطبيق يتطلب اتصال بالانترنت');
+        },() => {
+          (accept) ? (this.acceptLoader = false) : (this.refuseLoader = false)
+          this.isDisabled = false;
         })
 
     }

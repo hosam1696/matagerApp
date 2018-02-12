@@ -84,6 +84,8 @@ export class DeliveryrequestPage {
         if (status == 'success') {
           this.showDeliveryInfo = true;
           this.DeliverData = data;
+          this.shelfNumbers = (this.DeliverData.matger_id+','+this.DeliverData.shelf_id+','+this.DeliverData.name);
+          console.log('this.shelfNumbers',this.shelfNumbers);
           //console.log('delivered data to edit it is ', this.DeliverData);
           //console.log('matger to edit it is ', this.DeliverData.matger_id);
           //console.log('shelf data to edit it is ', this.DeliverData.shelf_id);
@@ -220,6 +222,7 @@ export class DeliveryrequestPage {
     setTimeout(() => {
       this.isDisabled = false; // enable button after 5 second
     }, 5000);
+    
     if (this.shelfNumbers) {
       console.log('shelfNumbers is', this.shelfNumbers);
       let [matger_id, shelf_id, shelf_name, matger_name] = this.shelfNumbers.split(',');
