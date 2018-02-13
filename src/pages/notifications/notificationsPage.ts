@@ -37,6 +37,7 @@ export class NotificationsPage {
             this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
         if (this.userLocal) {
+            console.log(`this local ${this.userLocal}`);
             [this.noUser, this.showLoader, this.noData, this.netErr] = [false, true, false, false];
             this.getNotifications();
         } else {
@@ -80,7 +81,7 @@ export class NotificationsPage {
             ({status, data}) => {
                 if (status == 'success') {
 
- event.complete();
+                    event.complete();
                     this.AllNotifications = [...this.AllNotifications, ...data];
                     console.log('data.length',data.length);
                     console.log('this.initLimit',this.initLimit);
@@ -89,7 +90,7 @@ export class NotificationsPage {
                     } else {
                         this.moreData = true;
                     }
- console.log('this.moreData',this.moreData);
+                    console.log('this.moreData',this.moreData);
                 } else {
 
                     event.complete();
@@ -115,7 +116,7 @@ export class NotificationsPage {
         this.notificationProvider.getNotifications(this.userLocal.id, this.initLimit, this.initStart).subscribe(
             ({status, data}) => {
                 if (status == 'success') {
-event && event.complete();
+                    event && event.complete();
                     this.AllNotifications = data;
                     if (this.AllNotifications.lenght == this.initLimit) {
                         this.moreData = true;

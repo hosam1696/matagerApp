@@ -85,12 +85,12 @@ export class HomePage {
       } else {
           this.navCtrl.push('ReserveShelfPage', {pageData})
       }
-      /* if(data.wasTapped){
-        alert("Received in background");
+      // if(pageData.wasTapped){
+      //   alert("Received in background");
         
-      } else {
-        alert("Received in foreground");
-      }; */
+      // } else {
+      //   alert("Received in foreground");
+      // };
   })
   //*********************** */
     //this.SlidersErr = false;

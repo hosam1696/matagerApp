@@ -74,13 +74,15 @@ export class Login {
       
                 this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
       
-                //this.navCtrl.pop();
+                this.navCtrl.pop();
       
-                 setTimeout(()=>{
-                this.navCtrl.setRoot('TabsPage')
-                })
+                // setTimeout(()=>{
+                //   //this.events.publish('changeRoot', 'TabsPage');
+
+                //   this.navCtrl.setRoot('TabsPage')
+                // })
       
-               this.events.publish('loginUser','userLog')
+                // this.events.publish('loginUser','userLog')
       
               } else {
                 this.showLoader = false;
@@ -165,7 +167,7 @@ export class Login {
           
           }); */
           
-          // using FCM firbase
+          //*************** using FCM firbase *************************//
           this.fcm.getToken().then(token=>{
             let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
             let deviceData = {
@@ -192,13 +194,8 @@ export class Login {
                   
                   this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
     
-                  //this.navCtrl.pop();
-  
-                  setTimeout(()=>{
-                    this.navCtrl.setRoot('TabsPage')
-                  })
-    
-                  this.events.publish('loginUser','userLog')
+                  this.navCtrl.pop();
+ 
     
                 } else {
                   this.showLoader = false;

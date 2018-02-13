@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Platform,Nav} from 'ionic-angular';
+import {Platform,Nav,Events} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
@@ -15,6 +15,8 @@ export class MyApp {
         public platform: Platform,
         public statusBar: StatusBar,
         public splashScreen: SplashScreen,
+        public events: Events,
+
 
 
     ) {
@@ -26,7 +28,10 @@ export class MyApp {
 
         });
 
-        
+        /* this.events.subscribe('changeRoot', (root) => {
+            console.log(root,"hereererererrerere")
+            this.rootPage = root;
+        }); */
 
 
     }

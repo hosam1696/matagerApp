@@ -44,11 +44,10 @@ export class TabsPage {
 
     });
     
-      this.events.subscribe('loginUser', (data) => {
+    this.events.subscribe('loginUser', (data) => {
         console.log('successfully successfully successfully');
         this.appTabs.select(0, {isNavRoot:true}, true);
     })
-
       
   }
 
