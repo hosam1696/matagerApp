@@ -2,18 +2,18 @@
   "_args": [
     [
       {
-        "raw": "com.synconset.imagepicker@~2.1.8",
+        "raw": "com.synconset.imagepicker@^2.1.10",
         "scope": null,
         "escapedName": "com.synconset.imagepicker",
         "name": "com.synconset.imagepicker",
-        "rawSpec": "~2.1.8",
-        "spec": ">=2.1.8 <2.2.0",
+        "rawSpec": "^2.1.10",
+        "spec": ">=2.1.10 <3.0.0",
         "type": "range"
       },
       "D:\\MobileApps\\rfapp"
     ]
   ],
-  "_from": "com.synconset.imagepicker@>=2.1.8 <2.2.0",
+  "_from": "com.synconset.imagepicker@>=2.1.10 <3.0.0",
   "_id": "com.synconset.imagepicker@2.1.10",
   "_inBundle": false,
   "_inCache": true,

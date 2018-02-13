@@ -16,17 +16,40 @@ export class CommentNotificationPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CommentNotificationPage');
-    if (this.pageData.status == 0) { // check if the notification had read or not
-      this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
+
+    if (this.pageData.push == 'true') {
+      //alert(JSON.stringify(this.pageData));
+      this.notificationsProviders.getNotificationById(this.pageData.id).subscribe(
+        ({data}) => {
+          //alert(JSON.stringify(data));
+          if (data) {
+              this.pageData = data;
+              console.log('notification details', this.pageData);
+              if (this.pageData.status == 0) { // check if the notification had read or not
+                this.updateRead();
+              }
+          }
+        },
+        (err) => {
+            console.warn(err);
+        },
+        () => {
+        })
+    }else{
+      console.log('notification details no push', this.pageData);
+      if (this.pageData.status == 0) { // check if the notification had read or not
+        this.updateRead();
+      }
+    }    
+  }
+  
+  updateRead() {
+    this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
 
         .subscribe(res => { // in developing only
           console.log(res);
         })
-    } else {
-      console.info('you have been read this notification')
-    }
   }
-
   openComment() {
     this.navCtrl.push('ProductPage', {pageData: this.pageData.url})
   }

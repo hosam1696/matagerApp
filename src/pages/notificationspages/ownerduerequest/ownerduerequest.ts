@@ -19,7 +19,7 @@ import { IlevelId } from '../../../app/service/InewUserData';
 })
 export class OwnerduerequestPage {
   userLevel: number = JSON.parse(localStorage.getItem('userLocalData')).level_id;
-  pageData: INotification;
+  pageData: any;
   dueDetails: any;
   isStrore: boolean = false;
   showRefuseMsg: boolean = false;
@@ -48,10 +48,32 @@ export class OwnerduerequestPage {
 
 
   ionViewDidLoad() {
+    if (this.pageData.push == 'true') {
+      //alert(JSON.stringify(this.pageData));
+        
+        this.notificationProvider.getNotificationById(this.pageData.id).subscribe(
+          ({data}) => {
+            //alert(JSON.stringify(data));
+            if (data) {
+                this.pageData = data;
+                console.log('notification details', this.pageData);
+                this.getDueDetails()
+                this.updateNotificationStatus();
+            }
+          },
+          (err) => {
+              console.warn(err);
+          },
+          () => {
+          }
+      )
+    }else{
+      console.log('notification details no push', this.pageData);
+      this.getDueDetails()
     
-    this.getDueDetails()
+      this.updateNotificationStatus();
+    }
     
-    this.updateNotificationStatus();
     
   }
 

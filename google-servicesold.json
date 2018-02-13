@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "421205044026",
-    "firebase_url": "https://rfapp-97a84.firebaseio.com",
-    "project_id": "rfapp-97a84",
-    "storage_bucket": "rfapp-97a84.appspot.com"
+    "project_number": "146464528118",
+    "firebase_url": "https://angpeople-bbea4.firebaseio.com",
+    "project_id": "angpeople-bbea4",
+    "storage_bucket": "angpeople-bbea4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:421205044026:android:ae9c94fded57040b",
+        "mobilesdk_app_id": "1:81559743575:android:fc5578eceb25e5f7",
         "android_client_info": {
           "package_name": "co.itplus.rfapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "421205044026-h6iln8sgu8r521aoidekhpl3eokmt6pv.apps.googleusercontent.com",
+          "client_id": "81559743575-e588fl509qmfrasfvjuedeq3hhdsoj9f.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDyKKBsS3l_UpQrI9hQ58ycVihmzmF3wRs"
+          "current_key": "AIzaSyCp5en7ex5cbHPO_fyuSCRBzCzZ6WliSmw"
         }
       ],
       "services": {

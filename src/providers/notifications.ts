@@ -21,6 +21,12 @@ export class NotificationsProvider {
         return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action: 'readNotify', id: notification_id, user_id })).map(res=>res.json());
     }
 
+    getNotificationById(id: number) {
+        const action = 'getNotificationById';
+
+        return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action, id })).map(res=>res.json());
+    }
+
     
     
 

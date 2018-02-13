@@ -50,6 +50,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Camera } from '@ionic-native/camera';
 import {File} from '@ionic-native/file';
 import {FilePath} from '@ionic-native/file-path';
+import { FCM } from '@ionic-native/fcm';
 
 
 import { Transfer} from '@ionic-native/transfer';
@@ -136,10 +137,10 @@ import 'moment/locale/de';
     ActionSheet,
     PluginService,
     PushProvider,
-     Camera,
-     File,
-    
-     FilePath,
+    Camera,
+    File,
+    FCM,
+    FilePath,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},
     { provide: 'UPLOAD_PATH', useValue: 'http://rfapp.net/templates/default/uploads/'},

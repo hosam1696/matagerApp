@@ -2,49 +2,49 @@
   "_args": [
     [
       {
-        "raw": "cordova-plugin-file@^5.0.0",
+        "raw": "cordova-plugin-file@>=5.0.0",
         "scope": null,
         "escapedName": "cordova-plugin-file",
         "name": "cordova-plugin-file",
-        "rawSpec": "^5.0.0",
-        "spec": ">=5.0.0 <6.0.0",
+        "rawSpec": ">=5.0.0",
+        "spec": ">=5.0.0",
         "type": "range"
       },
       "D:\\MobileApps\\rfapp"
     ]
   ],
-  "_from": "cordova-plugin-file@>=5.0.0 <6.0.0",
-  "_id": "cordova-plugin-file@5.0.0",
+  "_from": "cordova-plugin-file@>=5.0.0",
+  "_id": "cordova-plugin-file@6.0.1",
   "_inCache": true,
   "_location": "/cordova-plugin-file",
-  "_nodeVersion": "6.6.0",
+  "_nodeVersion": "8.2.1",
   "_npmOperationalInternal": {
     "host": "s3://npm-registry-packages",
-    "tmp": "tmp/cordova-plugin-file-5.0.0.tgz_1510361700540_0.3414947600103915"
+    "tmp": "tmp/cordova-plugin-file-6.0.1.tgz_1514690802908_0.5163829217199236"
   },
   "_npmUser": {
-    "name": "stevegill",
-    "email": "stevengill97@gmail.com"
+    "name": "macdonst",
+    "email": "simon.macdonald@gmail.com"
   },
   "_npmVersion": "4.6.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "cordova-plugin-file@^5.0.0",
+    "raw": "cordova-plugin-file@>=5.0.0",
     "scope": null,
     "escapedName": "cordova-plugin-file",
     "name": "cordova-plugin-file",
-    "rawSpec": "^5.0.0",
-    "spec": ">=5.0.0 <6.0.0",
+    "rawSpec": ">=5.0.0",
+    "spec": ">=5.0.0",
     "type": "range"
   },
   "_requiredBy": [
     "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-5.0.0.tgz",
-  "_shasum": "d397682321669c000be8c71f8ef4438aae8f925d",
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-6.0.1.tgz",
+  "_shasum": "49606b8c15a5688d4728f92e4a7325a061de07f5",
   "_shrinkwrap": null,
-  "_spec": "cordova-plugin-file@^5.0.0",
+  "_spec": "cordova-plugin-file@>=5.0.0",
   "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"
@@ -56,16 +56,10 @@
     "id": "cordova-plugin-file",
     "platforms": [
       "android",
-      "amazon-fireos",
-      "ubuntu",
+      "browser",
       "ios",
       "osx",
-      "wp7",
-      "wp8",
-      "blackberry10",
-      "windows8",
-      "windows",
-      "firefoxos"
+      "windows"
     ]
   },
   "dependencies": {},
@@ -81,15 +75,15 @@
   },
   "directories": {},
   "dist": {
-    "shasum": "d397682321669c000be8c71f8ef4438aae8f925d",
-    "tarball": "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-5.0.0.tgz"
+    "shasum": "49606b8c15a5688d4728f92e4a7325a061de07f5",
+    "tarball": "https://registry.npmjs.org/cordova-plugin-file/-/cordova-plugin-file-6.0.1.tgz"
   },
   "engines": {
     "cordovaDependencies": {
       "5.0.0": {
         "cordova-android": ">=6.3.0"
       },
-      "6.0.0": {
+      "7.0.0": {
         "cordova": ">100"
       }
     }
@@ -100,42 +94,40 @@
     "file",
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-amazon-fireos",
-    "cordova-ubuntu",
+    "cordova-browser",
     "cordova-ios",
     "cordova-osx",
-    "cordova-wp7",
-    "cordova-wp8",
-    "cordova-blackberry10",
-    "cordova-windows8",
-    "cordova-windows",
-    "cordova-firefoxos"
+    "cordova-windows"
   ],
   "license": "Apache-2.0",
   "maintainers": [
     {
+      "name": "macdonst",
+      "email": "simon.macdonald@gmail.com"
+    },
+    {
       "name": "bowserj",
       "email": "bowserj@apache.org"
-    },
-    {
-      "name": "csantanapr",
-      "email": "csantana23@gmail.com"
-    },
-    {
-      "name": "filmaj",
-      "email": "maj.fil@gmail.com"
-    },
-    {
-      "name": "kotikov.vladimir",
-      "email": "kotikov.vladimir@gmail.com"
     },
     {
       "name": "purplecabbage",
       "email": "purplecabbage@gmail.com"
     },
     {
+      "name": "filmaj",
+      "email": "maj.fil@gmail.com"
+    },
+    {
       "name": "shazron",
       "email": "shazron@gmail.com"
+    },
+    {
+      "name": "csantanapr",
+      "email": "csantana23@gmail.com"
+    },
+    {
+      "name": "kotikov.vladimir",
+      "email": "kotikov.vladimir@gmail.com"
     },
     {
       "name": "stevegill",
@@ -154,5 +146,5 @@
     "test": "npm run eslint"
   },
   "types": "./types/index.d.ts",
-  "version": "5.0.0"
+  "version": "6.0.1"
 }

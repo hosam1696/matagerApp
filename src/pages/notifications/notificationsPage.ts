@@ -162,8 +162,6 @@ event && event.complete();
             this.navCtrl.push('OwnerduerequestPage', {pageData})
         } else {
             this.navCtrl.push('ReserveShelfPage', {pageData})
-
-
         }
 
 

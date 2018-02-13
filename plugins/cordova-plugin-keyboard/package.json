@@ -2,18 +2,18 @@
   "_args": [
     [
       {
-        "raw": "cordova-plugin-keyboard@^1.1.5",
+        "raw": "cordova-plugin-keyboard@^1.2.0",
         "scope": null,
         "escapedName": "cordova-plugin-keyboard",
         "name": "cordova-plugin-keyboard",
-        "rawSpec": "^1.1.5",
-        "spec": ">=1.1.5 <2.0.0",
+        "rawSpec": "^1.2.0",
+        "spec": ">=1.2.0 <2.0.0",
         "type": "range"
       },
       "D:\\MobileApps\\rfapp"
     ]
   ],
-  "_from": "cordova-plugin-keyboard@>=1.1.5 <2.0.0",
+  "_from": "cordova-plugin-keyboard@>=1.2.0 <2.0.0",
   "_id": "cordova-plugin-keyboard@1.2.0",
   "_inCache": true,
   "_location": "/cordova-plugin-keyboard",
@@ -29,12 +29,12 @@
   "_npmVersion": "5.5.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "cordova-plugin-keyboard@^1.1.5",
+    "raw": "cordova-plugin-keyboard@^1.2.0",
     "scope": null,
     "escapedName": "cordova-plugin-keyboard",
     "name": "cordova-plugin-keyboard",
-    "rawSpec": "^1.1.5",
-    "spec": ">=1.1.5 <2.0.0",
+    "rawSpec": "^1.2.0",
+    "spec": ">=1.2.0 <2.0.0",
     "type": "range"
   },
   "_requiredBy": [
@@ -44,7 +44,7 @@
   "_resolved": "https://registry.npmjs.org/cordova-plugin-keyboard/-/cordova-plugin-keyboard-1.2.0.tgz",
   "_shasum": "8445812643e4763e7beffed39d279f151bb89aeb",
   "_shrinkwrap": null,
-  "_spec": "cordova-plugin-keyboard@^1.1.5",
+  "_spec": "cordova-plugin-keyboard@^1.2.0",
   "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"

@@ -2,18 +2,18 @@
   "_args": [
     [
       {
-        "raw": "cordova-plugin-splashscreen@^4.0.3",
+        "raw": "cordova-plugin-splashscreen@^4.1.0",
         "scope": null,
         "escapedName": "cordova-plugin-splashscreen",
         "name": "cordova-plugin-splashscreen",
-        "rawSpec": "^4.0.3",
-        "spec": ">=4.0.3 <5.0.0",
+        "rawSpec": "^4.1.0",
+        "spec": ">=4.1.0 <5.0.0",
         "type": "range"
       },
       "D:\\MobileApps\\rfapp"
     ]
   ],
-  "_from": "cordova-plugin-splashscreen@>=4.0.3 <5.0.0",
+  "_from": "cordova-plugin-splashscreen@>=4.1.0 <5.0.0",
   "_id": "cordova-plugin-splashscreen@4.1.0",
   "_inCache": true,
   "_location": "/cordova-plugin-splashscreen",
@@ -29,12 +29,12 @@
   "_npmVersion": "4.6.1",
   "_phantomChildren": {},
   "_requested": {
-    "raw": "cordova-plugin-splashscreen@^4.0.3",
+    "raw": "cordova-plugin-splashscreen@^4.1.0",
     "scope": null,
     "escapedName": "cordova-plugin-splashscreen",
     "name": "cordova-plugin-splashscreen",
-    "rawSpec": "^4.0.3",
-    "spec": ">=4.0.3 <5.0.0",
+    "rawSpec": "^4.1.0",
+    "spec": ">=4.1.0 <5.0.0",
     "type": "range"
   },
   "_requiredBy": [
@@ -44,7 +44,7 @@
   "_resolved": "https://registry.npmjs.org/cordova-plugin-splashscreen/-/cordova-plugin-splashscreen-4.1.0.tgz",
   "_shasum": "81028ab7643e615593d27f2ad02445611f1946b6",
   "_shrinkwrap": null,
-  "_spec": "cordova-plugin-splashscreen@^4.0.3",
+  "_spec": "cordova-plugin-splashscreen@^4.1.0",
   "_where": "D:\\MobileApps\\rfapp",
   "author": {
     "name": "Apache Software Foundation"

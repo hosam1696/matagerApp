@@ -12,7 +12,7 @@ import { DeliveryProvider } from "../../../providers/delivery";
   templateUrl: 'notification-delevery-req.html',
 })
 export class NotificationDeleveryReqPage {
-  pageData: INotification;
+  pageData: any;
   DeliverData: IDeliveryNotifyInfo;
   userLocal = JSON.parse(localStorage.getItem('userLocalData'));
   noDeliveryData: boolean = false;
@@ -39,16 +39,43 @@ export class NotificationDeleveryReqPage {
     if (!this.userLocal)
       this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
 
-    this.getRequestInfo();
+      
+    if (this.pageData.push == 'true') {
+      //alert(JSON.stringify(this.pageData));
+        
+        this.notificationProvider.getNotificationById(this.pageData.id).subscribe(
+          ({data}) => {
+            //alert(JSON.stringify(data));
+            if (data) {
+              this.pageData = data;
+              console.log('notification details', this.pageData);
 
-    if (this.pageData.status == 0) {
-      this.notificationProvider.updatereadNotify(this.pageData.id, this.pageData.user_id)
-        .subscribe(res=>{
-          console.log(res);
-        })
+              this.getRequestInfo();
+              if (this.pageData.status == 0) {
+                this.updateRead();
+              }else {
+                console.info('you have been read this notification')
+              }
 
-    } else {
-      console.info('you have been read this notification')
+            }
+          },
+          (err) => {
+              console.warn(err);
+          },
+          () => {
+          }
+      )
+    }else{
+      console.log('notification details no push', this.pageData);
+
+      this.getRequestInfo();
+      if (this.pageData.status == 0) {
+        this.updateRead();
+  
+      } else {
+        console.info('you have been read this notification')
+      }
+
     }
   }
 
@@ -78,6 +105,14 @@ export class NotificationDeleveryReqPage {
         this.showLoader = false
       }
       )
+  }
+  
+  updateRead() {
+    this.notificationProvider.updatereadNotify(this.pageData.id, this.pageData.user_id)
+
+        .subscribe(res => { // in developing only
+          console.log(res);
+        })
   }
 
   navigateToPage(page, user_id) {

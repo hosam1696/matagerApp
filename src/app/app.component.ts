@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {Platform} from 'ionic-angular';
+import {Platform,Nav} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
+
 
 
 @Component({
@@ -13,7 +14,9 @@ export class MyApp {
     constructor(
         public platform: Platform,
         public statusBar: StatusBar,
-        public splashScreen: SplashScreen
+        public splashScreen: SplashScreen,
+
+
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -22,6 +25,8 @@ export class MyApp {
             splashScreen.hide();
 
         });
+
+        
 
 
     }

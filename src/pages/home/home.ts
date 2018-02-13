@@ -32,6 +32,7 @@ import {
   UserProvider
 } from "../../providers/user";
 //import {cordova} from "../profile/profile";
+import { FCM } from '@ionic-native/fcm';
 
 declare let cordova: any;
 @IonicPage()
@@ -58,13 +59,40 @@ export class HomePage {
     public platform: Platform,
     public pushProvider: PushProvider,
     public iab: InAppBrowser,
-    public itemProvider: ItemProvider
+    public itemProvider: ItemProvider,
+    public fcm: FCM,
+
   ) {
 
   }
 
   ionViewDidLoad() {
-    
+    //***************************** */
+    this.fcm.onNotification().subscribe(pageData=>{
+      //alert(JSON.stringify(pageData));
+      if (pageData.type == 'deliveryRequest') {
+          this.navCtrl.push('NotificationDeleveryReqPage', {pageData})
+      } else if (pageData.type == 'addComment') {
+          this.navCtrl.push('CommentNotificationPage', {pageData})
+      } else if (pageData.type == 'like') {
+          this.navCtrl.push('CommentNotificationPage', {pageData})
+      } else if (pageData.type == 'salesBill') {
+          this.navCtrl.push('SalesnotificationPage', {pageData})
+      } else if (pageData.type == 'duesRequest') {
+          this.navCtrl.push('NotificationDuePage', {pageData})
+      } else if (pageData.type == 'ownerDues') {
+          this.navCtrl.push('OwnerduerequestPage', {pageData})
+      } else {
+          this.navCtrl.push('ReserveShelfPage', {pageData})
+      }
+      /* if(data.wasTapped){
+        alert("Received in background");
+        
+      } else {
+        alert("Received in foreground");
+      }; */
+  })
+  //*********************** */
     //this.SlidersErr = false;
     let userId: number = 0;
     if (this.userLocalData && this.userLocalData.id) 
@@ -86,6 +114,7 @@ export class HomePage {
       })
 
     console.log('Config Object', this.config.get('caches'), this.config.get('iconMode'));
+    
 
 
     /* Get the current location if user activates the location */
@@ -106,7 +135,7 @@ export class HomePage {
        } else {
          console.log('Storage Directory', cordova.file.documentsDirectory)
        }*/
-    let pushOptios: PushOptions = {
+    /* let pushOptios: PushOptions = {
       android: {
         senderID: '146464528118'
       },
@@ -143,7 +172,7 @@ export class HomePage {
       
     });
 
-    push.on('error').subscribe(error => console.error('Error with Push plugin', error));
+    push.on('error').subscribe(error => console.error('Error with Push plugin', error)); */
 
     // TODO: check connection
     /*

@@ -26,18 +26,42 @@ export class NotificationDuePage {
               private notificationsProviders: NotificationsProvider
     ) {
 
-    this.pageData = this.navParams.get('pageData')
+    this.pageData = this.navParams.get('pageData');
+    console.log(`pageData >>> ${JSON.stringify(this.pageData)}`)
+    //alert(JSON.stringify(this.pageData));
   }
 
   ionViewDidLoad() {
-    
+    if (this.pageData.push == 'true') {
+      //alert(JSON.stringify(this.pageData));
+      this.notificationsProviders.getNotificationById(this.pageData.id).subscribe(
+        ({data}) => {
+          //alert(JSON.stringify(data));
+          if (data) {
+              this.pageData = data;
+              console.log('notification details', this.pageData);
+              this.getDueByID();
+              
+          }
+        },
+        (err) => {
+            console.warn(err);
+        },
+        () => {
+        })
+    }else{
+      console.log('notification details no push', this.pageData);
+      this.getDueByID();
+    }
+  }
+  
+  getDueByID(){
+
     let {url, user_id, id} = this.pageData;
     
     console.log(this.pageData);
 
     (this.pageData.status == 0)?this.updateRead(id, user_id):console.info('you have been read this notification')
-    
-
     this.dueProvider
       .getDueById({url, user_id})
       .retry(3)
@@ -53,7 +77,7 @@ export class NotificationDuePage {
       err=>{
         console.warn(err);
         this.netErr = true;
-      })
+    })
   }
 
   updateRead(id, user_id) {
@@ -73,7 +97,7 @@ export class NotificationDuePage {
     this.acceptLoader = true;
     let duedata = {
       user_id: this.pageData.user_id,
-      recieve_user_id: this.pageData.send_user_id,
+      receive_user_id: this.pageData.send_user_id,
       url: this.pageData.url
     }
     console.log('due data send to DB', duedata)
@@ -110,7 +134,7 @@ export class NotificationDuePage {
       if (this.dueMsg && this.dueMsg.trim() != '') {
       let duedata = {
         user_id: this.pageData.user_id,
-        recieve_user_id: this.pageData.send_user_id,
+        receive_user_id: this.pageData.send_user_id,
         url: this.pageData.url,
         due_message: this.dueMsg.replace(/\n/g,'<br><br>')
       }

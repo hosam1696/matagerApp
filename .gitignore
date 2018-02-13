@@ -22,6 +22,9 @@ tmp/
 temp/
 hooks/
 platforms/
+node_modules/
+plugins/
+resources/
 www/
 $RECYCLE.BIN/
 
@@ -32,6 +35,3 @@ load.html
 git
 
 /nbproject/
-node_modules/
-plugins/
-resources/

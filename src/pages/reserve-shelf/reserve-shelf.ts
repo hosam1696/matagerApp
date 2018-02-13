@@ -11,7 +11,7 @@ import {INotification, shelfRequestInfo} from '../../app/service/interfaces';
   templateUrl: 'reserve-shelf.html',
 })
 export class ReserveShelfPage {
-  pageData: INotification;
+  pageData: any;
   shelfData: shelfRequestInfo;
   showShelfList: boolean = false;
   showLoader: boolean = false;
@@ -45,17 +45,32 @@ export class ReserveShelfPage {
     //if (this.pageData.close == 0) {
     this.showLoader = true;
     console.log('%c%s', 'font-size:20px', 'shelf status is pending');
-    this.getShelf(this.pageData.url, this.pageData.user_id);
     //}
     console.log(this.salesPercentage);
-    if (this.pageData.status == 0) { // check if the notification had read or not
-      this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
 
-        .subscribe(res => { // in developing only
-          console.log(res);
-        })
-    } else {
-      console.info('you have been read this notification')
+    if (this.pageData.push == 'true') {
+      //alert(JSON.stringify(this.pageData));
+        
+        this.notificationsProviders.getNotificationById(this.pageData.id).subscribe(
+          ({data}) => {
+            //alert(JSON.stringify(data));
+            if (data) {
+              this.pageData = data;
+              console.log('notification details', this.pageData);
+              this.getShelf(this.pageData.url, this.pageData.user_id);
+              this.updateRead();
+            }
+          },
+          (err) => {
+              console.warn(err);
+          },
+          () => {
+          }
+      )
+    }else{
+      console.log('notification details no push', this.pageData);
+      this.getShelf(this.pageData.url, this.pageData.user_id);
+      this.updateRead();
     }
 
   }
@@ -85,7 +100,18 @@ export class ReserveShelfPage {
         }
       )
   }
+  
+  updateRead() {
+    if (this.pageData.status == 0) {
+      this.notificationsProviders.updatereadNotify(this.pageData.id, this.pageData.user_id)
+        .subscribe(res => {
+          console.log(res);
+        })
 
+    } else {
+      console.info('you have been read this notification')
+    }
+  }
   sendPercentage() {
 
     setTimeout(() => {
