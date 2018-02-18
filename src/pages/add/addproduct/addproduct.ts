@@ -616,7 +616,11 @@ export class AddproductPage {
 
         return false;
       } else if (form.get(value).getError('pattern')) {
-        this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ArProductForm[value]}`);
+        if(value == 'item_price') {
+          this.showToast(ArProductForm[value]+ ' يجب ان يتكون من ارقام انجليزية')
+        } else {
+          this.showToast(`يرجى ادخال قيمة صحيحة لـ ${ArProductForm[value]}`);
+        }
         return false;
       } else {
         return true;

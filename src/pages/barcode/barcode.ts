@@ -27,13 +27,22 @@ export class BarcodePage {
     public toastCtrl: ToastController
 
   ) {
+    
   }
 
+  ionViewWillEnter() {
+    
+    this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
+    console.log('barcode local storage',JSON.stringify(this.userLocal));
+      
+  }
   ionViewDidLoad() {
-    if (!this.userLocal)
-      this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-
+    //if (!this.userLocal){
+     // this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));      
+    
+    console.log('barcode local storage',JSON.stringify(this.userLocal));
   }
+  
 
   private scanBarcode(): void {
     let scanOptions: BarcodeScannerOptions = {
@@ -128,30 +137,37 @@ export class BarcodePage {
 
   private showProductByCode(itemCode: number | string): void {
     this.showLoader = true;
-    this.salesProvider.getItemByCode(itemCode)
+    this.salesProvider.getItemByCode(this.userLocal.id,itemCode)
       .subscribe(({ status, data }) => {
         if (status === 'success') {
-          let foundedIndex = this.AllScanedProducts.findIndex((product: IscannedProduct) => { return product.id == data.id });
-
-          console.log('Index of repeated Product', foundedIndex);
-          // let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
-          //console.log('finded match', founded);
-          //let isRepeated = (founded)? (founded.item_id == data.id): false;
-          //console.log(data, isRepeated);
-          if (foundedIndex == -1) {
-            [data.item_id, data.item_quantity, data.item_code, this.showData] = [data.id, 1, itemCode, true];
-            console.log(status, data);
-            this.enteredCode.nativeElement.value = '';
-            this.AllScanedProducts.push(data);
-          } else {
-            this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity + 1;
-            this.enteredCode.nativeElement.value = '';
-
+          if(data['qtyInStore'] > 0){
+            //let foundedIndex = this.AllScanedProducts.findIndex((product: IscannedProduct) => { return product.id == data.id });
+            let foundedIndex = this.AllScanedProducts.findIndex((product: any) => { return product.id == data.id });
+            console.log('Index of repeated Product', foundedIndex);
+            // let founded:IscannedProduct = this.AllScanedProducts.find(x=>x.item_id == data.id);
+            //console.log('finded match', founded);
+            //let isRepeated = (founded)? (founded.item_id == data.id): false;
+            //console.log(data, isRepeated);
+            if (foundedIndex == -1) {
+              [data.item_id, data.item_quantity, data.item_code, this.showData] = [data.id, 1, itemCode, true];
+              console.log(status, data);
+              this.enteredCode.nativeElement.value = '';
+              this.AllScanedProducts.push(data);
+            } else {
+              if(this.AllScanedProducts[foundedIndex].item_quantity < data['qtyInStore'] ){
+                this.AllScanedProducts[foundedIndex].item_quantity = this.AllScanedProducts[foundedIndex].item_quantity + 1;
+                this.enteredCode.nativeElement.value = '';
+              }else{
+                this.showToast('لا توجد كميه كافيه بالمتجر')
+                this.enteredCode.nativeElement.value = '';
+              }
+            }
+            console.log('All Products', this.AllScanedProducts);
+            this.billTotal = this.countTotal;
+          }else {
+            //this.showLoader = false;
+            this.showToast('لا توجد كميه كافيه بالمتجر')
           }
-
-
-          console.log('All Products', this.AllScanedProducts);
-          this.billTotal = this.countTotal;
 
         } else {
           this.showLoader = false;
@@ -170,12 +186,16 @@ export class BarcodePage {
       )
   }
 
-  private increaseQuantity(product: IscannedProduct): void {
-    console.log(product);
-    let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
-    console.log(editedQuantity);
-    product.item_quantity = editedQuantity;
-    this.billTotal = this.countTotal;
+  private increaseQuantity(product: any): void {
+    console.log('at increase product',product);
+    if(product.item_quantity < product.qtyInStore){
+      let editedQuantity = Math.max(1, Math.min(product.item_quantity + 1, 100));
+      console.log('at increase edited', editedQuantity);
+      product.item_quantity = editedQuantity;
+      this.billTotal = this.countTotal;
+    }else{
+      this.showToast('لا توجد كميه كافيه بالمتجر')
+    }
     //this.render.setAttribute(this.ele.nativeElement.id == 1, 'value', '')
   }
 
@@ -197,13 +217,20 @@ export class BarcodePage {
     this.billTotal = this.countTotal;
   }
 
-  private changeValue(event, product: IscannedProduct): void {
+  private changeValue(event, product: any): void {
     let targetValue = event.target.value;
-    console.log(event, targetValue);
-    console.log(product.item_quantity);
-    product.item_quantity = targetValue;
-    this.billTotal = this.countTotal;
-    console.log(product.item_quantity);
+    console.log('************aaaaa***********',event, targetValue);
+    console.log('************bbbbbbbbbb***********',product.item_quantity);
+    console.log('************ccccccc***********',product.qtyInStore);
+    
+    if(targetValue <= product.qtyInStore){
+      product.item_quantity = targetValue;
+      this.billTotal = targetValue? this.countTotal : 0;
+    }else{
+      this.showToast('لا توجد كميه كافيه بالمتجر') 
+      product.item_quantity = product.qtyInStore;
+      this.billTotal = this.countTotal;     
+    }
   }
 
   swipeEvent(event) {
@@ -239,10 +266,19 @@ export class BarcodePage {
             this.sendshowLoader = false;
             this.AllScanedProducts = [];
           } else {
-            this.showToast(errors);
+            if(errors.total_cost){
+              this.showToast(errors.total_cost);
+            }else if(errors.bill_items){
+              this.showToast(errors.bill_items);
+            }else if(errors.item_code){
+              this.showToast(errors.item_code);
+            }else{
+              this.showToast(errors.item_id);
+            }
           }
         }, err => {
           this.isDisabled = false; // to disable send button for 5 second
+          this.sendshowLoader = false;          
           console.warn(err);
           this.showToast('التطبيق يتطلب اتصال بالانترنت')
         }, () => {

@@ -51,6 +51,7 @@ import { Camera } from '@ionic-native/camera';
 import {File} from '@ionic-native/file';
 import {FilePath} from '@ionic-native/file-path';
 import { FCM } from '@ionic-native/fcm';
+//import { Badge } from '@ionic-native/badge';
 
 
 import { Transfer} from '@ionic-native/transfer';
@@ -140,6 +141,7 @@ import 'moment/locale/de';
     Camera,
     File,
     FCM,
+    //Badge,
     FilePath,
     ItemProvider,
     { provide: 'API_URL', useValue: 'http://rfapp.net/api/'},

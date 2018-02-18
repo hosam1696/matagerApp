@@ -48,6 +48,9 @@
     },
     "cordova-plugin-fcm": {
       "PACKAGE_NAME": "co.itplus.rfapp"
+    },
+    "cordova-plugin-badge": {
+      "PACKAGE_NAME": "co.itplus.rfapp"
     }
   },
   "dependent_plugins": {

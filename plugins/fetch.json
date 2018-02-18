@@ -133,5 +133,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "cordova-plugin-badge": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-badge@^0.8.7"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -151,7 +151,7 @@ export class NotificationDeleveryReqPage {
           ({ status, data }) => {
             console.log(status, data);
             if (status == 'success') {
-              this.showToast(`لقد تم ارسال سبب موافقتك بطلب التسليم الى ${this.pageData.name}`);
+              this.showToast(`لقد تم ارسال  موافقتك علي طلب التسليم الى ${this.pageData.name}`);
               setTimeout(() => {
                 this.navCtrl.pop()
               }, 2000);

@@ -17,6 +17,7 @@ import { FCM } from '@ionic-native/fcm';
   templateUrl: 'login.html',
 })
 export class Login {
+  deviceData: any;  
   LoginForm: FormGroup;
   showLoader: boolean = false;
   constructor(public navCtrl: NavController,
@@ -46,189 +47,75 @@ export class Login {
     let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
 
     this.showToast(type);
- */
+   */
+    this.findDeviceToken();
   }
 
+  findDeviceToken(){
+    this.fcm.getToken().then(token=>{
+      let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
+      this.deviceData = {
+          device_token_id : token,
+          type : type
+      }
+    })
+    
+    this.fcm.onTokenRefresh().subscribe(token=>{
+      let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
+      this.deviceData = {
+          device_token_id : token,
+          type : type
+      }
+    })
+  }
 
   submitLogin() {
+    if (this.LoginForm.valid) {
 
+      this.showLoader = true;
+      this.userLogin.LoginUser({...this.deviceData,...this.LoginForm.value})
+      .subscribe(({status, message, data}) => {
+          console.log(status, message);
+          //TODO: if data is correct navigate to the home page
+          if (status == 'success') {
 
-//     alert(this.network.type);
+            let userLocalData = data;
 
-        if (this.LoginForm.valid) {
-
-          // start of web Browser
-          /* this.showLoader = true;
-          this.userLogin.LoginUser({...{device_token_id : 'zssfzsfz',
-          type: 'ANDROID'},...this.LoginForm.value})
-          .subscribe(({status, message, data}) => {
-              console.log(status, message);
-              //TODO: if data is correct navigate to the home page
-              if (status == 'success') {
-      
-                let userLocalData = data;
-                      
-                this.showLoader = false;
-      
-                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-      
-                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-      
-                this.navCtrl.pop();
-      
-                // setTimeout(()=>{
-                //   //this.events.publish('changeRoot', 'TabsPage');
-
-                //   this.navCtrl.setRoot('TabsPage')
-                // })
-      
-                // this.events.publish('loginUser','userLog')
-      
-              } else {
-                this.showLoader = false;
-                this.showToast(`${message}`)
-              }
-          },
-          err => {
-            this.showToast('حدثت مشكلة , يرجى التأكد من الاتصال بالانترنت او التواصل مع الدعم الفنى للتطبيق');
-            //alert(err);
             this.showLoader = false;
-          }); */
-          //*********************** end of web Browser*************************
 
-          /* let deviceData ={
-            // device_token_id : 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            // type : 'ios'
-          };
-          let pushOptios: PushOptions = {
-            android: {
-              senderID: '146464528118'
-            },
-            ios: {
-              alert: 'true',
-              badge: true,
-              sound: 'false'
-            },
-            windows: {}
-          };
-          
-          let push: PushObject = this.push.init(pushOptios);
-
-          push.on('registration').subscribe((registration: any) => {
-            let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
-            //alert(type);
-            //alert(registration.registrationId);
-            deviceData = {
-                device_token_id : registration.registrationId,
-                type : type
-            }
-          
-              
+            localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
+            //console.log(`this.userLocalData if login success ${JSON.stringify(userLocalData)}`)
             
-            this.showLoader = true;
-  
-            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
-            .subscribe(({status, message, data}) => {
-              console.log(status, message);
-              //TODO: if data is correct navigate to the home page
-              if (status == 'success') {
-  
-                let userLocalData = data;
-  
-                this.showLoader = false;
-  
-                localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-
-                
-                this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-  
-                //this.navCtrl.pop();
-
-                setTimeout(()=>{
-                  this.navCtrl.setRoot('TabsPage')
-                })
-  
-                this.events.publish('loginUser','userLog')
-  
-              } else {
-                this.showLoader = false;
-                this.showToast(`${message}`)
-              }
-              },
-              err => {
-                this.showToast('التطبيق يتطلب اتصال بالانترنت');
-                console.warn(err);
-                this.showLoader = false;
-              }
-          );
-            console.log('Device registered', registration, registration.registrationId, this.platform.is('android') ? 'android' : 'ios');
-
-          }, err=> {
-          
-          }); */
-          
-          //*************** using FCM firbase *************************//
-          this.fcm.getToken().then(token=>{
-            let type = this.platform.is('ios') ? 'ios' : (this.platform.is('windows')?'windows':'android');
-            let deviceData = {
-                device_token_id : token,
-                type : type
-            }
-          
-              
             
-            this.showLoader = true;
-  
-            this.userLogin.LoginUser({...deviceData,...this.LoginForm.value})
-            .subscribe(({status, message, data}) => {
-                console.log(status, message);
-                //TODO: if data is correct navigate to the home page
-                if (status == 'success') {
-    
-                  let userLocalData = data;
-    
-                  this.showLoader = false;
-    
-                  localStorage.setItem('userLocalData', JSON.stringify(userLocalData));
-  
-                  
-                  this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
-    
-                  this.navCtrl.pop();
- 
-    
-                } else {
-                  this.showLoader = false;
-                  this.showToast(`${message}`)
-                }
+            //this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+            this.events.publish('callCountNotify','yes');
 
-              },err => {
-                this.showToast('التطبيق يتطلب اتصال بالانترنت');
-                console.warn(err);
-                this.showLoader = false;
-              }
-            );
-          })
-          
-          this.fcm.onTokenRefresh().subscribe(token=>{
-            //backend.registerToken(token);
-          })
-          //***********************************//
-        
-        }else {
-          this.showLoader = false;
-          let formKeys = Object.keys(this.LoginForm.value);
-          this.showLoader = false;
-          for (let value of formKeys) {
-            if (this.LoginForm.get(value).getError('required')) {
-              value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
-              this.showToast(`يرجى ادخال ${value}`);
-              break;
-            }
+            this.navCtrl.pop();
+
+
+          } else {
+            this.showLoader = false;
+            this.showToast(`${message}`)
           }
+
+        },err => {
+          this.showToast('التطبيق يتطلب اتصال بالانترنت');
+          console.warn(err);
+          this.showLoader = false;
         }
-
-
+      );
+    }else {
+      this.showLoader = false;
+      let formKeys = Object.keys(this.LoginForm.value);
+      this.showLoader = false;
+      for (let value of formKeys) {
+        if (this.LoginForm.get(value).getError('required')) {
+          value = (value == 'username') ? 'اسم المستخدم' : 'كلمة المرور';
+          this.showToast(`يرجى ادخال ${value}`);
+          break;
+        }
+      }
+    }
   }
 
   toRegisterPage() {

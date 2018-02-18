@@ -1,9 +1,11 @@
 import {Component,Inject} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams,Events} from 'ionic-angular';
 import {Network} from '@ionic-native/network';
 import {NotificationsProvider} from '../../providers/notifications';
 import {IlocalUser} from '../../app/service/InewUserData';
 import {INotification} from '../../app/service/interfaces';
+import { count } from 'rxjs/operator/count';
+import { locale } from 'moment';
 
 
 @IonicPage()
@@ -13,6 +15,7 @@ import {INotification} from '../../app/service/interfaces';
 })
 export class NotificationsPage {
     userLocal: IlocalUser;
+    tabBageCount:any;
     isOnline: boolean = true;
     initLimit: number = 10;
     initStart: number = 0;
@@ -23,21 +26,21 @@ export class NotificationsPage {
     noUser: boolean = false;
     AllNotifications: INotification[] | any = [];
     constructor(
-     @Inject('API_URL') private API_URL,
-    @Inject('UPLOAD_PATH') private UPLOAD_PATH,
+        @Inject('API_URL') private API_URL,
+        @Inject('UPLOAD_PATH') private UPLOAD_PATH,
         public navCtrl: NavController,
         public navParams: NavParams,
         public network: Network,
+        public events: Events,
         public notificationProvider: NotificationsProvider
     ) {
     }
 
     ionViewWillEnter() {
-        if (!this.userLocal)
-            this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
-
+        this.userLocal = JSON.parse(localStorage.getItem('userLocalData'));
         if (this.userLocal) {
-            console.log(`this local ${this.userLocal}`);
+            this.tabBageCount = localStorage.getItem('tabBadgeNotify');
+            console.log(`this local ${JSON.stringify(this.userLocal)}`);
             [this.noUser, this.showLoader, this.noData, this.netErr] = [false, true, false, false];
             this.getNotifications();
         } else {
@@ -47,8 +50,11 @@ export class NotificationsPage {
 
     ionViewDidLoad() {
 
-
-
+        /* this.events.subscribe('tabBadge:notify', (counter) => {
+            console.log("tabBadge:notify counter when read or open notify", counter)
+            //this.events.publish('tabBadge:notify', counter-1);
+            this.tabcountBage = counter;
+        }); */
         //this.getNotifications();
         console.log('ionViewDidLoad Messages');
         /*
@@ -144,7 +150,22 @@ export class NotificationsPage {
     }
 
 
-    navigateToPage(pageData: INotification | string): void {
+    navigateToPage(pageData: any | string): void {
+        //console.log("tabBadge:notify counter when read or open notify")
+        /* this.events.subscribe('tabBadge:notify', (counter) => {
+            console.log("tabBadge:notify counter when read or open notify", counter)
+            //this.events.publish('tabBadge:notify', counter-1);
+        }); */
+        if (this.userLocal && typeof pageData != 'string') {
+            if (pageData.status == '0') {
+                console.log(this.tabBageCount);
+                let newCount :any = +this.tabBageCount - 1;
+                this.events.publish('tabBadge:notify', newCount);
+                localStorage.setItem('tabBadgeNotify', newCount);
+            }
+            
+        }
+
 
 
         if (typeof pageData == 'string') {

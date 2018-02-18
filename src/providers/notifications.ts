@@ -20,6 +20,10 @@ export class NotificationsProvider {
     updatereadNotify(notification_id: number, user_id:number) {
         return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action: 'readNotify', id: notification_id, user_id })).map(res=>res.json());
     }
+    
+    getUnreadNotifyCount(user_id:number) {
+        return this.http.post(this.API_URL + 'notifications.php', JSON.stringify({ action: 'unreadNotifyCount', user_id })).map(res=>res.json());
+    }
 
     getNotificationById(id: number) {
         const action = 'getNotificationById';

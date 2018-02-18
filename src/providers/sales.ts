@@ -9,8 +9,8 @@ export class SalesProvider {
   }
 
 
-  getItemByCode(item_code) {
-    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action:'getItemByCode', item_code})).map(res=>res.json());
+  getItemByCode(user_id: number, item_code) {
+    return this.http.post(this.API_URL+'sales.php', JSON.stringify({action:'getItemByCode', item_code,user_id})).map(res=>res.json());
   }
 
   addSalesBill(billData) {

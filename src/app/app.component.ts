@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Platform,Nav,Events} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
-
+import {IlocalUser} from "./service/InewUserData";
 
 
 @Component({
@@ -10,15 +10,11 @@ import {SplashScreen} from '@ionic-native/splash-screen';
 })
 export class MyApp {
     rootPage: any = 'TabsPage';
-
     constructor(
         public platform: Platform,
         public statusBar: StatusBar,
         public splashScreen: SplashScreen,
         public events: Events,
-
-
-
     ) {
         platform.ready().then(() => {
             // Okay, so the platform is ready and our plugins are available.
@@ -28,11 +24,7 @@ export class MyApp {
 
         });
 
-        /* this.events.subscribe('changeRoot', (root) => {
-            console.log(root,"hereererererrerere")
-            this.rootPage = root;
-        }); */
-
-
+        //console.log('console.log here in app');
+        
     }
 }

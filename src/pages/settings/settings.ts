@@ -66,10 +66,7 @@ export class SettingsPage {
 
   ionViewWillEnter() {
     console.log('user has cached or not', this.userHasLog);
-
-
-
-      this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
+    this.userLocalData = JSON.parse(localStorage.getItem('userLocalData'));
 
   }
   ionViewWilleave() {
@@ -103,7 +100,9 @@ export class SettingsPage {
                 if (res.status == 'success') {
                   localStorage.removeItem('userLocalData');
                   localStorage.removeItem('currentLocation');
-                  this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
+                  localStorage.removeItem('tabBadgeNotify');
+                  this.events.publish('tabBadge:notify', 0);                  
+                  //this.events.publish('updateLocalUser', JSON.parse(localStorage.getItem('userLocalData')));
                   this.navCtrl.push('Login');
                 } else {
                   
@@ -122,6 +121,7 @@ export class SettingsPage {
 
     //TODO: move to the home page after logout
   }
+
   navigateToPage(page) {
     this.navCtrl.push(page)
   }

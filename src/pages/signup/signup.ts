@@ -354,9 +354,9 @@ export class Signup implements AfterViewInit{
           this.showToast('تم اضافة حسابك بنجاح');
           // TODO: navigate to the home page
           
-          this.navCtrl.pop();
-
-          this.events.publish('loginUser', 'userLog')
+          //this.navCtrl.pop();
+          this.navCtrl.popToRoot();
+          //this.events.publish('loginUser', 'userLog')
          
        
           this.showLoader = false; // stop the loader
