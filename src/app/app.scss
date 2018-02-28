@@ -190,7 +190,8 @@ ion-header {
     &.header {
       &:after {
         background-position: 0 -4px;
-        content: ''
+        content: '';
+        background-image: none;
       }
       box-shadow: none !important;
     }

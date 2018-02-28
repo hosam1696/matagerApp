@@ -208,16 +208,12 @@ export class VprofilePage {
 
     if (this.navigatedUserId != 0) { // if the user is not visitor
       let followData = { user_id, follower_id: this.userLocal.id };
-      let FollowOrUnFollow = (followOrNot: boolean = true) => {
+      let followUser = (followOrNot: boolean = true) => {
         this.userProvider
           .follow(followData, followOrNot)
           .subscribe(res => {
               if (res.status === 'success') {
-                if (followOrNot) {
-                  this.userFollowCb();
-                } else {
-                  this.userUnfollowCb();
-                }
+                this.changeFollowCount(followOrNot?1:-1);
               } else {
                 this.showToast(res.errors);
               }
@@ -227,27 +223,20 @@ export class VprofilePage {
             },
             () => {
               this.userData.follow = !this.userData.follow;
-              (!this.userData.follow) ? this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بمتابعة ${this.userData.name}`);
+              this.userData.follow ? this.showToast(`لقد قمت بمتابعة ${this.userData.name}`) : this.showToast(`لقد قمت بالغاء بمتابعة ${this.userData.name}`);
             }
           );
-
       };
-      (!this.userData.follow) ? FollowOrUnFollow(true)/* if the user is not following him*/ : FollowOrUnFollow(false);
+      this.userData.follow ? followUser(false) : followUser(true);
     } else {
       this.showLoginAction()
     }
 
   }
 
-  private userUnfollowCb() {
-    this.userData.followers -= 1;
-    this.userLocal.followings--;
-    localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
-  }
-
-  private userFollowCb() {
-    this.userData.followers += 1;
-    this.userLocal.followings++;
+  private changeFollowCount(count:number):void {
+    this.userData.followers += count;
+    this.userLocal.followings += count;
     localStorage.setItem('userLocalData', JSON.stringify(this.userLocal));
   }
 
@@ -272,7 +261,6 @@ export class VprofilePage {
       enableBackdropDismiss: true
     };
     let alert = this.alertCtrl.create(alertOptions);
-
     alert.present();
   }
 
